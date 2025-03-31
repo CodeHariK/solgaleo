@@ -1,0 +1,59 @@
+{
+  "name": "solgaleo",
+  "version": "0.0.1",
+  "type": "module",
+  "private": false,
+  "main": "./dist/solgaleo.js",
+  "module": "./dist/solgaleo.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/solgaleo.js",
+      "require": "./dist/solgaleo.umd.cjs"
+    },
+    "./solgaleo.css": "./dist/solgaleo.css"
+  },
+  "author": {
+    "name": "codeharik",
+    "url": "https://github.com/codeharik"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "@solid-primitives/keyed": "^1.5.0",
+    "@solidjs/meta": "^0.29.4",
+    "solid-js": "^1.9.5",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "postcss": "^8.5.3",
+    "tailwindcss": "3",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-solid": "^2.11.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codeharik/solgaleo.git"
+  },
+  "keywords": [
+    "solidjs",
+    "ui",
+    "typescript",
+    "component library",
+    "ui components",
+    "tailwind"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "dist/*.js",
+    "dist/*.d.ts",
+    "dist/*.css"
+  ]
+}
