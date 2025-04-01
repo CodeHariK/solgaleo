@@ -30,6 +30,7 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@types/bun": "^1.2.8",
     "postcss": "^8.5.3",
     "tailwindcss": "3",
     "typescript": "~5.7.2",

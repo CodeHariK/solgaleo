@@ -11,15 +11,15 @@ interface Props {
     src: string;
 }
 
-export const RainbowImage = (props: Props) => (
-    <div
+export const RainbowImage = (props: Props) => {
+    return <div
         class="raincon"
         style={{
             "--size": props.size,
-            "--src": props.src,
+            "--src": `url(${props.src})`,
         }}>
         <div class="rainbow_grad">
             <slot />
         </div>
     </div>
-);
+}

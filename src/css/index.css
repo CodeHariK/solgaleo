@@ -116,9 +116,20 @@ main {
   @apply flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700;
 }
 
+header {
+  background: var(--header-bg);
+}
+
+footer {
+  background: var(--footer-bg);
+}
+
 .light {
   --bg-color: white;
   --text-color: #111827;
+
+  --header-bg: white;
+  --footer-bg: white;
 
   --out-bg: #475569;
   --out-color: #475569;
@@ -148,6 +159,9 @@ main {
 .night {
   --bg-color: #030712;
   --text-color: white;
+
+  --header-bg: #111827;
+  --footer-bg: #111827;
 
   --out-bg: #475569;
   --out-color: #475569;

@@ -5,7 +5,7 @@ import { DownIcon, UserIcon } from "./svg";
 
 export const Header = ({ links, rightChildren: rightChildren }: { links?: JSX.Element, rightChildren?: JSX.Element }) => (
     <header>
-        <nav class="bg-white night:bg-gray-900 antialiased">
+        <nav class="antialiased">
             <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-0">
                 <div class="flex items-center justify-between">
 
@@ -29,7 +29,6 @@ export const Header = ({ links, rightChildren: rightChildren }: { links?: JSX.El
 
             </div>
         </nav >
-
     </header >
 );
 

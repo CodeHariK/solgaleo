@@ -1,11 +1,19 @@
-import { SpaceLayout, Header, Footer, ThemeToggle, OutlinedButton, MaterialButton, BaseButton, RedButton, BorderButton, IconButton, H1, H3, H2, H6, H5, H4, P, TextInput, SpaceForm, CheckboxGroup } from "solgaleo";
+import { SpaceLayout, Header, Footer, ThemeToggle, OutlinedButton, MaterialButton, BaseButton, RedButton, BorderButton, IconButton, H1, H3, H2, H6, H5, H4, P, TextInput, SpaceForm, CheckboxGroup, GlitterCard } from "solgaleo";
 import "solgaleo/solgaleo.css";
 
 export function Storybook() {
+
   return (
+
     <SpaceLayout two contentCenter={true} title='Storybook'
       header={<Header rightChildren={<ThemeToggle />} />}
       footer={<Footer />}>
+
+      <GlitterCard />
+
+      {/* <GhostComponent />
+
+      <RainbowImage size="300px" src="https://raw.githubusercontent.com/CodeHariK/Shark.run/main/public/images/SpaceShark512.webp"></RainbowImage> */}
 
       <section class="light">
         Light
@@ -21,6 +29,7 @@ export function Storybook() {
         Custom
         <Story />
       </section>
+
 
     </SpaceLayout>
   )
@@ -56,5 +65,6 @@ function Story() {
     <H5>H5 header</H5>
     <H6>H6 header</H6>
     <P>P header</P>
+
   </div>
 }

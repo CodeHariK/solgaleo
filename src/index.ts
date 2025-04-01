@@ -10,7 +10,6 @@ export * from "./components/heading"
 export * from "./components/modal"
 export * from "./components/pagination"
 export * from "./components/radio"
-export * from "./components/rainbow"
 export * from "./components/ratingsbar"
 export * from "./components/search"
 export * from "./components/select"
@@ -23,6 +22,10 @@ export * from "./components/uploadpic"
 
 export * from "./layouts/SpaceLayout"
 
-export * from "./pages/NotFound"
+export * from "./fancy/ghost"
+export * from "./fancy/rainbow"
+export * from "./fancy/glittercard"
 
 export * from "./modal/modal1"
+
+export * from "./pages/NotFound"
