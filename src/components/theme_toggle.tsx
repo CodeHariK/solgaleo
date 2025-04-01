@@ -1,29 +1,40 @@
 import { createSignal, onMount } from "solid-js";
 
+let THEMECOUNT = 0
+let THEME = ["light", "night"];
+
+export function AddTheme(theme: string) {
+    THEME.push(theme)
+}
+
+export function CurrentTheme() {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (THEME.includes(savedTheme)) {
+        return savedTheme
+    } else {
+        const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        return prefersNight ? "night" : "light";
+    }
+}
+
 export function ThemeToggle() {
     // Signal to store the current theme ("light" or "dark")
     const [theme, setTheme] = createSignal("light");
 
     // Function to manually toggle between light and dark themes
     const toggleTheme = () => {
-        const newTheme = theme() === "light" ? "dark" : "light";
+        THEMECOUNT = (THEMECOUNT + 1) % THEME.length
+        const newTheme = THEME[THEMECOUNT]
         setTheme(newTheme);
         document.documentElement.className = newTheme;
-        localStorage.setItem("theme", newTheme); // Save manual preference
+        localStorage.setItem("theme", newTheme);
     };
 
     // Detect system theme preference and apply it on mount
     onMount(() => {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme) {
-            setTheme(savedTheme);
-        } else {
-            // Use system theme if no manual preference is saved
-            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            const systemTheme = prefersDark ? "dark" : "light";
-            setTheme(systemTheme);
-        }
-
+        const savedTheme = CurrentTheme();
+        setTheme(savedTheme);
         document.documentElement.className = theme();
     });
 
@@ -32,7 +43,7 @@ export function ThemeToggle() {
             id="theme-toggle"
             type="button"
             onClick={toggleTheme}
-            class="text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg p-2.5"
+            class="text-gray-600 night:text-gray-200 hover:bg-gray-100 night:hover:bg-gray-700 rounded-lg p-2.5"
         > {theme() === "light" ?
             <svg
                 class="w-5 h-5"

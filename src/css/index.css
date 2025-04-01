@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: monospace, Inter, ui-sans-serif, system-ui;
+}
+
+section {
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 10px;
+}
+
+main {
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
 @layer utilities {
   *::-webkit-scrollbar {
     height: 8px;
@@ -20,24 +41,11 @@
   *::-webkit-scrollbar-thumb:hover {}
 }
 
-.AppText {
-  @apply text-gray-700 dark:text-white
-}
-
-.AppText1 {
-  @apply text-gray-600 dark:text-gray-300
-}
-
-.DarkAppText {
-  @apply dark:text-gray-700 text-white
-}
-
-.DarkAppText1 {
-  @apply dark:text-gray-600 text-gray-300
-}
-
 .AppIcon {
-  @apply shrink-0 size-4 text-xs text-slate-500 dark:text-slate-100 inline-block
+  @apply shrink-0 size-4 text-xs inline-block;
+  color: var(--out-color);
+  background: var(--out-bg);
+  border: var(--out-border);
 }
 
 .AppIconButton {
@@ -48,16 +56,26 @@
   @apply flex select-none items-center gap-2 rounded py-2.5 px-4 text-xs font-semibold transition-all hover:opacity-75;
 }
 
-.AppButton {
-  @apply AppButtonBase text-gray-200 dark:text-gray-700 bg-gray-800 dark:bg-gray-100;
+.AppMaterialButton {
+  @apply AppButtonBase;
+  color: var(--mat-color);
+  background: var(--mat-bg);
+  border: var(--mat-border);
 }
 
 .AppOutlinedButton {
-  @apply AppButtonBase text-slate-600 dark:text-gray-200 border border-slate-300 dark:border-gray-200 bg-transparent dark:bg-transparent;
+  @apply AppButtonBase;
+  color: var(--out-color);
+  background: var(--out-bg);
+  border: var(--out-border);
+  background-color: transparent;
 }
 
 .AppTextInput {
-  @apply my-1 text-gray-900 dark:text-white bg-white border border-gray-300 outline-none text-sm rounded-lg focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  @apply my-1 outline-none text-sm rounded-lg w-full;
+  color: var(--input-color);
+  background: var(--input-bg);
+  border: var(--input-border);
 }
 
 .AppErrorTextInput {
@@ -65,11 +83,17 @@
 }
 
 .AppCheckboxInput {
-  @apply w-4 h-4 select-none text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600;
+  @apply w-4 h-4 select-none rounded;
+  accent-color: var(--checkbox-color);
+  background: var(--checkbox-bg);
+  border: var(--checkbox-border);
 }
 
 .AppLabel {
-  @apply ms-2 text-sm select-none font-medium text-gray-900 dark:text-gray-300;
+  @apply ms-2 text-sm select-none font-medium;
+  color: var(--label-color);
+  background: var(--label-bg);
+  border: var(--label-border);
 }
 
 .AppLabelDisabled {
@@ -90,4 +114,58 @@
 
 .AppDropdownOption {
   @apply flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700;
+}
+
+.light {
+  --bg-color: white;
+  --text-color: #111827;
+
+  --out-bg: #475569;
+  --out-color: #475569;
+  --out-border: 1px solid #cbd5e1;
+
+  --mat-bg: #475569;
+  --mat-color: #475569;
+  --mat-border: 1px solid #cbd5e1;
+
+  --icon-bg: #475569;
+  --icon-color: #475569;
+  --icon-border: 1px solid #cbd5e1;
+
+  --input-bg: #ffffff;
+  --input-color: #111827;
+  --input-border: 1px solid #d1d5db;
+
+  --checkbox-bg: #ffffff;
+  --checkbox-color: #111827;
+  --checkbox-border: 1px solid #d1d5db;
+
+  --label-bg: #ffffff;
+  --label-color: #111827;
+  --label-border: 1px solid #d1d5db;
+}
+
+.night {
+  --bg-color: #030712;
+  --text-color: white;
+
+  --out-bg: #475569;
+  --out-color: #475569;
+  --out-border: 1px solid #cbd5e1;
+
+  --mat-bg: #475569;
+  --mat-color: #475569;
+  --mat-border: 1px solid #cbd5e1;
+
+  --icon-bg: #475569;
+  --icon-color: #475569;
+  --icon-border: 1px solid #cbd5e1;
+
+  --checkbox-bg: #ff3838;
+  --checkbox-color: #3473fc;
+  --checkbox-border: 1px solid #6eff75;
+
+  --label-bg: #ffa2a2;
+  --label-color: #9b51ef;
+  --label-border: 1px solid #0260ec;
 }

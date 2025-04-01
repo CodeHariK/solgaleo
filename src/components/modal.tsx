@@ -32,9 +32,9 @@ export function Modal(props: ModalProps) {
                     :
                     <div id="Modal" onClick={() => { setShow(false) }} class="fixed z-50 w-full items-center justify-center overflow-y-auto overflow-x-hidden inset-0">
                         <div onClick={(event) => { event.stopPropagation() }} style={{ left: `${align?.x + "%"}`, top: `${align?.y + "%"}`, "max-width": `${size?.x + "%"}` }}
-                            class={`${show() ? "opacity-100 visible" : "opacity-0 invisible"} pointer-events-auto bg-gray-50 dark:bg-gray-800 rounded-lg transition-opacity duration-300 transform -translate-x-1/2 -translate-y-1/2 relative w-full h-auto shadow-2xl`}>
+                            class={`${show() ? "opacity-100 visible" : "opacity-0 invisible"} pointer-events-auto bg-gray-50 night:bg-gray-800 rounded-lg transition-opacity duration-300 transform -translate-x-1/2 -translate-y-1/2 relative w-full h-auto shadow-2xl`}>
 
-                            <button onclick={() => { if (setShow) setShow(false); }} type="button" class="absolute z-50 right-2.5 top-2.5 ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteOrderModal">
+                            <button onclick={() => { if (setShow) setShow(false); }} type="button" class="absolute z-50 right-2.5 top-2.5 ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 night:hover:bg-gray-600 night:hover:text-white" data-modal-toggle="deleteOrderModal">
                                 <CrossIcon></CrossIcon>
                             </button>
 
@@ -49,8 +49,8 @@ export function Modal(props: ModalProps) {
 }
 
 export function DeleteModal(setShow?: Setter<boolean>) {
-    return <div class=" rounded-lg bg-white p-4 text-center shadow dark:bg-gray-800 sm:p-5">
-        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 p-2 dark:bg-gray-700">
+    return <div class=" rounded-lg bg-white p-4 text-center shadow night:bg-gray-800 sm:p-5">
+        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 p-2 night:bg-gray-700">
             <DeleteIcon />
             <span class="sr-only">Danger icon</span>
         </div>

@@ -11,10 +11,10 @@ export function RatingsBar(props: { ratings?: number, reviews?: number }) {
         </div>
 
         {
-            props.ratings && <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{props.ratings}</span>
+            props.ratings && <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded night:bg-blue-200 night:text-blue-800 ms-3">{props.ratings}</span>
         }
         {
-            props.reviews && <p class="text-sm font-medium text-gray-500 dark:text-gray-400">({props.reviews})</p>
+            props.reviews && <p class="text-sm font-medium text-gray-500 night:text-gray-400">({props.reviews})</p>
         }
     </div>;
 }

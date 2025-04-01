@@ -18,7 +18,7 @@ export function Select(props: SelectProps) {
 
     return (
         <div class="mb-4">
-            <label for={props.id} class="block mt-2 mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label for={props.id} class="block mt-2 mb-1 text-sm font-medium text-gray-900 night:text-white">
                 {props.header}
             </label>
             <select

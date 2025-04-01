@@ -13,9 +13,9 @@ export function Table(props: TableProps) {
                 <tr>
                     {props.heading.map((e) => (
                         <th
-                            class="p-4 cursor-pointer border-y border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600">
+                            class="p-4 cursor-pointer border-y border-slate-200 night:border-slate-600 bg-slate-50 night:bg-slate-700 hover:bg-slate-100 night:hover:bg-slate-600">
                             <p
-                                class="flex items-center justify-between font-sans text-sm  font-normal leading-none text-slate-500 dark:text-slate-100"
+                                class="flex items-center justify-between font-sans text-sm  font-normal leading-none text-slate-500 night:text-slate-100"
                             >
                                 {e}
                             </p>
@@ -28,7 +28,7 @@ export function Table(props: TableProps) {
                 {props.rows.map((row) => (
                     <tr>
                         {row.map((item, i) => (
-                            <td class={`p-4 border-b border-slate-200 dark:border-slate-600 ${(props.class ?? [])[i]}`}>
+                            <td class={`p-4 border-b border-slate-200 night:border-slate-600 ${(props.class ?? [])[i]}`}>
                                 {item}
                             </td>
                         ))}
@@ -55,7 +55,7 @@ export function SuperTable(props: SuperTableProps) {
             class={`${props.class || ''} mx-auto`}
             style={{ width: typeof props.width === "number" ? `${props.width}px` : props.width }}  // ✅ Convert number to string
         >
-            <div class="flex flex-col w-full h-full bg-white dark:bg-gray-800 shadow-md rounded-xl bg-clip-border">
+            <div class="flex flex-col w-full h-full bg-white night:bg-gray-800 shadow-md rounded-xl bg-clip-border">
                 {!(props.headerstart || props.headerend) ? null : (
                     <div class="flex items-center justify-between mx-4 mt-4 overflow-hidden rounded-none bg-clip-border">
                         {props.headerstart}

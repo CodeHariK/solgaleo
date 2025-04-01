@@ -5,7 +5,7 @@ import { DownIcon, UserIcon } from "./svg";
 
 export const Header = ({ links, rightChildren: rightChildren }: { links?: JSX.Element, rightChildren?: JSX.Element }) => (
     <header>
-        <nav class="bg-white dark:bg-gray-900 antialiased">
+        <nav class="bg-white night:bg-gray-900 antialiased">
             <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-0">
                 <div class="flex items-center justify-between">
 
@@ -38,10 +38,10 @@ export const TransitionModal = ({ transition, children }: { transition: boolean,
         <TransitionWidget showFirstWidget={transition}
             one={
                 <PositionBox2 name={<p>{UserIcon()}{<span>Account</span>}{DownIcon()}</p>} align={{ x: 0, y: 1 }}>
-                    <div class="z-50 m-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                    <div class="z-50 m-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow night:bg-gray-700 night:divide-gray-600" id="user-dropdown">
                         <div class="px-4 py-3">
-                            <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-                            <span class="block text-sm text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+                            <span class="block text-sm text-gray-900 night:text-white">Bonnie Green</span>
+                            <span class="block text-sm text-gray-500 truncate night:text-gray-400">name@flowbite.com</span>
                         </div>
                         <ul class="py-2" aria-labelledby="user-menu-button">
                             {children} {/* Accept header links dynamically */}
@@ -91,7 +91,7 @@ export const HeaderLinks = (props: { href: string, title: string, fn?: (href: st
     };
 
     return <li>
-        <a onClick={handleLinkClick} href={props.href} title={props.title} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+        <a onClick={handleLinkClick} href={props.href} title={props.title} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 night:hover:bg-gray-600 night:text-gray-200 night:hover:text-white">
             {props.title}
         </a>
     </li>;

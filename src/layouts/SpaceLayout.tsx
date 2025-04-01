@@ -5,6 +5,7 @@ type SpaceLayoutProps = {
     title: string;
     one?: boolean;
     two?: boolean;
+    contentCenter?: boolean;
     children?: JSX.Element | JSX.Element[];
     header?: JSX.Element;
     footer?: JSX.Element;
@@ -16,12 +17,12 @@ export const SpaceLayout = (props: SpaceLayoutProps) => (
         <Title>{props.title}</Title>
 
         <main
-            class={`${props.one ? "h-full" : ""} ${props.two ? "h-screen" : ""} flex flex-col`}
+            class={`${props.one ? "h-full" : ""} ${props.two ? "h-screen" : ""}`}
         >
             {props.header}
 
             <section
-                class={`w-full ${props.two ? "h-full overflow-y-scroll" : ""}`}
+                class={`w-full ${props.contentCenter && 'content-center'} ${props.two ? "h-full overflow-y-scroll" : ""}`}
             >
                 {props.children}
             </section>

@@ -1,0 +1,12 @@
+.custom {
+    --bg-color: #242424;
+    --text-color: #ffcc00;
+
+    --out-bg: red;
+    --out-color: blue;
+    --out-border: 5px solid #cbd5e1;
+
+    --mat-bg: green;
+    --mat-color: yellow;
+    --mat-border: 5px solid #cbd5e1;
+}

@@ -15,7 +15,7 @@ export function IconButton(props: ButtonProps) {
 }
 
 export function MaterialButton(props: ButtonProps) {
-    return <button onClick={props.onClick} class={`AppButton ${props.class}`} type={props.type} disabled={props.disabled}>
+    return <button onClick={props.onClick} class={`AppMaterialButton ${props.class}`} type={props.type} disabled={props.disabled}>
         {props.children}
     </button>;
 }

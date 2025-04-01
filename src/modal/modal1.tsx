@@ -8,9 +8,9 @@ import { TextInput } from "../components/textinput";
 export function Modal1() {
     return (
         <div class="max-h-auto relative max-h-full w-full max-w-lg p-4">
-            <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
+            <div class="relative rounded-lg bg-white shadow night:bg-gray-800">
 
-                <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 dark:border-gray-700 md:p-5">
+                <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 night:border-gray-700 md:p-5">
                     <H4>Account Information</H4>
                     <IconButton>
                         <CrossIcon />
@@ -34,7 +34,7 @@ export function Modal1() {
                         <TextInput area name="delivery_address" label='Delivery Address*' type="text" placeholder="Enter here your address" />
 
                     </div>
-                    <div class="flex gap-3 border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-5">
+                    <div class="flex gap-3 border-t border-gray-200 pt-4 night:border-gray-700 md:pt-5">
                         <MaterialButton>Save information</MaterialButton>
                         <OutlinedButton>Cancel</OutlinedButton>
                     </div>

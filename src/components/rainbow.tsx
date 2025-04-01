@@ -1,7 +1,9 @@
-import '../css/rainbox.css';
+import { type JSX } from 'solid-js';
 
-export const RainboxText = () => (
-    <span class="rainbow"><slot /></span>
+import '../css/rainbow.css';
+
+export const RainbowText = (props: { children: JSX.Element }) => (
+    <span class="rainbow">{props.children}</span>
 );
 
 interface Props {
@@ -9,7 +11,7 @@ interface Props {
     src: string;
 }
 
-export const RainboxImage = (props: Props) => (
+export const RainbowImage = (props: Props) => (
     <div
         class="raincon"
         style={{

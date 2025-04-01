@@ -1,7 +1,11 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
-import App from './App.tsx'
+import { Storybook } from './storybook.tsx'
 
-const root = document.getElementById('root')
+import "./index.css"
 
-render(() => <App />, root!)
+import * as Solgaleo from "solgaleo";
+
+Solgaleo.AddTheme("custom")
+
+render(() => <Storybook />, document.body!)
