@@ -1,8 +1,4 @@
-import { SpaceLayout, H1, H3, H2, H6, H5, H4, P, OutlinedButton, BaseButton, MaterialButton, BorderButton, IconButton, RedButton } from "solgaleo";
-
-import { TextInput, SpaceForm, CheckboxGroup } from "solgaleo/input"
-
-import { GlitterCard } from "solgaleo/fancy"
+import { Dropdown, DropdownToggle, SpaceLayoutFull, TextInput, SpaceForm, CheckboxGroup, H1, H3, H2, H6, H5, H4, P, OutlinedButton, BaseButton, MaterialButton, BorderButton, IconButton, RedButton } from "solgaleo";
 
 import "solgaleo/solgaleo.css";
 
@@ -10,15 +6,29 @@ export function Storybook() {
 
     return (
 
-
-        <SpaceLayout two contentCenter={true} title='Storybook'
+        <SpaceLayoutFull two contentCenter={true} title='Storybook'
         // header={<Header rightChildren={<ThemeToggle />} />}
         // footer={<Footer />}
         >
 
-            <GlitterCard />
+            <DropdownToggle name="Dropdown"
+                fn={(t: any) => { console.log(t) }}
+                options={["Hello", "How", "Are", "You"]}
+            ></DropdownToggle>
+
+            <Dropdown items={[
+                <p> The most popular </p>,
+                <p> Increasing price </p>,
+                <p> Newest </p>,
+                <p> Decreasing price </p>,
+                <p> No. reviews </p>,
+                <p> Discount % </p>,
+            ]} />
+
 
             <OutlinedButton>Hello</OutlinedButton>
+
+            {/* <GlitterCard /> */}
 
             {/* <GhostComponent />
 
@@ -40,7 +50,7 @@ export function Storybook() {
             </section>
 
 
-        </SpaceLayout>
+        </SpaceLayoutFull>
     )
 }
 

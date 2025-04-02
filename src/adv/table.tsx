@@ -13,7 +13,7 @@ export function Table(props: TableProps) {
                 <tr>
                     {props.heading.map((e) => (
                         <th
-                            class="p-4 cursor-pointer border-y border-slate-200 night:border-slate-600 bg-slate-50 night:bg-slate-700 hover:bg-slate-100 night:hover:bg-slate-600">
+                            class="bg-[var(--table-header-bg)] p-4 cursor-pointer border-y border-slate-200">
                             <p
                                 class="flex items-center justify-between font-sans text-sm  font-normal leading-none text-slate-500 night:text-slate-100"
                             >
@@ -55,7 +55,7 @@ export function SuperTable(props: SuperTableProps) {
             class={`${props.class || ''} mx-auto`}
             style={{ width: typeof props.width === "number" ? `${props.width}px` : props.width }}  // ✅ Convert number to string
         >
-            <div class="flex flex-col w-full h-full bg-white night:bg-gray-800 shadow-md rounded-xl bg-clip-border">
+            <div class="bg-[var(--table-bg)] flex flex-col w-full h-full shadow-md rounded-xl bg-clip-border">
                 {!(props.headerstart || props.headerend) ? null : (
                     <div class="flex items-center justify-between mx-4 mt-4 overflow-hidden rounded-none bg-clip-border">
                         {props.headerstart}

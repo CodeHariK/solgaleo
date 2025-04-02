@@ -1,7 +1,7 @@
 import { type JSX } from 'solid-js';
 import { MetaProvider, Title } from "@solidjs/meta";
 
-type SpaceLayoutProps = {
+type SpaceLayoutFullProps = {
     title: string;
     one?: boolean;
     two?: boolean;
@@ -11,7 +11,7 @@ type SpaceLayoutProps = {
     footer?: JSX.Element;
 };
 
-export const SpaceLayout = (props: SpaceLayoutProps) => (
+export const SpaceLayoutFull = (props: SpaceLayoutFullProps) => (
 
     <MetaProvider>
         <Title>{props.title}</Title>

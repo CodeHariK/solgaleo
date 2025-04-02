@@ -7,7 +7,7 @@ html {}
 body {
   background: var(--bg-color);
   color: var(--text-color);
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -54,17 +54,38 @@ body {
 
 .AppMaterialButton {
   @apply AppButtonBase;
+  justify-content: center;
   color: var(--mat-color);
   background: var(--mat-bg);
   border: var(--mat-border);
 }
 
+.AppMaterialButton:hover {
+  color: var(--mat-hover-color);
+  background: var(--mat-hover-bg);
+}
+
+.AppMaterialButton:focus {
+  color: var(--mat-focus-color);
+  background: var(--mat-focus-bg);
+}
+
 .AppOutlinedButton {
   @apply AppButtonBase;
+  justify-content: center;
   color: var(--out-color);
   background: var(--out-bg);
   border: var(--out-border);
-  background-color: transparent;
+}
+
+.AppOutlinedButton:hover {
+  color: var(--out-hover-color);
+  background: var(--out-hover-bg);
+}
+
+.AppOutlinedButton:focus {
+  color: var(--out-focus-color);
+  background: var(--out-focus-bg);
 }
 
 .AppTextInput {
@@ -112,6 +133,24 @@ body {
   @apply flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700;
 }
 
+.AppToggleOptions {
+  @apply AppButtonBase;
+  justify-content: center;
+  color: var(--option-color);
+  background: var(--option-bg);
+  border: var(--option-border);
+}
+
+.AppToggleOptions:hover {
+  color: var(--option-hover-color);
+  background: var(--option-hover-bg);
+}
+
+.AppToggleOptions:focus {
+  color: var(--option-focus-color);
+  background: var(--option-focus-bg);
+}
+
 header {
   background: var(--header-bg);
 }
@@ -132,8 +171,8 @@ a {
 }
 
 a:hover {
-  color: var(--a-color-hover);
-  background: var(--a-bg-hover);
+  color: var(--a-hover-color);
+  background: var(--a-hover-bg);
 }
 
 .light {
@@ -146,17 +185,33 @@ a:hover {
   --header-bg: white;
   --footer-bg: white;
 
-  --out-bg: #475569;
+  --out-bg: transparent;
   --out-color: #475569;
   --out-border: 1px solid #cbd5e1;
+  --out-hover-bg: #c2c2c238;
+  --out-hover-color: #6636e8;
+  --out-focus-bg: #f00;
+  --out-focus-color: #f00;
 
   --mat-bg: #3b75c8;
   --mat-color: #ffffff;
   --mat-border: 1px solid #cbd5e1;
+  --mat-hover-bg: #4050c7;
+  --mat-hover-color: #ffffff;
+  --mat-focus-bg: #f00;
+  --mat-focus-color: #f00;
+
+  --option-bg: transparent;
+  --option-color: #0000000;
+  --option-border: 1px solid #cbd5e1;
+  --option-hover-bg: #c2c2c238;
+  --option-hover-color: #6636e8;
+  --option-focus-bg: #f00;
+  --option-focus-color: #f00;
 
   --icon-width: 1.2rem;
   --icon-height: 1.2rem;
-  --icon-bg: #ffffff;
+  --icon-bg: transparent;
   --icon-color: #475569;
   --icon-border: 0px solid #cbd5e1;
 
@@ -173,10 +228,19 @@ a:hover {
   --label-border: 1px solid #d1d5db;
 
   --a-bg: transparent;
-  --a-bg-hover: #111827;
   --a-color: #111827;
-  --a-color-hover: #ffffff;
   --a-border: 0px solid #d1d5db;
+  --a-hover-bg: transparent;
+  --a-hover-color: #6636e8;
+
+  --table-bg: #f9f9f9;
+  --table-header-bg: #e3e3e3;
+
+  --dropdown-bg: #222222;
+  --dropdown-color: #ffffff;
+  --dropdown-hover-bg: #505050;
+  --dropdown-hover-color: #f44343;
+  --dropdownitem-bg: #3b3b3b;
 }
 
 .night {
@@ -189,13 +253,29 @@ a:hover {
   --header-bg: #111827;
   --footer-bg: #111827;
 
-  --out-bg: #475569;
-  --out-color: #475569;
+  --out-bg: transparent;
+  --out-color: #fff;
   --out-border: 1px solid #cbd5e1;
+  --out-hover-bg: #7d8dff4d;
+  --out-hover-color: #fff;
+  --out-focus-bg: #f00;
+  --out-focus-color: #f00;
 
   --mat-bg: #204477;
   --mat-color: #ffffff;
   --mat-border: 1px solid #cbd5e1;
+  --mat-hover-bg: #102747;
+  --mat-hover-color: #ffffff;
+  --mat-focus-bg: #f00;
+  --mat-focus-color: #f00;
+
+  --option-bg: transparent;
+  --option-color: #fff;
+  --option-border: 1px solid #cbd5e1;
+  --option-hover-bg: #7d8dff4d;
+  --option-hover-color: #fff;
+  --option-focus-bg: #f00;
+  --option-focus-color: #f00;
 
   --icon-width: 1.2rem;
   --icon-height: 1.2rem;
@@ -220,4 +300,13 @@ a:hover {
   --a-color: #ffffff;
   --a-color-hover: #030712;
   --a-border: 0px solid #d1d5db;
+
+  --table-bg: #2a2a2a;
+  --table-header-bg: #3f3f3f;
+
+  --dropdown-bg: transparent;
+  --dropdown-color: #ffffff;
+  --dropdown-hover-bg: #505050;
+  --dropdown-hover-color: #f44343;
+  --dropdownitem-bg: #3b3b3b;
 }

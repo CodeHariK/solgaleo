@@ -1,33 +1,29 @@
-import { JSX, JSXElement } from "solid-js";
+import { JSX } from "solid-js/jsx-runtime";
 import { OutlinedButton } from "../ui/button";
 import { PositionBox2 } from "../input/dropdown";
 import { DownIcon, UserIcon } from "../svg/svg";
 
-export const Header = ({ links, rightChildren: rightChildren }: { links?: JSX.Element, rightChildren?: JSX.Element }) => (
+export const Header = ({ iconSrc, title, links, rightChildren }: { iconSrc?: string, title?: JSX.Element, links?: JSX.Element, rightChildren?: JSX.Element }) => (
     <header>
-        <nav class="antialiased">
-            <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-0">
-                <div class="flex items-center justify-between">
+        <nav class="antialiased max-w-screen-xl px-4 mx-auto 2xl:px-0 py-0 flex items-center justify-between">
 
-                    <div class="flex items-center space-x-8">
-                        <a href="/" title="" class="">
-                            <div class="flex items-center space-x-2">
-                                <img class="block w-auto h-12" src="https://cdn-icons-png.flaticon.com/128/12244/12244295.png" alt="" />
-                                {/* <H4>Atlantic</H4> */}
-                            </div>
-                        </a>
-
-                        <ul class="hidden lg:flex items-center justify-start gap-2 md:gap-2 py-3 sm:justify-center">
-                            {links}
-                        </ul>
+            <div class="flex items-center space-x-8">
+                <a href="/" title="" class="">
+                    <div class="flex items-center space-x-2">
+                        {iconSrc && <div class="min-w-16"><img class="block w-auto h-12" src={iconSrc} /></div>}
+                        {title}
                     </div>
+                </a>
 
-                    <div class="flex items-center lg:space-x-2">
-                        {rightChildren}
-                    </div>
-                </div>
-
+                <ul class="hidden lg:flex items-center justify-start gap-2 md:gap-2 py-3 sm:justify-center">
+                    {links}
+                </ul>
             </div>
+
+            <div class="flex items-center lg:space-x-2">
+                {rightChildren}
+            </div>
+
         </nav >
     </header >
 );
@@ -53,7 +49,7 @@ export const TransitionModal = ({ transition, children }: { transition: boolean,
     );
 };
 
-const TransitionWidget = (props: { showFirstWidget: boolean, one: JSXElement, two: JSXElement }) => {
+const TransitionWidget = (props: { showFirstWidget: boolean, one: JSX.Element, two: JSX.Element }) => {
     return (
         <div class="relative">
             <div
