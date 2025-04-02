@@ -3,14 +3,38 @@
   "version": "0.0.1",
   "type": "module",
   "private": false,
-  "main": "./dist/solgaleo.js",
-  "module": "./dist/solgaleo.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/solgaleo.js",
-      "require": "./dist/solgaleo.umd.cjs"
+      "types": "./dist/solgaleo.index.d.ts",
+      "import": "./dist/solgaleo.index.es.js"
+    },
+    "./adv": {
+      "types": "./dist/solgaleo.adv.d.ts",
+      "import": "./dist/solgaleo.adv.es.js"
+    },
+    "./fancy": {
+      "types": "./dist/solgaleo.fancy.d.ts",
+      "import": "./dist/solgaleo.fancy.es.js"
+    },
+    "./input": {
+      "types": "./dist/solgaleo.input.d.ts",
+      "import": "./dist/solgaleo.input.es.js"
+    },
+    "./nav": {
+      "types": "./dist/solgaleo.nav.d.ts",
+      "import": "./dist/solgaleo.nav.es.js"
+    },
+    "./pages": {
+      "types": "./dist/solgaleo.pages.d.ts",
+      "import": "./dist/solgaleo.pages.es.js"
+    },
+    "./svg": {
+      "types": "./dist/solgaleo.svg.d.ts",
+      "import": "./dist/solgaleo.svg.es.js"
+    },
+    "./ui": {
+      "types": "./dist/solgaleo.ui.d.ts",
+      "import": "./dist/solgaleo.ui.es.js"
     },
     "./solgaleo.css": "./dist/solgaleo.css"
   },

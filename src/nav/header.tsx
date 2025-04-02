@@ -1,7 +1,7 @@
 import { JSX, JSXElement } from "solid-js";
-import { OutlinedButton } from "./button";
-import { PositionBox2 } from "./dropdown";
-import { DownIcon, UserIcon } from "./svg";
+import { OutlinedButton } from "../ui/button";
+import { PositionBox2 } from "../input/dropdown";
+import { DownIcon, UserIcon } from "../svg/svg";
 
 export const Header = ({ links, rightChildren: rightChildren }: { links?: JSX.Element, rightChildren?: JSX.Element }) => (
     <header>
@@ -90,7 +90,8 @@ export const HeaderLinks = (props: { href: string, title: string, fn?: (href: st
     };
 
     return <li>
-        <a onClick={handleLinkClick} href={props.href} title={props.title} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 night:hover:bg-gray-600 night:text-gray-200 night:hover:text-white">
+        <a onClick={handleLinkClick} href={props.href} title={props.title}
+            class="block px-4 py-2 text-sm">
             {props.title}
         </a>
     </li>;

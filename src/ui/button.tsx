@@ -1,4 +1,4 @@
-import { type JSX } from 'solid-js';
+import { JSX } from "solid-js/jsx-runtime";
 
 export type ButtonProps = {
     class?: string;
@@ -39,4 +39,3 @@ export function BorderButton(props: ButtonProps) {
 export function RedButton(props: ButtonProps) {
     return <BaseButton onClick={props.onClick} class="rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none dark:bg-red-600 dark:hover:bg-red-700">{props.children}</BaseButton>;
 }
-

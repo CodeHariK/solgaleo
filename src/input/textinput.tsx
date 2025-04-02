@@ -1,6 +1,6 @@
 import { createSignal, type JSX } from "solid-js";
 import { useSpaceContext } from "./spaceform";
-import { KeyIcon, LockIcon, UnlockIcon } from "./svg";
+import { KeyIcon, LockIcon, UnlockIcon } from "../svg/svg";
 
 type TextInputProps = {
     name: string;

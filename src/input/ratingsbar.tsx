@@ -1,4 +1,4 @@
-import { StarIcon } from "./svg";
+import { StarIcon } from "../svg/svg";
 
 export function RatingsBar(props: { ratings?: number, reviews?: number }) {
     return <div class="flex items-center gap-2">

@@ -1,9 +1,9 @@
 import { createSignal, Setter } from "solid-js";
-import { BorderButton, RedButton } from "../components/button";
-import { H6 } from "../components/heading";
-import { CrossIcon, DeleteIcon } from "../components/svg";
+import { H6 } from "../ui/heading";
+import { CrossIcon, DeleteIcon } from "../svg/svg";
 
 import { type JSX } from 'solid-js';
+import { BorderButton, RedButton } from "../ui/button";
 
 export type ModalProps = {
     show?: boolean;

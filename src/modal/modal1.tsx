@@ -1,9 +1,9 @@
-import { IconButton, MaterialButton, OutlinedButton } from "../components/button";
-import { H4 } from "../components/heading";
-import { Select } from "../components/select";
-import { SpaceForm } from "../components/spaceform";
-import { CrossIcon } from "../components/svg";
-import { TextInput } from "../components/textinput";
+import { Select } from "../input/select";
+import { SpaceForm } from "../input/spaceform";
+import { TextInput } from "../input/textinput";
+import { CrossIcon } from "../svg/svg";
+import { IconButton, MaterialButton, OutlinedButton } from "../ui/button";
+import { H4 } from "../ui/heading";
 
 export function Modal1() {
     return (

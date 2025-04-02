@@ -1,10 +1,10 @@
 import { SpaceLayout } from '../layouts/SpaceLayout';
 
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
+import { Footer } from '../nav/footer';
+import { Header } from '../nav/header';
 
 import '../css/ghost.css';
-import { ThemeToggle } from '../components/theme_toggle';
+import { ThemeToggle } from '../ui/theme_toggle';
 import { RainbowText } from '../fancy/rainbow';
 import { GhostComponent } from '../fancy/ghost';
 

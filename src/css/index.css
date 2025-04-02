@@ -2,25 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+html {}
+
 body {
-  height: 100%;
-  overflow: hidden;
-  font-family: monospace, Inter, ui-sans-serif, system-ui;
-}
-
-section {
   background: var(--bg-color);
   color: var(--text-color);
-  padding: 10px;
-}
-
-main {
-  background: var(--bg-color);
-  color: var(--text-color);
-  padding: 0px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 100vh;
+  padding: 0px;
+  /* overflow: hidden; */
+  font-family: monospace, Inter, ui-sans-serif, system-ui;
 }
 
 @layer utilities {
@@ -42,10 +36,12 @@ main {
 }
 
 .AppIcon {
-  @apply shrink-0 size-4 text-xs inline-block;
-  color: var(--out-color);
-  background: var(--out-bg);
-  border: var(--out-border);
+  @apply shrink-0 text-xs inline-block;
+  width: var(--icon-width);
+  height: var(--icon-height);
+  color: var(--icon-color);
+  background: var(--icon-bg);
+  border: var(--icon-border);
 }
 
 .AppIconButton {
@@ -124,9 +120,28 @@ footer {
   background: var(--footer-bg);
 }
 
+.secbg {
+  color: var(--sec-text-color);
+  background: var(--sec-bg-color);
+}
+
+a {
+  color: var(--a-color);
+  background: var(--a-bg);
+  border: var(--a-border);
+}
+
+a:hover {
+  color: var(--a-color-hover);
+  background: var(--a-bg-hover);
+}
+
 .light {
   --bg-color: white;
   --text-color: #111827;
+
+  --sec-bg-color: white;
+  --sec-text-color: #2f2f2f;
 
   --header-bg: white;
   --footer-bg: white;
@@ -135,13 +150,15 @@ footer {
   --out-color: #475569;
   --out-border: 1px solid #cbd5e1;
 
-  --mat-bg: #475569;
-  --mat-color: #475569;
+  --mat-bg: #3b75c8;
+  --mat-color: #ffffff;
   --mat-border: 1px solid #cbd5e1;
 
-  --icon-bg: #475569;
+  --icon-width: 1.2rem;
+  --icon-height: 1.2rem;
+  --icon-bg: #ffffff;
   --icon-color: #475569;
-  --icon-border: 1px solid #cbd5e1;
+  --icon-border: 0px solid #cbd5e1;
 
   --input-bg: #ffffff;
   --input-color: #111827;
@@ -154,11 +171,20 @@ footer {
   --label-bg: #ffffff;
   --label-color: #111827;
   --label-border: 1px solid #d1d5db;
+
+  --a-bg: transparent;
+  --a-bg-hover: #111827;
+  --a-color: #111827;
+  --a-color-hover: #ffffff;
+  --a-border: 0px solid #d1d5db;
 }
 
 .night {
   --bg-color: #030712;
   --text-color: white;
+
+  --sec-bg-color: #2f2f2f;
+  --sec-text-color: #ffffff;
 
   --header-bg: #111827;
   --footer-bg: #111827;
@@ -167,13 +193,19 @@ footer {
   --out-color: #475569;
   --out-border: 1px solid #cbd5e1;
 
-  --mat-bg: #475569;
-  --mat-color: #475569;
+  --mat-bg: #204477;
+  --mat-color: #ffffff;
   --mat-border: 1px solid #cbd5e1;
 
-  --icon-bg: #475569;
-  --icon-color: #475569;
-  --icon-border: 1px solid #cbd5e1;
+  --icon-width: 1.2rem;
+  --icon-height: 1.2rem;
+  --icon-bg: transparent;
+  --icon-color: #ffffff;
+  --icon-border: 0px solid #cbd5e1;
+
+  --input-bg: #3b3b3b;
+  --input-color: #ffffff;
+  --input-border: 1px solid #d1d5db;
 
   --checkbox-bg: #ff3838;
   --checkbox-color: #3473fc;
@@ -182,4 +214,10 @@ footer {
   --label-bg: #ffa2a2;
   --label-color: #9b51ef;
   --label-border: 1px solid #0260ec;
+
+  --a-bg: transparent;
+  --a-bg-hover: #ffffff;
+  --a-color: #ffffff;
+  --a-color-hover: #030712;
+  --a-border: 0px solid #d1d5db;
 }
