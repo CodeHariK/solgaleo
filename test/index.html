@@ -10,7 +10,7 @@
 
 <body></body>
 
-<script type="module" src="/src/index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
 
 <script>
   if (
@@ -18,9 +18,9 @@
     (!("theme" in localStorage) &&
       window.matchMedia("(prefers-color-scheme: dark)").matches)
   ) {
-    document.documentElement.classList.add("light");
+    document.documentElement.classList.add("night");
   } else {
-    document.documentElement.classList.remove("light");
+    document.documentElement.classList.remove("night");
   }
 </script>
 

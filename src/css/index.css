@@ -17,6 +17,11 @@ body {
   font-family: monospace, Inter, ui-sans-serif, system-ui;
 }
 
+section {
+  background: var(--section-bg);
+  color: var(--section-color);
+}
+
 @layer utilities {
   *::-webkit-scrollbar {
     height: 8px;
@@ -33,122 +38,6 @@ body {
   }
 
   *::-webkit-scrollbar-thumb:hover {}
-}
-
-.AppIcon {
-  @apply shrink-0 text-xs inline-block;
-  width: var(--icon-width);
-  height: var(--icon-height);
-  color: var(--icon-color);
-  background: var(--icon-bg);
-  border: var(--icon-border);
-}
-
-.AppIconButton {
-  @apply hover:bg-slate-100 hover:dark:bg-slate-500 rounded w-7 h-7
-}
-
-.AppButtonBase {
-  @apply flex select-none items-center gap-2 rounded py-2.5 px-4 text-xs font-semibold transition-all hover:opacity-75;
-}
-
-.AppMaterialButton {
-  @apply AppButtonBase;
-  justify-content: center;
-  color: var(--mat-color);
-  background: var(--mat-bg);
-  border: var(--mat-border);
-}
-
-.AppMaterialButton:hover {
-  color: var(--mat-hover-color);
-  background: var(--mat-hover-bg);
-}
-
-.AppMaterialButton:focus {
-  color: var(--mat-focus-color);
-  background: var(--mat-focus-bg);
-}
-
-.AppOutlinedButton {
-  @apply AppButtonBase;
-  justify-content: center;
-  color: var(--out-color);
-  background: var(--out-bg);
-  border: var(--out-border);
-}
-
-.AppOutlinedButton:hover {
-  color: var(--out-hover-color);
-  background: var(--out-hover-bg);
-}
-
-.AppOutlinedButton:focus {
-  color: var(--out-focus-color);
-  background: var(--out-focus-bg);
-}
-
-.AppTextInput {
-  @apply my-1 outline-none text-sm rounded-lg w-full;
-  color: var(--input-color);
-  background: var(--input-bg);
-  border: var(--input-border);
-}
-
-.AppErrorTextInput {
-  @apply border-red-500 dark:border-red-500 focus:border-red-400 dark:focus:border-red-400;
-}
-
-.AppCheckboxInput {
-  @apply w-4 h-4 select-none rounded;
-  accent-color: var(--checkbox-color);
-  background: var(--checkbox-bg);
-  border: var(--checkbox-border);
-}
-
-.AppLabel {
-  @apply ms-2 text-sm select-none font-medium;
-  color: var(--label-color);
-  background: var(--label-bg);
-  border: var(--label-border);
-}
-
-.AppLabelDisabled {
-  @apply ms-2 text-sm select-none font-medium text-gray-400 dark:text-gray-500;
-}
-
-.AppHelperLabel {
-  @apply text-xs font-normal text-gray-500 dark:text-gray-400;
-}
-
-.AppSelect {
-  @apply bg-white border border-gray-300 text-gray-900 text-sm rounded-lg outline-none block w-full p-2.5 dark:bg-neutral-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white;
-}
-
-.AppErrorText {
-  @apply mt-2 text-sm text-gray-500 dark:text-gray-400;
-}
-
-.AppDropdownOption {
-  @apply flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700;
-}
-
-.AppToggleOptions {
-  @apply AppButtonBase;
-  justify-content: center;
-  color: var(--option-color);
-  background: var(--option-bg);
-  border: var(--option-border);
-}
-
-.AppToggleOptions:hover {
-  color: var(--option-hover-color);
-  background: var(--option-hover-bg);
-}
-
-.AppToggleOptions:focus {
-  color: var(--option-focus-color);
-  background: var(--option-focus-bg);
 }
 
 header {
@@ -179,53 +68,14 @@ a:hover {
   --bg-color: white;
   --text-color: #111827;
 
+  --section-bg: white;
+  --section-color: #111827;
+
   --sec-bg-color: white;
   --sec-text-color: #2f2f2f;
 
   --header-bg: white;
   --footer-bg: white;
-
-  --out-bg: transparent;
-  --out-color: #475569;
-  --out-border: 1px solid #cbd5e1;
-  --out-hover-bg: #c2c2c238;
-  --out-hover-color: #6636e8;
-  --out-focus-bg: #f00;
-  --out-focus-color: #f00;
-
-  --mat-bg: #3b75c8;
-  --mat-color: #ffffff;
-  --mat-border: 1px solid #cbd5e1;
-  --mat-hover-bg: #4050c7;
-  --mat-hover-color: #ffffff;
-  --mat-focus-bg: #f00;
-  --mat-focus-color: #f00;
-
-  --option-bg: transparent;
-  --option-color: #0000000;
-  --option-border: 1px solid #cbd5e1;
-  --option-hover-bg: #c2c2c238;
-  --option-hover-color: #6636e8;
-  --option-focus-bg: #f00;
-  --option-focus-color: #f00;
-
-  --icon-width: 1.2rem;
-  --icon-height: 1.2rem;
-  --icon-bg: transparent;
-  --icon-color: #475569;
-  --icon-border: 0px solid #cbd5e1;
-
-  --input-bg: #ffffff;
-  --input-color: #111827;
-  --input-border: 1px solid #d1d5db;
-
-  --checkbox-bg: #ffffff;
-  --checkbox-color: #111827;
-  --checkbox-border: 1px solid #d1d5db;
-
-  --label-bg: #ffffff;
-  --label-color: #111827;
-  --label-border: 1px solid #d1d5db;
 
   --a-bg: transparent;
   --a-color: #111827;
@@ -235,65 +85,20 @@ a:hover {
 
   --table-bg: #f9f9f9;
   --table-header-bg: #e3e3e3;
-
-  --dropdown-bg: #222222;
-  --dropdown-color: #ffffff;
-  --dropdown-hover-bg: #505050;
-  --dropdown-hover-color: #f44343;
-  --dropdownitem-bg: #3b3b3b;
 }
 
 .night {
   --bg-color: #030712;
   --text-color: white;
 
+  --section-bg: #030712;
+  --section-color: #ffffff;
+
   --sec-bg-color: #2f2f2f;
   --sec-text-color: #ffffff;
 
   --header-bg: #111827;
   --footer-bg: #111827;
-
-  --out-bg: transparent;
-  --out-color: #fff;
-  --out-border: 1px solid #cbd5e1;
-  --out-hover-bg: #7d8dff4d;
-  --out-hover-color: #fff;
-  --out-focus-bg: #f00;
-  --out-focus-color: #f00;
-
-  --mat-bg: #204477;
-  --mat-color: #ffffff;
-  --mat-border: 1px solid #cbd5e1;
-  --mat-hover-bg: #102747;
-  --mat-hover-color: #ffffff;
-  --mat-focus-bg: #f00;
-  --mat-focus-color: #f00;
-
-  --option-bg: transparent;
-  --option-color: #fff;
-  --option-border: 1px solid #cbd5e1;
-  --option-hover-bg: #7d8dff4d;
-  --option-hover-color: #fff;
-  --option-focus-bg: #f00;
-  --option-focus-color: #f00;
-
-  --icon-width: 1.2rem;
-  --icon-height: 1.2rem;
-  --icon-bg: transparent;
-  --icon-color: #ffffff;
-  --icon-border: 0px solid #cbd5e1;
-
-  --input-bg: #3b3b3b;
-  --input-color: #ffffff;
-  --input-border: 1px solid #d1d5db;
-
-  --checkbox-bg: #ff3838;
-  --checkbox-color: #3473fc;
-  --checkbox-border: 1px solid #6eff75;
-
-  --label-bg: #ffa2a2;
-  --label-color: #9b51ef;
-  --label-border: 1px solid #0260ec;
 
   --a-bg: transparent;
   --a-bg-hover: #ffffff;
@@ -303,10 +108,4 @@ a:hover {
 
   --table-bg: #2a2a2a;
   --table-header-bg: #3f3f3f;
-
-  --dropdown-bg: transparent;
-  --dropdown-color: #ffffff;
-  --dropdown-hover-bg: #505050;
-  --dropdown-hover-color: #f44343;
-  --dropdownitem-bg: #3b3b3b;
 }

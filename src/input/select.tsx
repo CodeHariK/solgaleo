@@ -1,9 +1,11 @@
 import { Key } from "@solid-primitives/keyed";
 import { useSpaceContext } from "./spaceform";
-import { PositionBox2, ToggleOptions } from "./dropdown";
+import { PositionBox } from "./position";
 
 import { type JSX } from 'solid-js';
 import { DownIcon, FilterIcon } from "../svg/svg";
+
+import "../css/input.css"
 
 type OptionType = {
     value: string;
@@ -45,53 +47,43 @@ export function Select(props: SelectProps) {
     );
 }
 
-export type DropdownProps<T> = {
-    name: JSX.Element;
-    options: T[];
-    show?: boolean;
-    fn: (option: T) => void;
-};
+export function Dropdown<T>({ id, items, visible, fn }: {
+    id?: string,
+    visible?: boolean,
+    fn?: (data: T) => void,
+    items: {
+        header?: string,
+        subitems: {
+            element: JSX.Element;
+            data?: T;
+        }[],
+    }[],
+}) {
+    return <PositionBox align={{ x: 0, y: 1 }}
+        visible={visible}
+        name={<>{FilterIcon()}{<span>Filter</span>}{DownIcon()}</>}>
 
-export function DropdownToggle<T>(props: DropdownProps<T>) {
-    return (
-        <ToggleOptions name={props.name} show={props.show ?? false}>
-            <div class="min-w-[150px]">
-                {props.options.map((option) => (
-                    <a
-                        class="bg-[var(--dropdown-bg)] text-[var(--dropdown-color)]
-                            hover:bg-[var(--dropdown-hover-bg)] hover:text-[var(--dropdown-hover-color)]
-                            group inline-flex w-full items-center rounded-md px-3 py-2 text-sm"
-                        onClick={() => props.fn(option)} // Pass the clicked option to the fn callback
-                    >
-                        {option as string}
-                    </a>
-                ))}
-            </div>
-        </ToggleOptions>
-    );
-}
+        <div id={id} class="AppDropdown"
+            data-popper-placement="bottom">
 
-export function Dropdown({ id, items }: { id?: string, items: JSX.Element[] }) {
-    return <PositionBox2 align={{ x: 0, y: 1 }}
-        name={<p>{FilterIcon()}{<span>Filter</span>}{DownIcon()}</p>}>
-        <div id={id} class="bg-[var(--dropdownitem-bg)] z-50 w-40 divide-y divide-gray-100 rounded-lg shadow" data-popper-placement="bottom">
-            <ul class="p-2 text-left text-sm font-medium" aria-labelledby="sortDropdownButton">
+            {items.map((item) => {
+                return item.subitems.length == 0 ? <></> :
+                    <>
+                        {item.header && <h6 class="AppDropdownHeader">{item.header}</h6>}
+                        <ul class="text-left text-sm font-medium" aria-labelledby="sortDropdownButton">
+                            {item.subitems.map((e) => {
+                                return <li>
+                                    <a href="#" class="AppDropdownItem"
+                                        onclick={() => fn?.(e.data)}>
+                                        {e.element}
+                                    </a>
+                                </li>
+                            })}
+                        </ul>
+                    </>
+            })}
 
-                {items.map((e) => {
-                    return <DropdownItem title={e} />
-                })}
 
-            </ul>
         </div>
-    </PositionBox2>;
-}
-
-function DropdownItem({ title }: { title: JSX.Element }) {
-    return (<li>
-        <a href="#" class="bg-[var(--dropdown-bg)] text-[var(--dropdown-color)]
-          hover:bg-[var(--dropdown-hover-bg)] hover:text-[var(--dropdown-hover-color)]
-          group inline-flex w-full items-center rounded-md px-3 py-2 text-sm">
-            {title}
-        </a>
-    </li>);
+    </PositionBox>;
 }

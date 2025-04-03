@@ -1,32 +1,10 @@
 import { type JSX } from 'solid-js';
 
+import "../css/heading.css"
+
 export type HeadingProps = {
     class?: string;
     children: JSX.Element;
-}
-
-export function H1(props: HeadingProps) {
-    return <h1 class={`text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl ${props.class}`}>
-        {props.children}
-    </h1>;
-}
-export function H2(props: HeadingProps) {
-    return <h2 class={`text-3xl font-extrabold ${props.class}`}>{props.children}</h2>;
-}
-export function H3(props: HeadingProps) {
-    return <h3 class={`text-2xl font-semibold ${props.class}`}>{props.children}</h3>;
-}
-export function H4(props: HeadingProps) {
-    return <h4 class={`text-xl font-semibold ${props.class}`}>{props.children}</h4>;
-}
-export function H5(props: HeadingProps) {
-    return <h5 class={`text-lg font-medium ${props.class}`}>{props.children}</h5>;
-}
-export function H6(props: HeadingProps) {
-    return <h6 class={`text-base font-normal ${props.class}`}>{props.children}</h6>;
-}
-export function P(props: HeadingProps) {
-    return <p class={`text-sm ${props.class}`}>{props.children}</p>;
 }
 
 export function Mark(props: HeadingProps) {
@@ -88,11 +66,11 @@ export type TitleSubtitleProps = {
 
 export function TitleSubtitle(props: TitleSubtitleProps) {
     return <div class="flex flex-col">
-        <H6 class="font-semibold">
+        <h6 class="font-semibold">
             {props.title}
-        </H6>
-        <P>
+        </h6>
+        <p>
             {props.subtitle}
-        </P>
+        </p>
     </div>;
 }

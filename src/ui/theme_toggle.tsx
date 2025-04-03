@@ -7,6 +7,10 @@ export function AddTheme(theme: string) {
     THEME.push(theme)
 }
 
+export function AllTheme() {
+    return THEME
+}
+
 export function CurrentTheme() {
     const savedTheme = localStorage.getItem("theme");
 
@@ -37,6 +41,7 @@ export function ThemeToggle() {
         setTheme(savedTheme);
         document.documentElement.className = theme();
         THEMECOUNT = THEME.indexOf(savedTheme)
+        console.log(savedTheme)
     });
 
     return (

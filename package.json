@@ -45,6 +45,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test": "vite --config test/vite.config.ts",
+    "test:build": "tsc -p test/tsconfig.json && vite build --config test/vite.config.ts",
     "preview": "vite preview"
   },
   "peerDependencies": {

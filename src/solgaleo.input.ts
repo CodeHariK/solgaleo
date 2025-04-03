@@ -1,7 +1,7 @@
-import './css/index.css'
+import './css/*.css'
 
 export * from "./input/checkbox"
-export * from "./input/dropdown"
+export * from "./input/position"
 export * from "./input/radio"
 export * from "./input/ratingsbar"
 export * from "./input/select"

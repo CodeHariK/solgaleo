@@ -1,9 +1,8 @@
 import { createSignal, Setter } from "solid-js";
-import { H6 } from "../ui/heading";
 import { CrossIcon, DeleteIcon } from "../svg/svg";
 
 import { type JSX } from 'solid-js';
-import { BorderButton, RedButton } from "../ui/button";
+import { MaterialButton, OutlinedButton } from "../solgaleo.index";
 
 export type ModalProps = {
     show?: boolean;
@@ -54,10 +53,10 @@ export function DeleteModal(setShow?: Setter<boolean>) {
             <DeleteIcon />
             <span class="sr-only">Danger icon</span>
         </div>
-        <H6 class="mb-3">Are you sure you want to delete this order from your account?</H6>
+        <h6 class="mb-3">Are you sure you want to delete this order from your account?</h6>
         <div class="flex items-center justify-center space-x-4">
-            <BorderButton>No, cancel</BorderButton>
-            <RedButton onClick={() => { if (setShow) setShow(false) }}>Yes, delete</RedButton>
+            <OutlinedButton>No, cancel</OutlinedButton>
+            <MaterialButton onClick={() => { if (setShow) setShow(false) }}>Yes, delete</MaterialButton>
         </div>
     </div>;
 }

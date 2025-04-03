@@ -7,7 +7,7 @@ export * from "./fancy/glittercard"
 export * from "./fancy/rainbow"
 
 export * from "./input/checkbox"
-export * from "./input/dropdown"
+export * from "./input/position"
 export * from "./input/radio"
 export * from "./input/ratingsbar"
 export * from "./input/select"

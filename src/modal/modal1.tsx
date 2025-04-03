@@ -3,7 +3,6 @@ import { SpaceForm } from "../input/spaceform";
 import { TextInput } from "../input/textinput";
 import { CrossIcon } from "../svg/svg";
 import { IconButton, MaterialButton, OutlinedButton } from "../ui/button";
-import { H4 } from "../ui/heading";
 
 export function Modal1() {
     return (
@@ -11,7 +10,7 @@ export function Modal1() {
             <div class="relative rounded-lg bg-white shadow night:bg-gray-800">
 
                 <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 night:border-gray-700 md:p-5">
-                    <H4>Account Information</H4>
+                    <h4>Account Information</h4>
                     <IconButton>
                         <CrossIcon />
                     </IconButton>

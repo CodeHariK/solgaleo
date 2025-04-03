@@ -2,7 +2,7 @@
 import { render } from 'solid-js/web'
 import { Storybook } from './storybook.tsx'
 
-import "./index.css"
+// import "./index.css"
 
 // import * as Solgaleo from "solgaleo";
 

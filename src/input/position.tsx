@@ -2,151 +2,21 @@ import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
 
 import { type JSX } from 'solid-js';
 
-export type ToggleOptionsProps = {
-    name: JSX.Element;
-    children: JSX.Element;
-    show?: boolean;
-}
-
-export function ToggleOptions(props: ToggleOptionsProps) {
-    const [hover, setHover] = createSignal(false);
-
-    const handleMouseEnter = () => setHover(true);
-    const handleMouseLeave = () => setHover(false);
-
-    let button: HTMLButtonElement | undefined;
-    let dropdown: HTMLDivElement | undefined;
-
-    // Function to handle clicks outside of the dropdown
-    const handleClickOutside = (event: MouseEvent) => {
-        const target = event.target as Node;
-        if ((dropdown && !dropdown.contains(target)) &&
-            (button && !button.contains(target))
-        ) {
-            setHover(false);
-        }
-    };
-
-    createEffect(() => {
-        if (hover()) {
-            document.addEventListener("mousedown", handleClickOutside);
-        }
-    });
-
-    onCleanup(() => {
-        document.removeEventListener("mousedown", handleClickOutside);
-    });
-
-    return (
-        <div class="relative inline-flex py-2"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>
-            <button
-                type="button"
-                ref={button}
-                class="AppToggleOptions py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg group-hover:opacity-100 group-hover:visible focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
-            >
-                {props.name}
-            </button>
-
-            {(props.show || hover()) && (
-                <div
-                    ref={dropdown}
-                    class="absolute left-1/2 transform translate-y-11 -translate-x-1/2 mt-2 rounded-lg space-y-0.5 transition-opacity duration-300 opacity-100 visible dark:border dark:border-neutral-700"
-                >
-                    {props.children}
-                </div>
-            )}
-        </div>
-    );
-}
-
-export function PositionBox() {
-    const [position, setPosition] = createSignal({ x: 0, y: 0 });
-    const [dragging, setDragging] = createSignal(false);
-    const [startPos, setStartPos] = createSignal({ x: 0, y: 0 });
-
-    const updatePosition = () => {
-        const box = document.getElementById("box");
-        if (box) {
-            const rect = box.getBoundingClientRect();
-            setPosition({
-                x: rect.left,
-                y: rect.top
-            });
-        }
-    };
-
-    const onMouseDown = (event: MouseEvent) => {
-        setDragging(true);
-        setStartPos({ x: event.clientX, y: event.clientY });
-        event.preventDefault();
-    };
-
-    const onMouseMove = (event: MouseEvent) => {
-        if (dragging()) {
-            const deltaX = event.clientX - startPos().x;
-            const deltaY = event.clientY - startPos().y;
-
-            const box = document.getElementById("box");
-            if (box) {
-                setPosition({
-                    x: position().x + deltaX,
-                    y: position().y + deltaY
-                });
-                setStartPos({ x: event.clientX, y: event.clientY });
-            }
-        }
-    };
-
-    const onMouseUp = () => {
-        setDragging(false);
-    };
-
-    onMount(() => {
-        updatePosition();
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-        onCleanup(() => {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-        });
-    });
-
-    return (
-        <div class="fixed inset-0 pointer-events-none bg-red-200">
-            <div
-                id="box"
-                class="bg-blue-500 text-white p-4 w-40 h-40 flex items-center justify-center cursor-move pointer-events-auto"
-                style={{ position: "absolute", left: `${position().x}px`, top: `${position().y}px`, "z-index": 1000 }}
-                onMouseDown={onMouseDown}
-            >
-                <div>
-                    <div>X: {Math.round(position().x)}</div>
-                    <div>Y: {Math.round(position().y)}</div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-
-export type PositionBox2Props = {
+export function PositionBox({ name, align, children, visible }: {
     name?: JSX.Element;
     align?: { x: number, y: number };
     children?: JSX.Element;
-}
-
-export function PositionBox2(props: PositionBox2Props) {
+    visible?: boolean;
+}) {
     const defaultAnchorPos = { l: 0, t: 0, r: 0, b: 0 };
 
     const [anchorPos, setAnchorPos] = createSignal(defaultAnchorPos);
     const [overlayPos, setOverlayPos] = createSignal(defaultAnchorPos);
     // const [dragging, setDragging] = createSignal(false);
     // const [startPos, setStartPos] = createSignal({ x: 0, y: 0 });
-    const [show, setShow] = createSignal(false);
+    const [show, setShow] = createSignal(visible ?? false);
 
-    const alignment = props.align || { x: 0, y: 1 }
+    const alignment = align || { x: 0, y: 1 }
     // const alignment = { x: Math.random() * .8 - .4, y: Math.random() * .8 - .4 }
 
     let overlay: HTMLDivElement | undefined;
@@ -246,7 +116,7 @@ export function PositionBox2(props: PositionBox2Props) {
     });
 
     return (
-        <div class="py-2"
+        <div class="inline-flex"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -255,19 +125,19 @@ export function PositionBox2(props: PositionBox2Props) {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 // onMouseDown={onMouseDown}
-                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg group-hover:opacity-100 group-hover:visible hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                class="AppPositionBoxButton"
             >
-                {props.name}
+                {name}
             </button>
 
-            <div class="fixed inset-0 pointer-events-none">
+            <div class="fixed inset-0 pointer-events-none z-10">
 
                 <div ref={overlay}
                     class={`${show() ? "opacity-100 visible" : "opacity-0 invisible"} transition-opacity duration-300 pointer-events-auto shadow-sm`}
 
-                    style={{ position: "absolute", left: `${overlayPos().l}px`, top: `${overlayPos().t}px`, "z-index": 1000 }}
+                    style={{ position: "absolute", left: `${overlayPos().l}px`, top: `${overlayPos().t}px` }}
                 >
-                    {props.children}
+                    {children}
                 </div>
             </div>
         </div>
@@ -311,4 +181,73 @@ export function PositionBox2(props: PositionBox2Props) {
 
         setOverlayPos(n);
     }
+}
+
+export function DragBox() {
+    const [position, setPosition] = createSignal({ x: 0, y: 0 });
+    const [dragging, setDragging] = createSignal(false);
+    const [startPos, setStartPos] = createSignal({ x: 0, y: 0 });
+
+    const updatePosition = () => {
+        const box = document.getElementById("box");
+        if (box) {
+            const rect = box.getBoundingClientRect();
+            setPosition({
+                x: rect.left,
+                y: rect.top
+            });
+        }
+    };
+
+    const onMouseDown = (event: MouseEvent) => {
+        setDragging(true);
+        setStartPos({ x: event.clientX, y: event.clientY });
+        event.preventDefault();
+    };
+
+    const onMouseMove = (event: MouseEvent) => {
+        if (dragging()) {
+            const deltaX = event.clientX - startPos().x;
+            const deltaY = event.clientY - startPos().y;
+
+            const box = document.getElementById("box");
+            if (box) {
+                setPosition({
+                    x: position().x + deltaX,
+                    y: position().y + deltaY
+                });
+                setStartPos({ x: event.clientX, y: event.clientY });
+            }
+        }
+    };
+
+    const onMouseUp = () => {
+        setDragging(false);
+    };
+
+    onMount(() => {
+        updatePosition();
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+        onCleanup(() => {
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+        });
+    });
+
+    return (
+        <div class="fixed inset-0 pointer-events-none bg-red-200">
+            <div
+                id="box"
+                class="bg-blue-500 text-white p-4 w-40 h-40 flex items-center justify-center cursor-move pointer-events-auto"
+                style={{ position: "absolute", left: `${position().x}px`, top: `${position().y}px`, "z-index": 1000 }}
+                onMouseDown={onMouseDown}
+            >
+                <div>
+                    <div>X: {Math.round(position().x)}</div>
+                    <div>Y: {Math.round(position().y)}</div>
+                </div>
+            </div>
+        </div>
+    );
 }

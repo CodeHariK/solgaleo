@@ -1,6 +1,6 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { OutlinedButton } from "../ui/button";
-import { PositionBox2 } from "../input/dropdown";
+import { PositionBox } from "../input/position";
 import { DownIcon, UserIcon } from "../svg/svg";
 
 export const Header = ({ iconSrc, title, links, rightChildren }: { iconSrc?: string, title?: JSX.Element, links?: JSX.Element, rightChildren?: JSX.Element }) => (
@@ -32,17 +32,17 @@ export const TransitionModal = ({ transition, children }: { transition: boolean,
     return (
         <TransitionWidget showFirstWidget={transition}
             one={
-                <PositionBox2 name={<p>{UserIcon()}{<span>Account</span>}{DownIcon()}</p>} align={{ x: 0, y: 1 }}>
+                <PositionBox name={<p>{UserIcon()}{<span>Account</span>}{DownIcon()}</p>} align={{ x: 0, y: 1 }}>
                     <div class="z-50 m-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow night:bg-gray-700 night:divide-gray-600" id="user-dropdown">
                         <div class="px-4 py-3">
-                            <span class="block text-sm text-gray-900 night:text-white">Bonnie Green</span>
+                            <span class="block text-sm text-gray-900 night:text-white">Person</span>
                             <span class="block text-sm text-gray-500 truncate night:text-gray-400">name@flowbite.com</span>
                         </div>
                         <ul class="py-2" aria-labelledby="user-menu-button">
                             {children} {/* Accept header links dynamically */}
                         </ul>
                     </div>
-                </PositionBox2>
+                </PositionBox>
             }
             two={<OutlinedButton><a href="/login">Log In</a></OutlinedButton>}>
         </TransitionWidget>

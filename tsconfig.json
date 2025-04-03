@@ -34,7 +34,6 @@
     "strict": false
   },
   "include": [
-    "src/**/*",
-    "example/src/storybook.tsx"
+    "src/**/*"
   ]
 }
