@@ -3,11 +3,8 @@ import { StarIcon } from "../svg/svg";
 export function RatingsBar(props: { ratings?: number, reviews?: number }) {
     return <div class="flex items-center gap-2">
         <div class="flex items-center">
-            {StarIcon()}
-            {StarIcon()}
-            {StarIcon()}
-            {StarIcon()}
-            {StarIcon()}
+            {[...Array(Math.floor(props.ratings))].map(() => <StarIcon color="#fde047" />)}
+            {[...Array((5 - Math.floor(props.ratings)))].map(() => <StarIcon color="#000000" />)}
         </div>
 
         {

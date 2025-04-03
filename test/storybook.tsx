@@ -1,8 +1,14 @@
-import { Dropdown, SpaceLayoutFull, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox } from "../src/solgaleo.index";
+import { Dropdown, SpaceLayoutFull, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, RocketIcon, CopyIcon, GlitterCard } from "../src/solgaleo.index";
 
 import "../src/css/button.css"
 import "../src/css/input.css"
 import "../src/css/index.css"
+import { DeleteModal } from "../src/modal/modal1";
+import { Stepper } from "../src/adv/stepper";
+import { Banner } from "../src/fancy/banner";
+
+import { Blog } from "../src/svg/svg"
+import { BlogList } from "../src/adv/blog"
 
 export function Storybook() {
 
@@ -13,13 +19,42 @@ export function Storybook() {
         // footer={<Footer />}
         >
 
-            {/* <GlitterCard /> */}
+            <BlogList blogs={[
+                {
+                    title: "Understanding SolidJS",
+                    tags: ["solidjs", "javascript"],
+                    description: "A deep dive into how SolidJS differs from React.",
+                    link: "#solidjs",
+                },
+                {
+                    title: "CSS Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+            ]} />
+
+
+            {Banner()}
+
+            {/* <Stepper items={
+                [
+                    {
+                        title: "Title",
+                        subtitle: "Subtitle",
+                        element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
+                    }
+                ]
+            } /> */}
+
+
+            <GlitterCard />
 
             {/* <GhostComponent />
 
             <RainbowImage size="300px" src="https://raw.githubusercontent.com/CodeHariK/Shark.run/main/public/images/SpaceShark512.webp"></RainbowImage> */}
 
-            <div style={{ "display": "flex", "justify-content": "start" }}>
+            {/* <div style={{ "display": "flex", "justify-content": "start" }}>
                 {
                     AllTheme().map((t) =>
                         <section class={t}>
@@ -27,7 +62,7 @@ export function Storybook() {
                             <Story />
                         </section>)
                 }
-            </div>
+            </div> */}
 
         </SpaceLayoutFull>
     )
@@ -38,6 +73,12 @@ function Story() {
     return <div>
 
         <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
+
+            {/* <Modal1 /> */}
+            {DeleteModal()}
+            <Modal child={"Show Modal"} modal={() => "Hi"} />
+            <Breadcrumbs />
+
             <PositionBox
                 visible={true}
                 name={<>{CartIcon()}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{DownIcon()}</>}>
@@ -103,6 +144,7 @@ function Story() {
                     label: "Bow"
                 },
             ]}></CheckboxGroup>
+            {RatingsBar({ ratings: 3.8, reviews: 5 })}
         </SpaceForm>
 
         <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>

@@ -58,7 +58,7 @@
     -webkit-text-fill-color: transparent;
 }
 
-.description {
+.card .description {
     color: #aaa;
     line-height: 1.6;
     margin-bottom: 2rem;

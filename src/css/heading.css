@@ -40,7 +40,8 @@ h6 {
     font-weight: 400;
 }
 
-p {
+p,
+li {
     font-size: 0.85rem;
     line-height: 1.25rem;
 }

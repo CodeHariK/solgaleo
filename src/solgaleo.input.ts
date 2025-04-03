@@ -1,4 +1,4 @@
-import './css/*.css'
+import './css/index.css'
 
 export * from "./input/checkbox"
 export * from "./input/position"
