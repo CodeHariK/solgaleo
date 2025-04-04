@@ -1,0 +1,64 @@
+.light {
+  --stepper-col: #ffffff;
+  --stepper-bg: red;
+  /* --stepper-border: ; */
+  /* --stepper-display: ; */
+  /* --visibility: ; */
+  /* --stepper-decoration: ; */
+  --stepper-bg-hover: yellow;
+  --stepper-bg-focus: blue;
+  --box_stepper-col: yellow;
+  --box_stepper-col-focus: yellow;
+  --hello-col: yellow;
+  --hello___stepper-col: yellow;
+  --hello_p-col: yellow;
+}
+
+.night {
+  --stepper-col: #aaaaaa;
+  --stepper-bg: green;
+  --stepper-border: 1px solid blue;
+  /* --stepper-display: ; */
+  /* --visibility: ; */
+  /* --stepper-decoration: ; */
+  --stepper-bg-hover: red;
+  --stepper-bg-focus: green;
+  --box_stepper-col: red;
+  --box_stepper-col-focus: red;
+  --hello-col: red;
+  --hello___stepper-col: red;
+  --hello_p-col: red;
+}
+
+.stepper {
+  color: var(--stepper-col);
+  background: var(--stepper-bg);
+  border: var(--stepper-border);
+  position: relative;
+  display: var(--stepper-display);
+  hello: var(--stepper-hello);
+  position: fixed;
+  visibility: var(--visibility);
+  decoration: var(--stepper-decoration);
+}
+.stepper:hover {
+  background: var(--stepper-bg-hover);
+}
+.stepper:focus {
+  background: var(--stepper-bg-focus);
+}
+.box .stepper {
+  color: var(--box_stepper-col);
+}
+.box .stepper:focus {
+  color: var(--box_stepper-col-focus);
+}
+#hello {
+  color: var(--hello-col);
+}
+#hello > .stepper {
+  color: var(--hello___stepper-col);
+}
+#hello>p {
+  color: var(--hello_p-col);
+}

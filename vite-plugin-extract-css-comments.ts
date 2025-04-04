@@ -15,6 +15,7 @@ function convertCSS(input: string): string {
 
     const lightVars: Record<string, string> = {};
     const nightVars: Record<string, string> = {};
+    const cssLines: Record<string, string[]> = {};
     const finalCSS: string[] = [];
 
     const lines = input.trim().split("\n");
@@ -24,9 +25,14 @@ function convertCSS(input: string): string {
     const blockLines: string[] = [];
 
     function processBlock(selector: string, block: string[]) {
-        const hover = selector.includes(":hover");
-        const selKey = selector.replace(/[:.]/g, "").replace("hover", "");
-        const cssLines: string[] = [];
+
+        const lastSelector = selector.includes(":") ? selector.split(":").at(-1)! : "" // hover, focus
+
+        const selKey = selector.replace(/[:.#]/g, "")
+            .replace(/[^a-zA-Z0-9]/g, "_")
+            .replace(lastSelector, "")
+
+        if (!cssLines[selector]) cssLines[selector] = [];
 
         for (let rawLine of block) {
             if (!rawLine.includes(":")) continue;
@@ -36,27 +42,40 @@ function convertCSS(input: string): string {
             const propTrim = propMap[prop] ?? prop;
             const value = valueParts.join(":").trim();
 
-            if (!value.startsWith("var:")) {
-                cssLines.push(`  ${prop}: ${value};`);
-                continue;
+            if (rawLine.trim().replaceAll(" ", "").startsWith("//")) {
+                continue
             }
 
-            const parts = value.slice(4).split(":").map((s) => s.trim());
-            const varName = `--${selKey}-${propTrim}${hover ? "-hover" : ""}`;
+            const matches = [...value.matchAll(/var\((--[\w-]+)\)/g)].map(m => m[1]);
+            matches.forEach((m) => {
+                lightVars[m] = (lightVars[m] ?? "");
+                nightVars[m] = (nightVars[m] ?? "");
+            })
+
+            if (!value.trim().replaceAll(" ", "").startsWith("var:")) {
+                if (value != "") {
+                    cssLines[selector].push(`  ${prop}: ${value}${value.endsWith(";") ? "" : ";"}`);
+                    continue;
+                }
+            }
+
+            const parts = value.split(":").map((s) => s.trim());
+
+            const varName = prop.startsWith("--") ? prop : `--${selKey}-${propTrim}${lastSelector ? "-" + lastSelector : ""}`;
 
             // One value = same for both themes
-            if (parts.length === 1) {
-                lightVars[varName] = parts[0];
-                nightVars[varName] = parts[0];
-            } else if (parts.length >= 2) {
-                lightVars[varName] = parts[0];
-                nightVars[varName] = parts[1];
+            if (parts.length === 2) {
+                lightVars[varName] = (lightVars[varName] ?? "") + parts[1];
+                nightVars[varName] = (nightVars[varName] ?? "") + parts[1];
+            } else if (parts.length === 3) {
+                lightVars[varName] = (lightVars[varName] ?? "") + parts[1];
+                nightVars[varName] = (nightVars[varName] ?? "") + parts[2];
             }
 
-            cssLines.push(`  ${prop}: var(${varName});`);
+            if (!prop.startsWith("--")) {
+                cssLines[selector].push(`  ${prop}: var(${varName});`);
+            }
         }
-
-        finalCSS.push(`${selector} {\n${cssLines.join("\n")}\n}`);
     }
 
     for (let line of lines) {
@@ -85,9 +104,22 @@ function convertCSS(input: string): string {
         processBlock(currentSelector, blockLines);
     }
 
+    for (const [selector, value] of Object.entries(cssLines)) {
+        if (value.join("")) {
+            finalCSS.push(`${selector} {\n${value.join("\n")}\n}`);
+        }
+    }
+
     const buildVars = (theme: string, vars: Record<string, string>) =>
         `.${theme} {\n` +
         Object.entries(vars)
+            .filter(([k]) => {
+                return !Object.entries(cssLines).find((e) => {
+                    return e[1].find((x) => {
+                        return x.trim().startsWith(k)
+                    })
+                })
+            })
             .map(([k, v]) => v.length ? `  ${k}: ${v};` : `  /* ${k}: ${v}; */`)
             .join("\n") +
         "\n}";
@@ -102,45 +134,53 @@ function convertCSS(input: string): string {
 }
 
 export default function ExtractCssComments(dir: string): Plugin {
-    return {
-        name: "vite-plugin-extract-css-comments",
-        apply: "build",
-        async buildStart() {
-            const walk = async (dir: string) => {
-                const entries = await fs.promises.readdir(dir, { withFileTypes: true });
-                for (const entry of entries) {
-                    const fullPath = path.join(dir, entry.name);
-                    if (entry.isDirectory()) {
-                        await walk(fullPath);
-                    } else if (entry.name.endsWith(".tsx")) {
-                        const content = await fs.promises.readFile(fullPath, "utf-8");
-                        let match;
-                        let combinedCSS = "";
-                        while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
-                            let input = match[1].trim()
-                            let output = convertCSS(input)
+    async function runExtract() {
+        const walk = async (dirPath: string) => {
+            const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+            for (const entry of entries) {
+                const fullPath = path.join(dirPath, entry.name);
+                if (entry.isDirectory()) {
+                    await walk(fullPath);
+                } else if (entry.name.endsWith(".tsx")) {
+                    const content = await fs.promises.readFile(fullPath, "utf-8");
+                    let match;
+                    let combinedCSS = "";
 
-                            // console.log("****************" + fullPath)
-                            // console.log(input)
-                            // console.log("----")
-                            // console.log(output)
-                            // console.log("***************")
+                    while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
+                        const input = match[1].trim();
+                        const output = convertCSS(input);
+                        combinedCSS += output + "\n\n";
+                    }
 
-                            combinedCSS += output + "\n\n";
-                        }
-
-                        if (combinedCSS) {
-                            const folderPath = path.dirname(fullPath);
-                            const folderName = path.basename(folderPath);
-                            const cssFilePath = path.join(folderPath, `${folderName}.css`);
-                            await fs.promises.writeFile(cssFilePath, combinedCSS.trim(), "utf-8");
-                            console.log(`✅ Extracted CSS to ${cssFilePath}`);
-                        }
+                    if (combinedCSS) {
+                        const folderPath = path.dirname(fullPath);
+                        const folderName = path.basename(folderPath);
+                        const cssFilePath = path.join(folderPath, `${folderName}.gen.css`);
+                        await fs.promises.writeFile(cssFilePath, combinedCSS.trim(), "utf-8");
+                        console.log(`✅ Extracted CSS to ${cssFilePath}`);
                     }
                 }
-            };
+            }
+        };
 
-            await walk(dir);
+        await walk(dir);
+    }
+
+    return {
+        name: 'vite-plugin-extract-css-comments',
+
+        async buildStart() {
+            await runExtract();
+        },
+
+        configureServer(server) {
+            runExtract(); // Run once on server start
+
+            server.watcher.on('change', async (changedPath) => {
+                if (changedPath.endsWith('.tsx')) {
+                    await runExtract();
+                }
+            });
         },
     };
 }

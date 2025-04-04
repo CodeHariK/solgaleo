@@ -1,4 +1,4 @@
-import { SpaceLayoutScroll } from '../layouts/SpaceLayoutScroll';
+import { SpaceLayoutFixed } from '../layouts/SpaceLayoutFixed';
 
 import { Footer } from '../nav/footer';
 import { Header } from '../nav/header';
@@ -10,7 +10,7 @@ import { GhostComponent } from '../fancy/ghost';
 
 export function NotFound() {
    return (
-      <SpaceLayoutScroll two contentCenter={true} title='Page Not Found'
+      <SpaceLayoutFixed two contentCenter={true} title='Page Not Found'
          header={<Header rightChildren={<ThemeToggle />} />}
          footer={<Footer />}>
 
@@ -33,6 +33,6 @@ export function NotFound() {
 
          </section>
 
-      </SpaceLayoutScroll>
+      </SpaceLayoutFixed>
    );
 }

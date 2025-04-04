@@ -3,9 +3,6 @@ import { MetaProvider, Title } from "@solidjs/meta";
 
 type SpaceLayoutFullProps = {
     title: string;
-    one?: boolean;
-    two?: boolean;
-    contentCenter?: boolean;
     children?: JSX.Element | JSX.Element[];
     header?: JSX.Element;
     footer?: JSX.Element;
@@ -16,14 +13,10 @@ export const SpaceLayoutFull = (props: SpaceLayoutFullProps) => (
     <MetaProvider>
         <Title>{props.title}</Title>
 
-        <main
-            class={`${props.one ? "h-full" : ""} ${props.two ? "h-screen" : ""}`}
-        >
+        <main>
             {props.header}
 
-            <section
-                class={`w-full ${props.contentCenter && 'content-center'} ${props.two ? "h-full overflow-y-scroll" : ""}`}
-            >
+            <section>
                 {props.children}
             </section>
 
