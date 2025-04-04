@@ -1,14 +1,15 @@
-import { Dropdown, SpaceLayoutFull, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, RocketIcon, CopyIcon, GlitterCard } from "../src/solgaleo.index";
+// import { Dropdown, SpaceLayoutFull, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, RocketIcon, CopyIcon, GlitterCard } from "../src/solgaleo.index";
+import { SpaceLayoutFull } from "../src/solgaleo.index";
 
 import "../src/css/button.css"
 import "../src/css/input.css"
 import "../src/css/index.css"
-import { DeleteModal } from "../src/modal/modal1";
 import { Stepper } from "../src/adv/stepper";
-import { Banner } from "../src/fancy/banner";
+// import { Banner } from "../src/fancy/banner";
 
-import { Blog } from "../src/svg/svg"
-import { BlogList } from "../src/adv/blog"
+// import { Blog } from "../src/svg/svg"
+// import { BlogList } from "../src/adv/blog"
+// import { MiniMarkdown } from "../src/adv/md";
 
 export function Storybook() {
 
@@ -19,7 +20,7 @@ export function Storybook() {
         // footer={<Footer />}
         >
 
-            <BlogList blogs={[
+            {/* <BlogList blogs={[
                 {
                     title: "Understanding SolidJS",
                     tags: ["solidjs", "javascript"],
@@ -32,23 +33,97 @@ export function Storybook() {
                     description: "Learn when to use CSS Grid and when Flexbox is better.",
                     link: "#css-grid",
                 },
-            ]} />
+                {
+                    title: "CSS1 Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+                {
+                    title: "CSS2 Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+                {
+                    title: "CSS 3Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+                {
+                    title: "CSS 4Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+                {
+                    title: "CSS 5Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+                {
+                    title: "CSS 6Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+                {
+                    title: "CSS 7Grid vs Flexbox",
+                    tags: ["css", "grid", "flexbox"],
+                    description: "Learn when to use CSS Grid and when Flexbox is better.",
+                    link: "#css-grid",
+                },
+            ]} /> */}
 
+            {/* 
+            <MiniMarkdown content="
+    # Title
+        ## Subtitle
+### Smaller Title
+    **Hello**, 
+this is _italic_, 
 
-            {Banner()}
+### Pacman Update Commands
+sudo pacman -Sy    # Sync package databases
 
-            {/* <Stepper items={
+```go
+    ### Pacman Update Commands
+    sudo pacman -Sy    # Sync package databases
+
+    import (
+        'io',
+        'os',
+        'fmt'
+    )
+
+    func main(){
+        fmt.Println('Hello')
+    }
+```
+and a [link](https://example.com)"
+            /> */}
+
+            {/* {Banner()} */}
+
+            <Stepper items={
                 [
                     {
                         title: "Title",
                         subtitle: "Subtitle",
                         element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
-                    }
+                    },
+                    {
+                        title: "Title",
+                        subtitle: "Subtitle",
+                        element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
+                    },
                 ]
-            } /> */}
+            } />
 
 
-            <GlitterCard />
+            {/* <GlitterCard /> */}
 
             {/* <GhostComponent />
 
@@ -68,92 +143,92 @@ export function Storybook() {
     )
 }
 
-function Story() {
+// function Story() {
 
-    return <div>
+//     return <div>
 
-        <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
+//         <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
 
-            {/* <Modal1 /> */}
-            {DeleteModal()}
-            <Modal child={"Show Modal"} modal={() => "Hi"} />
-            <Breadcrumbs />
+//             {/* <Modal1 /> */}
+//             {DeleteModal()}
+//             <Modal child={"Show Modal"} modal={() => "Hi"} />
+//             <Breadcrumbs />
 
-            <PositionBox
-                visible={true}
-                name={<>{CartIcon()}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{DownIcon()}</>}>
+//             <PositionBox
+//                 visible={true}
+//                 name={<>{CartIcon()}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{DownIcon()}</>}>
 
-                <div class="secbg min-w-[300px] z-10 mx-auto space-y-4 overflow-hidden rounded-lg p-4 antialiased shadow-lg">
+//                 <div class="secbg min-w-[300px] z-10 mx-auto space-y-4 overflow-hidden rounded-lg p-4 antialiased shadow-lg">
 
-                    <div>Cart is empty</div>
+//                     <div>Cart is empty</div>
 
-                </div>
+//                 </div>
 
-            </PositionBox>
+//             </PositionBox>
 
-            <Dropdown<string>
-                visible
-                fn={(data) => { console.log(data) }}
-                items={[
-                    {
-                        header: "Names",
-                        subitems: [
-                            {
-                                element: "The most popular",
-                                data: "Hello",
-                            },
-                            { element: <p> Increasing price </p>, },
-                        ]
-                    },
-                    {
-                        header: "Names",
-                        subitems: [
-                            { element: <p> Newest </p>, },
-                            { element: <p> Decreasing price </p>, },
-                        ]
-                    },
-                    {
-                        subitems: [
-                            { element: <p> No. reviews </p>, },
-                            { element: <p> Discount % </p>, },
-                        ]
-                    },
-                    { subitems: [] }
-                ]} />
+//             <Dropdown<string>
+//                 visible
+//                 fn={(data) => { console.log(data) }}
+//                 items={[
+//                     {
+//                         header: "Names",
+//                         subitems: [
+//                             {
+//                                 element: "The most popular",
+//                                 data: "Hello",
+//                             },
+//                             { element: <p> Increasing price </p>, },
+//                         ]
+//                     },
+//                     {
+//                         header: "Names",
+//                         subitems: [
+//                             { element: <p> Newest </p>, },
+//                             { element: <p> Decreasing price </p>, },
+//                         ]
+//                     },
+//                     {
+//                         subitems: [
+//                             { element: <p> No. reviews </p>, },
+//                             { element: <p> Discount % </p>, },
+//                         ]
+//                     },
+//                     { subitems: [] }
+//                 ]} />
 
-            <BaseButton > BaseButton</BaseButton >
-            <MaterialButton>MaterialButton</MaterialButton>
-            <OutlinedButton>OutlinedButton</OutlinedButton>
-            <IconButton>❤️</IconButton>
-        </div>
+//             <BaseButton > BaseButton</BaseButton >
+//             <MaterialButton>MaterialButton</MaterialButton>
+//             <OutlinedButton>OutlinedButton</OutlinedButton>
+//             <IconButton>❤️</IconButton>
+//         </div>
 
-        <SpaceForm id="Hello">
-            <TextInput name="Name" type="text" placeholder="Hello Name"
-                label="Label"
-            ></TextInput>
-            <TextInput area name="Area" type="text" placeholder="Hello Area"
-                label="Label"
-            ></TextInput>
-            <CheckboxGroup id="check" checkboxes={[
-                {
-                    name: "Hello",
-                    label: "Hello"
-                },
-                {
-                    name: "Bow",
-                    label: "Bow"
-                },
-            ]}></CheckboxGroup>
-            {RatingsBar({ ratings: 3.8, reviews: 5 })}
-        </SpaceForm>
+//         <SpaceForm id="Hello">
+//             <TextInput name="Name" type="text" placeholder="Hello Name"
+//                 label="Label"
+//             ></TextInput>
+//             <TextInput area name="Area" type="text" placeholder="Hello Area"
+//                 label="Label"
+//             ></TextInput>
+//             <CheckboxGroup id="check" checkboxes={[
+//                 {
+//                     name: "Hello",
+//                     label: "Hello"
+//                 },
+//                 {
+//                     name: "Bow",
+//                     label: "Bow"
+//                 },
+//             ]}></CheckboxGroup>
+//             {RatingsBar({ ratings: 3.8, reviews: 5 })}
+//         </SpaceForm>
 
-        <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>
-        <h2>h2: The electron is a subatomic particle with a negative one elementary electric charge.</h2>
-        <h3>h3: The electron is a subatomic particle with a negative one elementary electric charge.</h3>
-        <h4>h4: The electron is a subatomic particle with a negative one elementary electric charge.</h4>
-        <h5>h5: The electron is a subatomic particle with a negative one elementary electric charge.</h5>
-        <h6>h6: The electron is a subatomic particle with a negative one elementary electric charge.</h6>
-        <p>p: The electron is a subatomic particle with a negative one elementary electric charge.</p>
+//         <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>
+//         <h2>h2: The electron is a subatomic particle with a negative one elementary electric charge.</h2>
+//         <h3>h3: The electron is a subatomic particle with a negative one elementary electric charge.</h3>
+//         <h4>h4: The electron is a subatomic particle with a negative one elementary electric charge.</h4>
+//         <h5>h5: The electron is a subatomic particle with a negative one elementary electric charge.</h5>
+//         <h6>h6: The electron is a subatomic particle with a negative one elementary electric charge.</h6>
+//         <p>p: The electron is a subatomic particle with a negative one elementary electric charge.</p>
 
-    </div >
-}
+//     </div >
+// }

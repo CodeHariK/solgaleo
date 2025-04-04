@@ -1,5 +1,17 @@
 import { JSX } from "solid-js/jsx-runtime"
 
+/* CSS:
+.stepper {
+    color: var: #ffffff: #aaaaaa 
+    background: var: red : green
+    border: var::1px solid blue
+    position: relative
+}
+.stepper:hover {
+    background: var:yellow:red
+}
+*/
+
 export function Stepper({ items }: { items: { title: string, subtitle?: string, element: JSX.Element }[] }) {
     return items.length == 0 ? <></> : <div class="p-12">
         <ol class="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">

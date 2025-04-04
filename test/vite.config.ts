@@ -1,10 +1,14 @@
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
 import path from "path";
+import ExtractCssComments from "../vite-plugin-extract-css-comments";
 
 export default defineConfig({
   root: "test",
-  plugins: [solid()],
+  plugins: [
+    solid(),
+    ExtractCssComments("test")
+  ],
   build: {
     outDir: "../dist-test",
     emptyOutDir: true,

@@ -62,6 +62,7 @@ a {
   color: var(--a-color);
   background: var(--a-bg);
   border: var(--a-border);
+  text-decoration: underline;
 }
 
 a:hover {
@@ -106,10 +107,10 @@ a:hover {
   --footer-bg: #111827;
 
   --a-bg: transparent;
-  --a-bg-hover: #ffffff;
   --a-color: #ffffff;
-  --a-color-hover: #030712;
   --a-border: 0px solid #d1d5db;
+  --a-hover-bg: #ffffff;
+  --a-hover-color: #030712;
 
   --table-bg: #2a2a2a;
   --table-header-bg: #3f3f3f;

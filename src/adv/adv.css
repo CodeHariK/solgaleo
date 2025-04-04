@@ -1,0 +1,23 @@
+.light {
+  --stepper-col: #ffffff;
+  --stepper-bg: red;
+  /* --stepper-border: ; */
+  --stepper-bg-hover: yellow;
+}
+
+.night {
+  --stepper-col: #aaaaaa;
+  --stepper-bg: green;
+  --stepper-border: 1px solid blue;
+  --stepper-bg-hover: red;
+}
+
+.stepper {
+  color: var(--stepper-col);
+  background: var(--stepper-bg);
+  border: var(--stepper-border);
+  position: relative;
+}
+.stepper:hover {
+  background: var(--stepper-bg-hover);
+}

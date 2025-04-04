@@ -2,10 +2,12 @@ import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
 import dts from "vite-plugin-dts";
 import path from "path";
+import ExtractCssComments from "./vite-plugin-extract-css-comments";
 
 export default defineConfig({
   plugins: [
     solid(),
+    ExtractCssComments("src"),
     dts({
       outDir: "dist",
       insertTypesEntry: true,
