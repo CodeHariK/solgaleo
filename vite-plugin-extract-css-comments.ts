@@ -186,8 +186,13 @@ function convertCSS(input: string) {
 
         if (trimmed.endsWith("{")) {
             const sel = trimmed.slice(0, -1).trim();
-            const node: Node = { selector: sel, properties: [], children: [] };
-            current.children.push(node);
+
+            let node = current.children.find(c => c.selector === sel);
+            if (!node) {
+                node = { selector: sel, properties: [], children: [] };
+                current.children.push(node);
+            }
+
             stack.push(current);
             current = node;
         } else if (trimmed === "}") {

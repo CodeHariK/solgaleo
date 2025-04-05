@@ -1,22 +1,28 @@
+/*
+src/svg/svg.tsx
+*/
+
 .light {
-  --svg-background-color: #A7F3D0;
+    --svg-ring-width: 4px;
+    --svg-ring-color: #3b82f680;
+    --svg-background-color: #A7F3D0;
 }
 
 .night {
-  --svg-background-color: #A7F3D0;;
+    --svg-ring-width: 4px;
+    --svg-ring-color: #3b82f680;
+    --svg-background-color: #A7F3D0;
 }
 
 .svg {
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50px;
-  --svg-ring-width: 4px;
-  --svg-ring-color: var : #3b82f680 : #3b82f680;
-  box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
-  width: 2rem;
-  height: 2rem;
-  background-color: var(--svg-background-color);
-  inset-inline-start: -1rem;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--svg-background-color);
+    inset-inline-start: -1rem;
 }

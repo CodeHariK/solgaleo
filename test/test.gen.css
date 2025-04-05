@@ -59,8 +59,6 @@ test/index.tsx
 .stepper {
     position: fixed;
     decoration: var(--stepper-decoration);
-}
-.stepper {
     border: var(--stepper-border);
     display: var(--stepper-display);
 }

@@ -3,6 +3,7 @@ import { render } from 'solid-js/web'
 import { Storybook } from './storybook.tsx'
 
 import "./index.css"
+import "./test.gen.css"
 
 // import * as Solgaleo from "solgaleo";
 
@@ -56,4 +57,5 @@ render(() => <Storybook />, document.body!)
         background: var(--marquee-span-bg);
     }
 }
+
 */
