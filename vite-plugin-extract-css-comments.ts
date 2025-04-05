@@ -5,7 +5,127 @@ import { Plugin } from "vite";
 
 const CSS_COMMENT_REGEX = /\/\*\s*CSS:\s*([\s\S]*?)\*\//gm;
 
+// function convertCSS(input: string): string {
+//     const lightVars: Record<string, string> = {};
+//     const nightVars: Record<string, string> = {};
+//     const finalCSS: string[] = [];
+
+//     const propMap: Record<string, string> = {
+//         background: "bg",
+//         color: "col",
+//         position: "pos",
+//     };
+
+//     type Node = {
+//         selector: string;
+//         properties: string[];
+//         children: Node[];
+//     };
+
+//     const lines = input.split("\n");
+//     const stack: Node[] = [];
+//     const root: Node = { selector: "", properties: [], children: [] };
+//     let current = root;
+
+//     const trimLine = (l: string) => l.trim();
+
+//     // First handle @keyframes blocks separately and preserve structure
+//     let i = 0;
+//     while (i < lines.length) {
+//         const line = lines[i];
+//         if (trimLine(line).startsWith("@keyframes")) {
+//             const buffer: string[] = [line];
+//             i++;
+//             let depth = 0;
+//             while (i < lines.length) {
+//                 const l = lines[i];
+//                 if (l.includes("{")) depth++;
+//                 if (l.includes("}")) depth--;
+//                 buffer.push(l);
+//                 i++;
+//                 if (depth < 0) break;
+//             }
+//             finalCSS.push(buffer.join("\n"));
+//             continue;
+//         }
+
+//         const trimmed = trimLine(line);
+//         if (!trimmed) {
+//             i++;
+//             continue;
+//         }
+
+//         if (trimmed.endsWith("{")) {
+//             const sel = trimmed.slice(0, -1).trim();
+//             const node: Node = { selector: sel, properties: [], children: [] };
+//             current.children.push(node);
+//             stack.push(current);
+//             current = node;
+//         } else if (trimmed === "}") {
+//             current = stack.pop()!;
+//         } else {
+//             current.properties.push(trimmed);
+//         }
+
+//         i++;
+//     }
+
+//     function buildSelectorPath(path: string[]): string {
+//         return path.filter(Boolean).join(" ").replace(/\s+/g, " ");
+//     }
+
+//     function processNode(node: Node, path: string[] = []) {
+//         const fullSelector = buildSelectorPath([...path, node.selector]);
+//         const lines: string[] = [];
+
+//         for (const propLine of node.properties) {
+//             if (!propLine.includes(":") || propLine.trim().startsWith("//")) continue;
+//             const [rawProp, ...rest] = propLine.split(":");
+//             const prop = rawProp.trim();
+//             const value = rest.join(":").trim();
+//             const short = propMap[prop] ?? prop;
+//             const key = `--${[...path, node.selector].filter(Boolean).join("-").replace(/[^\w-]/g, "_")}-${short}`;
+
+//             if (value.startsWith("var:")) {
+//                 const parts = value.split(":").map(p => p.trim());
+//                 if (parts.length === 2) {
+//                     lightVars[key] = parts[1];
+//                     nightVars[key] = parts[1];
+//                 } else if (parts.length === 3) {
+//                     lightVars[key] = parts[1];
+//                     nightVars[key] = parts[2];
+//                 }
+//                 lines.push(`  ${prop}: var(${key});`);
+//             } else {
+//                 lines.push(`  ${prop}: ${value};`);
+//             }
+//         }
+
+//         if (lines.length) {
+//             finalCSS.push(`${fullSelector} {\n${lines.join("\n")}\n}`);
+//         }
+
+//         for (const child of node.children) {
+//             processNode(child, [...path, node.selector]);
+//         }
+//     }
+
+//     processNode(root);
+
+//     const buildVars = (theme: string, vars: Record<string, string>) =>
+//         `.${theme} {\n` +
+//         Object.entries(vars)
+//             .map(([k, v]) => v ? `  ${k}: ${v};` : `  /* ${k}: ; */`)
+//             .join("\n") +
+//         "\n}";
+
+//     return [buildVars("light", lightVars), "", buildVars("night", nightVars), "", ...finalCSS].join("\n");
+// }
+
 function convertCSS(input: string): string {
+    const lightVars: Record<string, string> = {};
+    const nightVars: Record<string, string> = {};
+    const finalCSS: string[] = [];
 
     const propMap: Record<string, string> = {
         background: "bg",
@@ -13,124 +133,131 @@ function convertCSS(input: string): string {
         position: "pos",
     };
 
-    const lightVars: Record<string, string> = {};
-    const nightVars: Record<string, string> = {};
-    const cssLines: Record<string, string[]> = {};
-    const finalCSS: string[] = [];
+    type Node = {
+        selector: string;
+        properties: string[];
+        children: Node[];
+    };
 
-    const lines = input.trim().split("\n");
+    const lines = input.split("\n");
+    const stack: Node[] = [];
+    const root: Node = { selector: "", properties: [], children: [] };
+    let current = root;
 
-    let currentSelector = "";
-    let inBlock = false;
-    const blockLines: string[] = [];
+    const trimLine = (l: string) => l.trim();
 
-    function processBlock(selector: string, block: string[]) {
-
-        const lastSelector = selector.includes(":") ? selector.split(":").at(-1)! : "" // hover, focus
-
-        const selKey = selector.replace(/[:.#]/g, "")
-            .replace(/[^a-zA-Z0-9]/g, "_")
-            .replace(lastSelector, "")
-
-        if (!cssLines[selector]) cssLines[selector] = [];
-
-        for (let rawLine of block) {
-            if (!rawLine.includes(":")) continue;
-
-            const [propRaw, ...valueParts] = rawLine.split(":");
-            const prop = propRaw.trim()
-            const propTrim = propMap[prop] ?? prop;
-            const value = valueParts.join(":").trim();
-
-            if (rawLine.trim().replaceAll(" ", "").startsWith("//")) {
-                continue
+    // First handle @keyframes blocks separately and preserve structure
+    let i = 0;
+    while (i < lines.length) {
+        const line = lines[i];
+        if (trimLine(line).startsWith("@keyframes")) {
+            const buffer: string[] = [line];
+            i++;
+            let depth = 0;
+            while (i < lines.length) {
+                const l = lines[i];
+                if (l.includes("{")) depth++;
+                if (l.includes("}")) depth--;
+                buffer.push(l);
+                i++;
+                if (depth < 0) break;
             }
+            finalCSS.push(buffer.join("\n"));
+            continue;
+        }
 
-            const matches = [...value.matchAll(/var\((--[\w-]+)\)/g)].map(m => m[1]);
-            matches.forEach((m) => {
-                lightVars[m] = (lightVars[m] ?? "");
-                nightVars[m] = (nightVars[m] ?? "");
-            })
+        const trimmed = trimLine(line);
+        if (!trimmed) {
+            i++;
+            continue;
+        }
 
-            if (!value.trim().replaceAll(" ", "").startsWith("var:")) {
-                if (value != "") {
-                    cssLines[selector].push(`  ${prop}: ${value}${value.endsWith(";") ? "" : ";"}`);
-                    continue;
+        if (trimmed.endsWith("{")) {
+            const sel = trimmed.slice(0, -1).trim();
+            const node: Node = { selector: sel, properties: [], children: [] };
+            current.children.push(node);
+            stack.push(current);
+            current = node;
+        } else if (trimmed === "}") {
+            current = stack.pop()!;
+        } else {
+            current.properties.push(trimmed);
+        }
+
+        i++;
+    }
+
+    function buildSelectorPath(path: string[]): string {
+        return path.filter(Boolean).join(" ").replace(/\s+/g, " ");
+    }
+
+    function flattenSelector(path: string[]): string {
+        if (path.length === 0) return "";
+
+        const last = path.at(-1);
+        if (last && last.includes(":")) {
+            path[path.length - 1] = last.split(":")[0];
+        }
+
+        return path
+            .map((part) =>
+                part
+                    .replace(/[:.#]/g, "")
+                    .replace(/[^a-zA-Z0-9]/g, "-")
+            )
+            .join("-");
+    }
+
+    function processNode(node: Node, path: string[] = []) {
+        const fullSelector = buildSelectorPath([...path, node.selector]);
+        const lines: string[] = [];
+
+        for (const propLine of node.properties) {
+            if (!propLine.includes(":")) continue;
+            const [rawProp, ...rest] = propLine.split(":");
+            const prop = rawProp.trim();
+            const value = rest.join(":").trim();
+            const short = propMap[prop] ?? prop;
+            const last = (node.selector.includes(":")) ? node.selector.split(":").at(-1) : "";
+            const cleanPath = flattenSelector([...path, node.selector]);
+            const key = `--${cleanPath}-${short}${last ? `-${last}` : ""}`.replace(/--+/g, "--");
+
+            if (value.startsWith("var:")) {
+                const parts = value.split(":").map(p => p.trim());
+                if (parts.length === 2) {
+                    lightVars[key] = parts[1];
+                    nightVars[key] = parts[1];
+                } else if (parts.length === 3) {
+                    lightVars[key] = parts[1];
+                    nightVars[key] = parts[2];
+                }
+                lines.push(`  ${prop}: var(${key});`);
+            } else {
+                if (value) {
+                    lines.push(`  ${prop}: ${value}${value.endsWith(";") ? "" : ";"}`);
                 }
             }
+        }
 
-            const parts = value.split(":").map((s) => s.trim());
+        if (lines.length) {
+            finalCSS.push(`${fullSelector} {\n${lines.join("\n")}\n}`);
+        }
 
-            const varName = prop.startsWith("--") ? prop : `--${selKey}-${propTrim}${lastSelector ? "-" + lastSelector : ""}`;
-
-            // One value = same for both themes
-            if (parts.length === 2) {
-                lightVars[varName] = (lightVars[varName] ?? "") + parts[1];
-                nightVars[varName] = (nightVars[varName] ?? "") + parts[1];
-            } else if (parts.length === 3) {
-                lightVars[varName] = (lightVars[varName] ?? "") + parts[1];
-                nightVars[varName] = (nightVars[varName] ?? "") + parts[2];
-            }
-
-            if (!prop.startsWith("--")) {
-                cssLines[selector].push(`  ${prop}: var(${varName});`);
-            }
+        for (const child of node.children) {
+            processNode(child, [...path, node.selector]);
         }
     }
 
-    for (let line of lines) {
-        line = line.trim();
-        if (!line) continue;
-
-        if (line.endsWith("{")) {
-            currentSelector = line.slice(0, -1).trim();
-            inBlock = true;
-            blockLines.length = 0;
-            continue;
-        }
-
-        if (line === "}") {
-            inBlock = false;
-            processBlock(currentSelector, blockLines);
-            continue;
-        }
-
-        if (inBlock) {
-            blockLines.push(line);
-        }
-    }
-
-    if (inBlock && blockLines.length > 0) {
-        processBlock(currentSelector, blockLines);
-    }
-
-    for (const [selector, value] of Object.entries(cssLines)) {
-        if (value.join("")) {
-            finalCSS.push(`${selector} {\n${value.join("\n")}\n}`);
-        }
-    }
+    processNode(root);
 
     const buildVars = (theme: string, vars: Record<string, string>) =>
         `.${theme} {\n` +
         Object.entries(vars)
-            .filter(([k]) => {
-                return !Object.entries(cssLines).find((e) => {
-                    return e[1].find((x) => {
-                        return x.trim().startsWith(k)
-                    })
-                })
-            })
-            .map(([k, v]) => v.length ? `  ${k}: ${v};` : `  /* ${k}: ${v}; */`)
+            .map(([k, v]) => v ? `  ${k}: ${v};` : `  /* ${k}: ; */`)
             .join("\n") +
         "\n}";
 
-    return [
-        buildVars("light", lightVars),
-        "",
-        buildVars("night", nightVars),
-        "",
-        ...finalCSS,
-    ].join("\n");
+    return [buildVars("light", lightVars), "", buildVars("night", nightVars), "", ...finalCSS].join("\n");
 }
 
 export default function ExtractCssComments(dir: string): Plugin {

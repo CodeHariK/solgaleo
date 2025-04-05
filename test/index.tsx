@@ -46,4 +46,21 @@ render(() => <Storybook />, document.body!)
 #hello>p {
     color: var: yellow : red
 }
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.marquee {
+    display: flex;
+    span {
+        color: var: #000: #fff;
+        font-size: 200px;
+    }
+}
 */

@@ -1,4 +1,4 @@
-import { Dropdown, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, Footer, Header, ThemeToggle, SpaceLayoutFixed, SpaceLayoutFull } from "../src/solgaleo.index";
+import { Dropdown, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, Footer, Header, ThemeToggle, SpaceLayout } from "../src/solgaleo.index";
 
 import "../src/css/input.css"
 import "../src/css/index.css"
@@ -13,59 +13,145 @@ import { DeleteModal } from "../src/modal/modal1";
 // import { BlogList } from "../src/adv/blog"
 // import { MiniMarkdown } from "../src/adv/md";
 
+// 
+// @keyframes marquee {
+//     0% {
+//         transform: translateX(0);
+//     }
+//     100% {
+//         transform: translateX(-100%);
+//     }
+// }
+// .marquee{
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-start;
+//     overflow: hidden;
+
+//     span{
+//         text-transform: uppercase;
+//         will-change: transform;
+//         transform: translateX(0);
+//         white-space: nowrap;
+//         animation: marquee 24s linear infinite;
+//         font-size: 200px;
+//         font-weight: 900;
+//         color: #98C9FF;
+//         color: var(--marquee-span-color);
+//     }
+// }
+//
+
 export function Storybook() {
 
-    // return <SpaceLayoutFixed title='Storybook'
-    //     header={<Header rightChildren={<ThemeToggle />} />}
-    //     footer={<Footer />}
-    // ></SpaceLayoutFixed>
+    return <div class="marquee">
+        <span>Hello World&nbsp;</span>
+        <span>Hello World&nbsp;</span>
+        <span>Hello World&nbsp;</span>
+        <span>Hello World&nbsp;</span>
+    </div>
 
-
-    // return <SpaceLayoutFull title='Storybook'
-    //     header={<Header rightChildren={<ThemeToggle />} />}
-    //     footer={<Footer />}
-    // ></SpaceLayoutFull>
-
-    return (
-
-        <SpaceLayoutFixed title='Storybook'
-            header={<Header rightChildren={<ThemeToggle />} />}
-            footer={<Footer />}
-        >
-
-            {/* <GlitterCard /> */}
-
-            {/* <GhostComponent /> */}
-
-            {/* <RainbowImage size="300px" src="https://raw.githubusercontent.com/CodeHariK/Shark.run/main/public/images/SpaceShark512.webp"></RainbowImage> */}
-
-            <div style={{ "display": "flex", "justify-content": "start" }}>
-                {
-                    AllTheme().map((t) =>
-                        <section class={t}>
-                            {t}
-                            <Story />
-                        </section>)
-                }
+    return <div class="z-0 h-full max-h-[400px] w-full max-w-lg rounded-xl border border-border bg-background">
+        <div class="flex flex-col gap-y-2 border-b border-border p-4">
+            <div class="flex flex-row gap-x-2">
+                <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                <div class="h-2 w-2 rounded-full bg-yellow-500">
+                </div><div class="h-2 w-2 rounded-full bg-green-500"></div>
             </div>
+        </div>
+        <pre class="p-4">
+            <code class="grid gap-y-1 overflow-auto">
+                <span class="text-sm font-normal tracking-tight">&gt; pnpm dlx shadcn@latest init</span>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Preflight checks.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Verifying framework. Found Next.js.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Validating Tailwind CSS.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Validating import alias.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Writing components.json.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Checking registry.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Updating tailwind.config.ts</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Updating app/globals.css</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
+                    <span>✔ Installing dependencies.</span>
+                </div>
+                <div class="grid text-sm font-normal tracking-tight text-blue-500" style="opacity: 1; transform: none;">
+                    <span>ℹ Updated 1 file:</span>
+                    <span class="pl-2">- lib/utils.ts</span>
+                </div>
+                <span class="text-sm font-normal tracking-tight text-muted-foreground">Success! Project initialization completed.</span>
+                <span class="text-sm font-normal tracking-tight text-muted-foreground">You may now add components.</span>
+            </code>
+        </pre>
+    </div>
 
-            <BlogList blogs={[
-                {
-                    title: "Understanding SolidJS",
-                    tags: ["solidjs", "javascript"],
-                    description: "A deep dive into how SolidJS differs from React.",
-                    link: "#solidjs",
-                },
-                {
-                    title: "CSS Grid vs Flexbox",
-                    tags: ["css", "grid", "flexbox"],
-                    description: "Learn when to use CSS Grid and when Flexbox is better.",
-                    link: "#css-grid",
-                },
-            ]} />
+    return <SpaceLayout title='Storybook'
+        header={<Header rightChildren={<ThemeToggle />} />}
+        footer={<Footer />}
+        sidebar={<div class="bg-blue-400">Sidebar</div>}
+        rightPanel={<div><ul>
+            <li style={{ "width": "100%", height: "250px", "background": "red" }}>Right Panel 1</li>
+            <li style={{ "width": "100%", height: "250px", "background": "orange" }}>Right Panel 1</li>
+            <li style={{ "width": "100%", height: "250px", "background": "blue" }}>Right Panel 1</li>
+            <li style={{ "width": "100%", height: "250px", "background": "green" }}>Right Panel 1</li>
+        </ul></div>}
+        children={
+            <Box />
+        }
+        individualScroll
+    // fixedNav
+    ></SpaceLayout>
+}
+
+function Box() {
+    return <>
+        {/* <GlitterCard /> */}
+
+        {/* <GhostComponent /> */}
+
+        {/* <RainbowImage size="300px" src="https://raw.githubusercontent.com/CodeHariK/Shark.run/main/public/images/SpaceShark512.webp"></RainbowImage> */}
+
+        <div style={{ "display": "flex", "justify-content": "start" }}>
+            {
+                AllTheme().map((t) =>
+                    <section class={t}>
+                        {t}
+                        <Story />
+                    </section>)
+            }
+        </div>
+
+        <BlogList blogs={[
+            {
+                title: "Understanding SolidJS",
+                tags: ["solidjs", "javascript"],
+                description: "A deep dive into how SolidJS differs from React.",
+                link: "#solidjs",
+            },
+            {
+                title: "CSS Grid vs Flexbox",
+                tags: ["css", "grid", "flexbox"],
+                description: "Learn when to use CSS Grid and when Flexbox is better.",
+                link: "#css-grid",
+            },
+        ]} />
 
 
-            <MiniMarkdown content="
+        <MiniMarkdown content="
     # Title
         ## Subtitle
 ### Smaller Title
@@ -90,28 +176,26 @@ sudo pacman -Sy    # Sync package databases
     }
 ```
 and a [link](https://example.com)"
-            />
+        />
 
-            {Banner()}
+        {Banner()}
 
-            <Stepper items={
-                [
-                    {
-                        title: "Title",
-                        subtitle: "Subtitle",
-                        element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
-                    },
-                    {
-                        title: "Title",
-                        subtitle: "Subtitle",
-                        element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
-                    },
-                ]
-            } />
+        <Stepper items={
+            [
+                {
+                    title: "Title",
+                    subtitle: "Subtitle",
+                    element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
+                },
+                {
+                    title: "Title",
+                    subtitle: "Subtitle",
+                    element: <div style={{ width: "100%", height: "30px", "background": "red" }}></div>
+                },
+            ]
+        } />
 
-
-        </SpaceLayoutFixed>
-    )
+    </>
 }
 
 function Story() {

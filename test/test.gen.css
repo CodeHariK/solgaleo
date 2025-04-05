@@ -1,64 +1,93 @@
 .light {
-  --stepper-col: #ffffff;
-  --stepper-bg: red;
-  /* --stepper-border: ; */
-  /* --stepper-display: ; */
-  /* --visibility: ; */
-  /* --stepper-decoration: ; */
-  --stepper-bg-hover: yellow;
-  --stepper-bg-focus: blue;
-  --box_stepper-col: yellow;
-  --box_stepper-col-focus: yellow;
-  --hello-col: yellow;
-  --hello___stepper-col: yellow;
-  --hello_p-col: yellow;
+    --stepper-col: #ffffff;
+    --stepper-bg: red;
+    /* --stepper-border: ; */
+    /* --stepper-display: ; */
+    /* --stepper-decoration: ; */
+    --stepper-bg-hover: yellow;
+    --stepper-bg-focus: blue;
+    --box-stepper-col: yellow;
+    --box-stepper-col-focus: yellow;
+    --hello-col: yellow;
+    --hello--stepper-col: yellow;
+    --hello-p-col: yellow;
+    --marquee-span-col: #000;
 }
 
 .night {
-  --stepper-col: #aaaaaa;
-  --stepper-bg: green;
-  --stepper-border: 1px solid blue;
-  /* --stepper-display: ; */
-  /* --visibility: ; */
-  /* --stepper-decoration: ; */
-  --stepper-bg-hover: red;
-  --stepper-bg-focus: green;
-  --box_stepper-col: red;
-  --box_stepper-col-focus: red;
-  --hello-col: red;
-  --hello___stepper-col: red;
-  --hello_p-col: red;
+    --stepper-col: #aaaaaa;
+    --stepper-bg: green;
+    --stepper-border: 1px solid blue;
+    /* --stepper-display: ; */
+    /* --stepper-decoration: ; */
+    --stepper-bg-hover: red;
+    --stepper-bg-focus: green;
+    --box-stepper-col: red;
+    --box-stepper-col-focus: red;
+    --hello-col: red;
+    --hello--stepper-col: red;
+    --hello-p-col: red;
+    --marquee-span-col: #fff;
+    ;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 .stepper {
-  color: var(--stepper-col);
-  background: var(--stepper-bg);
-  border: var(--stepper-border);
-  position: relative;
-  display: var(--stepper-display);
-  hello: var(--stepper-hello);
-  position: fixed;
-  visibility: var(--visibility);
-  decoration: var(--stepper-decoration);
+    color: var(--stepper-col);
+    background: var(--stepper-bg);
+    border: var(--stepper-border);
+    position: relative;
+    display: var(--stepper-display);
 }
+
+.stepper {
+    position: fixed;
+    visibility: var(--visibility);
+    decoration: var(--stepper-decoration);
+}
+
 .stepper:hover {
-  background: var(--stepper-bg-hover);
+    background: var(--stepper-bg-hover);
 }
+
 .stepper:focus {
-  background: var(--stepper-bg-focus);
+    background: var(--stepper-bg-focus);
 }
+
 .box .stepper {
-  color: var(--box_stepper-col);
+    color: var(--box-stepper-col);
 }
+
 .box .stepper:focus {
-  color: var(--box_stepper-col-focus);
+    color: var(--box-stepper-col-focus);
 }
+
 #hello {
-  color: var(--hello-col);
+    color: var(--hello-col);
 }
-#hello > .stepper {
-  color: var(--hello___stepper-col);
+
+#hello>.stepper {
+    color: var(--hello--stepper-col);
 }
+
 #hello>p {
-  color: var(--hello_p-col);
+    color: var(--hello-p-col);
+}
+
+.marquee {
+    display: flex;
+}
+
+.marquee span {
+    color: var(--marquee-span-col);
+    font-size: 200px;
 }
