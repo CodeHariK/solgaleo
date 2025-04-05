@@ -1,10 +1,8 @@
 .light {
-  --svg-ring-color: #3b82f680;
   --svg-background-color: #A7F3D0;
 }
 
 .night {
-  --svg-ring-color: #3b82f680;
   --svg-background-color: #A7F3D0;;
 }
 
@@ -15,6 +13,7 @@
   align-items: center;
   border-radius: 50px;
   --svg-ring-width: 4px;
+  --svg-ring-color: var : #3b82f680 : #3b82f680;
   box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
   width: 2rem;
   height: 2rem;

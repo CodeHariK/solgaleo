@@ -1,93 +1,86 @@
+/*
+test/index.tsx
+*/
+
 .light {
-    --stepper-col: #ffffff;
-    --stepper-bg: red;
+    /* --visibility: ; */
+    --svg-ring-width: 4px;
+    --svg-ring-color: #82f680;
+    /* --marquee-width: ; */
+    /* --keyframes-marquee-100-height: ; */
+    --keyframes-marquee-100-col: red;
+    /* --marquee-font-color: ; */
+    /* --marquee-span-bg: ; */
+    /* --stepper-decoration: ; */
     /* --stepper-border: ; */
     /* --stepper-display: ; */
-    /* --stepper-decoration: ; */
-    --stepper-bg-hover: yellow;
-    --stepper-bg-focus: blue;
-    --box-stepper-col: yellow;
-    --box-stepper-col-focus: yellow;
-    --hello-col: yellow;
-    --hello--stepper-col: yellow;
-    --hello-p-col: yellow;
+    --box-stepper-bg-hover: yellow;
+    /* --box-stepper-col-hover: ; */
+    --box-hello: 4px;
+    /* --box-hi: ; */
+    /* --box-alola: ; */
+    --svg-ring-bg: #3b82f6;
+    --svg-background-color: #A7F3D0;
+    --hello--stepper-col: orange;
     --marquee-span-col: #000;
 }
 
 .night {
-    --stepper-col: #aaaaaa;
-    --stepper-bg: green;
+    /* --visibility: ; */
+    --svg-ring-width: 4px;
+    --svg-ring-color: #3b82f680;
+    /* --marquee-width: ; */
+    /* --keyframes-marquee-100-height: ; */
+    --keyframes-marquee-100-col: blue;
+    /* --marquee-font-color: ; */
+    /* --marquee-span-bg: ; */
+    /* --stepper-decoration: ; */
     --stepper-border: 1px solid blue;
     /* --stepper-display: ; */
-    /* --stepper-decoration: ; */
-    --stepper-bg-hover: red;
-    --stepper-bg-focus: green;
-    --box-stepper-col: red;
-    --box-stepper-col-focus: red;
-    --hello-col: red;
-    --hello--stepper-col: red;
-    --hello-p-col: red;
+    --box-stepper-bg-hover: red;
+    /* --box-stepper-col-hover: ; */
+    --box-hello: 4px;
+    /* --box-hi: ; */
+    /* --box-alola: ; */
+    --svg-ring-bg: #3b82f6;
+    --svg-background-color: #A7F3D0;
+    --hello--stepper-col: blue;
     --marquee-span-col: #fff;
-    ;
 }
 
 @keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-
     100% {
         transform: translateX(-100%);
+        width: var(--marquee-width);
+        height: var(--keyframes-marquee-100-height);
+        color: var(--keyframes-marquee-100-col);
     }
 }
-
-.stepper {
-    color: var(--stepper-col);
-    background: var(--stepper-bg);
-    border: var(--stepper-border);
-    position: relative;
-    display: var(--stepper-display);
-}
-
 .stepper {
     position: fixed;
-    visibility: var(--visibility);
     decoration: var(--stepper-decoration);
 }
-
-.stepper:hover {
-    background: var(--stepper-bg-hover);
+.stepper {
+    border: var(--stepper-border);
+    display: var(--stepper-display);
 }
-
-.stepper:focus {
-    background: var(--stepper-bg-focus);
+.box .stepper:hover {
+    visibility: var(--visibility);
+    background: var(--box-stepper-bg-hover);
+    color: var(--box-stepper-col-hover);
 }
-
-.box .stepper {
-    color: var(--box-stepper-col);
+.svg {
+    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
+    background-color: var(--svg-background-color);
 }
-
-.box .stepper:focus {
-    color: var(--box-stepper-col-focus);
-}
-
-#hello {
-    color: var(--hello-col);
-}
-
-#hello>.stepper {
+#hello > .stepper {
     color: var(--hello--stepper-col);
 }
-
-#hello>p {
-    color: var(--hello-p-col);
-}
-
 .marquee {
-    display: flex;
+    font-color: var(--marquee-font-color);
 }
-
 .marquee span {
     color: var(--marquee-span-col);
     font-size: 200px;
+    background: var(--marquee-span-bg);
 }

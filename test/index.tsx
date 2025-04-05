@@ -12,55 +12,48 @@ render(() => <Storybook />, document.body!)
 
 /* CSS:
 .stepper {
-    color: var: #ffffff: #aaaaaa 
-    background: var: red : green
-    border: var::1px solid blue
-    position: relative
-    display: var::
-    hello:
-}
-.stepper {
     position: fixed
-    visibility: var(--visibility)
     decoration: var:
 }
-.stepper:hover {
+.stepper {
+    border: var::1px solid blue
+    display: var::
+    superhello:
+}
+.box .stepper:hover {
+    visibility: var(--visibility)
     background: var:yellow:red
+    color: var::
+    --box-hello: 4px
+    --box-hi: var::
+    --box-alola: var:
 }
-.stepper:focus {
-    background: var:blue:green
-}
-.box .stepper {
-    color: var: yellow : red
-}
-.box .stepper:focus {
-    color: var: yellow : red
+.svg {
+    --svg-ring-width: 4px
+    --svg-ring-bg: var : #3b82f6
+    --svg-ring-color: var : #82f680 : #3b82f680
+    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000
+    background-color: var:#A7F3D0:#A7F3D0
 }
 
-#hello {
-    color: var: yellow : red
-}
 #hello > .stepper {
-    color: var: yellow : red
-}
-#hello>p {
-    color: var: yellow : red
+    color: var: orange : blue
 }
 
 @keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
     100% {
         transform: translateX(-100%);
+        width: var(--marquee-width);
+        height : var::
+        color : var:red:blue
     }
 }
-
 .marquee {
-    display: flex;
+    font-color: var(--marquee-font-color)
     span {
-        color: var: #000: #fff;
+        color: var: #000: #fff
         font-size: 200px;
+        background: var(--marquee-span-bg);
     }
 }
 */
