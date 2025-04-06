@@ -71,12 +71,11 @@ function ExtractKV(value: string, prop: string, key: string, lines: string[]) {
     if (ExtractVarValue(value, varName)) {
         lines.push(`    ${prop}: var(${varName});`);
     } else {
-        if (value) {
+        if (value != "" && value != ";") {
             lines.push(`    ${prop}: ${value}${value.endsWith(";") ? "" : ";"}`);
         }
     }
 }
-
 
 function processNode(node: Node, path: string[] = []) {
     const fullSelector = buildSelectorPath([...path, node.selector]);
@@ -104,7 +103,7 @@ function processNode(node: Node, path: string[] = []) {
     }
 
     if (lines.length) {
-        FinalCSS.push(`${fullSelector} {\n${lines.join("\n")}\n}`);
+        FinalCSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
     }
 
     for (const child of node.children) {
@@ -114,7 +113,8 @@ function processNode(node: Node, path: string[] = []) {
 
 function convertCSS(input: string) {
 
-    const lines = input.split("\n");
+    const lines = input.split(/(?<=[;{}])\s*\n/)
+
     const stack: Node[] = [];
     const root: Node = { selector: "", properties: [], children: [] };
     let current = root;
@@ -142,10 +142,10 @@ function convertCSS(input: string) {
             let currentStep = "0";
 
             while (i < lines.length) {
-                let l = lines[i];
-                const trimmed = trimLine(l);
+                let keyframeLine = lines[i];
+                const trimmed = trimLine(keyframeLine);
 
-                ExtractInlineVars(l);
+                ExtractInlineVars(keyframeLine);
 
                 // Update current keyframe step if matched
                 const stepMatch = trimmed.match(/^(\d+)%\s*{?$/);
@@ -163,11 +163,11 @@ function convertCSS(input: string) {
 
                     const key = `--keyframes-${name}-${currentStep}-${propMap[prop] ?? prop}`;
                     if (ExtractVarValue(value, key)) {
-                        l = `        ${prop}: var(${key});`;
+                        keyframeLine = `        ${prop}: var(${key});`;
                     }
                 }
 
-                buffer.push(l);
+                buffer.push(keyframeLine);
                 i++;
 
                 if (depth < 0) break;
@@ -210,6 +210,7 @@ function convertCSS(input: string) {
 export default function ExtractCssComments(dir: string): Plugin {
     let lastFolderPath = "", lastFolderName = ""
     let processed: string[] = [];
+
     async function runExtract() {
         const walk = async (dirPath: string) => {
             const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
@@ -243,7 +244,7 @@ export default function ExtractCssComments(dir: string): Plugin {
                 const buildVars = (theme: string, vars: Record<string, string>) =>
                     `.${theme} {\n` +
                     Object.entries(vars)
-                        .map(([k, v]) => v ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}` : `    /* ${k}: ; */`)
+                        .map(([k, v]) => (v != "" && v != ";") ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}` : `    /* ${k}: ; */`)
                         .join("\n") +
                     "\n}";
 
@@ -268,6 +269,7 @@ export default function ExtractCssComments(dir: string): Plugin {
 
         await walk(dir);
     }
+
 
     return {
         name: 'vite-plugin-extract-css-comments',

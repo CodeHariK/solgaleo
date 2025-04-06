@@ -5,10 +5,10 @@ import { TickIcon } from "../solgaleo.index"
 
 /* CSS:
 .stepper {
-    color: var: #6B7280: #ffffff 
-    background: var::
-    border: var::1px solid #E5E7EB
-    position: relative
+    color: var: #6B7280: #ffffff;
+    background: var::;
+    border: var::1px solid #E5E7EB;
+    position: relative;
 }
 */
 

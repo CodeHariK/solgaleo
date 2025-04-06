@@ -14,6 +14,10 @@ export default defineConfig({
       include: ["src/**/*.ts", "src/**/*.tsx"],
     }),
   ],
+  server: {
+    port: 9000,
+    host: '0.0.0.0',
+  },
   build: {
     lib: {
       name: "solgaleo",

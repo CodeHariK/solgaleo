@@ -82,5 +82,8 @@
     "dist/*.js",
     "dist/*.d.ts",
     "dist/*.css"
-  ]
+  ],
+  "dependencies": {
+    "@solidjs/router": "^0.15.3"
+  }
 }

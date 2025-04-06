@@ -2,60 +2,75 @@
 import { render } from 'solid-js/web'
 import { Storybook } from './storybook.tsx'
 
-import "./index.css"
-import "./test.gen.css"
+import "../src/css/input.css"
+import "../src/css/index.css"
+import { Route, Router } from '@solidjs/router'
+import { RoutedTabs } from './tab.tsx'
 
 // import * as Solgaleo from "solgaleo";
 
 // Solgaleo.AddTheme("custom")
 
-render(() => <Storybook />, document.body!)
+// render(() => <Storybook />, document.body!)
 
-/* CSS:
-.stepper {
-    position: fixed
-    decoration: var:
-}
-.stepper {
-    border: var::1px solid blue
-    display: var::
-    superhello:
-}
-.box .stepper:hover {
-    visibility: var(--visibility)
-    background: var:yellow:red
-    color: var::
-    --box-hello: 4px
-    --box-hi: var::
-    --box-alola: var:
-}
-.svg {
-    --svg-ring-width: 4px
-    --svg-ring-bg: var : #3b82f6
-    --svg-ring-color: var : #82f680 : #3b82f680
-    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000
-    background-color: var:#A7F3D0:#A7F3D0
-}
-
-#hello > .stepper {
-    color: var: orange : blue
-}
-
-@keyframes marquee {
-    100% {
-        transform: translateX(-100%);
-        width: var(--marquee-width);
-        height : var::
-        color : var:red:blue
+const tabs = [
+    {
+        id: 'home',
+        label: 'Home',
+        content: <div>Home Content</div>
+    },
+    {
+        id: 'settings',
+        label: 'Settings',
+        children: [
+            {
+                id: 'profile',
+                label: 'Profile',
+                content: <div>Profile Settings</div>
+            },
+            {
+                id: 'account',
+                label: 'Account',
+                children: [
+                    {
+                        id: 'security',
+                        label: 'Security',
+                        content: <div>Security Settings</div>
+                    },
+                    {
+                        id: 'notifications',
+                        label: 'Notifications',
+                        content: <div>Notification Preferences</div>
+                    }
+                ]
+            }
+        ]
     }
-}
-.marquee {
-    font-color: var(--marquee-font-color)
-    span {
-        color: var: #000: #fff
-        font-size: 200px;
-        background: var(--marquee-span-bg);
-    }
-}
+];
 
-*/
+render(() => <Router>
+    <Route
+        path="/"
+        component={() => (
+            <>
+                <div style={{ background: "white", color: "black" }}>
+                    <RoutedTabs
+                        tabs={tabs}
+                        defaultTab="home"
+                        baseRoute="/"
+                        id="light"
+                    />
+                </div>
+
+                <div style={{ background: "#6a3568", color: "white" }}>
+                    <RoutedTabs
+                        tabs={tabs}
+                        defaultTab="home"
+                        baseRoute="/"
+                        id="night"
+                    />
+                </div>
+            </>
+        )} />
+</Router>,
+    document.body!)

@@ -49,7 +49,7 @@ export const SpaceLayout = (props: SpaceLayout) => (
                     <aside
                         style={{
                             flex: "1 1 0%",
-                            background: "#153d6f",
+                            background: "#e34242",
                             ...(props.individualScroll && {
                                 "overflow-y": "auto",
                             }),
@@ -62,7 +62,6 @@ export const SpaceLayout = (props: SpaceLayout) => (
                     <section
                         style={{
                             flex: "1 1 0%",
-                            background: "#d07900",
                             ...(props.individualScroll && {
                                 "overflow-y": "auto",
                             }),

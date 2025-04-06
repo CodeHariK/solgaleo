@@ -130,3 +130,6 @@ dist
 .pnp.*
 
 dist-test
+
+.gen.css
+bun.lock

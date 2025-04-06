@@ -45,8 +45,8 @@ export function Modal1() {
 }
 
 export function DeleteModal(setShow?: Setter<boolean>) {
-    return <div class=" rounded-lg bg-white p-4 text-center shadow night:bg-gray-800 sm:p-5">
-        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 p-2 night:bg-gray-700">
+    return <div class=" rounded-lg p-4 text-center shadow sm:p-5">
+        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg p-2">
             <DeleteIcon />
             <span class="sr-only">Danger icon</span>
         </div>

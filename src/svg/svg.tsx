@@ -15,7 +15,6 @@ function toProp(props: IconProps = {}) {
     };
 }
 
-
 /* CSS:
 .svg {
     display: flex;
@@ -23,13 +22,13 @@ function toProp(props: IconProps = {}) {
     justify-content: center; 
     align-items: center; 
     border-radius: 50px;
-    --svg-ring-width: 4px
-    --svg-ring-color: var : #3b82f680 : #3b82f680
+    --svg-ring-width: 4px;
+    --svg-ring-color: var : #3b82f680 : #3b82f680;
     box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
     width: 2rem; 
     height: 2rem; 
     background-color: var:#A7F3D0:#A7F3D0; 
-    inset-inline-start: -1rem 
+    inset-inline-start: -1rem;
 }
 */
 

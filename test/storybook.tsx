@@ -7,9 +7,8 @@ import { MiniMarkdown } from "../src/adv/md";
 import { Banner } from "../src/fancy/banner";
 import { Stepper } from "../src/adv/stepper";
 import { DeleteModal } from "../src/modal/modal1";
-import { Marquee } from "../src/fancy/marquee";
-import { Terminal } from "../src/fancy/terminal";
-import { TypeWriter } from "../src/fancy/typewriter";
+import { Treeview } from "../src/fancy/treeview";
+// import { Terminal, TypeWriter } from "../src/fancy/terminal";
 // import { Banner } from "../src/fancy/banner";
 
 // import { Blog } from "../src/svg/svg"
@@ -38,21 +37,22 @@ export function Storybook() {
 
 function Box() {
     return <>
+
         {/* <GlitterCard /> */}
 
         {/* <GhostComponent /> */}
 
         {/* Marquee() */}
 
-        <Terminal
+        {/* <Terminal
             lines={[
                 { text: "> pnpm dlx shadcn@latest init", input: true },
                 { text: "✔ Preflight checks.", color: "text-green-500" },
-                { text: "You may now add components.", color: "text-muted-foreground" },
+                { text: "You may now add components.", color: "text-muted-foreground", input: true },
             ]}
         />
 
-        {TypeWriter()}
+        {TypeWriter()} */}
 
         {/* <RainbowImage size="300px" src="https://raw.githubusercontent.com/CodeHariK/Shark.run/main/public/images/SpaceShark512.webp"></RainbowImage> */}
 
@@ -126,6 +126,23 @@ and a [link](https://example.com)"
             ]
         } />
 
+        <Treeview
+            direction="vertical"
+            defaultExpanded={true}
+            data={sampleTreeData}
+            onLeafClick={(node) => {
+                console.log("Leaf clicked:", node);
+            }}
+        />
+        <Treeview
+            direction="horizontal"
+            defaultExpanded={true}
+            data={sampleTreeData}
+            onLeafClick={(node) => {
+                console.log("Leaf clicked:", node);
+            }}
+        />
+
     </>
 }
 
@@ -141,7 +158,6 @@ function Story() {
             <Breadcrumbs />
 
             <PositionBox
-                visible={true}
                 name={<>{CartIcon()}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{DownIcon()}</>}>
 
                 <div class="secbg min-w-[300px] z-10 mx-auto space-y-4 overflow-hidden rounded-lg p-4 antialiased shadow-lg">
@@ -153,7 +169,6 @@ function Story() {
             </PositionBox>
 
             <Dropdown<string>
-                visible
                 fn={(data) => { console.log(data) }}
                 items={[
                     {
@@ -218,3 +233,28 @@ function Story() {
 
     </div >
 }
+
+let sampleTreeData = [
+    {
+        id: '1',
+        label: 'Root',
+        children: [
+            {
+                id: '2',
+                label: 'Documents',
+                children: [
+                    { id: '3', label: 'Report.pdf' },
+                    { id: '4', label: 'Meeting Notes.txt' }
+                ]
+            },
+            {
+                id: '5',
+                label: 'Pictures',
+                children: [
+                    { id: '6', label: 'Vacation.jpg' },
+                    { id: '7', label: 'Family.png' }
+                ]
+            }
+        ]
+    }
+]
