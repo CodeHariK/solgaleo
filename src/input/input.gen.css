@@ -1,0 +1,142 @@
+/*
+src/input/textinput.tsx
+src/input/dropdown.tsx
+src/input/checkbox.tsx
+*/
+
+.light {
+    --input-color: #111827;
+    --input-bg: #ffffff;
+    --input-border: 1px solid #d1d5db;
+    --AppDropdown-bg: #e0e0e0;
+    --AppDropdownHeader-col: #9c40ca;
+    --AppDropdownHeader-bg: #cfcfcf;
+    --AppDropdownHeader-border: none;
+    --AppDropdownItem-col: #343434;
+    --AppDropdownItem-bg: #ebebeb;
+    --AppDropdownItem-border: none;
+    --AppDropdownItem-col-hover: #d4d4d4;
+    --AppDropdownItem-bg-hover: #6b6b6b;
+    --input-accent-color: #111827;
+    --label-disabled-color: #6B7280;
+    --label-col: #111827;
+    --label-p-col: #6B7280;
+}
+
+.night {
+    --input-color: #ffffff;
+    --input-bg: #3b3b3b;
+    --input-border: 1px solid #d1d5db;
+    --AppDropdown-bg: #575757;
+    --AppDropdownHeader-col: #8a87e3;
+    --AppDropdownHeader-bg: #454545;
+    --AppDropdownHeader-border: none;
+    --AppDropdownItem-col: #f8f8f8;
+    --AppDropdownItem-bg: #4f4f4f;
+    --AppDropdownItem-border: none;
+    --AppDropdownItem-col-hover: #4b4b4b;
+    --AppDropdownItem-bg-hover: #d7d7d7;
+    --input-accent-color: #3473fc;
+    --label-disabled-color: #9CA3AF;
+    --label-col: #9b51ef ;
+    --label-p-col: #ae93cc;
+}
+
+.AppTextInput {
+    color: var(--input-color);
+    background: var(--input-bg);
+    border: var(--input-border);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    outline-style: none;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.AppDropdown {
+    background: var(--AppDropdown-bg);
+    border-radius: .3rem;
+    padding: .3rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.AppDropdownHeader {
+    color: var(--AppDropdownHeader-col);
+    background: var(--AppDropdownHeader-bg);
+    border: var(--AppDropdownHeader-border);
+    padding: 0.3rem;
+}
+
+.AppDropdownItem {
+    color: var(--AppDropdownItem-col);
+    background: var(--AppDropdownItem-bg);
+    border: var(--AppDropdownItem-border);
+    display: inline-flex;
+    padding: 0.3rem;
+    align-items: center;
+    width: 100%;
+}
+
+.AppDropdownItem:hover {
+    color: var(--AppDropdownItem-col-hover);
+    background: var(--AppDropdownItem-bg-hover);
+}
+
+fieldset {
+    display: inline-block;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+}
+
+fieldset div {
+    display: flex;
+    align-items: center;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    accent-color: var(--input-accent-color);
+    width: 1rem;
+    height: 1rem;
+    margin: .25rem;
+}
+
+input[type="checkbox"]:disabled, input[type="radio"]:disabled {
+    cursor: not-allowed;
+}
+
+select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-color: #D1D5DB;
+    outline-style: none;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #111827;
+    background-color: #ffffff;
+}
+
+label {
+    color: var(--label-col);
+    background: transparent;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    user-select: none;
+    padding: 0.25rem;
+}
+
+label[aria-disabled="true"] {
+    color: var(--label-disabled-color);
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+label p {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 400;
+    color: var(--label-p-col);
+}

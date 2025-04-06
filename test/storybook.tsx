@@ -1,4 +1,4 @@
-import { Dropdown, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, Footer, Header, ThemeToggle, SpaceLayout, SpaceDebugInfo, RadioGroup, SearchInput, Select, SpaceFormError } from "../src/solgaleo.index";
+import { Dropdown, TextInput, SpaceForm, CheckboxGroup, OutlinedButton, BaseButton, MaterialButton, IconButton, AllTheme, CartIcon, DownIcon, PositionBox, Breadcrumbs, Modal, RatingsBar, Footer, Header, ThemeToggle, SpaceLayout, SpaceDebugInfo, RadioGroup, SearchInput, Select, SpaceFormError, GhostComponent, GlitterCard, RainbowImage } from "../src/solgaleo.index";
 
 import "../src/css/input.css"
 import "../src/css/index.css"
@@ -16,6 +16,7 @@ import { Treeview } from "../src/fancy/treeview";
 // import { MiniMarkdown } from "../src/adv/md";
 
 export function Storybook() {
+
 
     return <SpaceLayout title='Storybook'
         header={<Header rightChildren={<ThemeToggle />} />}
@@ -38,9 +39,9 @@ export function Storybook() {
 function Box() {
     return <>
 
-        {/* <GlitterCard /> */}
+        {/* <FlickerText text="Flicker text" /> */}
 
-        {/* <GhostComponent /> */}
+        {/* <GlitterCard /> */}
 
         {/* Marquee() */}
 
@@ -244,6 +245,8 @@ let sampleTreeData = [
 ]
 
 import * as yup from 'yup';
+import { FlickerText } from "../src/fancy/flicker";
+import { NotFound } from "../src/pages/NotFound";
 
 export const validationSchema = yup.object().shape({
     first_name: yup.string().required('First name is required'),

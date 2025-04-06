@@ -15,19 +15,6 @@
     background: var(--option-focus-bg);
 }
 
-.AppTextInput {
-    color: var(--input-color);
-    background: var(--input-bg);
-    border: var(--input-border);
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    border-radius: 0.5rem;
-    outline-style: none;
-    width: 100%;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-}
-
 .AppErrorTextInput {
     border-color: #EF4444;
 }
@@ -75,10 +62,6 @@
     --option-hover-color: #6636e8;
     --option-focus-bg: #f00;
     --option-focus-color: #f00;
-
-    --input-bg: #ffffff;
-    --input-color: #111827;
-    --input-border: 1px solid #d1d5db;
 }
 
 .night {
@@ -95,8 +78,4 @@
     --option-hover-color: #fff;
     --option-focus-bg: #f00;
     --option-focus-color: #f00;
-
-    --input-bg: #3b3b3b;
-    --input-color: #ffffff;
-    --input-border: 1px solid #d1d5db;
 }

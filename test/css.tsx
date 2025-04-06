@@ -65,4 +65,35 @@
     background: rgba(0, 0, 0, 0.03);
 }
 
+.flicker-text {
+    margin-bottom: 10px;
+    text-shadow:
+        0 0 20px var(--neon-pink),
+        0 0 30px var(--neon-pink);
+}
+
+@keyframes flicker {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 10px var(--neon-pink),ð
+            0 0 20px var(--neon-pink),
+            0 0 30px var(--neon-pink);
+    }
+}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 768px) {
+    h6 {
+        font-size: 1rem;
+        line-height: 1.4rem;
+        font-weight: 400;
+    }
+}
+
 */

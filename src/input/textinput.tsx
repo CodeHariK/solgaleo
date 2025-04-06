@@ -2,6 +2,28 @@ import { createSignal, type JSX } from "solid-js";
 import { useSpaceContext } from "./spaceform";
 import { KeyIcon, LockIcon, UnlockIcon } from "../svg/svg";
 
+/*CSS:
+
+.AppTextInput {
+
+    --input-bg: var : #ffffff : #3b3b3b;
+    --input-color: var : #111827 : #ffffff;
+    --input-border: var : 1px solid #d1d5db;
+
+    color: var(--input-color);
+    background: var(--input-bg);
+    border: var(--input-border);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    outline-style: none;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+*/
+
 type TextInputProps = {
     name: string;
     type: "none" | "text" | "url" | "email" | "numeric" | "decimal" | "search" | "password" | "range" | "color" | "date" | "month" | "week" | "time" | "datetime-local";

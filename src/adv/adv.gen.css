@@ -1,0 +1,22 @@
+/*
+src/adv/stepper.tsx
+*/
+
+.light {
+    --stepper-col: #6B7280;
+    /* --stepper-bg: ; */
+    /* --stepper-border: ; */
+}
+
+.night {
+    --stepper-col: #ffffff;
+    /* --stepper-bg: ; */
+    --stepper-border: 1px solid #E5E7EB;
+}
+
+.stepper {
+    color: var(--stepper-col);
+    background: var(--stepper-bg);
+    border: var(--stepper-border);
+    position: relative;
+}

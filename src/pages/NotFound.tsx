@@ -2,7 +2,6 @@
 import { Footer } from '../nav/footer';
 import { Header } from '../nav/header';
 
-import '../css/ghost.css';
 import { ThemeToggle } from '../ui/theme_toggle';
 import { RainbowText } from '../fancy/rainbow';
 import { GhostComponent } from '../fancy/ghost';
@@ -27,8 +26,8 @@ export function NotFound() {
             </div>
 
             <GhostComponent
-               ghostColor="#0f0;"
-               waveColor="#ff0;"
+               ghostColor="#00ff00"
+               waveColor="#ff0"
             />
 
          </section>

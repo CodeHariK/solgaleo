@@ -1,5 +1,134 @@
 import { onCleanup, onMount } from "solid-js";
 
+/*CSS:
+#ghost {
+    position: absolute;
+}
+
+.ghost {
+    background: var(--ghostColor);
+    width: 120px;
+    height: 150px;
+    border-radius: 100px 100px 0 0;
+    box-shadow: 0 0 50px var(--ghostColor);
+    position: relative;
+    transform-origin: center;
+    animation: float 3s ease-out infinite;
+}
+
+.ghost__eyes {
+    display: flex;
+    gap: 25px;
+    padding-top: 44px;
+    justify-content: center;
+    position: relative;
+}
+
+.ghost__eyes_eye {
+    width: 10px;
+    height: 16px;
+    border: 6px solid var(--waveColor);
+    border-radius: 100px;
+    clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
+    transition: .1s;
+}
+
+.ghost:hover .ghost__eyes_eye,
+#ghost.active .ghost__eyes_eye {
+    background: var(--waveColor);
+    border-color: yellow;
+    clip-path: none;
+    height: 25px;
+}
+
+.ghost__waves {
+    display: flex;
+    position: absolute;
+    bottom: -32px;
+    height: 30px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ghost__wave {
+    width: 200%;
+    height: 30px;
+    background: var(--waveColor);
+    flex-shrink: 0;
+
+    animation: ghost-wave 3s linear infinite;
+
+    --size: 10px;
+    --p: 5px;
+    --R: 11.18px;
+
+    -webkit-mask:
+        radial-gradient(var(--R) at 50% calc(100% - (var(--size) + var(--p))), blue 99%, #0000 101%) calc(50% - 2*var(--size)) 0/calc(4*var(--size)) 100%,
+        radial-gradient(var(--R) at 50% calc(100% + var(--p)), #0000 99%, red 101%) 50% calc(100% - var(--size))/calc(4*var(--size)) 100% repeat-x;
+}
+
+.ghost__mouth {
+    width: 44px;
+    height: 8px;
+    background: #000;
+    border-radius: 10px;
+    margin: 16px auto 0;
+    position: relative;
+    animation: sleep 3s ease-out infinite;
+    transition: .1s;
+}
+
+.ghost:hover .ghost__mouth:before,
+#ghost.active .ghost__mouth:before {
+    display: none;
+}
+
+.ghost:hover .ghost__mouth,
+#ghost.active .ghost__mouth {
+    animation: none;
+    background: #000;
+    width: 32px;
+    height: 29px;
+    clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
+    border-radius: 100px;
+    margin-top: 1px;
+}
+
+#ghost.active .ghost {
+    animation: none;
+}
+
+@keyframes ghost-wave {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes sleep {
+    0% {
+        width: 44px;
+    }
+
+    50% {
+        width: 26px;
+    }
+
+    100% {
+        width: 44px;
+    }
+}
+
+@keyframes float {
+    50% {
+        transform: translate(0, 20px);
+    }
+}
+*/
+
 export const GhostComponent = ({ ghostColor, waveColor }: { ghostColor?: string, waveColor?: string }) => {
     let ghost: HTMLDivElement | undefined;
 

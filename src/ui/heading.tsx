@@ -1,11 +1,64 @@
 import { type JSX } from 'solid-js';
 
-import "../css/heading.css"
-
 export type HeadingProps = {
     class?: string;
     children: JSX.Element;
 }
+
+/*CSS:
+h1 {
+    font-size: 1.9rem;
+    line-height: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+h2 {
+    font-size: 1.7rem;
+    line-height: 1.8rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+h3 {
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+}
+
+h4 {
+    font-size: 1.3rem;
+    line-height: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+}
+
+h5 {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+
+}
+
+h6 {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    font-weight: 400;
+}
+
+p,
+li {
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {}
+*/
 
 export function Mark(props: HeadingProps) {
     return <mark class={`px-2 text-white bg-blue-600 rounded night:bg-blue-500 ${props.class}`}>{props.children}</mark>;
