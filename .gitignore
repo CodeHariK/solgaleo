@@ -131,5 +131,7 @@ dist
 
 dist-test
 
-.gen.css
 bun.lock
+
+*.gen.css
+*.gen.css.ts

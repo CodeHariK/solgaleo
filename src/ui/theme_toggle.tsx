@@ -1,5 +1,7 @@
 import { createSignal, onMount } from "solid-js";
 
+import "./ui.gen.css"
+
 let THEMECOUNT = 0
 let THEME = ["light", "night"];
 
@@ -41,15 +43,24 @@ export function ThemeToggle() {
         setTheme(savedTheme);
         document.documentElement.className = theme();
         THEMECOUNT = THEME.indexOf(savedTheme)
-        console.log(savedTheme)
     });
+
+    /*CSS:
+        #theme-toggle {
+            padding: 0.625rem; 
+            border-radius: 0.5rem; 
+            color: var : #60A5FA : #3B82F6 ; 
+        }
+        #theme-toggle:hover {
+            background: var : #F3F4F6 : #374151 ; 
+        }
+    */
 
     return (
         <button
             id="theme-toggle"
             type="button"
             onClick={toggleTheme}
-            class="text-blue-400 night:text-gray-200 hover:bg-gray-100 night:hover:bg-gray-700 rounded-lg p-2.5"
         > {theme() === "light" ?
             <svg
                 class="w-5 h-5"

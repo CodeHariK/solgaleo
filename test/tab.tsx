@@ -38,9 +38,17 @@ import { useNavigate, useLocation } from '@solidjs/router';
     opacity: 0.5;
 }
 
-.tab-level.level-0 { padding-left: 1rem; }
-.tab-level.level-1 { padding-left: 2.5rem; background: rgba(0, 0, 0, 0.02); }
-.tab-level.level-2 { padding-left: 4rem; background: rgba(0, 0, 0, 0.03); }
+.tab-level.level-0 { 
+    padding-left: 1rem;
+}
+.tab-level.level-1 { 
+    padding-left: 2.5rem; 
+    background: rgba(0, 0, 0, 0.02); 
+}
+.tab-level.level-2 {
+    padding-left: 4rem;
+    background: rgba(0, 0, 0, 0.03);
+}
 
 .tab-button {
     padding: 0.5rem 1rem;

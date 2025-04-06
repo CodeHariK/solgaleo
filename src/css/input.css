@@ -15,54 +15,6 @@
     background: var(--option-focus-bg);
 }
 
-.AppSelect {
-    display: block;
-    padding: 0.625rem;
-    border-radius: 0.5rem;
-    border-width: 1px;
-    border-color: #D1D5DB;
-    outline-style: none;
-    width: 100%;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: #111827;
-    background-color: #ffffff;
-}
-
-.AppDropdown {
-    background: var(--dropdown-bg);
-    border-radius: .3rem;
-    padding: .3rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-}
-
-.AppDropdownHeader {
-    color: var(--dropdown-header-color);
-    background: var(--dropdown-header-bg);
-    border: var(--dropdown-header-border);
-    padding: 0.3rem;
-}
-
-.AppDropdownItem {
-    color: var(--dropdown-item-color);
-    background: var(--dropdown-item-bg);
-    border: var(--dropdown-item-border);
-    display: inline-flex;
-    padding: 0.3rem;
-    align-items: center;
-    width: 100%;
-}
-
-.AppDropdownItem:hover {
-    color: var(--dropdown-item-hover-color);
-    background: var(--dropdown-item-hover-bg);
-}
-
-.AppDropdownItem:focus {
-    color: var(--dropdown-item-focus-color);
-    background: var(--dropdown-item-focus-bg);
-}
-
 .AppTextInput {
     color: var(--input-color);
     background: var(--input-bg);
@@ -78,41 +30,6 @@
 
 .AppErrorTextInput {
     border-color: #EF4444;
-}
-
-.AppCheckboxInput {
-    accent-color: var(--checkbox-color);
-    background: var(--checkbox-bg);
-    border: var(--checkbox-border);
-    border-radius: 0.25rem;
-    width: 1rem;
-    height: 1rem;
-    user-select: none;
-}
-
-.AppLabel {
-    color: var(--label-color);
-    background: var(--label-bg);
-    border: var(--label-border);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    user-select: none;
-}
-
-.AppLabelDisabled {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    color: #9CA3AF;
-    user-select: none;
-}
-
-.AppHelperLabel {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 400;
-    color: #6B7280;
 }
 
 .AppErrorText {
@@ -145,16 +62,6 @@
 }
 
 .light {
-    --dropdown-bg: #e0e0e0;
-    --dropdown-header-bg: #cfcfcf;
-    --dropdown-header-color: #9c40ca;
-    --dropdown-header-border: none;
-    --dropdown-item-bg: #ebebeb;
-    --dropdown-item-color: #343434;
-    --dropdown-item-border: none;
-    --dropdown-item-hover-bg: #6b6b6b;
-    --dropdown-item-hover-color: #d4d4d4;
-
     --position-bg: transparent;
     --position-color: #9c40ca;
     --position-border: none;
@@ -172,27 +79,9 @@
     --input-bg: #ffffff;
     --input-color: #111827;
     --input-border: 1px solid #d1d5db;
-
-    --checkbox-bg: #ffffff;
-    --checkbox-color: #111827;
-    --checkbox-border: 1px solid #d1d5db;
-
-    --label-bg: #ffffff;
-    --label-color: #111827;
-    --label-border: 1px solid #d1d5db;
 }
 
 .night {
-    --dropdown-bg: #575757;
-    --dropdown-header-bg: #454545;
-    --dropdown-header-color: #8a87e3;
-    --dropdown-header-border: none;
-    --dropdown-item-bg: #4f4f4f;
-    --dropdown-item-color: #f8f8f8;
-    --dropdown-item-border: none;
-    --dropdown-item-hover-bg: #d7d7d7;
-    --dropdown-item-hover-color: #4b4b4b;
-
     --position-bg: transparent;
     --position-color: #9c40ca;
     --position-border: none;
@@ -210,12 +99,4 @@
     --input-bg: #3b3b3b;
     --input-color: #ffffff;
     --input-border: 1px solid #d1d5db;
-
-    --checkbox-bg: #ff3838;
-    --checkbox-color: #3473fc;
-    --checkbox-border: 1px solid #6eff75;
-
-    --label-bg: #ffa2a2;
-    --label-color: #9b51ef;
-    --label-border: 1px solid #0260ec;
 }

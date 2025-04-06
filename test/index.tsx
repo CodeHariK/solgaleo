@@ -11,7 +11,7 @@ import { RoutedTabs } from './tab.tsx'
 
 // Solgaleo.AddTheme("custom")
 
-// render(() => <Storybook />, document.body!)
+render(() => <Storybook />, document.body!)
 
 const tabs = [
     {
@@ -48,29 +48,29 @@ const tabs = [
     }
 ];
 
-render(() => <Router>
-    <Route
-        path="/"
-        component={() => (
-            <>
-                <div style={{ background: "white", color: "black" }}>
-                    <RoutedTabs
-                        tabs={tabs}
-                        defaultTab="home"
-                        baseRoute="/"
-                        id="light"
-                    />
-                </div>
+// render(() => <Router>
+//     <Route
+//         path="/"
+//         component={() => (
+//             <>
+//                 <div style={{ background: "white", color: "black" }}>
+//                     <RoutedTabs
+//                         tabs={tabs}
+//                         defaultTab="home"
+//                         baseRoute="/"
+//                         id="light"
+//                     />
+//                 </div>
 
-                <div style={{ background: "#6a3568", color: "white" }}>
-                    <RoutedTabs
-                        tabs={tabs}
-                        defaultTab="home"
-                        baseRoute="/"
-                        id="night"
-                    />
-                </div>
-            </>
-        )} />
-</Router>,
-    document.body!)
+//                 <div style={{ background: "#6a3568", color: "white" }}>
+//                     <RoutedTabs
+//                         tabs={tabs}
+//                         defaultTab="home"
+//                         baseRoute="/"
+//                         id="night"
+//                     />
+//                 </div>
+//             </>
+//         )} />
+// </Router>,
+//     document.body!)

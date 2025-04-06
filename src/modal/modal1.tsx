@@ -1,5 +1,5 @@
 import { Setter } from "solid-js";
-import { Select } from "../input/select";
+import { Select } from "../input/dropdown";
 import { SpaceForm } from "../input/spaceform";
 import { TextInput } from "../input/textinput";
 import { CrossIcon, DeleteIcon } from "../svg/svg";

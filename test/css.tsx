@@ -25,6 +25,10 @@
     background-color: var:#A7F3D0:#A7F3D0;
 }
 
+#hello {
+    color: var: orange : blue;
+}
+
 #hello > .stepper {
     color: var: orange : blue;
 }
@@ -50,6 +54,15 @@
     animation:
         typewriter 5s steps(50) 1s 1 normal both,
         blinkingCursor 500ms steps(50) infinite normal;
+}
+
+.tab-level:not(:last-child)::after {
+    content: '';
+}
+
+.tab-level.level-2 {
+    padding-left: 4rem;
+    background: rgba(0, 0, 0, 0.03);
 }
 
 */

@@ -20,6 +20,7 @@ type Node = {
 let LightVars: Record<string, string> = {};
 let NightVars: Record<string, string> = {};
 let FinalCSS: string[] = [];
+let UniqueSelectors: Set<string> = new Set();
 
 function buildSelectorPath(path: string[]): string {
     return path.filter(Boolean).join(" ").replace(/\s+/g, " ");
@@ -103,6 +104,7 @@ function processNode(node: Node, path: string[] = []) {
     }
 
     if (lines.length) {
+        UniqueSelectors.add(fullSelector.trim());
         FinalCSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
     }
 
@@ -254,10 +256,12 @@ export default function ExtractCssComments(dir: string): Plugin {
                     const cssFilePath = path.join(lastFolderPath, `${lastFolderName}.gen.css`);
                     await fs.promises.writeFile(cssFilePath,
                         `/*\n${processed.join("\n")}\n*/\n\n` +
-                        combinedCSS.trim(),
+                        combinedCSS.trim() + "\n",
                         "utf-8");
 
                     console.log(`Extracted CSS to ${cssFilePath}`);
+
+                    await writeSelectorsFile(cssFilePath);
 
                     LightVars = {};
                     NightVars = {};
@@ -269,7 +273,6 @@ export default function ExtractCssComments(dir: string): Plugin {
 
         await walk(dir);
     }
-
 
     return {
         name: 'vite-plugin-extract-css-comments',
@@ -286,4 +289,55 @@ export default function ExtractCssComments(dir: string): Plugin {
             });
         },
     };
+}
+
+async function writeSelectorsFile(cssFilePath: string) {
+    const selectors = Array.from(UniqueSelectors)
+        .filter(s => s.trim())
+        .map(selector => {
+            // Get the last class selector
+            const parts = selector.split(' ');
+            const lastPart = parts[parts.length - 1];
+
+            // Handle compound classes with dots
+            const classNames = lastPart.split('.');
+            const lastClass = classNames[classNames.length - 1];
+
+            // Only process if it starts with . or contains a class
+            if (!lastPart.includes('.')) return null;
+
+            // Remove pseudo elements, pseudo classes and get base class name
+            const value = lastClass
+                .replace(/:[^:.]+/g, '')      // Remove pseudo classes like :not()
+                .replace(/:{2}[^:.]+/g, '')    // Remove pseudo elements like ::after
+                .replace(/^\./, '')           // Remove leading .
+                .replace(/:$/, '')            // Remove trailing colon
+                .trim();
+
+            // Generate the Pascal case key
+            const key = value
+                .replace(/-(.)/g, (_, chr) => chr.toUpperCase())
+                .replace(/^[a-z]/, c => c.toUpperCase());
+
+            return { key, value };
+        })
+        .filter((item): item is { key: string, value: string } =>
+            item !== null && item.key !== '' && item.value !== '')
+        .filter((item, index, self) =>
+            index === self.findIndex(t => t.value === item.value));
+
+    const content = `// Auto-generated CSS selectors
+export const SolCSS = {
+    ${selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ')}
+} as const;
+
+export type SolCSSType = keyof typeof SolCSS;
+`;
+
+    const tsFilePath = cssFilePath + '.ts';
+    await fs.promises.writeFile(tsFilePath, content, 'utf-8');
+
+    console.log(`Generated selectors file: ${tsFilePath}`);
+
+    UniqueSelectors.clear();
 }
