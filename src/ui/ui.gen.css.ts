@@ -1,10 +1,10 @@
 // Auto-generated CSS selectors
 export const SolCSS = {
-    AppButtonBase: "AppButtonBase",
-    AppIcon: "AppIcon",
-    AppIconButton: "AppIconButton",
-    AppMaterialButton: "AppMaterialButton",
-    AppOutlinedButton: "AppOutlinedButton"
+    Avatar: "avatar",
+    SolButtonBase: "SolButtonBase",
+    SolIconButton: "SolIconButton",
+    SolMaterialButton: "SolMaterialButton",
+    SolOutlinedButton: "SolOutlinedButton"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

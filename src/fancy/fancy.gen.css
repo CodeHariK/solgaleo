@@ -3,7 +3,6 @@ src/fancy/banner.tsx
 src/fancy/ghost.tsx
 src/fancy/terminal.tsx
 src/fancy/marquee.tsx
-src/fancy/treeview.tsx
 src/fancy/flicker.tsx
 src/fancy/glittercard.tsx
 src/fancy/rainbow.tsx
@@ -206,80 +205,6 @@ src/fancy/rainbow.tsx
     font-size: 200px;
     font-weight: 900;
     color: #b3ff98;
-}
-
-.tree-view {
-    display: inline-flex;
-    padding: 0.5rem;
-    user-select: none;
-    background: #565656;
-}
-
-.tree-view.horizontal {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.tree-item {
-    display: flex;
-    padding: 0.25rem;
-    cursor: pointer;
-}
-
-.tree-item.vertical {
-    flex-direction: column;
-    background: #ff6767;
-}
-
-.tree-item.horizontal {
-    flex-direction: row;
-    align-items: center;
-    background: #9fdf4a;
-}
-
-.tree-item:hover {
-    background: white;
-}
-
-.tree-item-content {
-    display: flex;
-    align-items: center;
-    background: #7878e7;
-}
-
-.tree-item-content span {
-    background: #6d44ae;
-    padding: 0.25rem;
-}
-
-.tree-toggle {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s ease;
-}
-
-.tree-toggle.open.vertical {
-    transform: rotate(90deg);
-}
-
-.tree-toggle.open.horizontal {
-    transform: rotate(180deg);
-}
-
-.tree-children.vertical {
-    margin-left: 1rem;
-    background: yellow;
-    padding: 0.2rem;
-}
-
-.tree-children.horizontal {
-    margin-top: 0rem;
-    background: #f37878;
-    padding: 0.2rem;
 }
 
 @keyframes flicker {

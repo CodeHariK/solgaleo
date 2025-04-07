@@ -77,18 +77,27 @@
     0%,
     100% {
         text-shadow:
-            0 0 10px var(--neon-pink),ð
+            0 0 10px var(--neon-pink),
             0 0 20px var(--neon-pink),
             0 0 30px var(--neon-pink);
     }
 }
 
-@media (min-width: 768px) {}
 
-@media (min-width: 768px) {
+p { padding-left: 4rem; color: var:; background: red; }
+
+h2 {
+    line-height: 1.5rem;
 }
 
-@media (min-width: 768px) {
+p { font-size: 1rem; }
+
+@media (min-width: 700px) {}
+
+@media (min-width: 800px) {
+}
+
+@media (min-width: 900px) {
     h6 {
         font-size: 1rem;
         line-height: 1.4rem;

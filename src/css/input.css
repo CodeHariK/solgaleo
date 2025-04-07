@@ -26,35 +26,7 @@
     color: #6B7280;
 }
 
-.AppPositionBoxButton {
-    color: var(--position-color);
-    background: var(--position-bg);
-    border: var(--position-border);
-    display: inline-flex;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    column-gap: 0.5rem;
-    align-items: center;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-}
-
-.AppPositionBoxButton:hover {
-    color: var(--position-hover-color);
-    background-color: var(--position-hover-bg);
-}
-
 .light {
-    --position-bg: transparent;
-    --position-color: #9c40ca;
-    --position-border: none;
-    --position-hover-bg: #efefef;
-    --position-hover-color: #90328b;
-
     --option-bg: transparent;
     --option-color: #0000000;
     --option-border: 1px solid #cbd5e1;
@@ -65,12 +37,6 @@
 }
 
 .night {
-    --position-bg: transparent;
-    --position-color: #9c40ca;
-    --position-border: none;
-    --position-hover-bg: #353535;
-    --position-hover-color: #faa0f6;
-
     --option-bg: transparent;
     --option-color: #fff;
     --option-border: 1px solid #cbd5e1;

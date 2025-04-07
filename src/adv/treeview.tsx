@@ -1,5 +1,4 @@
 import { For, Show, createSignal } from 'solid-js';
-import "./fancy.gen.css"
 
 /* CSS:
 .tree-view {

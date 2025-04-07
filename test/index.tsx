@@ -1,52 +1,55 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
-import { Storybook } from './storybook.tsx'
 
 import "../src/css/input.css"
 import "../src/css/index.css"
-import { Route, Router } from '@solidjs/router'
-import { RoutedTabs } from './tab.tsx'
+
+import { AdvTest } from './adv.test'
+import { InputTest } from './input.test'
 
 // import * as Solgaleo from "solgaleo";
 
 // Solgaleo.AddTheme("custom")
 
-render(() => <Storybook />, document.body!)
+// render(() => <AdvTest />, document.body!)
+render(() => <InputTest />, document.body!)
 
-const tabs = [
-    {
-        id: 'home',
-        label: 'Home',
-        content: <div>Home Content</div>
-    },
-    {
-        id: 'settings',
-        label: 'Settings',
-        children: [
-            {
-                id: 'profile',
-                label: 'Profile',
-                content: <div>Profile Settings</div>
-            },
-            {
-                id: 'account',
-                label: 'Account',
-                children: [
-                    {
-                        id: 'security',
-                        label: 'Security',
-                        content: <div>Security Settings</div>
-                    },
-                    {
-                        id: 'notifications',
-                        label: 'Notifications',
-                        content: <div>Notification Preferences</div>
-                    }
-                ]
-            }
-        ]
-    }
-];
+// render(() => <Storybook />, document.body!)
+
+// const tabs = [
+//     {
+//         id: 'home',
+//         label: 'Home',
+//         content: <div>Home Content</div>
+//     },
+//     {
+//         id: 'settings',
+//         label: 'Settings',
+//         children: [
+//             {
+//                 id: 'profile',
+//                 label: 'Profile',
+//                 content: <div>Profile Settings</div>
+//             },
+//             {
+//                 id: 'account',
+//                 label: 'Account',
+//                 children: [
+//                     {
+//                         id: 'security',
+//                         label: 'Security',
+//                         content: <div>Security Settings</div>
+//                     },
+//                     {
+//                         id: 'notifications',
+//                         label: 'Notifications',
+//                         content: <div>Notification Preferences</div>
+//                     }
+//                 ]
+//             }
+//         ]
+//     }
+// ];
 
 // render(() => <Router>
 //     <Route

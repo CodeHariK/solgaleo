@@ -5,7 +5,7 @@ import { Plugin } from "vite";
 
 const CSS_COMMENT_REGEX = /\/\*\s*CSS:\s*([\s\S]*?)\*\//gm;
 
-const propMap: Record<string, string> = {
+const PROP_MAP: Record<string, string> = {
     background: "bg",
     color: "col",
     position: "pos",
@@ -17,16 +17,16 @@ type Node = {
     children: Node[];
 };
 
-let LightVars: Record<string, string> = {};
-let NightVars: Record<string, string> = {};
-let FinalCSS: string[] = [];
-let UniqueSelectors: Set<string> = new Set();
+let LIGHT_VARS: Record<string, string> = {};
+let NIGHT_VARS: Record<string, string> = {};
+let FINAL_CSS: string[] = [];
+let UNIQUE_SELECTORS: Set<string> = new Set();
 
-function buildSelectorPath(path: string[]): string {
+function BuildSelectorPath(path: string[]): string {
     return path.filter(Boolean).join(" ").replace(/\s+/g, " ");
 }
 
-function flattenSelector(path: string[]): string {
+function FlattenSelector(path: string[]): string {
     if (path.length === 0) return "";
 
     const last = path.at(-1);
@@ -46,8 +46,8 @@ function flattenSelector(path: string[]): string {
 function ExtractInlineVars(line: string) {
     const matches = [...line.matchAll(/var\((--[\w-]+)\)/g)].map(m => m[1]);
     matches.forEach((m) => {
-        LightVars[m] = "";
-        NightVars[m] = "";
+        LIGHT_VARS[m] = "";
+        NIGHT_VARS[m] = "";
     });
 }
 
@@ -56,11 +56,11 @@ function ExtractVarValue(value: string, key: string) {
 
         const parts = value.split(":").map(p => p.trim());
         if (parts.length === 2) {
-            LightVars[key] = parts[1];
-            NightVars[key] = parts[1];
+            LIGHT_VARS[key] = parts[1];
+            NIGHT_VARS[key] = parts[1];
         } else if (parts.length === 3) {
-            LightVars[key] = parts[1];
-            NightVars[key] = parts[2];
+            LIGHT_VARS[key] = parts[1];
+            NIGHT_VARS[key] = parts[2];
         }
         return true
     }
@@ -78,8 +78,8 @@ function ExtractKV(value: string, prop: string, key: string, lines: string[]) {
     }
 }
 
-function processNode(node: Node, path: string[] = []) {
-    const fullSelector = buildSelectorPath([...path, node.selector]);
+function ProcessNode(node: Node, path: string[] = []) {
+    const fullSelector = BuildSelectorPath([...path, node.selector]);
     const lines: string[] = [];
 
     for (const propLine of node.properties) {
@@ -87,15 +87,15 @@ function processNode(node: Node, path: string[] = []) {
         const [rawProp, ...rest] = propLine.split(":");
         const prop = rawProp.trim();
         const value = rest.join(":").trim();
-        const short = propMap[prop] ?? prop;
+        const short = PROP_MAP[prop] ?? prop;
         const last = (node.selector.includes(":")) ? node.selector.split(":").at(-1) : "";
-        const cleanPath = flattenSelector([...path, node.selector]);
+        const cleanPath = FlattenSelector([...path, node.selector]);
         const key = `--${cleanPath}-${short}${last ? `-${last}` : ""}`.replace(/--+/g, "--");
 
         if (prop.startsWith("--")) {
             if (!ExtractVarValue(value, prop)) {
-                LightVars[prop] = value;
-                NightVars[prop] = value;
+                LIGHT_VARS[prop] = value;
+                NIGHT_VARS[prop] = value;
             }
             continue
         }
@@ -104,16 +104,16 @@ function processNode(node: Node, path: string[] = []) {
     }
 
     if (lines.length) {
-        UniqueSelectors.add(fullSelector.trim());
-        FinalCSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
+        UNIQUE_SELECTORS.add(fullSelector.trim());
+        FINAL_CSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
     }
 
     for (const child of node.children) {
-        processNode(child, [...path, node.selector]);
+        ProcessNode(child, [...path, node.selector]);
     }
 }
 
-function convertCSS(input: string) {
+function ConvertCSS(input: string) {
 
     const lines = input.split(/(?<=[;{}])\s*\n/)
 
@@ -134,7 +134,7 @@ function convertCSS(input: string) {
 
         ExtractInlineVars(line);
 
-        if (trimLine(line).startsWith("@keyframes")) {
+        if (trimLine(line).startsWith("@keyframes") || trimLine(line).startsWith("@media")) {
             const header = trimLine(line); // e.g., "@keyframes marquee"
             const name = header.split(" ")[1]?.trim();
             const buffer: string[] = [header];
@@ -163,7 +163,7 @@ function convertCSS(input: string) {
                     const prop = rawProp.trim();
                     const value = rest.join(":").trim().replace(/;$/, "");
 
-                    const key = `--keyframes-${name}-${currentStep}-${propMap[prop] ?? prop}`;
+                    const key = `--keyframes-${name}-${currentStep}-${PROP_MAP[prop] ?? prop}`;
                     if (ExtractVarValue(value, key)) {
                         keyframeLine = `        ${prop}: var(${key});`;
                     }
@@ -176,7 +176,7 @@ function convertCSS(input: string) {
             }
 
 
-            FinalCSS.push(buffer.join("\n"));
+            FINAL_CSS.push(buffer.join("\n"));
             continue;
         }
 
@@ -186,7 +186,23 @@ function convertCSS(input: string) {
             continue;
         }
 
-        if (trimmed.endsWith("{")) {
+
+        if (trimmed.includes("{") && trimmed.indexOf("{") < trimmed.lastIndexOf("}")) {
+            let indexOpen = trimmed.indexOf("{");
+            let indexClose = trimmed.indexOf("}");
+            let properties = trimmed.substring(indexOpen + 1, indexClose).split(";")
+            if (properties[0] != "") {
+
+                const sel = trimmed.substring(0, indexOpen).trim();
+
+                let node = current.children.find(c => c.selector === sel);
+                if (!node) {
+                    node = { selector: sel, properties: [], children: [] };
+                    current.children.push(node);
+                }
+                node.properties.push(...properties.map(p => p.trim()).filter(p => p != "" && p != ";"));
+            }
+        } else if (trimmed.endsWith("{")) {
             const sel = trimmed.slice(0, -1).trim();
 
             let node = current.children.find(c => c.selector === sel);
@@ -206,12 +222,12 @@ function convertCSS(input: string) {
         i++;
     }
 
-    processNode(root);
+    ProcessNode(root);
 }
 
 export default function ExtractCssComments(dir: string): Plugin {
-    let lastFolderPath = "", lastFolderName = ""
-    let processed: string[] = [];
+    let folderPath = "", folderName = ""
+    let processedFile: string[] = [];
 
     async function runExtract() {
         const walk = async (dirPath: string) => {
@@ -220,13 +236,8 @@ export default function ExtractCssComments(dir: string): Plugin {
             for (const entry of entries) {
                 const fullPath = path.join(dirPath, entry.name);
 
-                const folderPath = path.dirname(fullPath);
-                const folderName = path.basename(folderPath);
-                if (folderPath !== lastFolderPath) {
-                    lastFolderPath = folderPath;
-                }
-                lastFolderPath = folderPath;
-                lastFolderName = folderName;
+                folderPath = path.dirname(fullPath);
+                folderName = path.basename(folderPath);
 
                 if (entry.isDirectory()) {
                     await walk(fullPath);
@@ -237,36 +248,44 @@ export default function ExtractCssComments(dir: string): Plugin {
 
                     while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
                         const input = match[1].trim();
-                        processed.push(fullPath);
-                        convertCSS(input);
+                        processedFile.push(fullPath);
+                        ConvertCSS(input);
                     }
                 }
             }
-            if (LightVars || NightVars || FinalCSS) {
+
+            if (LIGHT_VARS || NIGHT_VARS || FINAL_CSS) {
                 const buildVars = (theme: string, vars: Record<string, string>) =>
                     `.${theme} {\n` +
                     Object.entries(vars)
-                        .map(([k, v]) => (v != "" && v != ";") ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}` : `    /* ${k}: ; */`)
+                        .map(([k, v]) =>
+                            (v != "" && v != ";")
+                                ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}`
+                                : `    /* ${k}: ; */`)
                         .join("\n") +
                     "\n}";
 
-                let combinedCSS = [buildVars("light", LightVars), "", buildVars("night", NightVars), "", ...FinalCSS].join("\n");
+                let combinedCSS = [
+                    buildVars("light", LIGHT_VARS), "",
+                    buildVars("night", NIGHT_VARS), "",
+                    ...FINAL_CSS
+                ].join("\n");
 
                 if (combinedCSS) {
-                    const cssFilePath = path.join(lastFolderPath, `${lastFolderName}.gen.css`);
+                    const cssFilePath = path.join(folderPath, `${folderName}.gen.css`);
                     await fs.promises.writeFile(cssFilePath,
-                        `/*\n${processed.join("\n")}\n*/\n\n` +
+                        `/*\n${processedFile.join("\n")}\n*/\n\n` +
                         combinedCSS.trim() + "\n",
                         "utf-8");
 
                     console.log(`Extracted CSS to ${cssFilePath}`);
 
-                    await writeSelectorsFile(cssFilePath);
+                    await WriteSelectorsFile(cssFilePath);
 
-                    LightVars = {};
-                    NightVars = {};
-                    processed = [];
-                    FinalCSS.length = 0;
+                    LIGHT_VARS = {};
+                    NIGHT_VARS = {};
+                    processedFile = [];
+                    FINAL_CSS.length = 0;
                 }
             }
         };
@@ -291,8 +310,8 @@ export default function ExtractCssComments(dir: string): Plugin {
     };
 }
 
-async function writeSelectorsFile(cssFilePath: string) {
-    const selectors = Array.from(UniqueSelectors)
+async function WriteSelectorsFile(cssFilePath: string) {
+    const selectors = Array.from(UNIQUE_SELECTORS)
         .filter(s => s.trim())
         .map(selector => {
             // Get the last class selector
@@ -339,5 +358,5 @@ export type SolCSSType = keyof typeof SolCSS;
 
     console.log(`Generated selectors file: ${tsFilePath}`);
 
-    UniqueSelectors.clear();
+    UNIQUE_SELECTORS.clear();
 }

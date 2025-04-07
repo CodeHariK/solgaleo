@@ -1,4 +1,60 @@
+import { SearchIcon } from "../svg/svg";
 import { useSpaceContext } from "./spaceform";
+
+/*CSS:
+.searchinput {
+    position: relative;
+}
+
+.searchinput > div {
+    display: flex; 
+    position: absolute; 
+    top: 0;
+    bottom: 0; 
+    align-items: center; 
+    pointer-events: none;
+    inset-inline-start: 0px;
+    padding-inline-start: 0.75rem;
+}
+
+input[type="search"] {
+    display: block; 
+    padding: 1rem; 
+    border-radius: 0.5rem; 
+    border-width: 1px; 
+    border-color: #D1D5DB; 
+    width: 100%; 
+    font-size: 0.875rem;
+    line-height: 1.25rem; 
+    color: #111827; 
+    background-color: #F9FAFB; 
+    padding-inline-start: 2.5rem;
+}
+
+.searchinput > button {
+    position: absolute; 
+    bottom: 0.625rem; 
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem; 
+    padding-left: 1rem;
+    padding-right: 1rem; 
+    border-radius: 0.5rem; 
+    font-size: 0.875rem;
+    line-height: 1.25rem; 
+    font-weight: 500; 
+    color: #ffffff; 
+    background-color: #1D4ED8;
+    inset-inline-end: 0.625rem;
+    bottom: 0.625rem;
+}
+.searchinput > button:hover {
+    background-color: #1E40AF;
+}
+.searchinput > button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+*/
 
 type SearchInputProps = {
     name: string;
@@ -9,21 +65,18 @@ export function SearchInput(props: SearchInputProps) {
     const { handleChange } = useSpaceContext();
 
     return (
-        <div class="relative">
-            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg class="w-4 h-4 text-gray-500 night:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>
+        <div class="searchinput">
+            <div>
+                <SearchIcon />
             </div>
 
             <input type="search" id="search"
-                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 night:bg-gray-700 night:border-gray-600 night:placeholder-gray-400 night:text-white night:focus:ring-blue-500 night:focus:border-blue-500"
                 placeholder={props.placeholder}
                 onInput={(e) => {
                     handleChange(props.name, e.target.value)
                 }} required />
 
-            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 night:bg-blue-600 night:hover:bg-blue-700 night:focus:ring-blue-800">Search</button>
+            <button type="submit">Search</button>
         </div>
     );
 }

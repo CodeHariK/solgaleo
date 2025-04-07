@@ -1,15 +1,14 @@
 /*
 src/ui/heading.tsx
+src/ui/heading.tsx
+src/ui/button.tsx
+src/ui/button.tsx
+src/ui/button.tsx
 src/ui/button.tsx
 src/ui/theme_toggle.tsx
 */
 
 .light {
-    --icon-width: 1.2rem;
-    --icon-height: 1.2rem;
-    --icon-color: #475569;
-    --icon-bg: transparent;
-    --icon-border: 0px solid #cbd5e1;
     --mat-color: #ffffff;
     --mat-bg: #3b75c8;
     --mat-border: 1px solid #cbd5e1;
@@ -29,11 +28,6 @@ src/ui/theme_toggle.tsx
 }
 
 .night {
-    --icon-width: 1.2rem;
-    --icon-height: 1.2rem;
-    --icon-color: #475569;
-    --icon-bg: transparent;
-    --icon-border: 0px solid #cbd5e1;
     --mat-color: #ffffff;
     --mat-bg: #204477;
     --mat-border: 1px solid #cbd5e1;
@@ -52,10 +46,9 @@ src/ui/theme_toggle.tsx
     --theme-toggle-bg-hover: #374151 ;
 }
 
- {
-    @media (min-width: 1024px) {};
+@media (min-width: 768px) {
 }
-
+@media (min-width: 1024px) {}
 h1 {
     font-size: 1.9rem;
     line-height: 2rem;
@@ -102,7 +95,17 @@ p, li {
     line-height: 1.25rem;
 }
 
-.AppButtonBase {
+.avatar {
+    display: inline-block;
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+}
+
+.SolButtonBase {
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
     padding-left: 1rem;
@@ -119,57 +122,45 @@ p, li {
     user-select: none;
 }
 
-.AppButtonBase:hover {
+.SolButtonBase:hover {
     opacity: 0.75;
 }
 
-.AppIcon {
-    display: inline-block;
-    flex-shrink: 0;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    width: var(--icon-width);
-    height: var(--icon-height);
-    color: var(--icon-color);
-    background: var(--icon-bg);
-    border: var(--icon-border);
-}
-
-.AppIconButton {
+.SolIconButton {
     width: 1.75rem;
     height: 1.74rem;
 }
 
-.AppMaterialButton {
+.SolMaterialButton {
     justify-content: center;
     color: var(--mat-color);
     background: var(--mat-bg);
     border: var(--mat-border);
 }
 
-.AppMaterialButton:hover {
+.SolMaterialButton:hover {
     color: var(--mat-hover-color);
     background: var(--mat-hover-bg);
 }
 
-.AppMaterialButton:focus {
+.SolMaterialButton:focus {
     color: var(--mat-focus-color);
     background: var(--mat-focus-bg);
 }
 
-.AppOutlinedButton {
+.SolOutlinedButton {
     justify-content: center;
     color: var(--out-color);
     background: var(--out-bg);
     border: var(--out-border);
 }
 
-.AppOutlinedButton:hover {
+.SolOutlinedButton:hover {
     color: var(--out-hover-color);
     background: var(--out-hover-bg);
 }
 
-.AppOutlinedButton:focus {
+.SolOutlinedButton:focus {
     color: var(--out-focus-color);
     background: var(--out-focus-bg);
 }

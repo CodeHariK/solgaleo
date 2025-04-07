@@ -7,7 +7,7 @@ class IconProps {
 function toProp(props: IconProps = {}) {
     return {
         style: {
-            color: props.color ?? "#ffffff",
+            color: props.color ?? "#d65fcb",
             "font-size": `${props.fontSize ?? 1}em`,
             width: `${props.size ?? 1}em`,
             height: `${props.size ?? 1}em`,
@@ -30,6 +30,34 @@ function toProp(props: IconProps = {}) {
     background-color: var:#A7F3D0:#A7F3D0; 
     inset-inline-start: -1rem;
 }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.AppIcon {
+
+    --icon-width: var : 1.2rem;
+    --icon-height: var : 1.2rem;
+    --icon-bg: var : transparent;
+    --icon-color: var : #475569;
+    --icon-border: var : 0px solid #cbd5e1;
+
+    display: inline-block;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    width: var(--icon-width);
+    height: var(--icon-height);
+    color: var(--icon-color);
+    background: var(--icon-bg);
+    border: var(--icon-border);
+}
 */
 
 export function PhoneIcon() {
@@ -40,10 +68,11 @@ export function PhoneIcon() {
     );
 }
 
-export function KeyIcon() {
+export function KeyIcon({ props }: { props?: IconProps }) {
     return (
         <svg
             class="AppIcon"
+            {...toProp(props)}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -144,9 +173,9 @@ export function EmailIcon() {
         </svg>);
 }
 
-export function StarIcon(props: IconProps) {
+export function StarIcon({ props }: { props?: IconProps }) {
     return (
-        <svg style={`color:${props.color ?? "white"};`} class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+        <svg {...toProp(props)} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
             <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
         </svg>
     );
@@ -174,6 +203,12 @@ export function DownIcon() {
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
         </svg>
     );
+}
+
+export function SearchIcon({ props }: { props?: IconProps }) {
+    return <svg {...toProp(props)} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+    </svg>;
 }
 
 export function FilterIcon() {

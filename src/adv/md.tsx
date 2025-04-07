@@ -1,4 +1,3 @@
-
 import { Component, JSX } from "solid-js";
 
 interface MiniMarkdownProps {

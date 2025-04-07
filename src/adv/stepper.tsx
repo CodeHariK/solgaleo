@@ -1,7 +1,5 @@
 import { JSX } from "solid-js/jsx-runtime"
-
-import "./adv.gen.css"
-import { TickIcon } from "../solgaleo.index"
+import { TickIcon } from "../svg/svg"
 
 /* CSS:
 .stepper {

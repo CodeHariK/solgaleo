@@ -1,22 +1,29 @@
 /*
+src/input/position.tsx
 src/input/textinput.tsx
+src/input/search.tsx
 src/input/dropdown.tsx
 src/input/checkbox.tsx
 */
 
 .light {
+    --position-color: #9c40ca;
+    --position-bg: transparent;
+    --position-border: none;
+    --position-hover-color: #faa0f6;
+    --position-hover-bg: #353535;
     --input-color: #111827;
     --input-bg: #ffffff;
     --input-border: 1px solid #d1d5db;
-    --AppDropdown-bg: #e0e0e0;
-    --AppDropdownHeader-col: #9c40ca;
-    --AppDropdownHeader-bg: #cfcfcf;
-    --AppDropdownHeader-border: none;
-    --AppDropdownItem-col: #343434;
-    --AppDropdownItem-bg: #ebebeb;
-    --AppDropdownItem-border: none;
-    --AppDropdownItem-col-hover: #d4d4d4;
-    --AppDropdownItem-bg-hover: #6b6b6b;
+    --SolDropdown-bg: #e0e0e0;
+    --SolDropdownHeader-col: #9c40ca;
+    --SolDropdownHeader-bg: #cfcfcf;
+    --SolDropdownHeader-border: none;
+    --SolDropdownItem-col: #343434;
+    --SolDropdownItem-bg: #ebebeb;
+    --SolDropdownItem-border: none;
+    --SolDropdownItem-col-hover: #d4d4d4;
+    --SolDropdownItem-bg-hover: #6b6b6b;
     --input-accent-color: #111827;
     --label-disabled-color: #6B7280;
     --label-col: #111827;
@@ -24,22 +31,60 @@ src/input/checkbox.tsx
 }
 
 .night {
+    --position-color: #9c40ca;
+    --position-bg: transparent;
+    --position-border: none;
+    --position-hover-color: #faa0f6;
+    --position-hover-bg: #353535;
     --input-color: #ffffff;
     --input-bg: #3b3b3b;
     --input-border: 1px solid #d1d5db;
-    --AppDropdown-bg: #575757;
-    --AppDropdownHeader-col: #8a87e3;
-    --AppDropdownHeader-bg: #454545;
-    --AppDropdownHeader-border: none;
-    --AppDropdownItem-col: #f8f8f8;
-    --AppDropdownItem-bg: #4f4f4f;
-    --AppDropdownItem-border: none;
-    --AppDropdownItem-col-hover: #4b4b4b;
-    --AppDropdownItem-bg-hover: #d7d7d7;
+    --SolDropdown-bg: #575757;
+    --SolDropdownHeader-col: #8a87e3;
+    --SolDropdownHeader-bg: #454545;
+    --SolDropdownHeader-border: none;
+    --SolDropdownItem-col: #f8f8f8;
+    --SolDropdownItem-bg: #4f4f4f;
+    --SolDropdownItem-border: none;
+    --SolDropdownItem-col-hover: #4b4b4b;
+    --SolDropdownItem-bg-hover: #d7d7d7;
     --input-accent-color: #3473fc;
     --label-disabled-color: #9CA3AF;
     --label-col: #9b51ef ;
     --label-p-col: #ae93cc;
+}
+
+.SolPositionBox {
+    display: inline-flex;
+}
+
+.SolPositionBox > div {
+    position: fixed;
+    inset: 0px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.SolPositionBoxButton {
+    color: var(--position-color);
+    background: var(--position-bg);
+    border: var(--position-border);
+    display: inline-flex;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    column-gap: 0.5rem;
+    align-items: center;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+}
+
+.SolPositionBoxButton:hover {
+    color: var(--position-hover-color);
+    background-color: var(--position-hover-bg);
 }
 
 .AppTextInput {
@@ -55,33 +100,88 @@ src/input/checkbox.tsx
     line-height: 1.25rem;
 }
 
-.AppDropdown {
-    background: var(--AppDropdown-bg);
+.searchinput {
+    position: relative;
+}
+
+.searchinput > div {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    pointer-events: none;
+    inset-inline-start: 0px;
+    padding-inline-start: 0.75rem;
+}
+
+input[type="search"] {
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-color: #D1D5DB;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #111827;
+    background-color: #F9FAFB;
+    padding-inline-start: 2.5rem;
+}
+
+.searchinput > button {
+    position: absolute;
+    bottom: 0.625rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #1D4ED8;
+    inset-inline-end: 0.625rem;
+    bottom: 0.625rem;
+}
+
+.searchinput > button:hover {
+    background-color: #1E40AF;
+}
+
+.searchinput > button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.SolDropdown {
+    background: var(--SolDropdown-bg);
     border-radius: .3rem;
     padding: .3rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.AppDropdownHeader {
-    color: var(--AppDropdownHeader-col);
-    background: var(--AppDropdownHeader-bg);
-    border: var(--AppDropdownHeader-border);
+.SolDropdownHeader {
+    color: var(--SolDropdownHeader-col);
+    background: var(--SolDropdownHeader-bg);
+    border: var(--SolDropdownHeader-border);
     padding: 0.3rem;
 }
 
-.AppDropdownItem {
-    color: var(--AppDropdownItem-col);
-    background: var(--AppDropdownItem-bg);
-    border: var(--AppDropdownItem-border);
+.SolDropdownItem {
+    color: var(--SolDropdownItem-col);
+    background: var(--SolDropdownItem-bg);
+    border: var(--SolDropdownItem-border);
     display: inline-flex;
     padding: 0.3rem;
     align-items: center;
     width: 100%;
 }
 
-.AppDropdownItem:hover {
-    color: var(--AppDropdownItem-col-hover);
-    background: var(--AppDropdownItem-bg-hover);
+.SolDropdownItem:hover {
+    color: var(--SolDropdownItem-col-hover);
+    background: var(--SolDropdownItem-bg-hover);
 }
 
 fieldset {

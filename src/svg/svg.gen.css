@@ -5,15 +5,30 @@ src/svg/svg.tsx
 .light {
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
+    --icon-width: 1.2rem;
+    --icon-height: 1.2rem;
+    --icon-color: #475569;
+    --icon-bg: transparent;
+    --icon-border: 0px solid #cbd5e1;
     --svg-background-color: #A7F3D0;
 }
 
 .night {
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
+    --icon-width: 1.2rem;
+    --icon-height: 1.2rem;
+    --icon-color: #475569;
+    --icon-bg: transparent;
+    --icon-border: 0px solid #cbd5e1;
     --svg-background-color: #A7F3D0;
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 .svg {
     display: flex;
     position: absolute;
@@ -25,4 +40,20 @@ src/svg/svg.tsx
     height: 2rem;
     background-color: var(--svg-background-color);
     inset-inline-start: -1rem;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.AppIcon {
+    display: inline-block;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    width: var(--icon-width);
+    height: var(--icon-height);
+    color: var(--icon-color);
+    background: var(--icon-bg);
+    border: var(--icon-border);
 }

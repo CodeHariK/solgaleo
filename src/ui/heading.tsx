@@ -1,4 +1,5 @@
 import { type JSX } from 'solid-js';
+import { SolCSS } from './ui.gen.css';
 
 export type HeadingProps = {
     class?: string;
@@ -60,39 +61,26 @@ li {
 @media (min-width: 1024px) {}
 */
 
-export function Mark(props: HeadingProps) {
-    return <mark class={`px-2 text-white bg-blue-600 rounded night:bg-blue-500 ${props.class}`}>{props.children}</mark>;
-}
-
-export function GradientText(props: HeadingProps) {
-    return <span class={`text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 ${props.class}`}>{props.children}</span>;
-}
-
-export function UnderlineText(props: HeadingProps) {
-    return <span class={`underline underline-offset-3 decoration-8 decoration-blue-400 night:decoration-blue-600 ${props.class}`}>{props.children}</span>;
-}
-
-export function BadgeText(props: HeadingProps) {
-    return <span class={`bg-blue-100 ${props.class} text-blue-800 text-xl font-semibold me-2 px-2.5 py-0.5 rounded night:bg-blue-200 night:text-blue-800`}>
-        {props.children}
-    </span>;
-}
-
-export function SmallBadgeText(props: HeadingProps) {
-    return <span class={`bg-blue-100 ${props.class} text-blue-800 text-sm font-medium me-2 px-2.5 py-1 rounded night:bg-blue-200 night:text-blue-800`}>
-        {props.children}
-    </span>;
-}
-
 export type AvatarProps = {
     src: string;
     alt?: string;
 }
 
 export function Avatar(props: AvatarProps) {
-    return <img src={props.src}
-        alt={props.alt}
-        class="relative inline-block h-9 w-9 !rounded-full object-cover object-center" />;
+
+    /*CSS:
+    .avatar {
+        display: inline-block;
+        object-fit: cover;
+        object-position: center;
+        position: relative;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 9999px;
+    }
+    */
+
+    return <img src={props.src} alt={props.alt} class={SolCSS.Avatar} />;
 }
 
 export type ListTileProps = {
@@ -103,7 +91,12 @@ export type ListTileProps = {
 }
 
 export function ListTile(props: ListTileProps) {
-    return <div class="flex justify-between items-center gap-3">
+    return <div style={{
+        display: "flex",
+        "align-items": "center",
+        "justify-content": "space-between",
+        gap: "0.75rem"
+    }}>
         <div class='flex gap-4'>
             {props.start}
             <TitleSubtitle title={props.title} subtitle={props.subtitle}></TitleSubtitle>
@@ -118,8 +111,8 @@ export type TitleSubtitleProps = {
 }
 
 export function TitleSubtitle(props: TitleSubtitleProps) {
-    return <div class="flex flex-col">
-        <h6 class="font-semibold">
+    return <div style={{ "display": "flex", "flex-direction": "column" }}>
+        <h6>
             {props.title}
         </h6>
         <p>

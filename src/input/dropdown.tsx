@@ -6,21 +6,21 @@ import { SolCSS } from "./input.gen.css.ts";
 
 /*CSS:
 
-.AppDropdown {
+.SolDropdown {
     background: var : #e0e0e0 : #575757;
     border-radius: .3rem;
     padding: .3rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.AppDropdownHeader {
+.SolDropdownHeader {
     color: var : #9c40ca : #8a87e3;
     background: var : #cfcfcf : #454545;
     border: var : none : none;
     padding: 0.3rem;
 }
 
-.AppDropdownItem {
+.SolDropdownItem {
     color: var : #343434 : #f8f8f8;
     background: var : #ebebeb : #4f4f4f;
     border: var : none : none;
@@ -30,7 +30,7 @@ import { SolCSS } from "./input.gen.css.ts";
     width: 100%;
 }
 
-.AppDropdownItem:hover {
+.SolDropdownItem:hover {
     color: var : #d4d4d4 : #4b4b4b;
     background: var : #6b6b6b : #d7d7d7;
 }
@@ -53,7 +53,7 @@ export function Dropdown<T>({ id, items, visible, fn }: {
         visible={visible}
         name={<>{FilterIcon()}{<span>Filter</span>}{DownIcon()}</>}>
 
-        <div id={id} class={SolCSS.AppDropdown}
+        <div id={id} class={SolCSS.SolDropdown}
             role="menu" aria-orientation="vertical"
             aria-labelledby="sortDropdownButton"
             tabindex="-1"
@@ -62,11 +62,11 @@ export function Dropdown<T>({ id, items, visible, fn }: {
             {items.map((item) => {
                 return item.subitems.length == 0 ? <></> :
                     <>
-                        {item.header && <h6 class={SolCSS.AppDropdownHeader}>{item.header}</h6>}
+                        {item.header && <h6 class={SolCSS.SolDropdownHeader}>{item.header}</h6>}
                         <ul aria-labelledby="sortDropdownButton">
                             {item.subitems.map((e) => {
                                 return <li>
-                                    <a href="#" class={SolCSS.AppDropdownItem}
+                                    <a href="#" class={SolCSS.SolDropdownItem}
                                         onclick={() => fn?.(e.data)}>
                                         {e.element}
                                     </a>

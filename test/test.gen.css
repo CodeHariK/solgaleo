@@ -26,6 +26,7 @@ test/css.tsx
     --hello-col: orange;
     --hello--stepper-col: orange;
     --marquee-span-col: #000;
+    /* --p-col: ; */
 }
 
 .night {
@@ -51,6 +52,7 @@ test/css.tsx
     --hello-col: blue;
     --hello--stepper-col: blue;
     --marquee-span-col: #fff;
+    /* --p-col: ; */
 }
 
 .tabs-container {
@@ -187,15 +189,21 @@ test/css.tsx
     0%,
     100% {
         text-shadow:
-            0 0 10px var(--neon-pink),ð
+            0 0 10px var(--neon-pink),
             0 0 20px var(--neon-pink),
             0 0 30px var(--neon-pink);
     }
 }
- {
-    @media (min-width: 768px) {};
+@media (min-width: 700px) {}
+@media (min-width: 800px) {
 }
-
+@media (min-width: 900px) {
+    h6 {
+        font-size: 1rem;
+        line-height: 1.4rem;
+        font-weight: 400;
+    }
+}
 .stepper {
     position: fixed;
     decoration: var(--stepper-decoration);
@@ -252,8 +260,13 @@ test/css.tsx
         0 0 30px var(--neon-pink);
 }
 
-@media (min-width: 768px) h6 {
+p {
+    padding-left: 4rem;
+    color: var(--p-col);
+    background: red;
     font-size: 1rem;
-    line-height: 1.4rem;
-    font-weight: 400;
+}
+
+h2 {
+    line-height: 1.5rem;
 }

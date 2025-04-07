@@ -1,7 +1,3 @@
-import { RocketIcon } from "../solgaleo.svg";
-// import "../css/fancy.css"
-import "./fancy.gen.css"
-
 /* CSS:
 .banner {
     padding: 1rem;
@@ -20,6 +16,8 @@ import "./fancy.gen.css"
     }
 }
 */
+
+import { RocketIcon } from "../svg/svg";
 
 export function Banner() {
     return <aside aria-label="Tip" class="banner">

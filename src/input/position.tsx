@@ -1,6 +1,7 @@
 import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
 
 import { type JSX } from 'solid-js';
+import { SolCSS } from "./input.gen.css.ts";
 
 export function PositionBox({ name, align, children, visible }: {
     name?: JSX.Element;
@@ -115,8 +116,69 @@ export function PositionBox({ name, align, children, visible }: {
         });
     });
 
+    /*CSS:
+    
+    --position-bg: transparent;
+    --position-color: #9c40ca;
+    --position-border: none;
+    --position-hover-bg: #efefef;
+    --position-hover-color: #90328b;
+    
+    
+    --position-bg: transparent;
+    --position-color: #9c40ca;
+    --position-border: none;
+    --position-hover-bg: #353535;
+    --position-hover-color: #faa0f6;
+    
+    
+    .SolPositionBox {
+        display: inline-flex;
+
+        // div {
+        //     position: fixed;
+        //     inset: 0px;
+        //     z-index: 10;
+        //     pointer-events: none;
+        // }
+        // div {
+        //     inset: 0px;
+        //     z-index: 10;
+        //     pointer-events: none;
+        // }
+        > div {
+            position: fixed;
+            inset: 0px;
+            z-index: 10;
+            pointer-events: none;
+        }
+    }
+    
+    .SolPositionBoxButton {
+        color: var(--position-color);
+        background: var(--position-bg);
+        border: var(--position-border);
+        display: inline-flex;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        column-gap: 0.5rem;
+        align-items: center;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+    }
+    
+    .SolPositionBoxButton:hover {
+        color: var(--position-hover-color);
+        background-color: var(--position-hover-bg);
+    }
+    */
+
     return (
-        <div class="inline-flex"
+        <div class={SolCSS.SolPositionBox}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -125,13 +187,12 @@ export function PositionBox({ name, align, children, visible }: {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 // onMouseDown={onMouseDown}
-                class="AppPositionBoxButton"
+                class={SolCSS.SolPositionBoxButton}
             >
                 {name}
             </button>
 
-            <div class="fixed inset-0 pointer-events-none z-10">
-
+            <div>
                 <div ref={overlay}
                     class={`${show() ? "opacity-100 visible" : "opacity-0 invisible"} transition-opacity duration-300 pointer-events-auto shadow-sm`}
 
