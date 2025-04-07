@@ -16,7 +16,8 @@ export const SolCSS = {
     Svg: "svg",
     Marquee: "marquee",
     TypewriterAnimation: "typewriter-animation",
-    FlickerText: "flicker-text"
+    FlickerText: "flicker-text",
+    AppTextInput[dataHasLabel="true"]: "AppTextInput[data-has-label="true"]"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

@@ -22,8 +22,37 @@ let NIGHT_VARS: Record<string, string> = {};
 let FINAL_CSS: string[] = [];
 let UNIQUE_SELECTORS: Set<string> = new Set();
 
+function BuildClassSelector(path: string[]): string {
+    let classSelector = path.filter(Boolean).join(" ").replace(/\s+/g, " ");
+
+    console.log(path, " => ", classSelector);
+
+    return classSelector
+}
+
 function BuildSelectorPath(path: string[]): string {
-    return path.filter(Boolean).join(" ").replace(/\s+/g, " ");
+    return path
+        .filter(Boolean)
+        .map((part, i, arr) => {
+            const nextPart = arr[i + 1] || '';
+            // Remove spaces around combinators (>, +, ~)
+            const isCombinator = part === '>' || part === '+' || part === '~';
+            const nextIsCombinator = nextPart === '>' || nextPart === '+' || nextPart === '~';
+
+            if (isCombinator || nextIsCombinator) {
+                return part;
+            }
+
+            // Don't add space if next selector starts with special characters
+            const needsSpace = !(nextPart.startsWith(':') ||
+                nextPart.startsWith('.') ||
+                nextPart.startsWith('['));
+            return part + (needsSpace ? ' ' : '');
+        })
+        .join('')
+        .trim()
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([-+>~])\s*/g, '$1'); // Remove spaces around combinators
 }
 
 function FlattenSelector(path: string[]): string {
@@ -80,6 +109,7 @@ function ExtractKV(value: string, prop: string, key: string, lines: string[]) {
 
 function ProcessNode(node: Node, path: string[] = []) {
     const fullSelector = BuildSelectorPath([...path, node.selector]);
+    const classSelector = BuildClassSelector([...path, node.selector]);
     const lines: string[] = [];
 
     for (const propLine of node.properties) {
@@ -104,7 +134,7 @@ function ProcessNode(node: Node, path: string[] = []) {
     }
 
     if (lines.length) {
-        UNIQUE_SELECTORS.add(fullSelector.trim());
+        UNIQUE_SELECTORS.add(classSelector.trim());
         FINAL_CSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
     }
 
@@ -176,7 +206,7 @@ function ConvertCSS(input: string) {
             }
 
 
-            FINAL_CSS.push(buffer.join("\n"));
+            FINAL_CSS.push(buffer.join("\n") + "\n");
             continue;
         }
 
@@ -186,8 +216,11 @@ function ConvertCSS(input: string) {
             continue;
         }
 
-
         if (trimmed.includes("{") && trimmed.indexOf("{") < trimmed.lastIndexOf("}")) {
+
+            // Handle single line CSS rules
+            // e.g., ".class { color: red; }"
+
             let indexOpen = trimmed.indexOf("{");
             let indexClose = trimmed.indexOf("}");
             let properties = trimmed.substring(indexOpen + 1, indexClose).split(";")

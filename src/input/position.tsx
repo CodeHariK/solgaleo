@@ -117,21 +117,7 @@ export function PositionBox({ name, align, children, visible }: {
     });
 
     /*CSS:
-    
-    --position-bg: transparent;
-    --position-color: #9c40ca;
-    --position-border: none;
-    --position-hover-bg: #efefef;
-    --position-hover-color: #90328b;
-    
-    
-    --position-bg: transparent;
-    --position-color: #9c40ca;
-    --position-border: none;
-    --position-hover-bg: #353535;
-    --position-hover-color: #faa0f6;
-    
-    
+
     .SolPositionBox {
         display: inline-flex;
 
@@ -154,10 +140,10 @@ export function PositionBox({ name, align, children, visible }: {
         }
     }
     
-    .SolPositionBoxButton {
-        color: var(--position-color);
-        background: var(--position-bg);
-        border: var(--position-border);
+    .SolPositionBox > button {
+        color: var : #9c40ca;
+        background: var : transparent;
+        border: var : none;
         display: inline-flex;
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
@@ -171,9 +157,9 @@ export function PositionBox({ name, align, children, visible }: {
         font-weight: 500;
     }
     
-    .SolPositionBoxButton:hover {
-        color: var(--position-hover-color);
-        background-color: var(--position-hover-bg);
+    .SolPositionBox > button:hover {
+        color: var : #90328b : #faa0f6;
+        background-color: var : #efefef : #353535;
     }
     */
 
@@ -186,17 +172,25 @@ export function PositionBox({ name, align, children, visible }: {
                 ref={anchor}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                // onMouseDown={onMouseDown}
-                class={SolCSS.SolPositionBoxButton}
+            // onMouseDown={onMouseDown}
             >
                 {name}
             </button>
 
             <div>
                 <div ref={overlay}
-                    class={`${show() ? "opacity-100 visible" : "opacity-0 invisible"} transition-opacity duration-300 pointer-events-auto shadow-sm`}
-
-                    style={{ position: "absolute", left: `${overlayPos().l}px`, top: `${overlayPos().t}px` }}
+                    style={{
+                        position: "absolute",
+                        left: `${overlayPos().l}px`,
+                        top: `${overlayPos().t}px`,
+                        // opacity: show() ? 1 : 0,
+                        visibility: show() ? "visible" : "hidden",
+                        "transition-property": "opacity",
+                        "transition-timing-function": "cubic-bezier(0.4, 0, 0.2, 1)",
+                        "transition-duration": "300ms",
+                        "pointer-events": "auto",
+                        "box-shadow": "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
+                    }}
                 >
                     {children}
                 </div>
@@ -296,11 +290,33 @@ export function DragBox() {
         });
     });
 
+    /*CSS:
+
+    .SolDragBox {
+        position: fixed; 
+        inset: 0px;
+        background-color: #FECACA; 
+        pointer-events: none; 
+    }
+
+    .SolDragBox > div {
+        display: flex; 
+        padding: 1rem; 
+        justify-content: center; 
+        align-items: center; 
+        width: 10rem; 
+        height: 10rem; 
+        color: #ffffff; 
+        background-color: #3B82F6; 
+        cursor: move; 
+        pointer-events: auto; 
+    }
+    */
+
     return (
-        <div class="fixed inset-0 pointer-events-none bg-red-200">
+        <div class={SolCSS.SolDragBox}>
             <div
                 id="box"
-                class="bg-blue-500 text-white p-4 w-40 h-40 flex items-center justify-center cursor-move pointer-events-auto"
                 style={{ position: "absolute", left: `${position().x}px`, top: `${position().y}px`, "z-index": 1000 }}
                 onMouseDown={onMouseDown}
             >

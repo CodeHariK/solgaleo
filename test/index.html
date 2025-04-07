@@ -17,9 +17,9 @@
     (!("theme" in localStorage) &&
       window.matchMedia("(prefers-color-scheme: dark)").matches)
   ) {
-    document.documentElement.classList.add("night");
+    document.documentElement.classList.add("light");
   } else {
-    document.documentElement.classList.remove("night");
+    document.documentElement.classList.remove("light");
   }
 </script>
 

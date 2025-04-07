@@ -2,8 +2,6 @@ import { Key } from "@solid-primitives/keyed";
 import { useSpaceContext } from "./spaceform";
 import { JSX } from "solid-js";
 
-import "./input.gen.css"
-
 /*CSS:
 
 fieldset {
@@ -88,7 +86,10 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     const { state, handleChange } = useSpaceContext();
 
     return (
-        <fieldset class={`${props.horizontal ? "flex" : ""}`}>
+        <fieldset
+            style={{
+                display: props.horizontal ? "flex" : "",
+            }}>
 
             {props.header && <legend>{props.header}</legend>}
 
@@ -151,7 +152,10 @@ export function RadioGroup(props: RadioGroupProps) {
     const { state, handleChange } = useSpaceContext();
 
     return (
-        <fieldset class={`${props.horizontal ? "flex" : ""}`}>
+        <fieldset
+            style={{
+                display: props.horizontal ? "flex" : "",
+            }}>
 
             {props.header && <legend>{props.header}</legend>}
 
@@ -202,8 +206,7 @@ export function Select(props: SelectProps) {
     const { state, handleChange } = useSpaceContext();
 
     return (
-        <div class="mb-4">
-
+        <div>
             {props.header && <legend>{props.header}</legend>}
 
             <select

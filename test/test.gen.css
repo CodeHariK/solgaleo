@@ -13,6 +13,7 @@ test/css.tsx
     /* --marquee-font-color: ; */
     /* --marquee-span-bg: ; */
     /* --neon-pink: ; */
+    /* --input-placeholder: ; */
     /* --stepper-decoration: ; */
     /* --stepper-border: ; */
     /* --stepper-display: ; */
@@ -39,6 +40,7 @@ test/css.tsx
     /* --marquee-font-color: ; */
     /* --marquee-span-bg: ; */
     /* --neon-pink: ; */
+    /* --input-placeholder: ; */
     /* --stepper-decoration: ; */
     --stepper-border: 1px solid blue;
     /* --stepper-display: ; */
@@ -185,6 +187,7 @@ test/css.tsx
         color: var(--keyframes-marquee-100-col);
     }
 }
+
 @keyframes flicker {
     0%,
     100% {
@@ -194,6 +197,7 @@ test/css.tsx
             0 0 30px var(--neon-pink);
     }
 }
+
 @media (min-width: 700px) {}
 @media (min-width: 800px) {
 }
@@ -204,6 +208,10 @@ test/css.tsx
         font-weight: 400;
     }
 }
+.app-txt {
+    padding: 1rem;
+}
+
 .stepper {
     position: fixed;
     decoration: var(--stepper-decoration);
@@ -226,7 +234,7 @@ test/css.tsx
     color: var(--hello-col);
 }
 
-#hello > .stepper {
+#hello>.stepper {
     color: var(--hello--stepper-col);
 }
 
@@ -269,4 +277,14 @@ p {
 
 h2 {
     line-height: 1.5rem;
+}
+
+h2:focus::placeholder {
+    color: var(--input-placeholder);
+    transition: color 0.2s ease-out;
+}
+
+.AppTextInput[data-has-label="true"]:focus, .AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
 }

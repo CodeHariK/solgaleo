@@ -48,7 +48,9 @@ src/ui/theme_toggle.tsx
 
 @media (min-width: 768px) {
 }
+
 @media (min-width: 1024px) {}
+
 h1 {
     font-size: 1.9rem;
     line-height: 2rem;

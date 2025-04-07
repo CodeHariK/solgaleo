@@ -1,5 +1,6 @@
 /*
 src/input/position.tsx
+src/input/position.tsx
 src/input/textinput.tsx
 src/input/search.tsx
 src/input/dropdown.tsx
@@ -7,14 +8,23 @@ src/input/checkbox.tsx
 */
 
 .light {
-    --position-color: #9c40ca;
-    --position-bg: transparent;
-    --position-border: none;
-    --position-hover-color: #faa0f6;
-    --position-hover-bg: #353535;
+    --SolPositionBox--button-col: #9c40ca;
+    --SolPositionBox--button-bg: transparent;
+    --SolPositionBox--button-border: none;
+    --SolPositionBox--button-col-hover: #90328b;
+    --SolPositionBox--button-background-color-hover: #efefef;
     --input-color: #111827;
     --input-bg: #ffffff;
     --input-border: 1px solid #d1d5db;
+    --input-focus-border: #f69c3b;
+    --input-focus-ring: #3b82f6;
+    --input-placeholder: #9ca3af;
+    --label-transform-x: 0.10rem;
+    --label-transform-y: 0.15rem;
+    --label-scale: 0.75;
+    /* --label-bg: ; */
+    --label-padding: 1rem;
+    --label-color: #6B7280;
     --SolDropdown-bg: #e0e0e0;
     --SolDropdownHeader-col: #9c40ca;
     --SolDropdownHeader-bg: #cfcfcf;
@@ -31,14 +41,23 @@ src/input/checkbox.tsx
 }
 
 .night {
-    --position-color: #9c40ca;
-    --position-bg: transparent;
-    --position-border: none;
-    --position-hover-color: #faa0f6;
-    --position-hover-bg: #353535;
+    --SolPositionBox--button-col: #9c40ca;
+    --SolPositionBox--button-bg: transparent;
+    --SolPositionBox--button-border: none;
+    --SolPositionBox--button-col-hover: #faa0f6;
+    --SolPositionBox--button-background-color-hover: #353535;
     --input-color: #ffffff;
     --input-bg: #3b3b3b;
-    --input-border: 1px solid #d1d5db;
+    --input-border: 1px solid #525252;
+    --input-focus-border: #525252;
+    --input-focus-ring: #525252;
+    --input-placeholder: #737373;
+    --label-transform-x: 0.10rem;
+    --label-transform-y: 0.15rem;
+    --label-scale: 0.75;
+    /* --label-bg: ; */
+    --label-padding: 1rem;
+    --label-color: #A1A1AA;
     --SolDropdown-bg: #575757;
     --SolDropdownHeader-col: #8a87e3;
     --SolDropdownHeader-bg: #454545;
@@ -58,17 +77,17 @@ src/input/checkbox.tsx
     display: inline-flex;
 }
 
-.SolPositionBox > div {
+.SolPositionBox>div {
     position: fixed;
     inset: 0px;
     z-index: 10;
     pointer-events: none;
 }
 
-.SolPositionBoxButton {
-    color: var(--position-color);
-    background: var(--position-bg);
-    border: var(--position-border);
+.SolPositionBox>button {
+    color: var(--SolPositionBox--button-col);
+    background: var(--SolPositionBox--button-bg);
+    border: var(--SolPositionBox--button-border);
     display: inline-flex;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
@@ -82,29 +101,155 @@ src/input/checkbox.tsx
     font-weight: 500;
 }
 
-.SolPositionBoxButton:hover {
-    color: var(--position-hover-color);
-    background-color: var(--position-hover-bg);
+.SolPositionBox>button:hover {
+    color: var(--SolPositionBox--button-col-hover);
+    background-color: var(--SolPositionBox--button-background-color-hover);
+}
+
+.SolDragBox {
+    position: fixed;
+    inset: 0px;
+    background-color: #FECACA;
+    pointer-events: none;
+}
+
+.SolDragBox>div {
+    display: flex;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 10rem;
+    color: #ffffff;
+    background-color: #3B82F6;
+    cursor: move;
+    pointer-events: auto;
 }
 
 .AppTextInput {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.875rem;
     color: var(--input-color);
     background: var(--input-bg);
     border: var(--input-border);
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
     border-radius: 0.5rem;
-    outline-style: none;
-    width: 100%;
+    outline: none;
+    resize: vertical;
+}
+
+.AppTextInput[data-has-icon="true"] {
+    padding-left: 2.75rem;
+}
+
+.AppTextInput[data-is-range="true"] {
+    cursor: pointer;
+}
+
+.AppTextInput:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 1px var(--input-focus-ring);
+}
+
+.AppTextInput:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.AppTextInput::placeholder {
+    color: transparent;
+}
+
+.AppTextInput:focus::placeholder {
+    color: var(--input-placeholder);
+    transition: color 0.2s ease-out;
+}
+
+.AppTextInput:focus~.SolInputLabel, .AppTextInput:not(:placeholder-shown)~.SolInputLabel {
+    transform: translateX(var(--label-transform-x))
+        translateY(var(--label-transform-y))
+        scale(var(--label-scale));
+    background-color: var(--label-bg);
+    padding: 0 0.25rem;
+    left: 0.75rem;
+    height: auto;
+    opacity: 1;
+    color: var(--input-focus-border);
+}
+
+.AppTextInput[data-has-label="true"]:focus, .AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.AppTextInput:disabled~.SolInputLabel {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.AppErrorTextInput {
+    border-color: #EF4444;
+}
+
+.AppErrorText {
+    margin-top: 0.5rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
+    color: #6B7280;
+}
+
+.SolInputIcon {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0px;
+    align-items: center;
+    pointer-events: none;
+    padding-inline-start: 1rem;
+}
+
+.SolPasswordIcon {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 20;
+    inset-inline-end: 0px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    align-items: center;
+    cursor: pointer;
+}
+
+.SolPasswordIcon:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.SolInputLabel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: var(--label-padding);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    color: var(--label-color);
 }
 
 .searchinput {
     position: relative;
 }
 
-.searchinput > div {
+.searchinput>div {
     display: flex;
     position: absolute;
     top: 0;
@@ -129,7 +274,7 @@ input[type="search"] {
     padding-inline-start: 2.5rem;
 }
 
-.searchinput > button {
+.searchinput>button {
     position: absolute;
     bottom: 0.625rem;
     padding-top: 0.5rem;
@@ -146,11 +291,11 @@ input[type="search"] {
     bottom: 0.625rem;
 }
 
-.searchinput > button:hover {
+.searchinput>button:hover {
     background-color: #1E40AF;
 }
 
-.searchinput > button:focus {
+.searchinput>button:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
 }

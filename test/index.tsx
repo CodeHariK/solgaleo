@@ -1,10 +1,9 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
 
-import "../src/css/input.css"
-import "../src/css/index.css"
+// import "../src/css/index.css"
 
-import { AdvTest } from './adv.test'
+// import { AdvTest } from './adv.test'
 import { InputTest } from './input.test'
 
 // import * as Solgaleo from "solgaleo";

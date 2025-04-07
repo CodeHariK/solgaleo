@@ -72,6 +72,8 @@
         0 0 30px var(--neon-pink);
 }
 
+
+
 @keyframes flicker {
 
     0%,
@@ -84,13 +86,27 @@
 }
 
 
+
 p { padding-left: 4rem; color: var:; background: red; }
 
 h2 {
     line-height: 1.5rem;
+
+    :focus::placeholder {
+        color: var(--input-placeholder);
+        transition: color 0.2s ease-out;
+    }
 }
+    
+
 
 p { font-size: 1rem; }
+
+.AppTextInput[data-has-label="true"]:focus,
+.AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+}
 
 @media (min-width: 700px) {}
 
@@ -104,5 +120,10 @@ p { font-size: 1rem; }
         font-weight: 400;
     }
 }
+
+.app-txt {
+    padding: 1rem;
+}
+
 
 */

@@ -120,6 +120,7 @@ src/adv/stepper.tsx
         transform: translateX(0);
     }
 }
+
 .blog-list {
     display: flex;
     flex-direction: column;

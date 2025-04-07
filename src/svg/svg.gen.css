@@ -29,6 +29,7 @@ src/svg/svg.tsx
         transform: rotate(360deg);
     }
 }
+
 .svg {
     display: flex;
     position: absolute;

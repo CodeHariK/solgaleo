@@ -58,6 +58,7 @@ src/fancy/rainbow.tsx
         transform: translateX(-50%);
     }
 }
+
 @keyframes sleep {
     0% {
         width: 44px;
@@ -69,11 +70,13 @@ src/fancy/rainbow.tsx
         width: 44px;
     }
 }
+
 @keyframes float {
     50% {
         transform: translate(0, 20px);
     }
 }
+
 #ghost {
     position: absolute;
 }
@@ -169,6 +172,7 @@ src/fancy/rainbow.tsx
         width: 100%;
     }
 }
+
 .typewriter-animation {
     display: inline-block;
     white-space: nowrap;
@@ -189,6 +193,7 @@ src/fancy/rainbow.tsx
         transform: translateX(-100%);
     }
 }
+
 .marquee {
     display: flex;
     align-items: center;
@@ -227,6 +232,7 @@ src/fancy/rainbow.tsx
         text-shadow: none;
     }
 }
+
 .flicker-text {
     font-size: 4rem;
     font-weight: bold;
@@ -340,6 +346,7 @@ src/fancy/rainbow.tsx
         background-position: 100% 0;
     }
 }
+
 @keyframes gradient {
     0% {
         background-position: 0% 50%;
@@ -351,6 +358,7 @@ src/fancy/rainbow.tsx
         background-position: 0% 50%;
     }
 }
+
 .rainbow {
     background: linear-gradient(to right,
             blueviolet,
