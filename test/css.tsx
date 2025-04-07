@@ -97,10 +97,19 @@ h2 {
         transition: color 0.2s ease-out;
     }
 }
-    
-
 
 p { font-size: 1rem; }
+
+
+.Glitter {
+    [data-has-label="true"] {
+        :focus,
+        :not(:placeholder-shown) {
+            padding-top: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+    }
+}
 
 .AppTextInput[data-has-label="true"]:focus,
 .AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
@@ -121,9 +130,7 @@ p { font-size: 1rem; }
     }
 }
 
-.app-txt {
-    padding: 1rem;
-}
+
 
 
 */

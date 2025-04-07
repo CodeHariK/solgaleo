@@ -23,11 +23,7 @@ let FINAL_CSS: string[] = [];
 let UNIQUE_SELECTORS: Set<string> = new Set();
 
 function BuildClassSelector(path: string[]): string {
-    let classSelector = path.filter(Boolean).join(" ").replace(/\s+/g, " ");
-
-    console.log(path, " => ", classSelector);
-
-    return classSelector
+    return path.filter(Boolean).join(" ").replace(/\s+/g, " ")
 }
 
 function BuildSelectorPath(path: string[]): string {
@@ -108,8 +104,21 @@ function ExtractKV(value: string, prop: string, key: string, lines: string[]) {
 }
 
 function ProcessNode(node: Node, path: string[] = []) {
-    const fullSelector = BuildSelectorPath([...path, node.selector]);
+    let fullSelector = BuildSelectorPath([...path, node.selector]);
     const classSelector = BuildClassSelector([...path, node.selector]);
+
+    // If selector contains multiple parts (comma-separated)
+    if (node.selector.includes(',')) {
+        // Split the selector and create a compound selector
+        const selectors = node.selector.split(',').map(s => s.trim());
+        const baseSelector = path.join("").trim();
+        node.selector = selectors
+            .map(s => `${baseSelector}${s}`)
+            .join(', ');
+
+        fullSelector = node.selector;
+    }
+
     const lines: string[] = [];
 
     for (const propLine of node.properties) {
@@ -347,24 +356,14 @@ async function WriteSelectorsFile(cssFilePath: string) {
     const selectors = Array.from(UNIQUE_SELECTORS)
         .filter(s => s.trim())
         .map(selector => {
-            // Get the last class selector
-            const parts = selector.split(' ');
-            const lastPart = parts[parts.length - 1];
 
-            // Handle compound classes with dots
-            const classNames = lastPart.split('.');
-            const lastClass = classNames[classNames.length - 1];
+            // Get the first class selector
+            const match = selector.match(/\.([\w-]+)/);
 
-            // Only process if it starts with . or contains a class
-            if (!lastPart.includes('.')) return null;
+            if (!match) return null;
 
-            // Remove pseudo elements, pseudo classes and get base class name
-            const value = lastClass
-                .replace(/:[^:.]+/g, '')      // Remove pseudo classes like :not()
-                .replace(/:{2}[^:.]+/g, '')    // Remove pseudo elements like ::after
-                .replace(/^\./, '')           // Remove leading .
-                .replace(/:$/, '')            // Remove trailing colon
-                .trim();
+            // Extract the base class name
+            const value = match[1];
 
             // Generate the Pascal case key
             const key = value

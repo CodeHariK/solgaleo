@@ -166,7 +166,7 @@ src/input/checkbox.tsx
     transition: color 0.2s ease-out;
 }
 
-.AppTextInput:focus~.SolInputLabel, .AppTextInput:not(:placeholder-shown)~.SolInputLabel {
+.AppTextInput:focus ~ .SolInputLabel, .AppTextInput:not(:placeholder-shown) ~ .SolInputLabel {
     transform: translateX(var(--label-transform-x))
         translateY(var(--label-transform-y))
         scale(var(--label-scale));
