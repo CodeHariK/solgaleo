@@ -16,8 +16,8 @@ src/adv/stepper.tsx
     --tag-hover-color: #eef788;
     --blog-description-color: #444;
     --stepper-col: #6B7280;
-    /* --stepper-bg: ; */
-    /* --stepper-border: ; */
+    --stepper-bg: ;
+    --stepper-border: ;
 }
 
 .night {
@@ -32,7 +32,7 @@ src/adv/stepper.tsx
     --tag-hover-color: #eef788;
     --blog-description-color: #ccc;
     --stepper-col: #ffffff;
-    /* --stepper-bg: ; */
+    --stepper-bg: ;
     --stepper-border: 1px solid #E5E7EB;
 }
 

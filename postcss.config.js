@@ -1,5 +1,9 @@
+import cssnano from 'cssnano';
+
 export default {
-  plugins: {
-    tailwindcss: {},
-  },
+  plugins: [
+    // cssnano({
+    //   preset: 'default'
+    // })
+  ]
 }

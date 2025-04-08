@@ -15,7 +15,8 @@ export const SolCSS = {
     TypewriterAnimation: "typewriter-animation",
     FlickerText: "flicker-text",
     Glitter: "Glitter",
-    AppTextInput: "AppTextInput"
+    AppTextInput: "AppTextInput",
+    Potato: "potato"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

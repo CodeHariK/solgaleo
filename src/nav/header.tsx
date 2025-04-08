@@ -1,6 +1,6 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { OutlinedButton } from "../ui/button";
-import { PositionBox } from "../input/position";
+import { PositionBox } from "../ui/position";
 import { DownIcon, UserIcon } from "../svg/svg";
 
 export const Header = ({ iconSrc, title, links, rightChildren }: { iconSrc?: string, title?: JSX.Element, links?: JSX.Element, rightChildren?: JSX.Element }) => (

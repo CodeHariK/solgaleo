@@ -1,9 +1,9 @@
 import { Setter } from "solid-js";
-import { SpaceForm } from "../input/spaceform";
-import { TextInput } from "../input/textinput";
+import { SpaceForm } from "../ui/spaceform";
+import { TextInput } from "../ui/textinput";
 import { CrossIcon, DeleteIcon } from "../svg/svg";
 import { IconButton, MaterialButton, OutlinedButton } from "../ui/button";
-import { Select } from "../input/checkbox";
+import { Select } from "../ui/checkbox";
 
 export function Modal1() {
     return (

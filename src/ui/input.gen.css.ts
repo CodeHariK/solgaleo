@@ -9,9 +9,14 @@ export const SolCSS = {
     SolPasswordIcon: "SolPasswordIcon",
     SolInputLabel: "SolInputLabel",
     Searchinput: "searchinput",
+    Avatar: "avatar",
     SolDropdown: "SolDropdown",
     SolDropdownHeader: "SolDropdownHeader",
-    SolDropdownItem: "SolDropdownItem"
+    SolDropdownItem: "SolDropdownItem",
+    SolButtonBase: "SolButtonBase",
+    SolIconButton: "SolIconButton",
+    SolMaterialButton: "SolMaterialButton",
+    SolOutlinedButton: "SolOutlinedButton"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

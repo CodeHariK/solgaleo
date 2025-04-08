@@ -1,9 +1,10 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, SearchInput, Select, SpaceDebugInfo, SpaceForm, SpaceFormError, TextInput } from '../src/input/solgaleo.input';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, SearchInput, Select, SpaceDebugInfo, SpaceForm, SpaceFormError, TextInput } from '../src/ui/solgaleo.ui';
 import { CartIcon, DownIcon } from '../src/svg/svg';
 
-import "../src/input/input.gen.css"
+import "../src/ui/ui.gen.css"
+import { BaseButton, IconButton, MaterialButton, OutlinedButton } from '../src/ui/button';
 
 export function InputTest() {
     return <>
@@ -87,8 +88,9 @@ export function InputTest() {
                 ]}
             />
 
-            <TextInput name="password" type="password" placeholder="placeholder" />
-            <TextInput name="value" type="range" header='value' placeholder="value" />
+            <TextInput name="password1" type="password" label='password' placeholder="password" />
+            <TextInput name="password2" type="password" placeholder="password" />
+            <TextInput name="range" type="range" header='range' placeholder="range" />
 
             <TextInput name="Name" type="text" placeholder="Hello Name"
                 label="Label"
@@ -105,6 +107,23 @@ export function InputTest() {
 
             <SpaceDebugInfo />
         </SpaceForm>
+
+        <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
+
+            <BaseButton > BaseButton</BaseButton >
+            <MaterialButton>MaterialButton</MaterialButton>
+            <OutlinedButton>OutlinedButton</OutlinedButton>
+            <IconButton>❤️</IconButton>
+        </div>
+
+        <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>
+        <h2>h2: The electron is a subatomic particle with a negative one elementary electric charge.</h2>
+        <h3>h3: The electron is a subatomic particle with a negative one elementary electric charge.</h3>
+        <h4>h4: The electron is a subatomic particle with a negative one elementary electric charge.</h4>
+        <h5>h5: The electron is a subatomic particle with a negative one elementary electric charge.</h5>
+        <h6>h6: The electron is a subatomic particle with a negative one elementary electric charge.</h6>
+        <p>p: The electron is a subatomic particle with a negative one elementary electric charge.</p>
+
     </>
 }
 

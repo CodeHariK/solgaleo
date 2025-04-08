@@ -11,27 +11,27 @@ src/fancy/rainbow.tsx
 .light {
     --banner-border: #40224e;
     --banner-bg: #bd53ee;
-    /* --ghostColor: ; */
-    /* --waveColor: ; */
+    --ghostColor: ;
+    --waveColor: ;
     --R: 11.18px;
-    /* --size: ; */
+    --size: ;
     --p: 5px;
     --flicker-shadow: #36e2f8;
     --flicker-text-col: #3694f8;
-    /* --src: ; */
+    --src: ;
 }
 
 .night {
     --banner-border: #bd53ee;
     --banner-bg: #40224e;
-    /* --ghostColor: ; */
-    /* --waveColor: ; */
+    --ghostColor: ;
+    --waveColor: ;
     --R: 11.18px;
-    /* --size: ; */
+    --size: ;
     --p: 5px;
     --flicker-shadow: #36e2f8;
     --flicker-text-col: #3694f8;
-    /* --src: ; */
+    --src: ;
 }
 
 .banner {
@@ -109,7 +109,8 @@ src/fancy/rainbow.tsx
     transition: .1s;
 }
 
-.ghost:hover .ghost__eyes_eye, #ghost.active .ghost__eyes_eye {
+.ghost:hover .ghost__eyes_eye,
+#ghost.active .ghost__eyes_eye {
     background: var(--waveColor);
     border-color: yellow;
     clip-path: none;
@@ -146,11 +147,13 @@ src/fancy/rainbow.tsx
     transition: .1s;
 }
 
-.ghost:hover .ghost__mouth:before, #ghost.active .ghost__mouth:before {
+.ghost:hover .ghost__mouth:before,
+#ghost.active .ghost__mouth:before {
     display: none;
 }
 
-.ghost:hover .ghost__mouth, #ghost.active .ghost__mouth {
+.ghost:hover .ghost__mouth,
+#ghost.active .ghost__mouth {
     animation: none;
     background: #000;
     width: 32px;

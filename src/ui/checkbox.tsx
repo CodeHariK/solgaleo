@@ -8,6 +8,7 @@ fieldset {
     display: inline-block;
     justify-content: space-between;
     border-radius: 0.5rem;
+    border: none;
 }
 
 fieldset div {
@@ -206,7 +207,7 @@ export function Select(props: SelectProps) {
     const { state, handleChange } = useSpaceContext();
 
     return (
-        <div>
+        <fieldset>
             {props.header && <legend>{props.header}</legend>}
 
             <select
@@ -224,6 +225,6 @@ export function Select(props: SelectProps) {
                     )}
                 </Key>
             </select>
-        </div>
+        </fieldset>
     );
 }

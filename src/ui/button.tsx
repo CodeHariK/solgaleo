@@ -1,5 +1,5 @@
 import { JSX } from "solid-js/jsx-runtime";
-import { SolCSS } from "./ui.gen.css.ts";
+import { SolCSS } from "./input.gen.css.ts";
 
 export type ButtonProps = {
     type?: 'button' | 'submit' | 'reset';

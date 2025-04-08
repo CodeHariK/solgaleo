@@ -1,7 +1,7 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
 
-// import "../src/css/index.css"
+import "../src/ui/base.css"
 
 // import { AdvTest } from './adv.test'
 import { InputTest } from './input.test'

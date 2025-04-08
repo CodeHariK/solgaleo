@@ -1,12 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 100vh;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #e0cbcb22;
+  border-radius: 100vh;
+}
+
+*::-webkit-scrollbar-thumb:hover {}
 
 * {
   scroll-behavior: smooth;
 }
-
-html {}
 
 body {
   background: var(--bg-color);
@@ -25,24 +35,6 @@ body {
 section {
   background: var(--section-bg);
   color: var(--section-color);
-}
-
-@layer utilities {
-  *::-webkit-scrollbar {
-    height: 8px;
-    width: 6px;
-  }
-
-  *::-webkit-scrollbar-track {
-    border-radius: 100vh;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background: #e0cbcb22;
-    border-radius: 100vh;
-  }
-
-  *::-webkit-scrollbar-thumb:hover {}
 }
 
 header {

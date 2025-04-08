@@ -4,57 +4,57 @@ test/css.tsx
 */
 
 .light {
-    /* --visibility: ; */
+    --visibility: ;
     --svg-ring-width: 4px;
     --svg-ring-color: #82f680;
-    /* --marquee-width: ; */
-    /* --keyframes-marquee-100-height: ; */
+    --marquee-width: ;
+    --keyframes-marquee-100-height: ;
     --keyframes-marquee-100-col: red;
-    /* --marquee-font-color: ; */
-    /* --marquee-span-bg: ; */
-    /* --neon-pink: ; */
-    /* --input-placeholder: ; */
-    /* --stepper-decoration: ; */
-    /* --stepper-border: ; */
-    /* --stepper-display: ; */
+    --marquee-font-color: ;
+    --marquee-span-bg: ;
+    --neon-pink: ;
+    --input-placeholder: ;
+    --stepper-decoration: ;
+    --stepper-border: ;
+    --stepper-display: ;
     --box-stepper-bg-hover: yellow;
-    /* --box-stepper-col-hover: ; */
+    --box-stepper-col-hover: ;
     --box-hello: 4px;
-    /* --box-hi: ; */
-    /* --box-alola: ; */
+    --box-hi: ;
+    --box-alola: ;
     --svg-ring-bg: #3b82f6;
     --svg-background-color: #A7F3D0;
     --hello-col: orange;
     --hello--stepper-col: orange;
     --marquee-span-col: #000;
-    /* --p-col: ; */
+    --p-col: ;
 }
 
 .night {
-    /* --visibility: ; */
+    --visibility: ;
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
-    /* --marquee-width: ; */
-    /* --keyframes-marquee-100-height: ; */
+    --marquee-width: ;
+    --keyframes-marquee-100-height: ;
     --keyframes-marquee-100-col: blue;
-    /* --marquee-font-color: ; */
-    /* --marquee-span-bg: ; */
-    /* --neon-pink: ; */
-    /* --input-placeholder: ; */
-    /* --stepper-decoration: ; */
+    --marquee-font-color: ;
+    --marquee-span-bg: ;
+    --neon-pink: ;
+    --input-placeholder: ;
+    --stepper-decoration: ;
     --stepper-border: 1px solid blue;
-    /* --stepper-display: ; */
+    --stepper-display: ;
     --box-stepper-bg-hover: red;
-    /* --box-stepper-col-hover: ; */
+    --box-stepper-col-hover: ;
     --box-hello: 4px;
-    /* --box-hi: ; */
-    /* --box-alola: ; */
+    --box-hi: ;
+    --box-alola: ;
     --svg-ring-bg: #3b82f6;
     --svg-background-color: #A7F3D0;
     --hello-col: blue;
     --hello--stepper-col: blue;
     --marquee-span-col: #fff;
-    /* --p-col: ; */
+    --p-col: ;
 }
 
 .tabs-container {
@@ -199,8 +199,10 @@ test/css.tsx
 }
 
 @media (min-width: 700px) {}
+
 @media (min-width: 800px) {
 }
+
 @media (min-width: 900px) {
     h6 {
         font-size: 1rem;
@@ -281,12 +283,18 @@ h2:focus::placeholder {
     transition: color 0.2s ease-out;
 }
 
-.Glitter[data-has-label="true"]:focus, .Glitter[data-has-label="true"]:not(:placeholder-shown) {
+.Glitter[data-has-label="true"]:focus,
+.Glitter[data-has-label="true"]:not(:placeholder-shown) {
     padding-top: 1.5rem;
     padding-bottom: 0.5rem;
 }
 
-.AppTextInput[data-has-label="true"]:focus, .AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
+.AppTextInput[data-has-label="true"]:focus,
+.AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
     padding-top: 1.5rem;
     padding-bottom: 0.5rem;
+}
+
+.potato {
+    width: 100%;
 }

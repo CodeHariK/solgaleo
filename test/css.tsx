@@ -119,6 +119,10 @@ p { font-size: 1rem; }
 
 @media (min-width: 700px) {}
 
+.potato {
+    width: 100%;
+}
+
 @media (min-width: 800px) {
 }
 
@@ -129,8 +133,5 @@ p { font-size: 1rem; }
         font-weight: 400;
     }
 }
-
-
-
 
 */

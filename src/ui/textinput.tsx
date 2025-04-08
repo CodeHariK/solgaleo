@@ -1,27 +1,20 @@
 import { createSignal, type JSX } from "solid-js";
-import { useSpaceContext } from "./spaceform";
-import { KeyIcon, LockIcon, UnlockIcon } from "../svg/svg";
+import { useSpaceContext } from "./spaceform.tsx";
+import { KeyIcon, LockIcon, UnlockIcon } from "../svg/svg.tsx";
 
 import { SolCSS } from "./input.gen.css.ts";
 
 /*CSS:
 
 .AppTextInput {
-    --input-bg: var : #ffffff : #3b3b3b;
-    --input-color: var : #111827 : #ffffff;
-    --input-border: var : 1px solid #d1d5db : 1px solid #525252;
-    --input-focus-border: var : #f69c3b : #525252;
-    --input-focus-ring: var : #3b82f6 : #525252;
-    --input-placeholder: var : #9ca3af : #737373;
-    
     display: block;
     width: 100%;
     padding: 1rem;
     font-size: 0.875rem;
-    color: var(--input-color);
-    background: var(--input-bg);
-    border: var(--input-border);
-    border-radius: 0.5rem;
+    color: var : #111827 : #ffffff;
+    background: var : #ffffff : #3b3b3b;
+    border: var : 1px solid #d1d5db : 1px solid #525252;
+    border-radius: var : 0.5rem;
     outline: none;
     resize: vertical;
 
@@ -29,55 +22,59 @@ import { SolCSS } from "./input.gen.css.ts";
         padding-left: 2.75rem;
     }
 
-
     [data-is-range="true"] {
         cursor: pointer;
     }
 
     :focus {
-        border-color: var(--input-focus-border);
-        box-shadow: 0 0 0 1px var(--input-focus-ring);
+        border-color: var : #8d40ec : #8d40ec;
+        box-shadow: var : 2px 3px 1px #c4ced1 : 2px 3px 1px #c4ced1;
     }
 
     :disabled {
         opacity: 0.5;
-        pointer-events: none;
+        cursor: not-allowed;
+    }
+    :disabled ~ .SolInputLabel {
+        opacity: 0.5;
     }
 
-    ::placeholder {
+    [data-has-label="true"]::placeholder {
         color: transparent;
     }
-
+    [data-has-label="false"]::placeholder {
+        color: var : #9ca3af : #737373;
+    }
     :focus::placeholder {
-        color: var(--input-placeholder);
+        color: var : #ae81e4 : #737373;
         transition: color 0.2s ease-out;
     }
-}
 
-.AppTextInput:focus ~ .SolInputLabel,
-.AppTextInput:not(:placeholder-shown) ~ .SolInputLabel {
-    transform: 
-        translateX(var(--label-transform-x))
-        translateY(var(--label-transform-y))
-        scale(var(--label-scale));
+    [data-has-icon="true"] ~ .SolInputLabel {
+        left : 2rem;
+    }
 
-    background-color: var(--label-bg);
-    padding: 0 0.25rem;
-    left: 0.75rem;
-    height: auto;
-    opacity: 1;
-    color: var(--input-focus-border);  
-}
+    :focus ~ .SolInputLabel,
+    :not(:placeholder-shown) ~ .SolInputLabel {
 
-.AppTextInput[data-has-label="true"]:focus,
-.AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
-}
+        --label-transform-x: 0.6rem;
+        --label-transform-y: -1.0rem;
+        --label-scale: 0.85;
+        --input-label-focus-color: #983daf;
+        --input-label-focus-bg: white;
 
-.AppTextInput:disabled ~ .SolInputLabel {
-    opacity: 0.5;
-    pointer-events: none;
+        transform: 
+            translateX(var(--label-transform-x))
+            translateY(var(--label-transform-y))
+            scale(var(--label-scale));
+
+        left: 0rem;
+        height: auto;
+        opacity: 1;
+        color: var(--input-label-focus-color);  
+        background: var(--input-label-focus-bg);  
+        align-self: auto;
+    }
 }
 
 .AppErrorTextInput {
@@ -107,7 +104,7 @@ import { SolCSS } from "./input.gen.css.ts";
     position: absolute; 
     top: 0;
     bottom: 0; 
-    z-index: 20;
+    // z-index: 20;
     inset-inline-end: 0px;
     padding-left: 0.75rem;
     padding-right: 0.75rem; 
@@ -120,30 +117,20 @@ import { SolCSS } from "./input.gen.css.ts";
 }
 
 .SolInputLabel {
-    --label-color: var : #6B7280 : #A1A1AA;
-    --label-padding: 1rem;
-    --label-transform-x: 0.10rem;
-    --label-transform-y: 0.15rem;
-    --label-scale: 0.75;
-
     position: absolute;
     top: 0;
-    left: 0;
-    height: 100%;
-    padding: var(--label-padding);
+    margin: 0.25rem;
+    padding: 0.25rem;
+    color: var : #6B7280 : #A1A1AA;
+    border: var : 1px solid transparent;
     font-size: 0.875rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     pointer-events: none;
     transition: all 0.2s ease-in-out;
-    border: 1px solid transparent;
     transform-origin: 0 0;
-    color: var(--label-color);
-}
-
-.SolInputLabel[data-has-icon="true"] {
-    --label-padding: 1rem; 
+    align-self: anchor-center;
 }
 
 */
@@ -238,7 +225,6 @@ export function TextInput(props: TextInputProps) {
                         {props.icon ? props.icon : <KeyIcon />}
                     </div>
                 )}
-
 
                 {props.type === "password" && (
                     <button

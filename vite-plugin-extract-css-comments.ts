@@ -22,35 +22,6 @@ let NIGHT_VARS: Record<string, string> = {};
 let FINAL_CSS: string[] = [];
 let UNIQUE_SELECTORS: Set<string> = new Set();
 
-function BuildClassSelector(path: string[]): string {
-    return path.filter(Boolean).join(" ").replace(/\s+/g, " ")
-}
-
-function BuildSelectorPath(path: string[]): string {
-    return path
-        .filter(Boolean)
-        .map((part, i, arr) => {
-            const nextPart = arr[i + 1] || '';
-            // Remove spaces around combinators (>, +, ~)
-            const isCombinator = part === '>' || part === '+' || part === '~';
-            const nextIsCombinator = nextPart === '>' || nextPart === '+' || nextPart === '~';
-
-            if (isCombinator || nextIsCombinator) {
-                return part;
-            }
-
-            // Don't add space if next selector starts with special characters
-            const needsSpace = !(nextPart.startsWith(':') ||
-                nextPart.startsWith('.') ||
-                nextPart.startsWith('['));
-            return part + (needsSpace ? ' ' : '');
-        })
-        .join('')
-        .trim()
-        .replace(/\s+/g, ' ')
-        .replace(/\s*([-+>~])\s*/g, '$1'); // Remove spaces around combinators
-}
-
 function FlattenSelector(path: string[]): string {
     if (path.length === 0) return "";
 
@@ -103,6 +74,35 @@ function ExtractKV(value: string, prop: string, key: string, lines: string[]) {
     }
 }
 
+function BuildClassSelector(path: string[]): string {
+    return path.filter(Boolean).join(" ").replace(/\s+/g, " ")
+}
+
+function BuildSelectorPath(path: string[]): string {
+    return path
+        .filter(Boolean)
+        .map((part, i, arr) => {
+            const nextPart = arr[i + 1] || '';
+            // Remove spaces around combinators (>, +, ~)
+            const isCombinator = part === '>' || part === '+' || part === '~';
+            const nextIsCombinator = nextPart === '>' || nextPart === '+' || nextPart === '~';
+
+            if (isCombinator || nextIsCombinator) {
+                return part;
+            }
+
+            // Don't add space if next selector starts with special characters
+            const needsSpace = !(nextPart.startsWith(':') ||
+                nextPart.startsWith('.') ||
+                nextPart.startsWith('['));
+            return part + (needsSpace ? ' ' : '');
+        })
+        .join('')
+        .trim()
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([-+>~])\s*/g, '$1'); // Remove spaces around combinators
+}
+
 function ProcessNode(node: Node, path: string[] = []) {
     let fullSelector = BuildSelectorPath([...path, node.selector]);
     const classSelector = BuildClassSelector([...path, node.selector]);
@@ -114,7 +114,7 @@ function ProcessNode(node: Node, path: string[] = []) {
         const baseSelector = path.join("").trim();
         node.selector = selectors
             .map(s => `${baseSelector}${s}`)
-            .join(', ');
+            .join(',\n');
 
         fullSelector = node.selector;
     }
@@ -173,7 +173,8 @@ function ConvertCSS(input: string) {
 
         ExtractInlineVars(line);
 
-        if (trimLine(line).startsWith("@keyframes") || trimLine(line).startsWith("@media")) {
+        if (trimLine(line).startsWith("@keyframes")
+            || trimLine(line).startsWith("@media")) {
             const header = trimLine(line); // e.g., "@keyframes marquee"
             const name = header.split(" ")[1]?.trim();
             const buffer: string[] = [header];
@@ -182,38 +183,42 @@ function ConvertCSS(input: string) {
             let depth = 0;
             let currentStep = "0";
 
-            while (i < lines.length) {
-                let keyframeLine = lines[i];
-                const trimmed = trimLine(keyframeLine);
+            if (!(header.includes("{") &&
+                header.indexOf("{") < header.lastIndexOf("}"))) {
+                while (i < lines.length) {
+                    let keyframeLine = lines[i];
+                    const trimmed = trimLine(keyframeLine);
 
-                ExtractInlineVars(keyframeLine);
+                    ExtractInlineVars(keyframeLine);
 
-                // Update current keyframe step if matched
-                const stepMatch = trimmed.match(/^(\d+)%\s*{?$/);
-                if (stepMatch) {
-                    currentStep = stepMatch[1];
-                }
-
-                if (trimmed.endsWith("{")) depth++;
-                if (trimmed === "}") depth--;
-
-                if (trimmed.includes(":")) {
-                    const [rawProp, ...rest] = trimmed.split(":");
-                    const prop = rawProp.trim();
-                    const value = rest.join(":").trim().replace(/;$/, "");
-
-                    const key = `--keyframes-${name}-${currentStep}-${PROP_MAP[prop] ?? prop}`;
-                    if (ExtractVarValue(value, key)) {
-                        keyframeLine = `        ${prop}: var(${key});`;
+                    // Update current keyframe step if matched
+                    const stepMatch = trimmed.match(/^(\d+)%\s*{?$/);
+                    if (stepMatch) {
+                        currentStep = stepMatch[1];
                     }
+
+                    if (trimmed.endsWith("{")) depth++;
+                    if (trimmed === "}") depth--;
+
+                    if (trimmed.includes(":")) {
+                        const [rawProp, ...rest] = trimmed.split(":");
+                        const prop = rawProp.trim();
+                        const value = rest.join(":").trim().replace(/;$/, "");
+
+                        const key = `--keyframes-${name}-${currentStep}-${PROP_MAP[prop] ?? prop}`;
+                        if (ExtractVarValue(value, key)) {
+                            keyframeLine = `        ${prop}: var(${key});`;
+                        }
+                    }
+
+                    buffer.push(keyframeLine);
+                    i++;
+
+                    if (depth < 0) break;
                 }
-
-                buffer.push(keyframeLine);
-                i++;
-
-                if (depth < 0) break;
+            } else {
+                ExtractInlineVars(header);
             }
-
 
             FINAL_CSS.push(buffer.join("\n") + "\n");
             continue;
@@ -225,7 +230,8 @@ function ConvertCSS(input: string) {
             continue;
         }
 
-        if (trimmed.includes("{") && trimmed.indexOf("{") < trimmed.lastIndexOf("}")) {
+        if (trimmed.includes("{") &&
+            trimmed.indexOf("{") < trimmed.lastIndexOf("}")) {
 
             // Handle single line CSS rules
             // e.g., ".class { color: red; }"
@@ -303,7 +309,7 @@ export default function ExtractCssComments(dir: string): Plugin {
                         .map(([k, v]) =>
                             (v != "" && v != ";")
                                 ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}`
-                                : `    /* ${k}: ; */`)
+                                : `    ${k}: ;`)
                         .join("\n") +
                     "\n}";
 
