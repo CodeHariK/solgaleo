@@ -1,5 +1,3 @@
-import "./svg.gen.css"
-
 class IconProps {
     constructor(public color?: string, public size?: number, public fontSize?: number) { }
 }

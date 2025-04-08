@@ -100,7 +100,6 @@ h2 {
 
 p { font-size: 1rem; }
 
-
 .Glitter {
     [data-has-label="true"] {
         :focus,
@@ -119,6 +118,7 @@ p { font-size: 1rem; }
 
 @media (min-width: 700px) {}
 
+// Mode potato
 .potato {
     width: 100%;
 }

@@ -2,7 +2,7 @@ import { PositionBox } from "./position.tsx";
 
 import { type JSX } from 'solid-js';
 import { DownIcon, FilterIcon } from "../svg/svg.tsx";
-import { SolCSS } from "./input.gen.css.ts";
+import { SolCSS } from "./gen.ts";
 
 /*CSS:
 

@@ -1,5 +1,3 @@
-import "./fancy.gen.css"
-
 /* CSS:
 
 .typewriter-animation {

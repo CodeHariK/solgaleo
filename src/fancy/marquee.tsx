@@ -1,5 +1,3 @@
-import "./fancy.gen.css"
-
 /* CSS:
 @keyframes marquee {
     0% {

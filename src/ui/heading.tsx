@@ -1,5 +1,5 @@
 import { type JSX } from 'solid-js';
-import { SolCSS } from './input.gen.css.ts';
+import { SolCSS } from './gen.ts';
 
 export type HeadingProps = {
     class?: string;

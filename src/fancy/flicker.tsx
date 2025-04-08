@@ -1,5 +1,3 @@
-import "./fancy.gen.css"
-
 /*CSS:
 .flicker-text {
     --flicker-shadow: #36e2f8;

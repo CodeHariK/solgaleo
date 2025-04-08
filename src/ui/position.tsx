@@ -1,7 +1,7 @@
 import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
 
 import { type JSX } from 'solid-js';
-import { SolCSS } from "./input.gen.css.ts";
+import { SolCSS } from "./gen.ts";
 
 export function PositionBox({ name, align, children, visible }: {
     name?: JSX.Element;

@@ -2,7 +2,7 @@ import { createSignal, type JSX } from "solid-js";
 import { useSpaceContext } from "./spaceform.tsx";
 import { KeyIcon, LockIcon, UnlockIcon } from "../svg/svg.tsx";
 
-import { SolCSS } from "./input.gen.css.ts";
+import { SolCSS } from "./gen.ts";
 
 /*CSS:
 

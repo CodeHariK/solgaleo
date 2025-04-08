@@ -1,17 +1,17 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
 
-import "../src/ui/base.css"
-
-// import { AdvTest } from './adv.test'
-import { InputTest } from './input.test'
+// @ts-ignore
+import { AdvTest, FancyTest, InputTest } from './gen'
 
 // import * as Solgaleo from "solgaleo";
 
 // Solgaleo.AddTheme("custom")
 
 // render(() => <AdvTest />, document.body!)
-render(() => <InputTest />, document.body!)
+// render(() => <InputTest />, document.body!)
+render(() => <FancyTest />, document.body!)
+// render(() => <GridLayout left={<List />} />, document.body!)
 
 // render(() => <Storybook />, document.body!)
 

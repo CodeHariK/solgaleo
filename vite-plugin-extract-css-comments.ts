@@ -5,6 +5,8 @@ import { Plugin } from "vite";
 
 const CSS_COMMENT_REGEX = /\/\*\s*CSS:\s*([\s\S]*?)\*\//gm;
 
+const EXPORT_REGEX = /export\s+(?:const|let|var|function|class|type|interface|enum)/;
+
 const PROP_MAP: Record<string, string> = {
     background: "bg",
     color: "col",
@@ -154,7 +156,7 @@ function ProcessNode(node: Node, path: string[] = []) {
 
 function ConvertCSS(input: string) {
 
-    const lines = input.split(/(?<=[;{}])\s*\n/)
+    const lines = input.split(/(?<=[;{}]|\/\/.*)\s*\n/)
 
     const stack: Node[] = [];
     const root: Node = { selector: "", properties: [], children: [] };
@@ -166,6 +168,7 @@ function ConvertCSS(input: string) {
     let i = 0;
     while (i < lines.length) {
         const line = lines[i];
+
         if (trimLine(line).startsWith("//")) {
             i++;
             continue;
@@ -275,7 +278,11 @@ function ConvertCSS(input: string) {
 
 export default function ExtractCssComments(dir: string): Plugin {
     let folderPath = "", folderName = ""
-    let processedFile: string[] = [];
+    let processedFiles = new Map<string, {
+        path: string;
+        hasStyles: boolean;
+        hasExports: boolean;
+    }>();
 
     async function runExtract() {
         const walk = async (dirPath: string) => {
@@ -292,12 +299,22 @@ export default function ExtractCssComments(dir: string): Plugin {
                 } else if (entry.name.endsWith(".tsx")) {
 
                     const content = await fs.promises.readFile(fullPath, "utf-8");
-                    let match;
+                    const hasExports = EXPORT_REGEX.test(content);
 
+                    let match;
+                    let hasStyles = false;
                     while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
                         const input = match[1].trim();
-                        processedFile.push(fullPath);
+                        hasStyles = true;
                         ConvertCSS(input);
+                    }
+
+                    if (hasStyles || hasExports) {
+                        processedFiles.set(fullPath, {
+                            path: fullPath,
+                            hasStyles,
+                            hasExports
+                        });
                     }
                 }
             }
@@ -320,19 +337,31 @@ export default function ExtractCssComments(dir: string): Plugin {
                 ].join("\n");
 
                 if (combinedCSS) {
-                    const cssFilePath = path.join(folderPath, `${folderName}.gen.css`);
-                    await fs.promises.writeFile(cssFilePath,
-                        `/*\n${processedFile.join("\n")}\n*/\n\n` +
+
+                    // Generate exports string
+                    const exportFiles = Array.from(processedFiles.values())
+                        .filter(file => file.hasExports)
+                        .map(file => `export * from "${file.path.replace(folderPath, ".")}";`)
+                        .join("\n");
+
+                    // Generate styles string
+                    const styleFiles = Array.from(processedFiles.values())
+                        .filter(file => file.hasStyles)
+                        .map(file => file.path.replace(folderName + "/", ""))
+                        .join("\n");
+
+                    await fs.promises.writeFile(`${folderPath}/gen.css`,
+                        `/*\n${styleFiles}\n*/\n\n` +
                         combinedCSS.trim() + "\n",
                         "utf-8");
 
-                    console.log(`Extracted CSS to ${cssFilePath}`);
+                    console.log(`Extracted CSS to ${folderPath}/gen.css`);
 
-                    await WriteSelectorsFile(cssFilePath);
+                    await WriteSelectorsFile(`${folderPath}/gen.ts`, exportFiles);
 
                     LIGHT_VARS = {};
                     NIGHT_VARS = {};
-                    processedFile = [];
+                    processedFiles.clear();
                     FINAL_CSS.length = 0;
                 }
             }
@@ -358,7 +387,7 @@ export default function ExtractCssComments(dir: string): Plugin {
     };
 }
 
-async function WriteSelectorsFile(cssFilePath: string) {
+async function WriteSelectorsFile(filePath: string, exportFiles: string) {
     const selectors = Array.from(UNIQUE_SELECTORS)
         .filter(s => s.trim())
         .map(selector => {
@@ -383,7 +412,11 @@ async function WriteSelectorsFile(cssFilePath: string) {
         .filter((item, index, self) =>
             index === self.findIndex(t => t.value === item.value));
 
-    const content = `// Auto-generated CSS selectors
+    const content = `${filePath.startsWith("src") ? "import '../base.css'" : ""}
+import "./gen.css"
+
+${exportFiles}
+
 export const SolCSS = {
     ${selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ')}
 } as const;
@@ -391,7 +424,7 @@ export const SolCSS = {
 export type SolCSSType = keyof typeof SolCSS;
 `;
 
-    const tsFilePath = cssFilePath + '.ts';
+    const tsFilePath = filePath;
     await fs.promises.writeFile(tsFilePath, content, 'utf-8');
 
     console.log(`Generated selectors file: ${tsFilePath}`);

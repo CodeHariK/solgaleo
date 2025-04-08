@@ -1,6 +1,4 @@
-import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/solgaleo.adv";
-
-import "../src/adv/adv.gen.css"
+import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
 
 export function AdvTest() {
     return <>

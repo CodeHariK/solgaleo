@@ -1,7 +1,5 @@
 import { createSignal, onMount } from "solid-js";
 
-import "./input.gen.css"
-
 let THEMECOUNT = 0
 let THEME = ["light", "night"];
 

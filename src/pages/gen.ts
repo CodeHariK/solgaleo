@@ -1,4 +1,8 @@
-// Auto-generated CSS selectors
+import '../base.css'
+import "./gen.css"
+
+export * from "./NotFound.tsx";
+
 export const SolCSS = {
     
 } as const;

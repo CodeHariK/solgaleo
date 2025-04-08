@@ -1,4 +1,8 @@
-// Auto-generated CSS selectors
+import '../base.css'
+import "./gen.css"
+
+export * from "./svg.tsx";
+
 export const SolCSS = {
     Svg: "svg",
     AnimateSpin: "animate-spin",
