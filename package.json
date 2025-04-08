@@ -9,31 +9,35 @@
       "import": "./dist/solgaleo.index.es.js"
     },
     "./adv": {
-      "types": "./dist/solgaleo.adv.d.ts",
+      "types": "./dist/adv/gen.d.ts",
       "import": "./dist/solgaleo.adv.es.js"
     },
     "./fancy": {
-      "types": "./dist/solgaleo.fancy.d.ts",
+      "types": "./dist/fancy/gen.d.ts",
       "import": "./dist/solgaleo.fancy.es.js"
     },
-    "./input": {
-      "types": "./dist/solgaleo.input.d.ts",
-      "import": "./dist/solgaleo.input.es.js"
+    "./layouts": {
+      "types": "./dist/layouts/gen.d.ts",
+      "import": "./dist/solgaleo.layouts.es.js"
+    },
+    "./modal": {
+      "types": "./dist/modal/gen.d.ts",
+      "import": "./dist/solgaleo.modal.es.js"
     },
     "./nav": {
-      "types": "./dist/solgaleo.nav.d.ts",
+      "types": "./dist/nav/gen.d.ts",
       "import": "./dist/solgaleo.nav.es.js"
     },
     "./pages": {
-      "types": "./dist/solgaleo.pages.d.ts",
+      "types": "./dist/pages/gen.d.ts",
       "import": "./dist/solgaleo.pages.es.js"
     },
     "./svg": {
-      "types": "./dist/solgaleo.svg.d.ts",
+      "types": "./dist/svg/gen.d.ts",
       "import": "./dist/solgaleo.svg.es.js"
     },
     "./ui": {
-      "types": "./dist/solgaleo.ui.d.ts",
+      "types": "./dist/ui/gen.d.ts",
       "import": "./dist/solgaleo.ui.es.js"
     },
     "./solgaleo.css": "./dist/solgaleo.css"

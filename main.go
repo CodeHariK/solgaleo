@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	dir := "dist-test"
+	// dir := "dist-test"
+	dir := "dist-example"
 
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		log.Fatalf("Directory %s does not exist", dir)

@@ -130,8 +130,9 @@ dist
 .pnp.*
 
 dist-test
+dist-example
 
 bun.lock
 
-# *.gen.css
-# *.gen.css.ts
+# gen.css
+# gen.ts
