@@ -1,12 +1,12 @@
-import '../base.css'
+import '../gen.css'
 import "./gen.css"
-
 export * from "./pagination.tsx";
 export * from "./tab.tsx";
 export * from "./footer.tsx";
 export * from "./breadcrumb.tsx";
 export * from "./header.tsx";
 export * from "./modal.tsx";
+
 
 export const SolCSS = {
     TabsContainer: "tabs-container",

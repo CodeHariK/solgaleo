@@ -24,7 +24,6 @@
 {/* <Modal1 /> */ }
 {/* {DeleteModal()} */ }
 // <Modal child={">>> Show Modal <<<"} modal={() => "Hi"} />
-// <Breadcrumbs />
 
 //         }
 //         individualScroll

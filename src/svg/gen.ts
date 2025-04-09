@@ -1,9 +1,10 @@
-import '../base.css'
+import '../gen.css'
 import "./gen.css"
-
 export * from "./svg.tsx";
 
+
 export const SolCSS = {
+    Flex: "flex",
     Svg: "svg",
     AnimateSpin: "animate-spin",
     AppIcon: "AppIcon"

@@ -1,11 +1,11 @@
-import '../base.css'
+import '../gen.css'
 import "./gen.css"
-
 export * from "./md.tsx";
 export * from "./treeview.tsx";
 export * from "./blog.tsx";
 export * from "./table.tsx";
 export * from "./stepper.tsx";
+
 
 export const SolCSS = {
     TreeView: "tree-view",

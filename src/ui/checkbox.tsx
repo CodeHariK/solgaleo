@@ -87,10 +87,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     const { state, handleChange } = useSpaceContext();
 
     return (
-        <fieldset
-            style={{
-                display: props.horizontal ? "flex" : "",
-            }}>
+        <fieldset classList={{ "flex": props.horizontal }}>
 
             {props.header && <legend>{props.header}</legend>}
 
@@ -122,9 +119,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
                         <label aria-disabled={option().disabled} for={option().value} >
                             {option().label}
                             {option().helperText && (
-                                <p id={`${option().value}-text`}>
-                                    {option().helperText}
-                                </p>
+                                <p>{option().helperText}</p>
                             )}
                         </label>
                     </div>
@@ -153,11 +148,7 @@ export function RadioGroup(props: RadioGroupProps) {
     const { state, handleChange } = useSpaceContext();
 
     return (
-        <fieldset
-            style={{
-                display: props.horizontal ? "flex" : "",
-            }}>
-
+        <fieldset classList={{ "flex": props.horizontal }}>
             {props.header && <legend>{props.header}</legend>}
 
             <Key each={props.options} by="value">
@@ -178,9 +169,7 @@ export function RadioGroup(props: RadioGroupProps) {
                         <label aria-disabled={option().disabled} for={`radio-${option().value}`}>
                             {option().label}
                             {option().helperText && (
-                                <p id={`${option().value}-text`}>
-                                    {option().helperText}
-                                </p>
+                                <p> {option().helperText} </p>
                             )}
                         </label>
                     </div>

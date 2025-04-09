@@ -16,10 +16,6 @@
       "types": "./dist/fancy/gen.d.ts",
       "import": "./dist/solgaleo.fancy.es.js"
     },
-    "./layouts": {
-      "types": "./dist/layouts/gen.d.ts",
-      "import": "./dist/solgaleo.layouts.es.js"
-    },
     "./modal": {
       "types": "./dist/modal/gen.d.ts",
       "import": "./dist/solgaleo.modal.es.js"
@@ -62,8 +58,6 @@
   },
   "devDependencies": {
     "@types/bun": "^1.2.8",
-    "cssnano": "^7.0.6",
-    "postcss": "^8.5.3",
     "typescript": "~5.7.3",
     "vite": "^6.2.5",
     "vite-plugin-dts": "^4.5.3",

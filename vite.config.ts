@@ -22,12 +22,12 @@ export default defineConfig({
     lib: {
       name: "solgaleo",
       entry: {
+        index: path.resolve(__dirname, "src/gen.ts"),
+
         adv: path.resolve(__dirname, "src/adv/gen.ts"),
         fancy: path.resolve(__dirname, "src/fancy/gen.ts"),
-        layouts: path.resolve(__dirname, "src/layouts/gen.ts"),
         modal: path.resolve(__dirname, "src/modal/gen.ts"),
         nav: path.resolve(__dirname, "src/nav/gen.ts"),
-        pages: path.resolve(__dirname, "src/pages/gen.ts"),
         svg: path.resolve(__dirname, "src/svg/gen.ts"),
         ui: path.resolve(__dirname, "src/ui/gen.ts"),
       },
@@ -39,5 +39,7 @@ export default defineConfig({
         globals: { "solid-js": "SolidJS" },
       },
     },
+    // cssMinify: true,
+    // cssCodeSplit: true,
   },
 });

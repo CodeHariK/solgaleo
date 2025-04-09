@@ -3,6 +3,8 @@ src/svg.tsx
 */
 
 .light {
+    --bg-color: ;
+    --text-color: ;
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
     --icon-width: 1.2rem;
@@ -14,6 +16,8 @@ src/svg.tsx
 }
 
 .night {
+    --bg-color: ;
+    --text-color: ;
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
     --icon-width: 1.2rem;
@@ -22,6 +26,90 @@ src/svg.tsx
     --icon-bg: transparent;
     --icon-border: 0px solid #cbd5e1;
     --svg-background-color: #A7F3D0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+*::-webkit-scrollbar {
+    height: 8px;
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 100vh;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #e0cbcb22;
+    border-radius: 100vh;
+}
+
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    font-family: monospace, Inter, ui-sans-serif, system-ui;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+.flex {
+    display: flex;
 }
 
 @keyframes spin {

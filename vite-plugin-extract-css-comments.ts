@@ -276,98 +276,17 @@ function ConvertCSS(input: string) {
     ProcessNode(root);
 }
 
+type ProcessedFile = {
+    path: string;
+    hasStyles: boolean;
+    hasExports: boolean;
+}
+
 export default function ExtractCssComments(dir: string): Plugin {
-    let folderPath = "", folderName = ""
-    let processedFiles = new Map<string, {
-        path: string;
-        hasStyles: boolean;
-        hasExports: boolean;
-    }>();
+    let processedFiles = new Map<string, ProcessedFile>();
 
     async function runExtract() {
-        const walk = async (dirPath: string) => {
-            const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
-
-            for (const entry of entries) {
-                const fullPath = path.join(dirPath, entry.name);
-
-                folderPath = path.dirname(fullPath);
-                folderName = path.basename(folderPath);
-
-                if (entry.isDirectory()) {
-                    await walk(fullPath);
-                } else if (entry.name.endsWith(".tsx")) {
-
-                    const content = await fs.promises.readFile(fullPath, "utf-8");
-                    const hasExports = EXPORT_REGEX.test(content);
-
-                    let match;
-                    let hasStyles = false;
-                    while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
-                        const input = match[1].trim();
-                        hasStyles = true;
-                        ConvertCSS(input);
-                    }
-
-                    if (hasStyles || hasExports) {
-                        processedFiles.set(fullPath, {
-                            path: fullPath,
-                            hasStyles,
-                            hasExports
-                        });
-                    }
-                }
-            }
-
-            if (LIGHT_VARS || NIGHT_VARS || FINAL_CSS) {
-                const buildVars = (theme: string, vars: Record<string, string>) =>
-                    `.${theme} {\n` +
-                    Object.entries(vars)
-                        .map(([k, v]) =>
-                            (v != "" && v != ";")
-                                ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}`
-                                : `    ${k}: ;`)
-                        .join("\n") +
-                    "\n}";
-
-                let combinedCSS = [
-                    buildVars("light", LIGHT_VARS), "",
-                    buildVars("night", NIGHT_VARS), "",
-                    ...FINAL_CSS
-                ].join("\n");
-
-                if (combinedCSS) {
-
-                    // Generate exports string
-                    const exportFiles = Array.from(processedFiles.values())
-                        .filter(file => file.hasExports)
-                        .map(file => `export * from "${file.path.replace(folderPath, ".")}";`)
-                        .join("\n");
-
-                    // Generate styles string
-                    const styleFiles = Array.from(processedFiles.values())
-                        .filter(file => file.hasStyles)
-                        .map(file => file.path.replace(folderName + "/", ""))
-                        .join("\n");
-
-                    await fs.promises.writeFile(`${folderPath}/gen.css`,
-                        `/*\n${styleFiles}\n*/\n\n` +
-                        combinedCSS.trim() + "\n",
-                        "utf-8");
-
-                    console.log(`Extracted CSS to ${folderPath}/gen.css`);
-
-                    await WriteSelectorsFile(`${folderPath}/gen.ts`, exportFiles);
-
-                    LIGHT_VARS = {};
-                    NIGHT_VARS = {};
-                    processedFiles.clear();
-                    FINAL_CSS.length = 0;
-                }
-            }
-        };
-
-        await walk(dir);
+        await processDirectory(dir);
     }
 
     return {
@@ -385,9 +304,132 @@ export default function ExtractCssComments(dir: string): Plugin {
             });
         },
     };
+
+    async function processDirectory(dirPath: string, allFiles = new Map<string, Map<string, ProcessedFile>>()) {
+        const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+        const filesInDir = new Map<string, ProcessedFile>();
+
+        // First process all files in current directory
+        for (const entry of entries) {
+            const fullPath = path.join(dirPath, entry.name);
+
+            if (!entry.isDirectory() && entry.name.endsWith(".tsx")) {
+                const content = await fs.promises.readFile(fullPath, "utf-8");
+                const hasExports = EXPORT_REGEX.test(content);
+
+                let hasStyles = false;
+                let match;
+                while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
+                    const input = match[1].trim();
+                    hasStyles = true;
+                    ConvertCSS(input);
+                }
+
+                if (hasStyles || hasExports) {
+                    filesInDir.set(fullPath, {
+                        path: fullPath,
+                        hasStyles,
+                        hasExports
+                    });
+                }
+            }
+        }
+
+        // Store files for this directory
+        if (filesInDir.size > 0) {
+            allFiles.set(dirPath, filesInDir);
+        }
+
+        // Process all subdirectories
+        for (const entry of entries) {
+            const fullPath = path.join(dirPath, entry.name);
+            if (entry.isDirectory()) {
+                await processDirectory(fullPath, allFiles);
+            }
+        }
+
+        // After all subdirectories are processed, write files
+        if (filesInDir.size > 0) {
+            // Add to global processed files
+            for (const [path, file] of filesInDir) {
+                processedFiles.set(path, file);
+            }
+
+            const currentFolder = path.basename(dirPath);
+            await writeCssTs(dirPath, currentFolder);
+        }
+    };
+
+    async function writeCssTs(folderPath, folderName) {
+        if (LIGHT_VARS || NIGHT_VARS || FINAL_CSS) {
+            const buildVars = (theme: string, vars: Record<string, string>) => `.${theme} {\n` +
+                Object.entries(vars)
+                    .map(([k, v]) => (v != "" && v != ";")
+                        ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}`
+                        : `    ${k}: ;`)
+                    .join("\n") +
+                "\n}";
+
+            let combinedCSS = [
+                buildVars("light", LIGHT_VARS), "",
+                buildVars("night", NIGHT_VARS), "",
+                ...FINAL_CSS
+            ].join("\n");
+
+            if (combinedCSS) {
+
+                // Generate exports string
+                const exportFiles = Array.from(processedFiles.values())
+                    .filter(file => file.hasExports)
+                    .map(file => `export * from "${file.path.replace(folderPath, ".")}";`)
+                    .join("\n");
+
+                // Generate styles string
+                const styleFiles = Array.from(processedFiles.values())
+                    .filter(file => file.hasStyles)
+                    .map(file => file.path.replace(folderName + "/", ""))
+                    .join("\n");
+
+                await fs.promises.writeFile(`${folderPath}/gen.css`,
+                    `/*\n${styleFiles}\n*/\n\n` +
+                    combinedCSS.trim() + "\n",
+                    "utf-8");
+
+                console.log(`Extracted CSS to ${folderPath}/gen.css`);
+
+                await WriteSelectorsFile(`${folderPath}/gen.ts`, exportFiles.trim());
+
+                LIGHT_VARS = {};
+                NIGHT_VARS = {};
+                processedFiles.clear();
+                FINAL_CSS.length = 0;
+            }
+        }
+    }
 }
 
 async function WriteSelectorsFile(filePath: string, exportFiles: string) {
+
+    // Get subfolder exports
+    const dirName = path.dirname(filePath)
+    const entries = await fs.promises.readdir(dirName, { withFileTypes: true });
+    const subFolderExports = await Promise.all(
+        entries
+            .filter(entry => entry.isDirectory())
+            .map(async folder => {
+                const subGenPath = path.join(dirName, folder.name, "gen.ts");
+                try {
+                    await fs.promises.access(subGenPath);
+                    const varName = `src_${folder.name}_gen`;
+                    return {
+                        export: `export * from "./${folder.name}/gen";`,
+                    };
+                } catch {
+                    return null;
+                }
+            })
+    );
+
     const selectors = Array.from(UNIQUE_SELECTORS)
         .filter(s => s.trim())
         .map(selector => {
@@ -412,10 +454,10 @@ async function WriteSelectorsFile(filePath: string, exportFiles: string) {
         .filter((item, index, self) =>
             index === self.findIndex(t => t.value === item.value));
 
-    const content = `${filePath.startsWith("src") ? "import '../base.css'" : ""}
+    const content = `${filePath != "src/gen.ts" ? "import '../gen.css'" : ""}
 import "./gen.css"
-
 ${exportFiles}
+${subFolderExports.filter(Boolean).map(exp => exp?.export).join("\n")}
 
 export const SolCSS = {
     ${selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ')}

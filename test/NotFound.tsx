@@ -1,11 +1,11 @@
 
-import { Footer } from '../nav/footer';
-import { Header } from '../nav/header';
+import { Footer } from '../src/nav/footer';
+import { Header } from '../src/nav/header';
 
-import { ThemeToggle } from '../ui/theme_toggle';
-import { RainbowText } from '../fancy/rainbow';
-import { GhostComponent } from '../fancy/ghost';
-import { SpaceLayout } from '../layouts/SpaceLayout';
+import { ThemeToggle } from '../src/ui/theme_toggle';
+import { RainbowText } from '../src/fancy/rainbow';
+import { GhostComponent } from '../src/fancy/ghost';
+import { SpaceLayout } from '../src/ui/SpaceLayout';
 
 export function NotFound() {
    return (
