@@ -14,11 +14,14 @@ src/rainbow.tsx
     --ghostColor: ;
     --waveColor: ;
     --R: 11.18px;
-    --size: ;
+    --size: 10px;
     --p: 5px;
+    --sterm-border-color: ;
+    --sterm-bg-color: ;
     --flicker-shadow: #36e2f8;
-    --flicker-text-col: #3694f8;
-    --src: ;
+    --SFlickerText-col: #3694f8;
+    --rainsrc: ;
+    --rainsize: ;
 }
 
 .night {
@@ -27,11 +30,14 @@ src/rainbow.tsx
     --ghostColor: ;
     --waveColor: ;
     --R: 11.18px;
-    --size: ;
+    --size: 10px;
     --p: 5px;
+    --sterm-border-color: ;
+    --sterm-bg-color: ;
     --flicker-shadow: #36e2f8;
-    --flicker-text-col: #3694f8;
-    --src: ;
+    --SFlickerText-col: #3694f8;
+    --rainsrc: ;
+    --rainsize: ;
 }
 
 .banner {
@@ -176,7 +182,7 @@ src/rainbow.tsx
     }
 }
 
-.typewriter-animation {
+.STypewriter {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -188,7 +194,66 @@ src/rainbow.tsx
     animation-iteration-count: 1, 4;
 }
 
-@keyframes marquee {
+.STerminalWindow {
+    z-index: 0;
+    height: 100%;
+    max-height: 400px;
+    width: 100%;
+    max-width: 32rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--sterm-border-color);
+    background: var(--sterm-bg-color);
+}
+
+.STerminalWindow pre {
+    padding: 1rem;
+}
+
+.STerminalWindow code {
+    display: grid;
+    gap: 0.25rem;
+    overflow: auto;
+}
+
+.STerminalHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--sterm-border-color);
+    padding: 1rem;
+}
+
+.STerminalHeader div {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.STerminalHeader div div {
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+}
+
+.STerminalHeader div div:nth-child(1) {
+    background-color: #ef4444;
+}
+
+.STerminalHeader div div:nth-child(2) {
+    background-color: #eab308;
+}
+
+.STerminalHeader div div:nth-child(3) {
+    background-color: #22c55e;
+}
+
+.STerminalLine {
+    font-size: 0.875rem;
+    font-weight: normal;
+    letter-spacing: -0.025em;
+}
+
+@keyframes marqueeAnim {
     0% {
         transform: translateX(0);
     }
@@ -197,19 +262,19 @@ src/rainbow.tsx
     }
 }
 
-.marquee {
+.SMarquee {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
 }
 
-.marquee span {
+.SMarquee span {
     text-transform: uppercase;
     will-change: transform;
     transform: translateX(0);
     white-space: nowrap;
-    animation: marquee 24s linear infinite;
+    animation: marqueeAnim 24s linear infinite;
     font-size: 200px;
     font-weight: 900;
     color: #b3ff98;
@@ -236,11 +301,11 @@ src/rainbow.tsx
     }
 }
 
-.flicker-text {
+.SFlickerText {
     font-size: 4rem;
     font-weight: bold;
     font-size: 1.5rem;
-    color: var(--flicker-text-col);
+    color: var(--SFlickerText-col);
     letter-spacing: 5px;
     margin-bottom: 10px;
     text-shadow: 0 0 10px var(--flicker-shadow),
@@ -340,7 +405,7 @@ src/rainbow.tsx
     text-transform: uppercase;
 }
 
-@keyframes rainbow_animation {
+@keyframes SRainbowAnim {
     0%,
     100% {
         background-position: 0 0;
@@ -350,7 +415,7 @@ src/rainbow.tsx
     }
 }
 
-@keyframes gradient {
+@keyframes SRainconAnim {
     0% {
         background-position: 0% 50%;
     }
@@ -362,7 +427,7 @@ src/rainbow.tsx
     }
 }
 
-.rainbow {
+.SRainbow {
     background: linear-gradient(to right,
             blueviolet,
             lawngreen,
@@ -371,21 +436,21 @@ src/rainbow.tsx
             deepskyblue);
     -webkit-background-clip: text;
     color: transparent;
-    animation: rainbow_animation 6s ease-in-out infinite;
+    animation: SRainbowAnim 6s ease-in-out infinite;
     background-size: 400% 100%;
 }
 
-.raincon {
-    background-image: var(--src);
-    -webkit-mask-image: var(--src);
+.SRaincon {
+    background-image: var(--rainsrc);
+    -webkit-mask-image: var(--rainsrc);
     -webkit-mask-size: cover;
-    background-size: var(--size);
-    width: var(--size);
-    height: var(--size);
+    background-size: var(--rainsize);
+    width: var(--rainsize);
+    height: var(--rainsize);
     display: inline-block;
 }
 
-.rainbow_grad {
+.SRainconGrad {
     background-image: linear-gradient(-45deg,
             #ee76526e,
             #e73c7e9a,
@@ -394,7 +459,7 @@ src/rainbow.tsx
             #23d5ab9a);
     background-size: 400%;
     background-repeat: no-repeat;
-    animation: gradient 5s ease infinite;
+    animation: SRainconAnim 5s ease infinite;
     width: inherit;
     height: inherit;
 }

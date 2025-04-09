@@ -1,7 +1,8 @@
 import { type JSX } from 'solid-js';
+import { SolCSS } from './gen';
 
 /*CSS:
-.rainbow {
+.SRainbow {
     background: linear-gradient(to right,
             blueviolet,
             lawngreen,
@@ -10,35 +11,29 @@ import { type JSX } from 'solid-js';
             deepskyblue);
     -webkit-background-clip: text;
     color: transparent;
-    animation: rainbow_animation 6s ease-in-out infinite;
+    animation: SRainbowAnim 6s ease-in-out infinite;
     background-size: 400% 100%;
 }
-
-@keyframes rainbow_animation {
-
+@keyframes SRainbowAnim {
     0%,
     100% {
         background-position: 0 0;
     }
-
     50% {
         background-position: 100% 0;
     }
 }
 
-
-.raincon {
-    background-image: var(--src);
-
-    -webkit-mask-image: var(--src);
+.SRaincon {
+    background-image: var(--rainsrc);
+    -webkit-mask-image: var(--rainsrc);
     -webkit-mask-size: cover;
-    background-size: var(--size);
-    width: var(--size);
-    height: var(--size);
+    background-size: var(--rainsize);
+    width: var(--rainsize);
+    height: var(--rainsize);
     display: inline-block;
 }
-
-.rainbow_grad {
+.SRainconGrad {
     background-image: linear-gradient(-45deg,
             #ee76526e,
             #e73c7e9a,
@@ -47,44 +42,40 @@ import { type JSX } from 'solid-js';
             #23d5ab9a);
     background-size: 400%;
     background-repeat: no-repeat;
-
-    animation: gradient 5s ease infinite;
+    animation: SRainconAnim 5s ease infinite;
     width: inherit;
     height: inherit;
 }
 
-@keyframes gradient {
+@keyframes SRainconAnim {
     0% {
         background-position: 0% 50%;
     }
-
     50% {
         background-position: 100% 50%;
     }
-
     100% {
         background-position: 0% 50%;
     }
 }
 */
 
-export const RainbowText = (props: { children: JSX.Element }) => (
-    <span class="rainbow">{props.children}</span>
-);
-
-interface Props {
-    size: string;
-    src: string;
+export function RainbowText(props: { children: JSX.Element }) {
+    return <span class={SolCSS.SRainbow}>{props.children}</span>
 }
 
-export const RainbowImage = (props: Props) => {
+
+export function RainbowImage(props: {
+    size: string;
+    src: string;
+}) {
     return <div
-        class="raincon"
+        class={SolCSS.SRaincon}
         style={{
-            "--size": props.size,
-            "--src": `url(${props.src})`,
+            [SolCSS.varRainsize]: props.size,
+            [SolCSS.varRainsrc]: `url(${props.src})`,
         }}>
-        <div class="rainbow_grad">
+        <div class={SolCSS.SRainconGrad}>
             <slot />
         </div>
     </div>

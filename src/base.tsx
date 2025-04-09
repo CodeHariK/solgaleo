@@ -28,8 +28,8 @@
 }
 
 body {
-  background: var(--bg-color);
-  color: var(--text-color);
+  background: var : white : black ;
+  color: var : black : white;
   align-items: center;
   justify-content: center;
   height: 100%;

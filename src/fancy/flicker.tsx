@@ -1,5 +1,8 @@
+
+import { SolCSS } from "./gen";
+
 /*CSS:
-.flicker-text {
+.SFlickerText {
     --flicker-shadow: #36e2f8;
     font-size: 4rem;
     font-weight: bold;
@@ -40,5 +43,5 @@
 */
 
 export function FlickerText(props: { text: string }) {
-    return <span class="flicker-text">{props.text}</span>;
+    return <span class={SolCSS.SFlickerText}>{props.text}</span>;
 }

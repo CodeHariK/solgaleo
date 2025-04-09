@@ -16,7 +16,9 @@ export const SolCSS = {
     TabContent: "tab-content",
     TabPath: "tab-path",
     PathSeparator: "path-separator",
-    PathItem: "path-item"
+    PathItem: "path-item",
+
+    
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

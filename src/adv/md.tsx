@@ -1,12 +1,33 @@
 import { Component, JSX } from "solid-js";
+import { SolCSS } from "./gen";
+
+/*CSS:
+.SMarkdown {
+    background: var : #ffe0fd : red;
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+.SMarkdownCode {
+    color : var : white;
+    background: var : #232323 : #15ff00;
+    
+    >div {
+        padding: .5rem;
+        background: var : #585858 : blue;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+*/
 
 interface MiniMarkdownProps {
     content: string;
 }
 export const MiniMarkdown: Component<MiniMarkdownProps> = (props) => {
     const jsxContent = () => parseMarkdownToJSX(props.content);
-    return <div>{jsxContent()}</div>;
+    return <div class={SolCSS.SMarkdown}>{jsxContent()}</div>;
 };
+
 
 function parseMarkdownToJSX(text: string): JSX.Element[] {
     const lines = text.split("\n");
@@ -34,16 +55,12 @@ function parseMarkdownToJSX(text: string): JSX.Element[] {
         if (inCodeBlock && trimline.startsWith("```")) {
             inCodeBlock = false;
             const code = codeLines
-                .map(l => l.replace(/</g, "&lt;").replace(/>/g, "&gt;")).join("\n");
+                .map(l =>
+                    l.replace(/</g, "&lt;").replace(/>/g, "&gt;")).join("\n");
 
             result.push(
-                <div class="code-block bg-slate-600">
-                    <div style={{
-                        "padding": ".5rem",
-                        display: "flex",
-                        "justify-content": "space-between",
-                        "align-items": "center"
-                    }}>
+                <div class={SolCSS.SMarkdownCode}>
+                    <div>
                         {codeLang}
                         <button onclick={() => { navigator.clipboard.writeText(code) }}>Copy</button>
                     </div>

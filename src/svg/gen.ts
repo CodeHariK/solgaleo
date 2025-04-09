@@ -4,10 +4,14 @@ export * from "./svg.tsx";
 
 
 export const SolCSS = {
-    Flex: "flex",
-    Svg: "svg",
     AnimateSpin: "animate-spin",
-    AppIcon: "AppIcon"
+
+    varIconWidth: "--icon-width",
+    varIconHeight: "--icon-height",
+    varIconColor: "--icon-color",
+    varIconBg: "--icon-bg",
+    varSvgRingWidth: "--svg-ring-width",
+    varSvgRingColor: "--svg-ring-color"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

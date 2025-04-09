@@ -307,9 +307,17 @@ export default function ExtractCssComments(dir: string): Plugin {
 
     async function processDirectory(dirPath: string, allFiles = new Map<string, Map<string, ProcessedFile>>()) {
         const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
-        const filesInDir = new Map<string, ProcessedFile>();
 
-        // First process all files in current directory
+        // Process all subdirectories first
+        for (const entry of entries) {
+            const fullPath = path.join(dirPath, entry.name);
+            if (entry.isDirectory()) {
+                await processDirectory(fullPath, allFiles);
+            }
+        }
+
+        // Then process files in current directory
+        const filesInDir = new Map<string, ProcessedFile>();
         for (const entry of entries) {
             const fullPath = path.join(dirPath, entry.name);
 
@@ -335,20 +343,7 @@ export default function ExtractCssComments(dir: string): Plugin {
             }
         }
 
-        // Store files for this directory
-        if (filesInDir.size > 0) {
-            allFiles.set(dirPath, filesInDir);
-        }
-
-        // Process all subdirectories
-        for (const entry of entries) {
-            const fullPath = path.join(dirPath, entry.name);
-            if (entry.isDirectory()) {
-                await processDirectory(fullPath, allFiles);
-            }
-        }
-
-        // After all subdirectories are processed, write files
+        // Write files for current directory
         if (filesInDir.size > 0) {
             // Add to global processed files
             for (const [path, file] of filesInDir) {
@@ -358,7 +353,9 @@ export default function ExtractCssComments(dir: string): Plugin {
             const currentFolder = path.basename(dirPath);
             await writeCssTs(dirPath, currentFolder);
         }
-    };
+
+        return allFiles;
+    }
 
     async function writeCssTs(folderPath, folderName) {
         if (LIGHT_VARS || NIGHT_VARS || FINAL_CSS) {
@@ -410,6 +407,13 @@ export default function ExtractCssComments(dir: string): Plugin {
 
 async function WriteSelectorsFile(filePath: string, exportFiles: string) {
 
+    const cssVarMappings = Object.keys(LIGHT_VARS)
+        .filter(key => key.startsWith('--'))
+        .map(key => ({
+            name: cssVarToVarName(key),
+            value: key
+        }));
+
     // Get subfolder exports
     const dirName = path.dirname(filePath)
     const entries = await fs.promises.readdir(dirName, { withFileTypes: true });
@@ -420,7 +424,6 @@ async function WriteSelectorsFile(filePath: string, exportFiles: string) {
                 const subGenPath = path.join(dirName, folder.name, "gen.ts");
                 try {
                     await fs.promises.access(subGenPath);
-                    const varName = `src_${folder.name}_gen`;
                     return {
                         export: `export * from "./${folder.name}/gen";`,
                     };
@@ -460,7 +463,11 @@ ${exportFiles}
 ${subFolderExports.filter(Boolean).map(exp => exp?.export).join("\n")}
 
 export const SolCSS = {
-    ${selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ')}
+    ${selectors.toString().trim()
+            ? selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ') + ','
+            : ""}
+
+    ${cssVarMappings.map(({ name, value }) => `${name}: "${value}"`).join(',\n    ')}
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;
@@ -472,4 +479,15 @@ export type SolCSSType = keyof typeof SolCSS;
     console.log(`Generated selectors file: ${tsFilePath}`);
 
     UNIQUE_SELECTORS.clear();
+}
+
+function cssVarToVarName(cssVar: string): string {
+    // Remove leading '--' and convert to camelCase
+    return 'var' + cssVar
+        .replace(/^--/, '')
+        .split('-')
+        .map((part) =>
+            part.charAt(0).toUpperCase() + part.slice(1)
+        )
+        .join('');
 }

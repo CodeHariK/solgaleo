@@ -1,6 +1,6 @@
 /* CSS:
 
-.typewriter-animation {
+.STypewriter {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -22,6 +22,8 @@
 }
 */
 
+import { SolCSS } from "./gen";
+
 type TerminalLine = {
     text: string;
     color?: string;
@@ -29,66 +31,94 @@ type TerminalLine = {
 };
 
 export function TypeWriter() {
-    return <p class="typewriter-animation">Hi there, I'm a Typewriter Animation made in pure CSS!</p>
+    return <p class={SolCSS.STypewriter}>Hi there, I'm a Typewriter Animation made in pure CSS!</p>
 }
+
+/* CSS:
+.STerminalWindow {
+    z-index: 0;
+    height: 100%;
+    max-height: 400px;
+    width: 100%;
+    max-width: 32rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--sterm-border-color);
+    background: var(--sterm-bg-color);
+
+    pre {
+        padding: 1rem;
+    }
+
+    code {
+        display: grid;
+        gap: 0.25rem;
+        overflow: auto;
+    }
+}
+
+.STerminalHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--sterm-border-color);
+    padding: 1rem;
+
+    div {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+
+        div {
+            height: 0.5rem;
+            width: 0.5rem;
+            border-radius: 9999px;
+
+            :nth-child(1) {
+                background-color: #ef4444;
+            }
+            :nth-child(2) {
+                background-color: #eab308;
+            }
+            :nth-child(3) {
+                background-color: #22c55e;
+            }
+        }
+    }
+}
+
+.STerminalLine {
+    font-size: 0.875rem;
+    font-weight: normal;
+    letter-spacing: -0.025em;
+}
+
+*/
 
 export function Terminal({ lines }: { lines: TerminalLine[] }) {
     return (
-
-        <div class="flex min-h-[350px] w-full items-center justify-center p-10">
-            <div class="z-0 h-full max-h-[400px] w-full max-w-lg rounded-xl border border-border bg-background">
-                <div class="flex flex-col gap-y-2 border-b border-border p-4">
-                    <div class="flex flex-row gap-x-2">
-                        <div class="h-2 w-2 rounded-full bg-red-500">
-                        </div>
-                        <div class="h-2 w-2 rounded-full bg-yellow-500">
-                        </div>
-                        <div class="h-2 w-2 rounded-full bg-green-500">
-                        </div>
-                    </div>
-                </div>
-                <pre class="p-4">
-                    <code class="grid gap-y-1 overflow-auto">
-                        <span class="text-sm font-normal tracking-tight">&gt; pnpm dlx shadcn@latest init</span>
-                        <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
-                            <span>✔ Preflight checks.</span>
-                        </div>
-                        <div class="grid text-sm font-normal tracking-tight text-green-500" style="opacity: 1; transform: none;">
-                            <span>✔ Installing dependencies.</span>
-                        </div>
-                        <div class="grid text-sm font-normal tracking-tight text-blue-500" style="opacity: 1; transform: none;">
-                            <span>ℹ Updated 1 file:</span>
-                            <span class="pl-2">- lib/utils.ts</span>
-                        </div>
-                        <span class="text-sm font-normal tracking-tight text-muted-foreground">Success! Project initialization completed.</span>
-
-
-                        {lines.map((line, i) => {
-
-                            const delay = i * 0.4;
-                            const style = line.input
-                                ? `animation-delay: ${delay}s, ${delay}s;`
-                                : undefined;
-
-                            const classes = [
-                                "text-sm font-normal tracking-tight",
-                                line.color || "",
-                                line.input ? "typewriter-animation" : "",
-                                "cursor"
-                            ]
-                                .filter(Boolean)
-                                .join(" ");
-
-                            return (
-                                <span class={classes} style={style}>
-                                    {line.text}
-                                </span>
-                            );
-                        })}
-
-                    </code>
-                </pre>
+        <div class={SolCSS.STerminalWindow}>
+            <div class={SolCSS.STerminalHeader}>
+                <div><div /><div /><div /></div>
             </div>
+            <pre>
+                <code>
+                    {lines.map((line, i) => {
+                        const delay = i * 0.4;
+
+                        return (
+                            <span classList={{
+                                [SolCSS.STerminalLine]: true,
+                                [SolCSS.STypewriter]: line.input,
+                            }} style={{
+                                "animation-delay": line.input ? `${delay}s, ${delay}s;` : '',
+                                color: line.color
+                            }}>
+                                {line.text}
+                            </span>
+                        );
+                    })}
+                </code>
+            </pre>
         </div>
     );
 }

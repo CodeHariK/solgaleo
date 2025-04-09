@@ -3,113 +3,21 @@ src/svg.tsx
 */
 
 .light {
-    --bg-color: ;
-    --text-color: ;
+    --icon-width: 8rem;
+    --icon-height: 8rem;
+    --icon-color: #338bff;
+    --icon-bg: #343434;
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
-    --icon-width: 1.2rem;
-    --icon-height: 1.2rem;
-    --icon-color: #475569;
-    --icon-bg: transparent;
-    --icon-border: 0px solid #cbd5e1;
-    --svg-background-color: #A7F3D0;
 }
 
 .night {
-    --bg-color: ;
-    --text-color: ;
+    --icon-width: 8rem;
+    --icon-height: 8rem;
+    --icon-color: #338bff;
+    --icon-bg: #343434;
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
-    --icon-width: 1.2rem;
-    --icon-height: 1.2rem;
-    --icon-color: #475569;
-    --icon-bg: transparent;
-    --icon-border: 0px solid #cbd5e1;
-    --svg-background-color: #A7F3D0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        interpolate-size: allow-keywords;
-    }
-}
-
-*::-webkit-scrollbar {
-    height: 8px;
-    width: 6px;
-}
-
-*::-webkit-scrollbar-track {
-    border-radius: 100vh;
-}
-
-*::-webkit-scrollbar-thumb {
-    background: #e0cbcb22;
-    border-radius: 100vh;
-}
-
-* {
-    scroll-behavior: smooth;
-    margin: 0;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-body {
-    background: var(--bg-color);
-    color: var(--text-color);
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    min-height: 100vh;
-    padding: 0px;
-    margin: 0px;
-    font-family: monospace, Inter, ui-sans-serif, system-ui;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    overflow-wrap: break-word;
-}
-
-p {
-    text-wrap: pretty;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    text-wrap: balance;
-}
-
-#root,
-#__next {
-    isolation: isolate;
-}
-
-.flex {
-    display: flex;
 }
 
 @keyframes spin {
@@ -118,31 +26,17 @@ h6 {
     }
 }
 
-.svg {
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50px;
-    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
-    width: 2rem;
-    height: 2rem;
-    background-color: var(--svg-background-color);
-    inset-inline-start: -1rem;
-}
-
 .animate-spin {
     animation: spin 1s linear infinite;
 }
 
-.AppIcon {
+svg {
     display: inline-block;
-    flex-shrink: 0;
-    font-size: 0.75rem;
-    line-height: 1rem;
+    margin: .4rem;
+    border-radius: 1rem;
     width: var(--icon-width);
     height: var(--icon-height);
     color: var(--icon-color);
     background: var(--icon-bg);
-    border: var(--icon-border);
+    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
 }

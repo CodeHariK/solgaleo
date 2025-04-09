@@ -16,10 +16,6 @@
       "types": "./dist/fancy/gen.d.ts",
       "import": "./dist/solgaleo.fancy.es.js"
     },
-    "./modal": {
-      "types": "./dist/modal/gen.d.ts",
-      "import": "./dist/solgaleo.modal.es.js"
-    },
     "./nav": {
       "types": "./dist/nav/gen.d.ts",
       "import": "./dist/solgaleo.nav.es.js"

@@ -18,9 +18,12 @@ export const SolCSS = {
     Ghost__wave: "ghost__wave",
     Ghost__mouth: "ghost__mouth",
     Active: "active",
-    TypewriterAnimation: "typewriter-animation",
-    Marquee: "marquee",
-    FlickerText: "flicker-text",
+    STypewriter: "STypewriter",
+    STerminalWindow: "STerminalWindow",
+    STerminalHeader: "STerminalHeader",
+    STerminalLine: "STerminalLine",
+    SMarquee: "SMarquee",
+    SFlickerText: "SFlickerText",
     Card: "card",
     Badge: "badge",
     Title: "title",
@@ -28,9 +31,23 @@ export const SolCSS = {
     Stat: "stat",
     StatValue: "stat-value",
     StatLabel: "stat-label",
-    Rainbow: "rainbow",
-    Raincon: "raincon",
-    Rainbow_grad: "rainbow_grad"
+    SRainbow: "SRainbow",
+    SRaincon: "SRaincon",
+    SRainconGrad: "SRainconGrad",
+
+    varBannerBorder: "--banner-border",
+    varBannerBg: "--banner-bg",
+    varGhostColor: "--ghostColor",
+    varWaveColor: "--waveColor",
+    varR: "--R",
+    varSize: "--size",
+    varP: "--p",
+    varStermBorderColor: "--sterm-border-color",
+    varStermBgColor: "--sterm-bg-color",
+    varFlickerShadow: "--flicker-shadow",
+    varSFlickerTextCol: "--SFlickerText-col",
+    varRainsrc: "--rainsrc",
+    varRainsize: "--rainsize"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

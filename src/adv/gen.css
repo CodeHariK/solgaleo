@@ -1,10 +1,15 @@
 /*
+src/md.tsx
 src/treeview.tsx
 src/blog.tsx
 src/stepper.tsx
 */
 
 .light {
+    --SMarkdown-bg: #ffe0fd;
+    --SMarkdownCode-col: white;
+    --SMarkdownCode-bg: #232323;
+    --SMarkdownCode--div-bg: #585858;
     --blog-border: 0px solid #ddd;
     --blog-bg: #ffffff;
     --blog-hover-bg: #fef8ff;
@@ -21,6 +26,10 @@ src/stepper.tsx
 }
 
 .night {
+    --SMarkdown-bg: red;
+    --SMarkdownCode-col: white;
+    --SMarkdownCode-bg: #15ff00;
+    --SMarkdownCode--div-bg: blue;
     --blog-border: 0px solid #ddd;
     --blog-bg: #282a36;
     --blog-hover-bg: #3c263d;
@@ -34,6 +43,24 @@ src/stepper.tsx
     --stepper-col: #ffffff;
     --stepper-bg: ;
     --stepper-border: 1px solid #E5E7EB;
+}
+
+.SMarkdown {
+    background: var(--SMarkdown-bg);
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+
+.SMarkdownCode {
+    color: var(--SMarkdownCode-col);
+    background: var(--SMarkdownCode-bg);
+}
+
+.SMarkdownCode>div {
+    padding: .5rem;
+    background: var(--SMarkdownCode--div-bg);
+    display: flex;
+    justify-content: space-between;
 }
 
 .tree-view {
