@@ -1,4 +1,4 @@
-import { SearchIcon } from "../svg/svg";
+import { IconSearch } from "../svg/svg";
 import { useSpaceContext } from "./spaceform";
 
 /*CSS:
@@ -67,7 +67,7 @@ export function SearchInput(props: SearchInputProps) {
     return (
         <div class="searchinput">
             <div>
-                <SearchIcon />
+                <IconSearch />
             </div>
 
             <input type="search" id="search"

@@ -17,12 +17,12 @@
 }
 */
 
-import { RocketIcon } from "../svg/svg";
+import { IconRocket } from "../svg/svg";
 
 export function Banner() {
     return <aside aria-label="Tip" class="banner">
         <h5 aria-hidden="true">
-            <RocketIcon props={{ color: "white", size: 1, fontSize: 1.33 }} />
+            <IconRocket props={{ color: "white", size: 1.33, }} />
             Tip
         </h5>
         <div>

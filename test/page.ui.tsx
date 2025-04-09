@@ -1,7 +1,7 @@
 
 import * as yup from 'yup';
 import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, SearchInput, Select, SpaceDebugInfo, SpaceForm, SpaceFormError, TextInput } from '../src/ui/gen.ts';
-import { CartIcon, DownIcon } from '../src/svg/gen.ts';
+import { IconCart, IconDown } from '../src/svg/gen.ts';
 
 import { BaseButton, IconButton, MaterialButton, OutlinedButton } from '../src/ui/gen.ts';
 
@@ -9,7 +9,7 @@ export function InputTest() {
     return <>
 
         <PositionBox
-            name={<>{CartIcon()}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{DownIcon()}</>}>
+            name={<>{<IconCart />}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{<IconDown />}</>}>
 
             <div class="min-w-[300px] z-10 mx-auto space-y-4 overflow-hidden rounded-lg p-4 antialiased shadow-lg">
 

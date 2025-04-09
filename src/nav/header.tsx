@@ -1,7 +1,7 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { OutlinedButton } from "../ui/button";
 import { PositionBox } from "../ui/position";
-import { DownIcon, UserIcon } from "../svg/svg";
+import { IconDown, IconUser } from "../svg/svg";
 
 export const Header = ({ iconSrc, title, links, rightChildren }: { iconSrc?: string, title?: JSX.Element, links?: JSX.Element, rightChildren?: JSX.Element }) => (
     <header>
@@ -32,7 +32,7 @@ export const TransitionModal = ({ transition, children }: { transition: boolean,
     return (
         <TransitionWidget showFirstWidget={transition}
             one={
-                <PositionBox name={<p>{UserIcon()}{<span>Account</span>}{DownIcon()}</p>} align={{ x: 0, y: 1 }}>
+                <PositionBox name={<p>{<IconUser />}{<span>Account</span>}{<IconDown />}</p>} align={{ x: 0, y: 1 }}>
                     <div class="z-50 m-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow night:bg-gray-700 night:divide-gray-600" id="user-dropdown">
                         <div class="px-4 py-3">
                             <span class="block text-sm text-gray-900 night:text-white">Person</span>

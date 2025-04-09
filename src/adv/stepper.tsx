@@ -1,5 +1,5 @@
 import { JSX } from "solid-js/jsx-runtime"
-import { TickIcon } from "../svg/svg"
+import { IconTick } from "../svg/svg"
 
 /* CSS:
 .stepper {
@@ -14,8 +14,11 @@ export function Stepper({ items }: { items: { title: string, subtitle?: string, 
     return items.length == 0 ? <></> : <div class="p-12">
         <ol class="stepper">
             {items.map((item, i) => {
-                return <li style={{ "margin-bottom": (i == (items.length - 1)) ? "" : "2.5rem", "margin-inline-start": "1.5rem" }}>
-                    <TickIcon />
+                return <li style={{
+                    "margin-bottom": (i == (items.length - 1)) ? "" : "2.5rem",
+                    "margin-inline-start": "1.5rem"
+                }}>
+                    <IconTick />
                     <h3>{item.title}</h3>
                     {item.subtitle && <p>{item.subtitle}</p>}
                     {item.element}

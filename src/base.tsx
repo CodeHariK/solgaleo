@@ -90,4 +90,12 @@ h6 {
   display: flex;
 }
 
+.items-center {
+  align-items: center; 
+} 
+
+.gap-2 {
+  gap: 0.5rem; 
+}
+
 */

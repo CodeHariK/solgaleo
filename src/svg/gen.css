@@ -3,21 +3,17 @@ src/svg.tsx
 */
 
 .light {
-    --icon-width: 8rem;
-    --icon-height: 8rem;
+    --icon-width: varl : 1.3rem;
+    --icon-height: 1.3rem;
     --icon-color: #338bff;
     --icon-bg: #343434;
-    --svg-ring-width: 4px;
-    --svg-ring-color: #3b82f680;
 }
 
 .night {
-    --icon-width: 8rem;
-    --icon-height: 8rem;
+    --icon-width: varl : 1.3rem;
+    --icon-height: 1.3rem;
     --icon-color: #338bff;
     --icon-bg: #343434;
-    --svg-ring-width: 4px;
-    --svg-ring-color: #3b82f680;
 }
 
 @keyframes spin {
@@ -32,11 +28,7 @@ src/svg.tsx
 
 svg {
     display: inline-block;
-    margin: .4rem;
-    border-radius: 1rem;
     width: var(--icon-width);
     height: var(--icon-height);
     color: var(--icon-color);
-    background: var(--icon-bg);
-    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
 }

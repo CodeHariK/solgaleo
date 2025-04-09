@@ -32,21 +32,21 @@ function toProp(props?: IconProps) {
 }
 
 svg {
-    --icon-width: var : 8rem;
-    --icon-height: var : 8rem;
+    --icon-width: varl : 1.3rem;
+    --icon-height: var : 1.3rem;
     --icon-bg: var : #343434;
     --icon-color: var : #338bff;
 
     display: inline-block;
-    margin: .4rem;
-    border-radius: 1rem;
+    // margin: .4rem;
+    // border-radius: 1rem;
     width: var(--icon-width);
     height: var(--icon-height);
     color: var(--icon-color);
-    background: var(--icon-bg);
-    --svg-ring-width: 4px;
-    --svg-ring-color: var : #3b82f680 : #3b82f680;
-    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
+    // background: var(--icon-bg);
+    // --svg-ring-width: 4px;
+    // --svg-ring-color: var : #3b82f680 : #3b82f680;
+    // box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
 }
 */
 
@@ -201,8 +201,8 @@ export function IconLock({ props }: { props?: IconProps }) {
     return <svg
         viewBox="-1 -1 26 26"
         {...toProp(props)}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
+        stroke={props?.fill ? "currentColor" : "none"}
+        fill={props?.fill ? "none" : "currentColor"}
         stroke-width={props?.strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"

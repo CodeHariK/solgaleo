@@ -1,7 +1,7 @@
 import { PositionBox } from "./position.tsx";
 
 import { type JSX } from 'solid-js';
-import { DownIcon, FilterIcon } from "../svg/svg.tsx";
+import { IconDown, IconFilter } from "../svg/svg.tsx";
 import { SolCSS } from "./gen.ts";
 
 /*CSS:
@@ -51,7 +51,7 @@ export function Dropdown<T>({ id, items, visible, fn }: {
 }) {
     return <PositionBox align={{ x: 0, y: 1 }}
         visible={visible}
-        name={<>{FilterIcon()}{<span>Filter</span>}{DownIcon()}</>}>
+        name={<>{<IconFilter />}{<span>Filter</span>}{<IconDown />}</>}>
 
         <div id={id} class={SolCSS.SolDropdown}
             role="menu" aria-orientation="vertical"
