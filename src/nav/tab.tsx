@@ -35,6 +35,7 @@ import { CssNAV } from './gen';
 .tab-content {
     flex: 1;
     overflow: auto;
+    background: #f94d4d;
 }
 
 */
@@ -66,8 +67,6 @@ export function RoutedTabs(props: RoutedTabsProps) {
     const getCurrentTab = () => {
         const states = parseParams();
 
-        console.log(states, props.id, states[props.id] || props.defaultTab || props.tabs[0]?.id)
-
         return states[props.id] || props.defaultTab || props.tabs[0]?.id;
     };
 
@@ -78,7 +77,6 @@ export function RoutedTabs(props: RoutedTabsProps) {
         const handleLocationChange = () => {
             const newTab = getCurrentTab();
             if (newTab !== currentTab()) {
-                console.log("CreateEffect SetTab", props.id, newTab)
                 setCurrentTab(newTab);
             }
         };
@@ -92,10 +90,10 @@ export function RoutedTabs(props: RoutedTabsProps) {
         <Tabs
             tabs={props.tabs}
             defaultTab={currentTab()}
+            id={props.id}
             onTabChange={
                 (tabId: string) => {
                     setCurrentTab(tabId);
-                    console.log("OnTabChange SetTab", props.id, tabId)
 
                     // Update URL while preserving other tab states
                     const params = new URLSearchParams(location.search);
@@ -116,17 +114,11 @@ type Tab = {
     children?: Tab[];
 };
 
-type TabPath = {
-    id: string;
-    label: string;
-    level: number;
-};
-
 type TabsProps = {
     tabs: Tab[];
     defaultTab?: string;
     onTabChange?: (tabId: string) => void;
-    activePath?: TabPath[];
+    id: string;
 };
 
 function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
@@ -142,23 +134,42 @@ function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
         }
     }
 
-    console.log(tabs, path, result)
-
     return result;
 }
 
 export function Tabs(props: TabsProps) {
     const [activePath, setActivePath] = createSignal<string[]>([]);
     const [visibleTabs, setVisibleTabs] = createSignal<Tab[][]>([props.tabs]);
+    const [tabContent, setTabContent] = createSignal<JSX.Element | undefined>();
 
-    // Initialize from defaultTab if provided
-    createEffect(() => {
-        if (props.defaultTab) {
-            const path = props.defaultTab.split('/');
-            setActivePath(path);
-            setVisibleTabs(findTabsByPath(props.tabs, path));
+    function updateContent(path: string[]) {
+
+        // Set initial content
+        let content: JSX.Element | undefined;
+        let current = props.tabs;
+
+        let leaf = ""
+
+        for (const pathId of path) {
+            const tab = current.find(t => t.id === pathId);
+            if (tab?.content) {
+                content = tab.content
+                leaf = ""
+            } else if (tab?.children && tab?.children[0]?.content) {
+                content = tab?.children[0]?.content
+                leaf = tab?.children[0]?.id
+            }
+            if (tab?.children) current = tab.children;
         }
-    });
+        setTabContent(content);
+
+        if (leaf) {
+            path.push(leaf)
+        }
+
+        setActivePath(path);
+        setVisibleTabs(findTabsByPath(props.tabs, path));
+    }
 
     const handleTabClick = (tab: Tab, level: number) => {
         // Check if we're clicking the same tab at the same level
@@ -167,8 +178,9 @@ export function Tabs(props: TabsProps) {
         }
 
         const newPath = [...activePath().slice(0, level), tab.id];
-        setActivePath(newPath);
-        setVisibleTabs(findTabsByPath(props.tabs, newPath));
+
+        updateContent(newPath)
+
         props.onTabChange?.(newPath.join('.'));
     };
 
@@ -177,8 +189,8 @@ export function Tabs(props: TabsProps) {
         if (props.defaultTab) {
             // Split by dot instead of slash
             const path = props.defaultTab.split('.');
-            setActivePath(path);
-            setVisibleTabs(findTabsByPath(props.tabs, path));
+
+            updateContent(path);
         }
     });
 
@@ -191,8 +203,7 @@ export function Tabs(props: TabsProps) {
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button
-                                        class={`${CssNAV.TabButton} ${activePath()[level()] === tab.id ? 'active' : ''
-                                            }`}
+                                        class={`${CssNAV.TabButton} ${activePath()[level()] === tab.id ? 'active' : ''}`}
                                         onClick={() => handleTabClick(tab, level())}
                                     >
                                         {tab.label}
@@ -205,17 +216,11 @@ export function Tabs(props: TabsProps) {
             </div>
 
             <div class={CssNAV.TabContent}>
-                {(() => {
-                    let content: JSX.Element | undefined;
-                    let current = props.tabs;
-                    for (const pathId of activePath()) {
-                        const tab = current.find(t => t.id === pathId);
-                        if (tab?.content) content = tab.content;
-                        if (tab?.children) current = tab.children;
-                    }
-                    return content;
-                })()}
+                {props.id} : {activePath().join(".")}
+                {tabContent()}
             </div>
+
+            <br />
         </div>
     );
 }

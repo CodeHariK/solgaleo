@@ -20,7 +20,7 @@ import { RoutedTabs } from '../src/nav/gen';
 
 // render(() => <Storybook />, document.body!)
 
-const tabs = [
+const tabs = () => [
     {
         id: 'home',
         label: 'Home',
@@ -61,14 +61,14 @@ render(() => <Router>
         component={() => (
             <>
                 <RoutedTabs
-                    tabs={tabs}
+                    tabs={tabs()}
                     defaultTab="home"
                     baseRoute="/"
                     id="light"
                 />
 
                 <RoutedTabs
-                    tabs={tabs}
+                    tabs={tabs()}
                     defaultTab="home"
                     baseRoute="/"
                     id="night"

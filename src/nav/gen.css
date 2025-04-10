@@ -94,6 +94,7 @@ src/header.tsx
 .tab-content {
     flex: 1;
     overflow: auto;
+    background: #f94d4d;
 }
 
 .Breadcrumb {
