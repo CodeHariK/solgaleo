@@ -3,7 +3,7 @@ import { useSpaceContext } from "./spaceform";
 import { createSignal, type JSX } from "solid-js";
 import { IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 
-import { SolCSS } from "./gen.ts";
+import { CssUI } from "./gen.ts";
 
 /*CSS:
 
@@ -414,7 +414,7 @@ export function Input(props: InputProps) {
 
             {props.header && <legend>{props.header}</legend>}
 
-            <div class={SolCSS.Input}
+            <div class={CssUI.Input}
                 data-has-icon={!!(props.icon || props.type === "password")}
                 data-has-label={!!props.label}
                 data-is-range={props.type === "range"}
@@ -422,7 +422,7 @@ export function Input(props: InputProps) {
 
                 {(props.icon || props.type === "password") && (
                     <div
-                        class={SolCSS.InputIcon}
+                        class={CssUI.InputIcon}
                     >
                         {props.icon ? props.icon : <IconKey />}
                     </div>
@@ -443,7 +443,7 @@ export function Input(props: InputProps) {
                                 handleChange(props.name, state().values[props.name])
                             }
                         }}
-                        class={`${state().errors[props.name] ? SolCSS.ErrorTextInput : ''}`}
+                        class={`${state().errors[props.name] ? CssUI.ErrorTextInput : ''}`}
                     />
 
                     :
@@ -468,13 +468,13 @@ export function Input(props: InputProps) {
                         min={props.min}
                         max={props.max}
                         step={props.step}
-                        class={`${state().errors[props.name] ? SolCSS.ErrorTextInput : ''}`}
+                        class={`${state().errors[props.name] ? CssUI.ErrorTextInput : ''}`}
                     />
                 }
 
                 {props.type === "range" && (
                     <div
-                        class={SolCSS.RangeValue}
+                        class={CssUI.RangeValue}
                         style={{ "--value-left": rangeLeft() }}
                     >
                         {state().values[props.name] || props.min || 0}
@@ -482,10 +482,10 @@ export function Input(props: InputProps) {
                 )}
 
                 {(props.type === "password" || props.end) && (
-                    <div class={SolCSS.InputEnd}>
+                    <div class={CssUI.InputEnd}>
                         <button
                             type="button"
-                            class={SolCSS.IconButton}
+                            class={CssUI.IconButton}
                             onClick={() => setShowPassword(!showPassword())}
                         >
                             {showPassword() ? <IconUnlock /> : <IconLock />}
@@ -499,7 +499,7 @@ export function Input(props: InputProps) {
 
             {state().errors[props.name] &&
                 <p aria-errormessage={state().errors[props.name]}
-                    class={SolCSS.ErrorText}>{state().errors[props.name]}
+                    class={CssUI.ErrorText}>{state().errors[props.name]}
                 </p>}
         </fieldset>
     );

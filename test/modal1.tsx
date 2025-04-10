@@ -1,5 +1,5 @@
 import { Setter } from "solid-js";
-import { SpaceForm, SolCSS } from "../src/ui/gen.ts";
+import { SpaceForm, CssUI } from "../src/ui/gen.ts";
 import { IconCross, IconDelete } from "../src/svg/svg";
 import { Input, Select } from "../src/ui/input.tsx";
 
@@ -10,7 +10,7 @@ export function Modal1() {
 
                 <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 night:border-gray-700 md:p-5">
                     <h4>Account Information</h4>
-                    <button class={SolCSS.IconButton}><IconCross /></button>
+                    <button class={CssUI.IconButton}><IconCross /></button>
                 </div>
 
                 <SpaceForm class="p-4 md:p-5" id="AccountForm">
@@ -31,8 +31,8 @@ export function Modal1() {
 
                     </div>
                     <div class="flex gap-3 border-t border-gray-200 pt-4 night:border-gray-700 md:pt-5">
-                        <button class={SolCSS.MaterialButton}>Save information</button>
-                        <button class={SolCSS.OutlinedButton}>Cancel</button>
+                        <button class={CssUI.MaterialButton}>Save information</button>
+                        <button class={CssUI.OutlinedButton}>Cancel</button>
                     </div>
                 </SpaceForm>
             </div>
@@ -48,8 +48,8 @@ export function DeleteModal(setShow?: Setter<boolean>) {
         </div>
         <h6 class="mb-3">Are you sure you want to delete this order from your account?</h6>
         <div class="flex items-center justify-center space-x-4">
-            <button class={SolCSS.OutlinedButton}>No, cancel</button>
-            <button class={SolCSS.MaterialButton} onClick={() => { if (setShow) setShow(false) }}>Yes, delete</button>
+            <button class={CssUI.OutlinedButton}>No, cancel</button>
+            <button class={CssUI.MaterialButton} onClick={() => { if (setShow) setShow(false) }}>Yes, delete</button>
         </div>
     </div>;
 }

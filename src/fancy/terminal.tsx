@@ -1,3 +1,5 @@
+import { CssFANCY } from "./gen";
+
 /* CSS:
 
 .STypewriter {
@@ -22,8 +24,6 @@
 }
 */
 
-import { SolCSS } from "./gen";
-
 type TerminalLine = {
     text: string;
     color?: string;
@@ -31,7 +31,7 @@ type TerminalLine = {
 };
 
 export function TypeWriter() {
-    return <p class={SolCSS.STypewriter}>Hi there, I'm a Typewriter Animation made in pure CSS!</p>
+    return <p class={CssFANCY.STypewriter}>Hi there, I'm a Typewriter Animation made in pure CSS!</p>
 }
 
 /* CSS:
@@ -96,8 +96,8 @@ export function TypeWriter() {
 
 export function Terminal({ lines }: { lines: TerminalLine[] }) {
     return (
-        <div class={SolCSS.STerminalWindow}>
-            <div class={SolCSS.STerminalHeader}>
+        <div class={CssFANCY.STerminalWindow}>
+            <div class={CssFANCY.STerminalHeader}>
                 <div><div /><div /><div /></div>
             </div>
             <pre>
@@ -107,8 +107,8 @@ export function Terminal({ lines }: { lines: TerminalLine[] }) {
 
                         return (
                             <span classList={{
-                                [SolCSS.STerminalLine]: true,
-                                [SolCSS.STypewriter]: line.input,
+                                [CssFANCY.STerminalLine]: true,
+                                [CssFANCY.STypewriter]: line.input,
                             }} style={{
                                 "animation-delay": line.input ? `${delay}s, ${delay}s;` : '',
                                 color: line.color

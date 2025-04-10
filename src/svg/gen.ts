@@ -3,12 +3,11 @@ import "./gen.css"
 export * from "./svg.tsx";
 
 
-export const SolCSS = {
+export const CssSVG = {
     AnimateSpin: "animate-spin",
 
     varIconWidth: "--icon-width",
-    varIconHeight: "--icon-height",
-    varIconColor: "--icon-color"
+    varIconHeight: "--icon-height"
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type CssSVGType = keyof typeof CssSVG;

@@ -2,7 +2,7 @@ import { PositionBox } from "./position.tsx";
 
 import { type JSX } from 'solid-js';
 import { IconDown, IconFilter } from "../svg/svg.tsx";
-import { SolCSS } from "./gen.ts";
+import { CssUI } from "./gen.ts";
 
 /*CSS:
 
@@ -53,7 +53,7 @@ export function Dropdown<T>({ id, items, visible, fn }: {
         visible={visible}
         name={<>{<IconFilter />}{<span>Filter</span>}{<IconDown />}</>}>
 
-        <div id={id} class={SolCSS.SolDropdown}
+        <div id={id} class={CssUI.SolDropdown}
             role="menu" aria-orientation="vertical"
             aria-labelledby="sortDropdownButton"
             tabindex="-1"
@@ -62,11 +62,11 @@ export function Dropdown<T>({ id, items, visible, fn }: {
             {items.map((item) => {
                 return item.subitems.length == 0 ? <></> :
                     <>
-                        {item.header && <h6 class={SolCSS.SolDropdownHeader}>{item.header}</h6>}
+                        {item.header && <h6 class={CssUI.SolDropdownHeader}>{item.header}</h6>}
                         <ul aria-labelledby="sortDropdownButton">
                             {item.subitems.map((e) => {
                                 return <li>
-                                    <a href="#" class={SolCSS.SolDropdownItem}
+                                    <a href="#" class={CssUI.SolDropdownItem}
                                         onclick={() => fn?.(e.data)}>
                                         {e.element}
                                     </a>

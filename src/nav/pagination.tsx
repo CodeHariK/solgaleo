@@ -1,37 +1,124 @@
-export function Pagination() {
-    return <nav class="mt-6 flex items-center justify-center sm:mt-8" aria-label="Page navigation example">
-        <ul class="flex h-8 items-center -space-x-px text-sm">
-            <li>
-                <a href="#" class="ms-0 flex h-8 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 night:border-gray-700 night:bg-gray-800 night:text-gray-400 night:hover:bg-gray-700 night:hover:text-white">
-                    <span class="sr-only">Previous</span>
-                    <svg class="h-4 w-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7" />
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 night:border-gray-700 night:bg-gray-800 night:text-gray-400 night:hover:bg-gray-700 night:hover:text-white">1</a>
-            </li>
-            <li>
-                <a href="#" class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 night:border-gray-700 night:bg-gray-800 night:text-gray-400 night:hover:bg-gray-700 night:hover:text-white">2</a>
-            </li>
-            <li>
-                <a href="#" aria-current="page" class="z-10 flex h-8 items-center justify-center border border-primary-300 bg-primary-50 px-3 leading-tight text-primary-600 hover:bg-primary-100 hover:text-primary-700 night:border-gray-700 night:bg-gray-700 night:text-white">3</a>
-            </li>
-            <li>
-                <a href="#" class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 night:border-gray-700 night:bg-gray-800 night:text-gray-400 night:hover:bg-gray-700 night:hover:text-white">...</a>
-            </li>
-            <li>
-                <a href="#" class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 night:border-gray-700 night:bg-gray-800 night:text-gray-400 night:hover:bg-gray-700 night:hover:text-white">100</a>
-            </li>
-            <li>
-                <a href="#" class="flex h-8 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 night:border-gray-700 night:bg-gray-800 night:text-gray-400 night:hover:bg-gray-700 night:hover:text-white">
-                    <span class="sr-only">Next</span>
-                    <svg class="h-4 w-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" />
-                    </svg>
-                </a>
-            </li>
-        </ul>
-    </nav>;
+import { createSignal, For } from "solid-js";
+import { CssNAV } from "./gen";
+import { IconChevronLeft, IconChevronRight } from "../gen";
+
+/*CSS:
+.PaginationNav {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PaginationList {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.PaginationButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--border-color, #e5e7eb);
+    background: var(--bg-color, white);
+    color: var(--text-color, #6b7280);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.PaginationButton:hover:not(:disabled):not(.PaginationActive) {
+    background: var(--hover-bg, #f3f4f6);
+    color: var(--hover-text, #374151);
+    border-color: var(--hover-border, #d1d5db);
+}
+
+.PaginationActive {
+    background: var(--active-bg, #4f46e5) !important;
+    color: white !important;
+    border-color: var(--active-bg, #4f46e5) !important;
+}
+
+.PaginationItem {
+    transition: transform 0.2s ease-in-out;
+}
+
+.PaginationItem:hover {
+    transform: translateY(-1px);
+}
+*/
+
+type PaginationProps = {
+    totalPages: number;
+    onPageChange: (page: number) => void;
+};
+
+export function Pagination({ totalPages, onPageChange }: PaginationProps) {
+
+    const [currentPage, setCurrentPage] = createSignal(1);
+
+    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    return (
+        <nav class={CssNAV.PaginationNav} aria-label="Pagination">
+            <ul class={CssNAV.PaginationList}>
+
+                <li>
+                    <button
+                        onClick={() => {
+                            if (currentPage() > 1) {
+                                console.log("<", totalPages, currentPage() - 1)
+                                setCurrentPage(currentPage() - 1)
+                                onPageChange(currentPage() - 1)
+                            }
+                        }}
+                        disabled={currentPage() === 1}
+                        class={CssNAV.PaginationButton}
+                        aria-label="Previous page"
+                    >
+                        <IconChevronLeft />
+                    </button>
+                </li>
+
+                <For each={pageNumbers}>
+                    {(number) => (
+                        <li class={CssNAV.PaginationItem}>
+                            <button
+                                onClick={() => {
+                                    setCurrentPage(number)
+                                    onPageChange(number)
+                                }}
+                                class={`${CssNAV.PaginationButton} ${currentPage() === number ? CssNAV.PaginationActive : ''
+                                    }`}
+                            >
+                                {number}
+                            </button>
+                        </li>
+                    )}
+                </For>
+
+                <li>
+                    <button
+                        onClick={() => {
+                            if (currentPage() < totalPages) {
+                                setCurrentPage(currentPage() + 1)
+
+                                onPageChange(currentPage() + 1)
+                            }
+                        }}
+                        disabled={currentPage() === totalPages}
+                        class={CssNAV.PaginationButton}
+                        aria-label="Next page"
+                    >
+                        <IconChevronRight />
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    );
 }

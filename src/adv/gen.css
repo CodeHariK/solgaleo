@@ -137,17 +137,6 @@ src/stepper.tsx
     padding: 0.2rem;
 }
 
-@keyframes fadeSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 .blog-list {
     display: flex;
     flex-direction: column;
@@ -258,6 +247,17 @@ src/stepper.tsx
     color: var(--blog-underline-color, #9573d9);
     transition: color 0.3s ease, transform 0.3s ease;
     transform: scale(1.05);
+}
+
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .stepper {

@@ -1,7 +1,7 @@
 import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
 
 import { type JSX } from 'solid-js';
-import { SolCSS } from "./gen.ts";
+import { CssUI } from "./gen.ts";
 
 export function PositionBox({ name, align, children, visible }: {
     name?: JSX.Element;
@@ -164,7 +164,7 @@ export function PositionBox({ name, align, children, visible }: {
     */
 
     return (
-        <div class={SolCSS.SolPositionBox}
+        <div class={CssUI.SolPositionBox}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -314,7 +314,7 @@ export function DragBox() {
     */
 
     return (
-        <div class={SolCSS.SolDragBox}>
+        <div class={CssUI.SolDragBox}>
             <div
                 id="box"
                 style={{ position: "absolute", left: `${position().x}px`, top: `${position().y}px`, "z-index": 1000 }}

@@ -56,33 +56,6 @@ src/rainbow.tsx
     margin-top: .5rem;
 }
 
-@keyframes ghost-wave {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-@keyframes sleep {
-    0% {
-        width: 44px;
-    }
-    50% {
-        width: 26px;
-    }
-    100% {
-        width: 44px;
-    }
-}
-
-@keyframes float {
-    50% {
-        transform: translate(0, 20px);
-    }
-}
-
 #ghost {
     position: absolute;
 }
@@ -173,12 +146,30 @@ src/rainbow.tsx
     animation: none;
 }
 
-@keyframes typing {
-    from {
-        width: 0;
+@keyframes ghost-wave {
+    0% {
+        transform: translateX(0);
     }
-    to {
-        width: 100%;
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes sleep {
+    0% {
+        width: 44px;
+    }
+    50% {
+        width: 26px;
+    }
+    100% {
+        width: 44px;
+    }
+}
+
+@keyframes float {
+    50% {
+        transform: translate(0, 20px);
     }
 }
 
@@ -192,6 +183,15 @@ src/rainbow.tsx
     animation-timing-function: steps(30, end), step-end;
     animation-fill-mode: forwards, forwards;
     animation-iteration-count: 1, 4;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 .STerminalWindow {
@@ -253,15 +253,6 @@ src/rainbow.tsx
     letter-spacing: -0.025em;
 }
 
-@keyframes marqueeAnim {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
 .SMarquee {
     display: flex;
     align-items: center;
@@ -278,6 +269,28 @@ src/rainbow.tsx
     font-size: 200px;
     font-weight: 900;
     color: #b3ff98;
+}
+
+@keyframes marqueeAnim {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.SFlickerText {
+    font-size: 4rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--SFlickerText-col);
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--flicker-shadow),
+        0 0 20px var(--flicker-shadow),
+        0 0 30px var(--flicker-shadow);
+    animation: flicker 2s infinite alternate;
 }
 
 @keyframes flicker {
@@ -299,19 +312,6 @@ src/rainbow.tsx
     55% {
         text-shadow: none;
     }
-}
-
-.SFlickerText {
-    font-size: 4rem;
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: var(--SFlickerText-col);
-    letter-spacing: 5px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--flicker-shadow),
-        0 0 20px var(--flicker-shadow),
-        0 0 30px var(--flicker-shadow);
-    animation: flicker 2s infinite alternate;
 }
 
 .card {
@@ -405,28 +405,6 @@ src/rainbow.tsx
     text-transform: uppercase;
 }
 
-@keyframes SRainbowAnim {
-    0%,
-    100% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 100% 0;
-    }
-}
-
-@keyframes SRainconAnim {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 .SRainbow {
     background: linear-gradient(to right,
             blueviolet,
@@ -462,4 +440,26 @@ src/rainbow.tsx
     animation: SRainconAnim 5s ease infinite;
     width: inherit;
     height: inherit;
+}
+
+@keyframes SRainbowAnim {
+    0%,
+    100% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+}
+
+@keyframes SRainconAnim {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }

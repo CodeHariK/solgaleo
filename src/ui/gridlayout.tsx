@@ -1,6 +1,6 @@
-import { SolCSS } from "./gen.ts";
-
 import { JSX } from "solid-js";
+
+import { CssUI } from "./gen.ts";
 
 /*CSS:
 .GridLayout {
@@ -138,40 +138,40 @@ export function GridLayout({
 
     if (mode == 'fixed') {
         return (
-            <main class={`${SolCSS.GridLayout} ${SolCSS.GridLayoutFixed}`}>
-                <header class={SolCSS.GridHeader}>{header}</header>
-                <nav class={SolCSS.GridLeft}>{left}</nav>
-                <section class={SolCSS.GridMiddle}>{middle}</section>
-                <aside class={SolCSS.GridRight}>{right}</aside>
-                <footer class={SolCSS.GridFooter}>{footer}</footer>
+            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFixed}`}>
+                <header class={CssUI.GridHeader}>{header}</header>
+                <nav class={CssUI.GridLeft}>{left}</nav>
+                <section class={CssUI.GridMiddle}>{middle}</section>
+                <aside class={CssUI.GridRight}>{right}</aside>
+                <footer class={CssUI.GridFooter}>{footer}</footer>
             </main>
         )
     } else if (mode == 'scroll') {
         return (
-            <main class={`${SolCSS.GridLayout} ${SolCSS.GridLayoutScroll}`}>
-                <nav class={SolCSS.GridLeft}>{left}</nav>
-                <section class={SolCSS.GridMiddle}>
-                    <div class={SolCSS.GridScrollContainer}>
-                        <header class={SolCSS.GridHeader}>{header}</header>
-                        <div class={SolCSS.GridContent}>{middle}</div>
-                        <footer class={SolCSS.GridFooter}>{footer}</footer>
+            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutScroll}`}>
+                <nav class={CssUI.GridLeft}>{left}</nav>
+                <section class={CssUI.GridMiddle}>
+                    <div class={CssUI.GridScrollContainer}>
+                        <header class={CssUI.GridHeader}>{header}</header>
+                        <div class={CssUI.GridContent}>{middle}</div>
+                        <footer class={CssUI.GridFooter}>{footer}</footer>
                     </div>
                 </section>
-                <aside class={SolCSS.GridRight}>{right}</aside>
+                <aside class={CssUI.GridRight}>{right}</aside>
             </main>
         )
     } else {
         return (
-            <main class={`${SolCSS.GridLayout} ${SolCSS.GridLayoutFlow}`}>
-                <header class={SolCSS.GridHeader}>{header}</header>
-                <nav class={SolCSS.GridLeft}>{left}</nav>
-                <section class={SolCSS.GridMiddle}>
-                    <div class={SolCSS.GridScrollContainer}>
-                        <div class={SolCSS.GridContent}>{middle}</div>
+            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFlow}`}>
+                <header class={CssUI.GridHeader}>{header}</header>
+                <nav class={CssUI.GridLeft}>{left}</nav>
+                <section class={CssUI.GridMiddle}>
+                    <div class={CssUI.GridScrollContainer}>
+                        <div class={CssUI.GridContent}>{middle}</div>
                     </div>
                 </section>
-                <aside class={SolCSS.GridRight}>{right}</aside>
-                <footer class={SolCSS.GridFooter}>{footer}</footer>
+                <aside class={CssUI.GridRight}>{right}</aside>
+                <footer class={CssUI.GridFooter}>{footer}</footer>
             </main>
         )
     }
@@ -229,18 +229,18 @@ export function GridLayout({
 
 export function List() {
     return (
-        <div class={SolCSS.ListContainer}>
-            <ul class={SolCSS.List}>
-                <li class={`${SolCSS.ListItem} ${SolCSS.Red}`}>
+        <div class={CssUI.ListContainer}>
+            <ul class={CssUI.List}>
+                <li class={`${CssUI.ListItem} ${CssUI.Red}`}>
                     Panel Item 1
                 </li>
-                <li class={`${SolCSS.ListItem} ${SolCSS.Orange}`}>
+                <li class={`${CssUI.ListItem} ${CssUI.Orange}`}>
                     Panel Item 2
                 </li>
-                <li class={`${SolCSS.ListItem} ${SolCSS.Blue}`}>
+                <li class={`${CssUI.ListItem} ${CssUI.Blue}`}>
                     Panel Item 3
                 </li>
-                <li class={`${SolCSS.ListItem} ${SolCSS.Green}`}>
+                <li class={`${CssUI.ListItem} ${CssUI.Green}`}>
                     Panel Item 4
                 </li>
             </ul>

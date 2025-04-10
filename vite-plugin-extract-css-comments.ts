@@ -22,6 +22,7 @@ type Node = {
 let LIGHT_VARS: Record<string, string> = {};
 let NIGHT_VARS: Record<string, string> = {};
 let FINAL_CSS: string[] = [];
+let MEDIA_KEYFRAME_CSS: string[] = [];
 let UNIQUE_SELECTORS: Set<string> = new Set();
 
 function FlattenSelector(path: string[]): string {
@@ -223,7 +224,7 @@ function ConvertCSS(input: string) {
                 ExtractInlineVars(header);
             }
 
-            FINAL_CSS.push(buffer.join("\n") + "\n");
+            MEDIA_KEYFRAME_CSS.push(buffer.join("\n") + "\n");
             continue;
         }
 
@@ -274,6 +275,9 @@ function ConvertCSS(input: string) {
     }
 
     ProcessNode(root);
+
+    FINAL_CSS.push(...MEDIA_KEYFRAME_CSS)
+    MEDIA_KEYFRAME_CSS = []
 }
 
 type ProcessedFile = {
@@ -457,12 +461,14 @@ async function WriteSelectorsFile(filePath: string, exportFiles: string) {
         .filter((item, index, self) =>
             index === self.findIndex(t => t.value === item.value));
 
-    const content = `${filePath != "src/gen.ts" ? "import '../gen.css'" : ""}
+    const fileName = filePath.split("/").at(-2).toUpperCase()
+
+    const content = `${filePath != "src/gen.ts" && filePath != "test/gen.ts" ? "import '../gen.css'" : ""}
 import "./gen.css"
 ${exportFiles}
 ${subFolderExports.filter(Boolean).map(exp => exp?.export).join("\n")}
 
-export const SolCSS = {
+export const Css${fileName} = {
     ${selectors.toString().trim()
             ? selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ') + ','
             : ""}
@@ -470,13 +476,12 @@ export const SolCSS = {
     ${cssVarMappings.map(({ name, value }) => `${name}: "${value}"`).join(',\n    ')}
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type Css${fileName}Type = keyof typeof Css${fileName};
 `;
 
-    const tsFilePath = filePath;
-    await fs.promises.writeFile(tsFilePath, content, 'utf-8');
+    await fs.promises.writeFile(filePath, content, 'utf-8');
 
-    console.log(`Generated selectors file: ${tsFilePath}`);
+    console.log(`Generated selectors file: ${filePath}`);
 
     UNIQUE_SELECTORS.clear();
 }

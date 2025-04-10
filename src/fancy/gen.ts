@@ -9,7 +9,7 @@ export * from "./glittercard.tsx";
 export * from "./rainbow.tsx";
 
 
-export const SolCSS = {
+export const CssFANCY = {
     Banner: "banner",
     Ghost: "ghost",
     Ghost__eyes: "ghost__eyes",
@@ -50,4 +50,4 @@ export const SolCSS = {
     varRainsize: "--rainsize"
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type CssFANCYType = keyof typeof CssFANCY;

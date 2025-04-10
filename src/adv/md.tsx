@@ -1,5 +1,5 @@
 import { Component, JSX } from "solid-js";
-import { SolCSS } from "./gen";
+import { CssADV } from "./gen";
 
 /*CSS:
 .SMarkdown {
@@ -25,7 +25,7 @@ interface MiniMarkdownProps {
 }
 export const MiniMarkdown: Component<MiniMarkdownProps> = (props) => {
     const jsxContent = () => parseMarkdownToJSX(props.content);
-    return <div class={SolCSS.SMarkdown}>{jsxContent()}</div>;
+    return <div class={CssADV.SMarkdown}>{jsxContent()}</div>;
 };
 
 
@@ -59,7 +59,7 @@ function parseMarkdownToJSX(text: string): JSX.Element[] {
                     l.replace(/</g, "&lt;").replace(/>/g, "&gt;")).join("\n");
 
             result.push(
-                <div class={SolCSS.SMarkdownCode}>
+                <div class={CssADV.SMarkdownCode}>
                     <div>
                         {codeLang}
                         <button onclick={() => { navigator.clipboard.writeText(code) }}>Copy</button>

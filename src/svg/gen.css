@@ -3,21 +3,13 @@ src/svg.tsx
 */
 
 .light {
-    --icon-width: varl : 1.3rem;
+    --icon-width: 1.3rem;
     --icon-height: 1.3rem;
-    --icon-color: #338bff;
 }
 
 .night {
-    --icon-width: varl : 1.3rem;
+    --icon-width: 1.3rem;
     --icon-height: 1.3rem;
-    --icon-color: #338bff;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 .animate-spin {
@@ -28,5 +20,11 @@ svg {
     display: inline-block;
     width: var(--icon-width);
     height: var(--icon-height);
-    color: var(--icon-color);
+    color: currentColor;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

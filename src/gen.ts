@@ -7,7 +7,7 @@ export * from "./adv/gen";
 export * from "./fancy/gen";
 export * from "./nav/gen";
 
-export const SolCSS = {
+export const CssSRC = {
     Flex: "flex",
     ItemsCenter: "items-center",
     Gap2: "gap-2",
@@ -16,4 +16,4 @@ export const SolCSS = {
     varBodyCol: "--body-col"
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type CssSRCType = keyof typeof CssSRC;

@@ -12,7 +12,7 @@ export * from "./input.tsx";
 export * from "./spaceform.tsx";
 
 
-export const SolCSS = {
+export const CssUI = {
     SolPositionBox: "SolPositionBox",
     SolDragBox: "SolDragBox",
     GridLayout: "GridLayout",
@@ -95,4 +95,4 @@ export const SolCSS = {
     varErrorTextCol: "--ErrorText-col"
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type CssUIType = keyof typeof CssUI;

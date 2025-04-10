@@ -7,7 +7,7 @@ export * from "./table.tsx";
 export * from "./stepper.tsx";
 
 
-export const SolCSS = {
+export const CssADV = {
     SMarkdown: "SMarkdown",
     SMarkdownCode: "SMarkdownCode",
     TreeView: "tree-view",
@@ -44,4 +44,4 @@ export const SolCSS = {
     varStepperBorder: "--stepper-border"
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type CssADVType = keyof typeof CssADV;

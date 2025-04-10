@@ -1,4 +1,5 @@
 /*
+page.svg.tsx
 css.tsx
 */
 
@@ -56,36 +57,38 @@ css.tsx
     --p-col: ;
 }
 
-@keyframes marquee {
-    100% {
-        transform: translateX(-100%);
-        width: var(--marquee-width);
-        height: var(--keyframes-marquee-100-height);
-        color: var(--keyframes-marquee-100-col);
-    }
+.IconGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
 }
 
-@keyframes flicker {
-    0%,
-    100% {
-        text-shadow:
-            0 0 10px var(--neon-pink),
-            0 0 20px var(--neon-pink),
-            0 0 30px var(--neon-pink);
-    }
+.IconItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
 }
 
-@media (min-width: 700px) {}
-
-@media (min-width: 800px) {
+.IconItem svg {
+    background: #5c1d5c;
 }
 
-@media (min-width: 900px) {
-    h6 {
-        font-size: 1rem;
-        line-height: 1.4rem;
-        font-weight: 400;
-    }
+.IconItem:hover {
+    background: #fe81e732;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.IconLabel {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-align: center;
 }
 
 .stepper {
@@ -174,4 +177,36 @@ h2:focus::placeholder {
 
 .potato {
     width: 100%;
+}
+
+@keyframes marquee {
+    100% {
+        transform: translateX(-100%);
+        width: var(--marquee-width);
+        height: var(--keyframes-marquee-100-height);
+        color: var(--keyframes-marquee-100-col);
+    }
+}
+
+@keyframes flicker {
+    0%,
+    100% {
+        text-shadow:
+            0 0 10px var(--neon-pink),
+            0 0 20px var(--neon-pink),
+            0 0 30px var(--neon-pink);
+    }
+}
+
+@media (min-width: 700px) {}
+
+@media (min-width: 800px) {
+}
+
+@media (min-width: 900px) {
+    h6 {
+        font-size: 1rem;
+        line-height: 1.4rem;
+        font-weight: 400;
+    }
 }

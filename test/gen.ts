@@ -1,7 +1,8 @@
-import '../gen.css'
+
 import "./gen.css"
 export * from "./page.fancy.tsx";
 export * from "./modal1.tsx";
+export * from "./page.nav.tsx";
 export * from "./page.adv.tsx";
 export * from "./storybook.tsx";
 export * from "./page.svg.tsx";
@@ -9,7 +10,10 @@ export * from "./NotFound.tsx";
 export * from "./page.ui.tsx";
 
 
-export const SolCSS = {
+export const CssTEST = {
+    IconGrid: "IconGrid",
+    IconItem: "IconItem",
+    IconLabel: "IconLabel",
     Stepper: "stepper",
     Box: "box",
     Svg: "svg",
@@ -47,4 +51,4 @@ export const SolCSS = {
     varPCol: "--p-col"
 } as const;
 
-export type SolCSSType = keyof typeof SolCSS;
+export type CssTESTType = keyof typeof CssTEST;

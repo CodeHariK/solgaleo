@@ -1,6 +1,6 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, SolCSS, SpaceDebugInfo, SpaceForm, SpaceFormError, Input } from '../src/ui/gen.ts';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input } from '../src/ui/gen.ts';
 import { IconCart, IconCross, IconDown, IconGoogle } from '../src/svg/gen.ts';
 
 export function InputTest() {
@@ -85,7 +85,7 @@ export function InputTest() {
 
             <Input name="password1" type="password" label='label' placeholder="placeholder"
                 end={[
-                    <button class={SolCSS.IconButton} type="reset"><IconCross /></button>,
+                    <button class={CssUI.IconButton} type="reset"><IconCross /></button>,
                 ]} />
             <Input name="password2" type="password" placeholder="placeholder" />
             <Input name="range" type="range" header='range' placeholder="range" />
@@ -106,9 +106,9 @@ export function InputTest() {
         <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
 
             <button>BaseButton</button >
-            <button class={SolCSS.MaterialButton}>MaterialButton</button>
-            <button class={SolCSS.OutlinedButton}>OutlinedButton</button>
-            <button class={SolCSS.IconButton}><IconGoogle /></button>
+            <button class={CssUI.MaterialButton}>MaterialButton</button>
+            <button class={CssUI.OutlinedButton}>OutlinedButton</button>
+            <button class={CssUI.IconButton}><IconGoogle /></button>
         </div>
 
         <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>

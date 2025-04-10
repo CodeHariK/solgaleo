@@ -1,5 +1,5 @@
 
-import { SolCSS } from "./gen";
+import { CssFANCY } from "./gen";
 
 /*CSS:
 .SFlickerText {
@@ -43,5 +43,5 @@ import { SolCSS } from "./gen";
 */
 
 export function FlickerText(props: { text: string }) {
-    return <span class={SolCSS.SFlickerText}>{props.text}</span>;
+    return <span class={CssFANCY.SFlickerText}>{props.text}</span>;
 }

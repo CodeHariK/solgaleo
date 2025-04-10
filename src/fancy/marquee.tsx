@@ -1,3 +1,5 @@
+import { CssFANCY } from "./gen";
+
 /* CSS:
 .SMarquee{
     display: flex;
@@ -26,10 +28,8 @@
 }
 */
 
-import { SolCSS } from "./gen";
-
 export function Marquee() {
-    return <div class={SolCSS.SMarquee}>
+    return <div class={CssFANCY.SMarquee}>
         <span>Hello World&nbsp;</span>
         <span>Hello World&nbsp;</span>
         <span>Hello World&nbsp;</span>

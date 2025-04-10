@@ -1,5 +1,5 @@
 import { type JSX } from 'solid-js';
-import { SolCSS } from './gen.ts';
+import { CssUI } from './gen.ts';
 
 export type HeadingProps = {
     class?: string;
@@ -80,7 +80,7 @@ export function Avatar(props: AvatarProps) {
     }
     */
 
-    return <img src={props.src} alt={props.alt} class={SolCSS.Avatar} />;
+    return <img src={props.src} alt={props.alt} class={CssUI.Avatar} />;
 }
 
 export type ListTileProps = {

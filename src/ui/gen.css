@@ -312,11 +312,6 @@ src/input.tsx
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
 }
 
-@media (min-width: 768px) {
-}
-
-@media (min-width: 1024px) {}
-
 h1 {
     font-size: 1.9rem;
     line-height: 2rem;
@@ -363,6 +358,11 @@ li {
     font-size: 0.85rem;
     line-height: 1.25rem;
 }
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {}
 
 .avatar {
     display: inline-block;

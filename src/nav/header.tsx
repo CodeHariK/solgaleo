@@ -1,93 +1,184 @@
 import { JSX } from "solid-js/jsx-runtime";
-import { PositionBox, SolCSS } from "../ui/gen";
-import { IconDown, IconUser } from "../svg/svg";
+import { CssNAV } from "./gen";
 
-export const Header = ({ iconSrc, title, links, rightChildren }: { iconSrc?: string, title?: JSX.Element, links?: JSX.Element, rightChildren?: JSX.Element }) => (
-    <header>
-        <nav class="antialiased max-w-screen-xl px-4 mx-auto 2xl:px-0 py-0 flex items-center justify-between">
+/* CSS:
+// ...existing code...
 
-            <div class="flex items-center space-x-8">
-                <a href="/" title="" class="">
-                    <div class="flex items-center space-x-2">
-                        {iconSrc && <div class="min-w-16"><img class="block w-auto h-12" src={iconSrc} /></div>}
+.HeaderLink {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-color, #374151);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.HeaderLink:hover {
+    color: var(--link-hover-color, #4f46e5);
+}
+
+.HeaderLink:active {
+    color: var(--link-active-color, #4338ca);
+}
+*/
+
+export function HeaderLinks({ href, title, fn }: { href: string, title: string, fn?: (href: string) => void }) {
+    const handleLinkClick = (event: MouseEvent) => {
+        event.preventDefault();
+        if (fn) fn(href);
+    };
+
+    return <li>
+        <a
+            onClick={handleLinkClick}
+            href={href}
+            title={title}
+            class={CssNAV.HeaderLink}
+        >
+            {title}
+        </a>
+    </li>;
+}
+
+/* CSS:
+.HeaderNav {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-smooth: antialiased;
+}
+
+@media (min-width: 1536px) {
+    .HeaderNav {
+        padding: 0;
+    }
+}
+
+.HeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.HeaderLogo {
+    text-decoration: none;
+}
+
+.HeaderLogoContent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.HeaderIcon {
+    min-width: 4rem;
+}
+
+.HeaderIcon img {
+    display: block;
+    width: auto;
+    height: 3rem;
+}
+
+.HeaderLinks {
+    display: none;
+    list-style-type: none;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+}
+
+@media (min-width: 1024px) {
+    .HeaderLinks {
+        display: flex;
+    }
+}
+
+.HeaderRight {
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .HeaderRight {
+        gap: 0.5rem;
+    }
+}
+*/
+
+export function Header({ iconSrc, title, links, rightChildren }: {
+    iconSrc?: string,
+    title?: JSX.Element | JSX.Element[],
+    links?: JSX.Element | JSX.Element[],
+    rightChildren?: JSX.Element | JSX.Element[]
+}) {
+    return <header>
+        <nav class={CssNAV.HeaderNav}>
+            <div class={CssNAV.HeaderLeft}>
+                <a href="/" class={CssNAV.HeaderLogo}>
+                    <div class={CssNAV.HeaderLogoContent}>
+                        {iconSrc && (
+                            <div class={CssNAV.HeaderIcon}>
+                                <img src={iconSrc} />
+                            </div>
+                        )}
                         {title}
                     </div>
                 </a>
 
-                <ul class="hidden lg:flex items-center justify-start gap-2 md:gap-2 py-3 sm:justify-center">
+                <ul class={CssNAV.HeaderLinks}>
                     {links}
                 </ul>
             </div>
 
-            <div class="flex items-center lg:space-x-2">
+            <div class={CssNAV.HeaderRight}>
                 {rightChildren}
             </div>
+        </nav>
+    </header>
+}
 
-        </nav >
-    </header >
-);
+/* CSS:
 
-export const TransitionModal = ({ transition, children }: { transition: boolean, children?: JSX.Element }) => {
+.TransitionContainer {
+    position: relative;
+}
+
+.TransitionItem {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.Show {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+}
+
+.Hide {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+}
+*/
+
+export function TransitionWidget(props: { showFirstWidget: boolean, one: JSX.Element, two: JSX.Element }) {
     return (
-        <TransitionWidget showFirstWidget={transition}
-            one={
-                <PositionBox name={<p>{<IconUser />}{<span>Account</span>}{<IconDown />}</p>} align={{ x: 0, y: 1 }}>
-                    <div class="z-50 m-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow night:bg-gray-700 night:divide-gray-600" id="user-dropdown">
-                        <div class="px-4 py-3">
-                            <span class="block text-sm text-gray-900 night:text-white">Person</span>
-                            <span class="block text-sm text-gray-500 truncate night:text-gray-400">name@flowbite.com</span>
-                        </div>
-                        <ul class="py-2" aria-labelledby="user-menu-button">
-                            {children} {/* Accept header links dynamically */}
-                        </ul>
-                    </div>
-                </PositionBox>
-            }
-            two={<button class={SolCSS.OutlinedButton}><a href="/login">Log In</a></button>}>
-        </TransitionWidget>
-    );
-};
-
-const TransitionWidget = (props: { showFirstWidget: boolean, one: JSX.Element, two: JSX.Element }) => {
-    return (
-        <div class="relative">
-            <div
-                class={`transition-opacity duration-[10sec] ease-in-out ${props.showFirstWidget ? 'opacity-100' : 'opacity-0 hidden'
-                    }`}
-            >
+        <div class={CssNAV.TransitionContainer}>
+            <div class={`${CssNAV.TransitionItem} ${props.showFirstWidget ? CssNAV.Show : CssNAV.Hide}`}>
                 {props.one}
-                {/* <div class="bg-blue-500 text-white p-4 rounded">
-                    <h2 class="text-lg">Widget One</h2>
-                </div> */}
             </div>
-
-            <div
-                class={`transition-opacity duration-[10sec] ease-in-out ${props.showFirstWidget ? 'opacity-0 hidden' : 'opacity-100'
-                    }`}
-            >
+            <div class={`${CssNAV.TransitionItem} ${!props.showFirstWidget ? CssNAV.Show : CssNAV.Hide}`}>
                 {props.two}
-                {/* <div class="bg-green-500 text-white p-4 rounded">
-                    <h2 class="text-lg">Widget Two</h2>
-                </div> */}
             </div>
         </div>
     );
 };
-
-export const HeaderLinks = (props: { href: string, title: string, fn?: (href: string) => void }) => {
-    const handleLinkClick = (event: MouseEvent) => {
-        event.preventDefault();
-        console.log(props.href)
-        if (props.fn) props.fn(props.href);
-        setTimeout(() => {
-            location.reload()
-        }, 10)
-    };
-
-    return <li>
-        <a onClick={handleLinkClick} href={props.href} title={props.title}
-            class="block px-4 py-2 text-sm">
-            {props.title}
-        </a>
-    </li>;
-}

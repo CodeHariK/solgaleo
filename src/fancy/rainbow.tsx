@@ -1,5 +1,5 @@
 import { type JSX } from 'solid-js';
-import { SolCSS } from './gen';
+import { CssFANCY } from './gen';
 
 /*CSS:
 .SRainbow {
@@ -61,7 +61,7 @@ import { SolCSS } from './gen';
 */
 
 export function RainbowText(props: { children: JSX.Element }) {
-    return <span class={SolCSS.SRainbow}>{props.children}</span>
+    return <span class={CssFANCY.SRainbow}>{props.children}</span>
 }
 
 
@@ -70,12 +70,12 @@ export function RainbowImage(props: {
     src: string;
 }) {
     return <div
-        class={SolCSS.SRaincon}
+        class={CssFANCY.SRaincon}
         style={{
-            [SolCSS.varRainsize]: props.size,
-            [SolCSS.varRainsrc]: `url(${props.src})`,
+            [CssFANCY.varRainsize]: props.size,
+            [CssFANCY.varRainsrc]: `url(${props.src})`,
         }}>
-        <div class={SolCSS.SRainconGrad}>
+        <div class={CssFANCY.SRainconGrad}>
             <slot />
         </div>
     </div>

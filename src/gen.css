@@ -12,12 +12,6 @@ base.tsx
     --body-col: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        interpolate-size: allow-keywords;
-    }
-}
-
 *::-webkit-scrollbar {
     height: 8px;
     width: 6px;
@@ -102,4 +96,10 @@ h6 {
 
 .gap-2 {
     gap: 0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
 }

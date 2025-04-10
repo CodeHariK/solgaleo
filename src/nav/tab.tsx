@@ -1,5 +1,6 @@
 import { For, createSignal, JSX, createEffect } from 'solid-js';
 import { useNavigate, useLocation } from '@solidjs/router';
+import { CssNAV } from './gen';
 
 /* CSS:
 .tabs-container {
@@ -7,120 +8,35 @@ import { useNavigate, useLocation } from '@solidjs/router';
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background: var(--surface-background, #ffffff);
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tabs-levels {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid var(--border-color, #e5e7eb);
-    background: var(--header-background, #f9fafb);
-    border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .tab-level {
     display: flex;
+    flex-direction: row;
     gap: 0.75rem;
-    padding: 0.75rem;
-    position: relative;
-}
-
-.tab-level:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 2rem;
-    right: 2rem;
-    height: 1px;
-    background: var(--border-color, #e5e7eb);
-    opacity: 0.5;
-}
-
-.tab-level.level-0 { 
-    padding-left: 1rem;
-}
-.tab-level.level-1 { 
-    padding-left: 2.5rem; 
-    background: rgba(0, 0, 0, 0.02); 
-}
-.tab-level.level-2 {
-    padding-left: 4rem;
-    background: rgba(0, 0, 0, 0.03);
 }
 
 .tab-button {
     padding: 0.5rem 1rem;
     border: none;
-    background: none;
-    cursor: pointer;
-    border-radius: 0.375rem;
-    color: var(--text-color, #374151);
-    font-size: calc(0.875rem + (0.125rem / var(--level, 0)));
-    font-weight: 500;
     transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.tab-button:hover {
-    background: var(--surface-hover, rgba(0, 0, 0, 0.05));
-    color: var(--primary-color, #2563eb);
 }
 
 .tab-button.active {
-    background: var(--primary-color, #2563eb);
+    background: var(--primary-color, #972579);
     color: white;
-}
-
-.tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0.5rem;
-    right: 0.5rem;
-    height: 2px;
-    background: currentColor;
-    border-radius: 1px;
 }
 
 .tab-content {
     flex: 1;
-    padding: 1.5rem;
     overflow: auto;
-    background: var(--content-background, #ffffff);
-    border-radius: 0 0 0.5rem 0.5rem;
 }
 
-.tab-path {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    color: var(--text-muted, #6b7280);
-    font-size: 0.875rem;
-    border-bottom: 1px solid var(--border-color, #e5e7eb);
-}
-
-.path-separator {
-    color: var(--text-muted, #6b7280);
-    font-size: 0.75rem;
-}
-
-.path-item {
-    color: var(--text-color, #374151);
-    transition: color 0.2s ease;
-}
-
-.path-item:hover {
-    color: var(--primary-color, #2563eb);
-}
-
-.path-item:last-child {
-    color: var(--primary-color, #2563eb);
-    font-weight: 600;
-}
 */
 
 type RoutedTabsProps = {
@@ -149,6 +65,9 @@ export function RoutedTabs(props: RoutedTabsProps) {
     // Get current instance's tab state
     const getCurrentTab = () => {
         const states = parseParams();
+
+        console.log(states, props.id, states[props.id] || props.defaultTab || props.tabs[0]?.id)
+
         return states[props.id] || props.defaultTab || props.tabs[0]?.id;
     };
 
@@ -159,6 +78,7 @@ export function RoutedTabs(props: RoutedTabsProps) {
         const handleLocationChange = () => {
             const newTab = getCurrentTab();
             if (newTab !== currentTab()) {
+                console.log("CreateEffect SetTab", props.id, newTab)
                 setCurrentTab(newTab);
             }
         };
@@ -167,25 +87,25 @@ export function RoutedTabs(props: RoutedTabsProps) {
         return () => window.removeEventListener('popstate', handleLocationChange);
     });
 
-    const handleTabChange = (tabId: string) => {
-        setCurrentTab(tabId);
-
-        // Update URL while preserving other tab states
-        const params = new URLSearchParams(location.search);
-        params.set(props.id, tabId);
-
-        const route = props.baseRoute || location.pathname;
-        navigate(`${route}?${params.toString()}`);
-    };
 
     return (
-        <div class="tabs-container">
-            <Tabs
-                tabs={props.tabs}
-                defaultTab={currentTab()}
-                onTabChange={handleTabChange}
-            />
-        </div>
+        <Tabs
+            tabs={props.tabs}
+            defaultTab={currentTab()}
+            onTabChange={
+                (tabId: string) => {
+                    setCurrentTab(tabId);
+                    console.log("OnTabChange SetTab", props.id, tabId)
+
+                    // Update URL while preserving other tab states
+                    const params = new URLSearchParams(location.search);
+                    params.set(props.id, tabId);
+
+                    const route = props.baseRoute || location.pathname;
+                    navigate(`${route}?${params.toString()}`);
+                }
+            }
+        />
     );
 }
 
@@ -206,7 +126,6 @@ type TabsProps = {
     tabs: Tab[];
     defaultTab?: string;
     onTabChange?: (tabId: string) => void;
-    level?: number;
     activePath?: TabPath[];
 };
 
@@ -222,6 +141,8 @@ function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
             current = currentTab.children;
         }
     }
+
+    console.log(tabs, path, result)
 
     return result;
 }
@@ -240,10 +161,14 @@ export function Tabs(props: TabsProps) {
     });
 
     const handleTabClick = (tab: Tab, level: number) => {
+        // Check if we're clicking the same tab at the same level
+        if (activePath()[level] === tab.id) {
+            return; // Do nothing if clicking the same tab
+        }
+
         const newPath = [...activePath().slice(0, level), tab.id];
         setActivePath(newPath);
         setVisibleTabs(findTabsByPath(props.tabs, newPath));
-        // Use dot notation instead of slash
         props.onTabChange?.(newPath.join('.'));
     };
 
@@ -258,15 +183,15 @@ export function Tabs(props: TabsProps) {
     });
 
     return (
-        <div class="tabs-container">
-            <div class="tabs-levels">
+        <div class={CssNAV.TabsContainer}>
+            <div class={CssNAV.TabsLevels}>
                 <For each={visibleTabs()}>
                     {(levelTabs, level) => (
-                        <div class={`tab-level level-${level()}`}>
+                        <div class={CssNAV.TabLevel} style={{ "padding-left": `${level() * 1.5}rem` }}>
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button
-                                        class={`tab-button ${activePath()[level()] === tab.id ? 'active' : ''
+                                        class={`${CssNAV.TabButton} ${activePath()[level()] === tab.id ? 'active' : ''
                                             }`}
                                         onClick={() => handleTabClick(tab, level())}
                                     >
@@ -279,7 +204,7 @@ export function Tabs(props: TabsProps) {
                 </For>
             </div>
 
-            <div class="tab-content">
+            <div class={CssNAV.TabContent}>
                 {(() => {
                     let content: JSX.Element | undefined;
                     let current = props.tabs;

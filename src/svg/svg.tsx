@@ -32,16 +32,15 @@ function toProp(props?: IconProps) {
 }
 
 svg {
-    --icon-width: varl : 1.3rem;
+    --icon-width: var : 1.3rem;
     --icon-height: var : 1.3rem;
-    --icon-color: var : #338bff;
 
     display: inline-block;
     // margin: .4rem;
     // border-radius: 1rem;
     width: var(--icon-width);
     height: var(--icon-height);
-    color: var(--icon-color);
+    color: currentColor;
     // background: var(--icon-bg);
     // --svg-ring-width: 4px;
     // --svg-ring-color: var : #3b82f680 : #3b82f680;
@@ -91,20 +90,6 @@ export function IconAddUser({ props }: { props?: IconProps }) {
     </svg>;
 }
 
-export function IconGo({ props }: { props?: IconProps }) {
-    return <svg
-        viewBox="-1 0 16 10"
-        {...toProp(props)}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path d="M1 5h12m0 0L9 1m4 4L9 9" />
-    </svg>;
-}
-
 export function IconTableHeading({ props }: { props?: IconProps }) {
     return <svg
         viewBox="3 3 18 18"
@@ -151,15 +136,15 @@ export function IconGoogle({ props }: { props?: IconProps }) {
 
 export function IconTick({ props }: { props?: IconProps }) {
     return <svg
-        viewBox="-1 0 18 12"
+        viewBox="50 -900 840 840"
         {...toProp(props)}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
+        fill={props?.fill ? "none" : "currentColor"}
+        stroke={props?.fill ? "currentColor" : "none"}
         stroke-width={props?.strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="M1 5.917 5.724 10.5 15 1.5" />
+        <path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z" />
     </svg>
 }
 
@@ -167,8 +152,8 @@ export function IconCross({ props }: { props?: IconProps }) {
     return <svg
         viewBox="0 0 20 20"
         {...toProp(props)}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
+        fill={props?.fill ? "none" : "currentColor"}
+        stroke={props?.fill ? "currentColor" : "none"}
         stroke-width={props?.strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -287,6 +272,40 @@ export function IconDown({ props }: { props?: IconProps }) {
     );
 }
 
+export function IconChevronLeft({ props }: { props?: IconProps }) {
+
+    return (
+        <svg
+            viewBox="180 -800 640 640"
+            {...toProp(props)}
+            fill={props?.fill ? "none" : "currentColor"}
+            stroke={props?.fill ? "currentColor" : "none"}
+            stroke-width={props?.strokeWidth ?? 2}
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="m432-480 156 156q11 11 11 28t-11 28q-11 11-28 11t-28-11L348-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 28-11t28 11q11 11 11 28t-11 28L432-480Z" />
+        </svg>
+    );
+}
+
+export function IconChevronRight({ props }: { props?: IconProps }) {
+
+    return (
+        <svg
+            viewBox="100 -800 640 640"
+            {...toProp(props)}
+            fill={props?.fill ? "none" : "currentColor"}
+            stroke={props?.fill ? "currentColor" : "none"}
+            stroke-width={props?.strokeWidth ?? 2}
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="M504-480 348-636q-11-11-11-28t11-28q11-11 28-11t28 11l184 184q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L404-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l156-156Z" />
+        </svg>
+    );
+}
+
 export function IconSearch({ props }: { props?: IconProps }) {
     return <svg
         viewBox="-2 -2 24 24"
@@ -383,5 +402,18 @@ export function IconCopy({ props }: { props?: IconProps } = {}) {
         stroke-linejoin="round"
     >
         <path d="M17.5 14H19C20.1046 14 21 13.1046 21 12V5C21 3.89543 20.1046 3 19 3H12C10.8954 3 10 3.89543 10 5V6.5M5 10H12C13.1046 10 14 10.8954 14 12V19C14 20.1046 13.1046 21 12 21H5C3.89543 21 3 20.1046 3 19V12C3 10.8954 3.89543 10 5 10Z" />
+    </svg>
+}
+
+export function IconHome({ props }: { props?: IconProps } = {}) {
+    return <svg viewBox="0 0 20 20"
+        {...toProp(props)}
+        fill={props?.fill ? "currentColor" : "none"}
+        stroke={props?.fill ? "none" : "currentColor"}
+        stroke-width={props?.strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
     </svg>
 }
