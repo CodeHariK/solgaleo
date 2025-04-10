@@ -6,14 +6,12 @@ src/svg.tsx
     --icon-width: varl : 1.3rem;
     --icon-height: 1.3rem;
     --icon-color: #338bff;
-    --icon-bg: #343434;
 }
 
 .night {
     --icon-width: varl : 1.3rem;
     --icon-height: 1.3rem;
     --icon-color: #338bff;
-    --icon-bg: #343434;
 }
 
 @keyframes spin {

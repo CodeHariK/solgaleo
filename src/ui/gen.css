@@ -1,13 +1,11 @@
 /*
 src/position.tsx
-src/textinput.tsx
 src/gridlayout.tsx
-src/search.tsx
 src/heading.tsx
 src/dropdown.tsx
 src/button.tsx
-src/checkbox.tsx
 src/theme_toggle.tsx
+src/input.tsx
 */
 
 .light {
@@ -16,21 +14,6 @@ src/theme_toggle.tsx
     --SolPositionBox--button-border: none;
     --SolPositionBox--button-col-hover: #90328b;
     --SolPositionBox--button-background-color-hover: #efefef;
-    --label-transform-x: 0.6rem;
-    --label-transform-y: -1.0rem;
-    --label-scale: 0.85;
-    --input-label-focus-color: #983daf;
-    --input-label-focus-bg: white;
-    --AppTextInput-col: #111827;
-    --AppTextInput-bg: #ffffff;
-    --AppTextInput-border: 1px solid #d1d5db;
-    --AppTextInput-border-radius: 0.5rem;
-    --AppTextInput--border-color-focus: #8d40ec;
-    --AppTextInput--box-shadow-focus: 2px 3px 1px #c4ced1;
-    --AppTextInput--data-has-label--false--col-placeholder: #9ca3af;
-    --AppTextInput--col-placeholder: #ae81e4;
-    --SolInputLabel-col: #6B7280;
-    --SolInputLabel-border: 1px solid transparent;
     --SolDropdown-bg: #e0e0e0;
     --SolDropdownHeader-col: #9c40ca;
     --SolDropdownHeader-bg: #cfcfcf;
@@ -40,26 +23,38 @@ src/theme_toggle.tsx
     --SolDropdownItem-border: none;
     --SolDropdownItem-col-hover: #d4d4d4;
     --SolDropdownItem-bg-hover: #6b6b6b;
+    --icon-bg: #73737346;
+    --icon-border-radius: 100rem;
+    --icon-hover-bg: #a465a7;
     --mat-color: #ffffff;
-    --mat-bg: #3b75c8;
-    --mat-border: 1px solid #cbd5e1;
+    --mat-bg: #5d2c5f;
+    --mat-border: 0px solid #cbd5e1;
     --mat-hover-color: #ffffff;
-    --mat-hover-bg: #4050c7;
-    --mat-focus-color: #f00;
-    --mat-focus-bg: #f00;
+    --mat-hover-bg: #a465a7;
     --out-color: #475569;
     --out-bg: transparent;
     --out-border: 1px solid #cbd5e1;
     --out-hover-color: #6636e8;
     --out-hover-bg: #c2c2c238;
-    --out-focus-color: yellow;
-    --out-focus-bg: #f00;
-    --input-accent-color: #111827;
+    --button-col: black;
+    --icon-border: 0px solid #cbd5e1;
+    --theme-toggle-col: #60A5FA;
+    --theme-toggle-bg-hover: #F3F4F6;
+    --input-accent-color: #7a23b4;
     --label-disabled-color: #6B7280;
     --label-col: #111827;
     --label-p-col: #6B7280;
-    --theme-toggle-col: #60A5FA;
-    --theme-toggle-bg-hover: #F3F4F6;
+    --input-bg: #ffffff;
+    --label-transform-x: 0.6rem;
+    --label-transform-y: -1.0rem;
+    --label-scale: 0.85;
+    --input-label-focus-color: #983daf;
+    --input-label-focus-bg: white;
+    --Input-Input-input--Input-textarea-col: #111827;
+    --Input-Input--input-col-placeholder: #ae81e4;
+    --Input-label-col: #6B7280;
+    --Input-label-border: 1px solid transparent;
+    --ErrorText-col: red;
 }
 
 .night {
@@ -68,21 +63,6 @@ src/theme_toggle.tsx
     --SolPositionBox--button-border: none;
     --SolPositionBox--button-col-hover: #faa0f6;
     --SolPositionBox--button-background-color-hover: #353535;
-    --label-transform-x: 0.6rem;
-    --label-transform-y: -1.0rem;
-    --label-scale: 0.85;
-    --input-label-focus-color: #983daf;
-    --input-label-focus-bg: white;
-    --AppTextInput-col: #ffffff;
-    --AppTextInput-bg: #3b3b3b;
-    --AppTextInput-border: 1px solid #525252;
-    --AppTextInput-border-radius: 0.5rem;
-    --AppTextInput--border-color-focus: #8d40ec;
-    --AppTextInput--box-shadow-focus: 2px 3px 1px #c4ced1;
-    --AppTextInput--data-has-label--false--col-placeholder: #737373;
-    --AppTextInput--col-placeholder: #737373;
-    --SolInputLabel-col: #A1A1AA;
-    --SolInputLabel-border: 1px solid transparent;
     --SolDropdown-bg: #575757;
     --SolDropdownHeader-col: #8a87e3;
     --SolDropdownHeader-bg: #454545;
@@ -92,26 +72,38 @@ src/theme_toggle.tsx
     --SolDropdownItem-border: none;
     --SolDropdownItem-col-hover: #4b4b4b;
     --SolDropdownItem-bg-hover: #d7d7d7;
+    --icon-bg: #73737346;
+    --icon-border-radius: 100rem;
+    --icon-hover-bg: #a465a7;
     --mat-color: #ffffff;
-    --mat-bg: #204477;
-    --mat-border: 1px solid #cbd5e1;
+    --mat-bg: #5d2c5f;
+    --mat-border: 0px solid #cbd5e1;
     --mat-hover-color: #ffffff;
-    --mat-hover-bg: #102747;
-    --mat-focus-color: #f00;
-    --mat-focus-bg: #f00;
+    --mat-hover-bg: #a465a7;
     --out-color: #fff;
     --out-bg: transparent;
     --out-border: 1px solid #cbd5e1;
     --out-hover-color: #fff;
     --out-hover-bg: #7d8dff4d;
-    --out-focus-color: #f00;
-    --out-focus-bg: green;
-    --input-accent-color: #3473fc;
+    --button-col: white;
+    --icon-border: 0px solid #cbd5e1;
+    --theme-toggle-col: #3B82F6 ;
+    --theme-toggle-bg-hover: #374151 ;
+    --input-accent-color: #7a23b4;
     --label-disabled-color: #9CA3AF;
     --label-col: #9b51ef ;
     --label-p-col: #ae93cc;
-    --theme-toggle-col: #3B82F6 ;
-    --theme-toggle-bg-hover: #374151 ;
+    --input-bg: #3b3b3b;
+    --label-transform-x: 0.6rem;
+    --label-transform-y: -1.0rem;
+    --label-scale: 0.85;
+    --input-label-focus-color: #983daf;
+    --input-label-focus-bg: white;
+    --Input-Input-input--Input-textarea-col: #ffffff;
+    --Input-Input--input-col-placeholder: #ae81e4;
+    --Input-label-col: #A1A1AA;
+    --Input-label-border: 1px solid transparent;
+    --ErrorText-col: red;
 }
 
 .SolPositionBox {
@@ -165,127 +157,6 @@ src/theme_toggle.tsx
     background-color: #3B82F6;
     cursor: move;
     pointer-events: auto;
-}
-
-.AppTextInput {
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    font-size: 0.875rem;
-    color: var(--AppTextInput-col);
-    background: var(--AppTextInput-bg);
-    border: var(--AppTextInput-border);
-    border-radius: var(--AppTextInput-border-radius);
-    outline: none;
-    resize: vertical;
-}
-
-.AppTextInput[data-has-icon="true"] {
-    padding-left: 2.75rem;
-}
-
-.AppTextInput[data-is-range="true"] {
-    cursor: pointer;
-}
-
-.AppTextInput:focus {
-    border-color: var(--AppTextInput--border-color-focus);
-    box-shadow: var(--AppTextInput--box-shadow-focus);
-}
-
-.AppTextInput:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.AppTextInput:disabled~.SolInputLabel {
-    opacity: 0.5;
-}
-
-.AppTextInput[data-has-label="true"]::placeholder {
-    color: transparent;
-}
-
-.AppTextInput[data-has-label="false"]::placeholder {
-    color: var(--AppTextInput--data-has-label--false--col-placeholder);
-}
-
-.AppTextInput:focus::placeholder {
-    color: var(--AppTextInput--col-placeholder);
-    transition: color 0.2s ease-out;
-}
-
-.AppTextInput[data-has-icon="true"]~.SolInputLabel {
-    left: 2rem;
-}
-
-.AppTextInput:focus ~ .SolInputLabel,
-.AppTextInput:not(:placeholder-shown) ~ .SolInputLabel {
-    transform: translateX(var(--label-transform-x))
-            translateY(var(--label-transform-y))
-            scale(var(--label-scale));
-    left: 0rem;
-    height: auto;
-    opacity: 1;
-    color: var(--input-label-focus-color);
-    background: var(--input-label-focus-bg);
-    align-self: auto;
-}
-
-.AppErrorTextInput {
-    border-color: #EF4444;
-}
-
-.AppErrorText {
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: #6B7280;
-}
-
-.SolInputIcon {
-    display: flex;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    inset-inline-start: 0px;
-    align-items: center;
-    pointer-events: none;
-    padding-inline-start: 1rem;
-}
-
-.SolPasswordIcon {
-    display: flex;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    inset-inline-end: 0px;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    align-items: center;
-    cursor: pointer;
-}
-
-.SolPasswordIcon:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-}
-
-.SolInputLabel {
-    position: absolute;
-    top: 0;
-    margin: 0.25rem;
-    padding: 0.25rem;
-    color: var(--SolInputLabel-col);
-    border: var(--SolInputLabel-border);
-    font-size: 0.875rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none;
-    transition: all 0.2s ease-in-out;
-    transform-origin: 0 0;
-    align-self: anchor-center;
 }
 
 .GridLayout {
@@ -441,61 +312,6 @@ src/theme_toggle.tsx
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
 }
 
-.searchinput {
-    position: relative;
-}
-
-.searchinput>div {
-    display: flex;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    align-items: center;
-    pointer-events: none;
-    inset-inline-start: 0px;
-    padding-inline-start: 0.75rem;
-}
-
-input[type="search"] {
-    display: block;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border-width: 1px;
-    border-color: #D1D5DB;
-    width: 100%;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: #111827;
-    background-color: #F9FAFB;
-    padding-inline-start: 2.5rem;
-}
-
-.searchinput>button {
-    position: absolute;
-    bottom: 0.625rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    color: #ffffff;
-    background-color: #1D4ED8;
-    inset-inline-end: 0.625rem;
-    bottom: 0.625rem;
-}
-
-.searchinput>button:hover {
-    background-color: #1E40AF;
-}
-
-.searchinput>button:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-}
-
 @media (min-width: 768px) {
 }
 
@@ -587,70 +403,69 @@ li {
     background: var(--SolDropdownItem-bg-hover);
 }
 
-.SolButtonBase {
-    padding-top: 0.625rem;
-    padding-bottom: 0.625rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+button {
+    display: flex;
     gap: 0.5rem;
-    align-items: center;
-    border-radius: 0.25rem;
+    padding: 0.625rem 1rem;
     font-size: 0.75rem;
-    line-height: 1rem;
     font-weight: 600;
+    color: var(--button-col);
+    background: transparent;
+    border: none;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
     user-select: none;
+    cursor: pointer;
 }
 
-.SolButtonBase:hover {
-    opacity: 0.75;
+button:hover {
+    opacity: 0.9;
 }
 
-.SolIconButton {
-    width: 1.75rem;
-    height: 1.74rem;
+.IconButton {
+    padding: .5rem;
+    background: var(--icon-bg);
+    border-radius: var(--icon-border-radius);
 }
 
-.SolMaterialButton {
-    justify-content: center;
+.IconButton:hover {
+    background: var(--icon-hover-bg);
+}
+
+.MaterialButton {
     color: var(--mat-color);
     background: var(--mat-bg);
     border: var(--mat-border);
 }
 
-.SolMaterialButton:hover {
+.MaterialButton:hover {
     color: var(--mat-hover-color);
     background: var(--mat-hover-bg);
 }
 
-.SolMaterialButton:focus {
-    color: var(--mat-focus-color);
-    background: var(--mat-focus-bg);
-}
-
-.SolOutlinedButton {
-    justify-content: center;
+.OutlinedButton {
     color: var(--out-color);
     background: var(--out-bg);
     border: var(--out-border);
 }
 
-.SolOutlinedButton:hover {
+.OutlinedButton:hover {
     color: var(--out-hover-color);
     background: var(--out-hover-bg);
 }
 
-.SolOutlinedButton:focus {
-    color: var(--out-focus-color);
-    background: var(--out-focus-bg);
+#theme-toggle {
+    padding: 0.625rem;
+    border-radius: 0.5rem;
+    color: var(--theme-toggle-col);
+}
+
+#theme-toggle:hover {
+    background: var(--theme-toggle-bg-hover);
 }
 
 fieldset {
-    display: inline-block;
-    justify-content: space-between;
-    border-radius: 0.5rem;
     border: none;
 }
 
@@ -680,8 +495,8 @@ select {
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: #111827;
-    background-color: #ffffff;
+    color: #ececec;
+    background-color: #2b2a2a;
 }
 
 label {
@@ -707,12 +522,135 @@ label p {
     color: var(--label-p-col);
 }
 
-#theme-toggle {
-    padding: 0.625rem;
-    border-radius: 0.5rem;
-    color: var(--theme-toggle-col);
+.Input {
+    position: relative;
+    background: var(--input-bg);
+    border-bottom: 2px solid #d1d5db;
 }
 
-#theme-toggle:hover {
-    background: var(--theme-toggle-bg-hover);
+.Input>input,
+.Input>textarea {
+    width: 100%;
+    padding: .5rem;
+    font-size: 0.875rem;
+    color: var(--Input-Input-input--Input-textarea-col);
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: vertical;
+}
+
+.Input> input:disabled,
+.Input> textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.Input> input:disabled ~ label,
+.Input> textarea:disabled ~ label {
+    opacity: 0.5;
+}
+
+.Input> input::placeholder,
+.Input> textarea::placeholder {
+    color: var(--Input-Input--input-col-placeholder);
+}
+
+.Input[data-has-label="true"] > input::placeholder,
+.Input[data-has-label="true"] > textarea::placeholder {
+    color: transparent;
+}
+
+.Input[data-has-icon="true"] > input ~ label,
+.Input[data-has-icon="true"] > textarea ~ label {
+    left: 3rem;
+}
+
+.Input> input:focus::placeholder,
+.Input> textarea:focus::placeholder {
+    color: var(--Input-Input--input-col-placeholder);
+    transition: color 0.2s ease-out;
+}
+
+.Input label {
+    position: absolute;
+    top: 0rem;
+    left: 1rem;
+    color: var(--Input-label-col);
+    border: var(--Input-label-border);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+    transform-origin: 0 0;
+    align-self: anchor-center;
+}
+
+.Input:has([data-has-icon="false"]) label {
+    display: none;
+}
+
+.Input> input:focus-within ~ label,
+.Input> textarea:focus-within ~ label,
+.Input> input:not(:placeholder-shown) ~ label,
+.Input> textarea:not(:placeholder-shown) ~ label {
+    transform: translateX(var(--label-transform-x))
+            translateY(var(--label-transform-y))
+            scale(var(--label-scale));
+    top: 0rem;
+    left: 0rem;
+    height: auto;
+    opacity: 1;
+    color: var(--input-label-focus-color);
+    background: var(--input-label-focus-bg);
+    align-self: auto;
+}
+
+.InputIcon {
+    pointer-events: none;
+    padding-inline-start: 1rem;
+}
+
+.InputEnd {
+    display: flex;
+    gap: .25rem;
+    justify-content: space-around;
+    background: var(--input-bg, inherit);
+    cursor: pointer;
+}
+
+.InputEnd:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.ErrorTextInput {
+    border-color: #EF4444;
+}
+
+.ErrorText {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--ErrorText-col);
+}
+
+.RangeValue {
+    position: absolute;
+    left: var(--value-left, 0);
+    transform: translateX(-50%);
+    background: var(--input-label-focus-color, #983daf);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+input[type="range"]:hover ~ .RangeValue,
+input[type="range"]:focus ~ .RangeValue {
+    opacity: 1;
 }

@@ -1,9 +1,7 @@
 import { Setter } from "solid-js";
-import { SpaceForm } from "../src/ui/spaceform";
-import { TextInput } from "../src/ui/textinput";
+import { SpaceForm, SolCSS } from "../src/ui/gen.ts";
 import { IconCross, IconDelete } from "../src/svg/svg";
-import { IconButton, MaterialButton, OutlinedButton } from "../src/ui/button";
-import { Select } from "../src/ui/checkbox";
+import { Input, Select } from "../src/ui/input.tsx";
 
 export function Modal1() {
     return (
@@ -12,17 +10,15 @@ export function Modal1() {
 
                 <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 night:border-gray-700 md:p-5">
                     <h4>Account Information</h4>
-                    <IconButton>
-                        <IconCross />
-                    </IconButton>
+                    <button class={SolCSS.IconButton}><IconCross /></button>
                 </div>
 
                 <SpaceForm class="p-4 md:p-5" id="AccountForm">
                     <div class="mb-5 gap-4">
 
-                        <TextInput name="pickuppoint" label='Pick-up point*' type="text" placeholder="Enter the pick-up point name" />
-                        <TextInput name="firstname" label='Your Full Name*' type="text" placeholder="Enter your first name" />
-                        <TextInput name="email" label='Your Email*' type="text" placeholder="Enter your email here" />
+                        <Input name="pickuppoint" label='Pick-up point*' type="text" placeholder="Enter the pick-up point name" />
+                        <Input name="firstname" label='Your Full Name*' type="text" placeholder="Enter your first name" />
+                        <Input name="email" label='Your Email*' type="text" placeholder="Enter your email here" />
 
                         <Select header="Country" id="country" options={[
                             { value: "us", label: "United States" },
@@ -31,12 +27,12 @@ export function Modal1() {
                             { value: "de", label: "Germany" }
                         ]} />
 
-                        <TextInput area name="delivery_address" label='Delivery Address*' type="text" placeholder="Enter here your address" />
+                        <Input textarea name="delivery_address" label='Delivery Address*' type="text" placeholder="Enter here your address" />
 
                     </div>
                     <div class="flex gap-3 border-t border-gray-200 pt-4 night:border-gray-700 md:pt-5">
-                        <MaterialButton>Save information</MaterialButton>
-                        <OutlinedButton>Cancel</OutlinedButton>
+                        <button class={SolCSS.MaterialButton}>Save information</button>
+                        <button class={SolCSS.OutlinedButton}>Cancel</button>
                     </div>
                 </SpaceForm>
             </div>
@@ -52,8 +48,8 @@ export function DeleteModal(setShow?: Setter<boolean>) {
         </div>
         <h6 class="mb-3">Are you sure you want to delete this order from your account?</h6>
         <div class="flex items-center justify-center space-x-4">
-            <OutlinedButton>No, cancel</OutlinedButton>
-            <MaterialButton onClick={() => { if (setShow) setShow(false) }}>Yes, delete</MaterialButton>
+            <button class={SolCSS.OutlinedButton}>No, cancel</button>
+            <button class={SolCSS.MaterialButton} onClick={() => { if (setShow) setShow(false) }}>Yes, delete</button>
         </div>
     </div>;
 }

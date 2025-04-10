@@ -1,9 +1,7 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, SearchInput, Select, SpaceDebugInfo, SpaceForm, SpaceFormError, TextInput } from '../src/ui/gen.ts';
-import { IconCart, IconDown } from '../src/svg/gen.ts';
-
-import { BaseButton, IconButton, MaterialButton, OutlinedButton } from '../src/ui/gen.ts';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, SolCSS, SpaceDebugInfo, SpaceForm, SpaceFormError, Input } from '../src/ui/gen.ts';
+import { IconCart, IconCross, IconDown, IconGoogle } from '../src/svg/gen.ts';
 
 export function InputTest() {
     return <>
@@ -68,8 +66,6 @@ export function InputTest() {
             }}
         >
 
-            <SearchInput name="search" placeholder="placeholder" />
-
             <CheckboxGroup header="Countries" id={"hello"} checkboxes={checkboxes} />
 
             <Select id="country" options={selectOptions} header="Country" />
@@ -87,17 +83,17 @@ export function InputTest() {
                 ]}
             />
 
-            <TextInput name="password1" type="password" label='password' placeholder="password" />
-            <TextInput name="password2" type="password" placeholder="password" />
-            <TextInput name="range" type="range" header='range' placeholder="range" />
+            <Input name="password1" type="password" label='label' placeholder="placeholder"
+                end={[
+                    <button class={SolCSS.IconButton} type="reset"><IconCross /></button>,
+                ]} />
+            <Input name="password2" type="password" placeholder="placeholder" />
+            <Input name="range" type="range" header='range' placeholder="range" />
 
-            <TextInput name="Name" type="text" placeholder="Hello Name"
-                label="Label"
-            ></TextInput>
-            <TextInput area name="Area" type="text" placeholder="Hello Area"
-                label="Label"
-            ></TextInput>
-            {RatingsBar({ ratings: 3.8, reviews: 5 })}
+            <Input name="Name" type="text" placeholder="placeholder" label="Label"></Input>
+            <Input textarea name="Area" type="text" placeholder="placeholder" label="Label"></Input>
+
+            <RatingsBar ratings={3.8} reviews={5} />
 
             <SpaceFormError />
 
@@ -109,10 +105,10 @@ export function InputTest() {
 
         <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
 
-            <BaseButton > BaseButton</BaseButton >
-            <MaterialButton>MaterialButton</MaterialButton>
-            <OutlinedButton>OutlinedButton</OutlinedButton>
-            <IconButton>❤️</IconButton>
+            <button>BaseButton</button >
+            <button class={SolCSS.MaterialButton}>MaterialButton</button>
+            <button class={SolCSS.OutlinedButton}>OutlinedButton</button>
+            <button class={SolCSS.IconButton}><IconGoogle /></button>
         </div>
 
         <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>
@@ -127,9 +123,9 @@ export function InputTest() {
 }
 
 export const validationSchema = yup.object().shape({
-    first_name: yup.string().required('First name is required'),
+    Name: yup.string().required('First name is required').min(3),
     // company: yup.string().required('Company is required'),
-    phone: yup.string().matches(/^[0-9]{3}-[0-9]{2}-[0-9]{3}$/, 'Phone number must be in the format 123-45-678').required('Phone number is required'),
+    // phone: yup.string().matches(/^[0-9]{3}-[0-9]{2}-[0-9]{3}$/, 'Phone number must be in the format 123-45-678').required('Phone number is required'),
     // website: yup.string().url('Must be a valid URL').required('Website URL is required'),
     // visitors: yup.number().positive('Must be a positive number').required('Unique visitors are required'),
     // email: yup.string().email('Invalid email address').required('Email address is required'),

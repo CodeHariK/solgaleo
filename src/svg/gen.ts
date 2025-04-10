@@ -8,8 +8,7 @@ export const SolCSS = {
 
     varIconWidth: "--icon-width",
     varIconHeight: "--icon-height",
-    varIconColor: "--icon-color",
-    varIconBg: "--icon-bg"
+    varIconColor: "--icon-color"
 } as const;
 
 export type SolCSSType = keyof typeof SolCSS;

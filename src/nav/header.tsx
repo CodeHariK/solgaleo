@@ -1,6 +1,5 @@
 import { JSX } from "solid-js/jsx-runtime";
-import { OutlinedButton } from "../ui/button";
-import { PositionBox } from "../ui/position";
+import { PositionBox, SolCSS } from "../ui/gen";
 import { IconDown, IconUser } from "../svg/svg";
 
 export const Header = ({ iconSrc, title, links, rightChildren }: { iconSrc?: string, title?: JSX.Element, links?: JSX.Element, rightChildren?: JSX.Element }) => (
@@ -44,7 +43,7 @@ export const TransitionModal = ({ transition, children }: { transition: boolean,
                     </div>
                 </PositionBox>
             }
-            two={<OutlinedButton><a href="/login">Log In</a></OutlinedButton>}>
+            two={<button class={SolCSS.OutlinedButton}><a href="/login">Log In</a></button>}>
         </TransitionWidget>
     );
 };

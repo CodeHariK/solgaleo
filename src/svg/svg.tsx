@@ -34,7 +34,6 @@ function toProp(props?: IconProps) {
 svg {
     --icon-width: varl : 1.3rem;
     --icon-height: var : 1.3rem;
-    --icon-bg: var : #343434;
     --icon-color: var : #338bff;
 
     display: inline-block;
