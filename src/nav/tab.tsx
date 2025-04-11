@@ -18,15 +18,16 @@ import { CssNAV } from './gen';
 .tab-level {
     display: flex;
     flex-direction: row;
-    gap: 0.75rem;
+    // gap: 0.75rem;
 }
 
 .tab-button {
-    padding: 0.5rem 1rem;
+    padding: 0.2rem .5rem;
     border: none;
     transition: all 0.2s ease;
+    background: var(--primary-color, #565656);
 }
-
+    
 .tab-button.active {
     background: var(--primary-color, #972579);
     color: white;
@@ -43,13 +44,13 @@ import { CssNAV } from './gen';
 type RoutedTabsProps = {
     tabs: Tab[];
     defaultTab?: string;
-    baseRoute?: string;
     id: string; // Add unique identifier
 };
 
 export function RoutedTabs(props: RoutedTabsProps) {
     const navigate = useNavigate();
     const location = useLocation();
+    const baseRoute = location.pathname;
 
     // Parse query params instead of hash
     const parseParams = () => {
@@ -90,7 +91,6 @@ export function RoutedTabs(props: RoutedTabsProps) {
         <Tabs
             tabs={props.tabs}
             defaultTab={currentTab()}
-            id={props.id}
             onTabChange={
                 (tabId: string) => {
                     setCurrentTab(tabId);
@@ -99,7 +99,7 @@ export function RoutedTabs(props: RoutedTabsProps) {
                     const params = new URLSearchParams(location.search);
                     params.set(props.id, tabId);
 
-                    const route = props.baseRoute || location.pathname;
+                    const route = baseRoute || location.pathname;
                     navigate(`${route}?${params.toString()}`);
                 }
             }
@@ -118,7 +118,6 @@ type TabsProps = {
     tabs: Tab[];
     defaultTab?: string;
     onTabChange?: (tabId: string) => void;
-    id: string;
 };
 
 function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
@@ -199,7 +198,7 @@ export function Tabs(props: TabsProps) {
             <div class={CssNAV.TabsLevels}>
                 <For each={visibleTabs()}>
                     {(levelTabs, level) => (
-                        <div class={CssNAV.TabLevel} style={{ "padding-left": `${level() * 1.5}rem` }}>
+                        <div class={CssNAV.TabLevel} style={{ "padding-left": `${level() * 0}rem` }}>
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button
@@ -216,7 +215,6 @@ export function Tabs(props: TabsProps) {
             </div>
 
             <div class={CssNAV.TabContent}>
-                {props.id} : {activePath().join(".")}
                 {tabContent()}
             </div>
 

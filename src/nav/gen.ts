@@ -34,8 +34,15 @@ export const CssNAV = {
     TransitionItem: "TransitionItem",
     Show: "Show",
     Hide: "Hide",
+    ModalOverlay: "ModalOverlay",
+    ModalContent: "ModalContent",
+    ModalPositioned: "ModalPositioned",
+    ModalClose: "ModalClose",
+    ModalFade: "ModalFade",
+    ModalSlide: "ModalSlide",
+    ModalScale: "ModalScale",
 
-    
+    varModalContentBg: "--ModalContent-bg"
 } as const;
 
 export type CssNAVType = keyof typeof CssNAV;

@@ -21,9 +21,6 @@
 //         children={
 //             <Box />
 
-{/* <Modal1 /> */ }
-{/* {DeleteModal()} */ }
-// <Modal child={">>> Show Modal <<<"} modal={() => "Hi"} />
 
 //         }
 //         individualScroll

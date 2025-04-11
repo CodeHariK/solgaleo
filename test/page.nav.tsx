@@ -1,10 +1,12 @@
 import { createMemo, createSignal, For } from "solid-js";
 import { CssUI, IconHome, ThemeToggle } from "../src/gen";
 import * as N from "../src/nav/gen";
+import { Portal } from "solid-js/web";
 
 export function NavTest() {
 
     const [toggle, setToggle] = createSignal(false);
+    const [isModalOpen, setIsModalOpen] = createSignal(false);
 
 
     return <>
@@ -47,6 +49,57 @@ export function NavTest() {
                 </button>
             }
         />
+
+        {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
+
+        <button
+            class={CssUI.MaterialButton}
+            onClick={() => setIsModalOpen(true)}
+        >
+            Open Modal
+        </button>
+
+        {/* <N.Modal
+            isOpen={isModalOpen()}
+            onClose={() => setIsModalOpen(false)}
+            title="Welcome"
+        >
+            <div>
+                <p>This is an animated modal!</p>
+                <button
+                    class={CssUI.MaterialButton}
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    Close
+                </button>
+            </div>
+        </N.Modal> */}
+
+        {/* <N.Modal
+            isOpen={isModalOpen()}
+            onClose={() => setIsModalOpen(false)}
+            title="Welcome"
+            position={{
+                x: '20%',
+                y: 50,
+                align: 'topcenter'
+            }}
+        >
+            <div>Top Aligned Content</div>
+        </N.Modal> */}
+
+        <N.Modal
+            isOpen={isModalOpen()}
+            onClose={() => setIsModalOpen(false)}
+            animation="slide"
+            position={{
+                x: 100,
+                y: 500,
+                align: 'leftcenter'
+            }}
+        >
+            <div>Animated Modal Content</div>
+        </N.Modal>
 
         <PaginationTest />
 

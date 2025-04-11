@@ -56,21 +56,20 @@ const tabs = () => [
 ];
 
 render(() => <Router>
+    <Route path="/nav" component={NavTest} />
     <Route
-        path="/"
+        path="/tabs"
         component={() => (
             <>
                 <RoutedTabs
                     tabs={tabs()}
                     defaultTab="home"
-                    baseRoute="/"
                     id="light"
                 />
 
                 <RoutedTabs
                     tabs={tabs()}
                     defaultTab="home"
-                    baseRoute="/"
                     id="night"
                 />
             </>
