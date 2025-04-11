@@ -7,11 +7,11 @@ src/modal.tsx
 */
 
 .light {
-    --ModalContent-bg: purple;
+    --ModalContent-bg: #4d84dc40;
 }
 
 .night {
-    --ModalContent-bg: purple;
+    --ModalContent-bg: #4d84dc40;
 }
 
 .PaginationNav {

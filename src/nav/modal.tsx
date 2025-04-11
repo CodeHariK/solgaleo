@@ -29,7 +29,7 @@ import { type JSX } from 'solid-js';
 }
 
 .ModalContent {
-    background: var : purple;
+    background: var : #4d84dc40;
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -218,65 +218,92 @@ export function Modal(props: ModalProps) {
 
         let styles: JSX.CSSProperties = {};
 
-        let left = 0
-        let top = 0
+        // Check if anchor is outside viewport
+        if (anchorRect.left > windowWidth || anchorRect.right < 0 ||
+            anchorRect.top > windowHeight || anchorRect.bottom < 0) {
+            styles.display = "none"
+            return styles;
+        }
+
+        const margin = 10;
 
         switch (anchorAlign) {
             case 'top':
-                left = anchorRect.left + (anchorRect.width / 2) - modalRect.width / 2
-                top = anchorRect.top - modalRect.height - offset;
+                if (anchorRect.left < windowWidth / 2) {
+                    let left = anchorRect.left - (modalRect.width / 2) + (anchorRect.width / 2)
+                    if (left < 0) left = margin
+                    styles.left = `${left}px`;
+                } else {
+                    let right = windowWidth - (anchorRect.right + (modalRect.width / 2) - (anchorRect.width / 2))
+                    if (right < 0) right = margin
+                    styles.right = `${right}px`;
+                }
+
+                styles.top = `${anchorRect.top - modalRect.height}px`;
+                console.log("height", modalRect.height)
+                // styles.top = `${anchorRect.top - modalRect.height - offset}px`;
                 break;
+
             case 'bottom':
-                left = anchorRect.left + (anchorRect.width / 2) - (modalRect.width / 2)
-                top = anchorRect.bottom + offset
+                if (anchorRect.left + (anchorRect.width / 2) + (modalRect.width / 2) > windowWidth) {
+                    styles.right = `${windowWidth - anchorRect.right}px`;
+                } else {
+                    styles.left = `${anchorRect.left + (anchorRect.width / 2) - (modalRect.width / 2)}px`;
+                }
+                if (anchorRect.bottom + modalRect.height + offset > windowHeight) {
+                    styles.bottom = `${windowHeight - anchorRect.top}px`;
+                } else {
+                    styles.top = `${anchorRect.bottom + offset}px`;
+                }
                 break;
+
             case 'left':
-                left = anchorRect.left - modalRect.width - offset
-                top = anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)
+
+                if (anchorRect.left - offset < windowWidth / 2) {
+                    let left = anchorRect.left - modalRect.width - offset
+                    if (left < 0) left = anchorRect.right + offset
+                    styles.left = `${left}px`;
+                } else {
+                    let right = windowWidth - (anchorRect.right - anchorRect.width - offset)
+                    styles.right = `${right}px`;
+                }
+
+                if (anchorRect.top + (anchorRect.height / 2) + (modalRect.height / 2) > windowHeight) {
+                    styles.bottom = `${windowHeight - anchorRect.bottom}px`;
+                } else {
+                    styles.top = `${anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)}px`;
+                }
+
                 break;
+
             case 'right':
-                left = anchorRect.right + offset
-                top = anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)
+
+                if (anchorRect.right + offset > windowWidth / 2) {
+                    let right = windowWidth - anchorRect.left + offset;
+                    if (right < 0) right = windowWidth - anchorRect.left - modalRect.width - offset;
+                    styles.right = `${right}px`;
+                } else {
+                    let left = anchorRect.right + offset;
+                    styles.left = `${left}px`;
+                }
+
+                if (anchorRect.top + (anchorRect.height / 2) + (modalRect.height / 2) > windowHeight) {
+                    styles.bottom = `${windowHeight - anchorRect.bottom}px`;
+                } else {
+                    styles.top = `${anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)}px`;
+                }
+
                 break;
         }
 
-        if (left < 0) {
-            left = 0
-        }
-        if (left + modalRect.width > windowWidth) {
-            left = windowWidth - modalRect.width
-        }
-
-        if (top < 0) {
-            top = anchorRect.top + anchorRect.height
-        }
-        if (top + modalRect.height > windowHeight) {
-            top = anchorRect.top - modalRect.height
-        }
-
-        styles = {
-            left: `${left}px`,
-            top: `${top}px`,
-        };
-
-
-        // console.table([
-        //     ["anchorRect.left", anchorRect.left,],
-        //     ["anchorRect.width", anchorRect.width,],
-        //     ["modalRect.width", modalRect.width,],
-        //     ["anchorRect.top", anchorRect.top,],
-        //     ["modalRect.height", modalRect.height,],
-        //     ["offset", offset,],
-        //     ["styles.left", styles.left],
-        //     ["styles.top", styles.top]
-        // ])
+        console.log(modalRect.width)
 
         return styles;
     };
 
     // Check and adjust position to stay within bounds
     const adjustPosition = (styles: JSX.CSSProperties) => {
-        if (!modalRef || !props) return styles;
+        if (!modalRef || !props || props.anchor) return styles;
 
         const modalRect = modalRef.getBoundingClientRect();
         const windowWidth = window.innerWidth;
@@ -322,21 +349,33 @@ export function Modal(props: ModalProps) {
         return adjustedStyles;
     };
 
+    const [, setResize] = createSignal({});  // Force re-render on resize/scroll
+
+    const handleViewportChange = () => {
+        setResize({}); // Trigger re-render
+    };
+
     createEffect(() => {
         if (props.isOpen) {
             document.addEventListener("keydown", handleEscape);
+            window.addEventListener("resize", handleViewportChange);
+            window.addEventListener("scroll", handleViewportChange);
             // Delay to trigger animation
             setTimeout(() => setIsVisible(true), 10);
         } else {
             setIsVisible(false);
             unlockScroll();
             document.removeEventListener("keydown", handleEscape);
+            window.removeEventListener("resize", handleViewportChange);
+            window.removeEventListener("scroll", handleViewportChange);
         }
     });
 
     onCleanup(() => {
         unlockScroll();
         document.removeEventListener("keydown", handleEscape);
+        window.removeEventListener("resize", handleViewportChange);
+        window.removeEventListener("scroll", handleViewportChange);
     });
 
     const getPositionStyles = () => {

@@ -59,19 +59,25 @@ export function NavTest() {
             Open Modal
         </button>
 
-        {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, null)}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', null,)} */}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', 200,)} */}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, null, null,)} */}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, -300, -300,)} */}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, 10, 1000,)} */}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, 1000, 0,)} */}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, 1000, -100,)} */}
-        {DummyModal(isModalOpen, setIsModalOpen, 10, 10, 'bottomright')}
-        {/* {DummyModal(isModalOpen, setIsModalOpen, 100, 500)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
+        {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
+        {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
+        {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')} */}
 
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, 40, 30, 'top')} */}
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, 850, 80, 'bottom')} */}
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "100px", "20%", 10, 'left')}
+        {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "20%", 10, 'left')}
+        {DummyModalAnchor(isModalOpen, setIsModalOpen, "300px", "40%", 10, 'left')} */}
+
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "20px", "60%", 10, 'right')} */}
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "60%", 10, 'right')} */}
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "300px", "80%", 10, 'right')} */}
+
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, "80%", 0, 'top')} */}
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "80%", 0, 'top')} */}
+        {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, "10%", 0, 'top')}
+        {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "10%", 0, 'top')}
+
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "50%", '850px', 0, 'bottom')} */}
 
         <PaginationTest />
 
@@ -79,19 +85,19 @@ export function NavTest() {
 }
 
 function DummyModal(isModalOpen, setIsModalOpen,
-    left: number | string, top: number | string,
+    x: number | string, y: number | string,
     corner: 'topleft' | 'topright' | 'bottomleft' | 'bottomright') {
     return <N.Modal
         isOpen={isModalOpen()}
         onClose={() => setIsModalOpen(false)}
         animation="slide"
         fixed={{
-            x: left,
-            y: top,
+            x: x,
+            y: y,
             corner: corner
         }}
     >
-        <div>{left}, {top}</div>
+        <div>{x}, {y}, {corner}</div>
     </N.Modal>;
 }
 
@@ -108,8 +114,8 @@ function DummyModalAnchor(isModalOpen, setIsModalOpen, left, top, offset, align)
                     style={{
                         background: "red",
                         position: "fixed",
-                        left: `${left}px`,
-                        top: `${top}px`
+                        left: left,
+                        top: top
                     }}
                 >
                     Click me
