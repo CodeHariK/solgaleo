@@ -1,7 +1,7 @@
 // import { createSignal, Setter } from "solid-js";
 // import { IconCross } from "../svg/svg";
 
-import { Show, createEffect, createSignal, onCleanup } from "solid-js";
+import { Setter, Show, createEffect, createSignal, onCleanup } from "solid-js";
 import { Portal } from "solid-js/web";
 import { CssNAV } from "./gen";
 
@@ -15,7 +15,7 @@ import { type JSX } from 'solid-js';
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    // background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +36,7 @@ import { type JSX } from 'solid-js';
     max-width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    transform: scale(0.9);
+    // transform: scale(0.9);
     opacity: 0;
     transition: all 0.2s ease-in-out;
 
@@ -74,6 +74,53 @@ import { type JSX } from 'solid-js';
 
 
 
+.ModalContent[data-position="top"]::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--modal-bg, white);
+}
+
+.ModalContent[data-position="bottom"]::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--modal-bg, white);
+}
+
+.ModalContent[data-position="left"]::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid var(--modal-bg, white);
+}
+
+.ModalContent[data-position="right"]::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid var(--modal-bg, white);
+}
+
+
+
+
 
 .ModalFade {
     opacity: 0;
@@ -88,7 +135,7 @@ import { type JSX } from 'solid-js';
 
 .ModalScale {
     opacity: 0;
-    transform: scale(0.9);
+    // transform: scale(0.9);
     transition: all 0.3s ease-in-out;
 }
 
@@ -110,25 +157,36 @@ import { type JSX } from 'solid-js';
 
 type AnimationType = 'fade' | 'slide' | 'scale';
 
-type Position = {
-    x?: number | string;
-    y?: number | string;
-    align?: 'leftcenter' | 'topcenter';
-};
+type AnchorAlign = 'top' | 'bottom' | 'left' | 'right';
+
+type CornerPosition = 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
+
 
 type ModalProps = {
     isOpen: boolean;
     onClose: () => void;
     children: JSX.Element;
     title?: string;
-    position?: Position;
     animation?: AnimationType;
+
+    fixed?: {
+        x: number | string;
+        y: number | string;
+        corner?: CornerPosition;
+    },
+    anchor?: {
+        element: (anchorRef: Setter<HTMLButtonElement>) => JSX.Element,
+        align?: AnchorAlign;
+        offset?: number;
+    };
 };
 
 export function Modal(props: ModalProps) {
     const [isVisible, setIsVisible] = createSignal(false);
 
     let modalRef!: HTMLDivElement;
+
+    const [anchorRef, setAnchorRef] = createSignal<HTMLButtonElement>();
 
     const animation = props.animation || 'scale';
 
@@ -148,37 +206,120 @@ export function Modal(props: ModalProps) {
         document.body.style.paddingRight = '';
     };
 
-    // Check and adjust position to stay within bounds
-    const adjustPosition = (styles: JSX.CSSProperties) => {
-        if (!modalRef || !props.position) return styles;
+    const getAnchorPosition = () => {
+        if (!modalRef || !anchorRef()) return {};
 
-        const modal = modalRef;
-        if (!modal) return styles;
-
-        const rect = modal.getBoundingClientRect();
+        const modalRect = modalRef.getBoundingClientRect();
+        const anchorRect = anchorRef().getBoundingClientRect();
+        const offset = props.anchor.offset || 0;
+        const anchorAlign = props.anchor?.align ?? 'bottom'
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
 
-        let left = parseFloat(styles.left as string);
-        let top = parseFloat(styles.top as string);
+        let styles: JSX.CSSProperties = {};
 
-        // Adjust horizontal position
-        if (left + rect.width > windowWidth) {
-            left = windowWidth - rect.width - 20;
+        let left = 0
+        let top = 0
+
+        switch (anchorAlign) {
+            case 'top':
+                left = anchorRect.left + (anchorRect.width / 2) - modalRect.width / 2
+                top = anchorRect.top - modalRect.height - offset;
+                break;
+            case 'bottom':
+                left = anchorRect.left + (anchorRect.width / 2) - (modalRect.width / 2)
+                top = anchorRect.bottom + offset
+                break;
+            case 'left':
+                left = anchorRect.left - modalRect.width - offset
+                top = anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)
+                break;
+            case 'right':
+                left = anchorRect.right + offset
+                top = anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)
+                break;
         }
-        if (left < 0) left = 20;
 
-        // Adjust vertical position
-        if (top + rect.height > windowHeight) {
-            top = windowHeight - rect.height - 20;
+        if (left < 0) {
+            left = 0
         }
-        if (top < 0) top = 20;
+        if (left + modalRect.width > windowWidth) {
+            left = windowWidth - modalRect.width
+        }
 
-        return {
-            ...styles,
+        if (top < 0) {
+            top = anchorRect.top + anchorRect.height
+        }
+        if (top + modalRect.height > windowHeight) {
+            top = anchorRect.top - modalRect.height
+        }
+
+        styles = {
             left: `${left}px`,
-            top: `${top}px`
+            top: `${top}px`,
         };
+
+
+        // console.table([
+        //     ["anchorRect.left", anchorRect.left,],
+        //     ["anchorRect.width", anchorRect.width,],
+        //     ["modalRect.width", modalRect.width,],
+        //     ["anchorRect.top", anchorRect.top,],
+        //     ["modalRect.height", modalRect.height,],
+        //     ["offset", offset,],
+        //     ["styles.left", styles.left],
+        //     ["styles.top", styles.top]
+        // ])
+
+        return styles;
+    };
+
+    // Check and adjust position to stay within bounds
+    const adjustPosition = (styles: JSX.CSSProperties) => {
+        if (!modalRef || !props) return styles;
+
+        const modalRect = modalRef.getBoundingClientRect();
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const margin = 10;
+
+        let adjustedStyles: JSX.CSSProperties = { ...styles };
+
+        // Handle horizontal positioning
+        if (styles.left !== undefined) {
+            let left = parseFloat(styles.left as string);
+            if (left + modalRect.width > windowWidth) {
+                left = windowWidth - modalRect.width - margin;
+            }
+            if (left < margin) left = margin;
+            adjustedStyles.left = `${left}px`;
+        } else if (styles.right !== undefined) {
+            let right = parseFloat(styles.right as string);
+            if (right + modalRect.width > windowWidth) {
+                right = windowWidth - modalRect.width - margin;
+            }
+            if (right < margin) right = margin;
+            adjustedStyles.right = `${right}px`;
+        }
+
+        // Handle vertical positioning
+        if (styles.top !== undefined) {
+            let top = parseFloat(styles.top as string);
+            if (top + modalRect.height > windowHeight) {
+                top = windowHeight - modalRect.height - margin;
+            }
+            if (top < margin) top = margin;
+            adjustedStyles.top = `${top}px`;
+        } else if (styles.bottom !== undefined) {
+            let bottom = parseFloat(styles.bottom as string);
+            if (bottom + modalRect.height > windowHeight) {
+                bottom = windowHeight - modalRect.height - margin;
+            }
+            if (bottom < margin) bottom = margin;
+            adjustedStyles.bottom = `${bottom}px`;
+        }
+
+        return adjustedStyles;
     };
 
     createEffect(() => {
@@ -199,52 +340,87 @@ export function Modal(props: ModalProps) {
     });
 
     const getPositionStyles = () => {
-        if (!props.position) return {};
 
-        let styles: JSX.CSSProperties = {
-            left: typeof props.position.x === 'number' ? `${props.position.x}px` : props.position.x || '50%',
-            top: typeof props.position.y === 'number' ? `${props.position.y}px` : props.position.y || '0',
-        };
+        if (!props) return {};
+        if (props.anchor) return getAnchorPosition();
+        if (!props.fixed) return {};
 
-        if (props.position.align === 'leftcenter') {
-            styles.transform = 'translateY(-50%)'
-        } else if (props.position.align === 'topcenter') {
-            styles.transform = 'translateX(-50%)'
+        const modalRect = modalRef.getBoundingClientRect();
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+
+        let x = props.fixed.x;
+        let y = props.fixed.y;
+        const corner = props.fixed.corner || 'topleft';
+
+        // Handle percentage values
+        if (typeof x === 'string' && x.includes('%')) {
+            x = (windowWidth * parseFloat(x)) / 100;
         }
+        if (typeof y === 'string' && y.includes('%')) {
+            y = (windowHeight * parseFloat(y)) / 100;
+        }
+
+        x = parseFloat(x.toString());
+        y = parseFloat(y.toString());
+
+        let styles: JSX.CSSProperties = {};
+
+        switch (corner) {
+            case 'topleft':
+                styles = { left: `${x}px`, top: `${y}px` };
+                break;
+            case 'topright':
+                styles = { right: `${x - modalRect.width}px`, top: `${y}px` };
+                break;
+            case 'bottomleft':
+                styles = { left: `${x}px`, bottom: `${y - modalRect.height}px` };
+                break;
+            case 'bottomright':
+                styles = { right: `${x}px`, bottom: `${y}px` };
+                console.log(styles)
+                break;
+        }
+
+        console.log(styles)
 
         return styles;
     };
 
     return (
-        <Show when={props.isOpen}>
-            <Portal>
-                <div class={`${CssNAV.ModalOverlay} ${isVisible() ? CssNAV.Show : ''}`}
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) props.onClose();
-                    }}
-                >
-                    <div
-                        ref={modalRef}
-                        class={`
+        <>
+            {props?.anchor && props.anchor.element(setAnchorRef)}
+
+            <Show when={props.isOpen}>
+                <Portal>
+                    <div class={`${CssNAV.ModalOverlay} ${isVisible() ? CssNAV.Show : ''}`}
+                        onClick={(e) => {
+                            if (e.target === e.currentTarget) props.onClose();
+                        }}
+                    >
+                        <div
+                            ref={modalRef}
+                            class={`
                             ${CssNAV.ModalContent}
                             ${isVisible() ? CssNAV.Show : ''}
-                            ${props.position ? CssNAV.ModalPositioned : ''}
+                            ${props ? CssNAV.ModalPositioned : ''}
                             ${CssNAV[`Modal${animation.charAt(0).toUpperCase() + animation.slice(1)}`]}
-                        `}
-                        style={adjustPosition(getPositionStyles())}
-                    >
-                        <button
-                            class={CssNAV.ModalClose}
-                            onClick={props.onClose}
-                            aria-label="Close modal"
+                            `}
+                            style={adjustPosition(getPositionStyles())}
                         >
-                            ×
-                        </button>
-                        {props.title && <h2>{props.title}</h2>}
-                        {props.children}
+                            <button
+                                class={CssNAV.ModalClose}
+                                onClick={props.onClose}
+                                aria-label="Close modal"
+                            >
+                                ×
+                            </button>
+                            {props.title && <h2>{props.title}</h2>}
+                            {props.children}
+                        </div>
                     </div>
-                </div>
-            </Portal>
-        </Show>
+                </Portal>
+            </Show>
+        </>
     );
 }

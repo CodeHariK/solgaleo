@@ -244,7 +244,6 @@ src/modal.tsx
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -265,7 +264,6 @@ src/modal.tsx
     max-width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    transform: scale(0.9);
     opacity: 0;
     transition: all 0.2s ease-in-out;
     position: relative;
@@ -299,6 +297,50 @@ src/modal.tsx
     background: rgba(0, 0, 0, 0.1);
 }
 
+.ModalContent[data-position="top"]::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--modal-bg, white);
+}
+
+.ModalContent[data-position="bottom"]::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--modal-bg, white);
+}
+
+.ModalContent[data-position="left"]::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid var(--modal-bg, white);
+}
+
+.ModalContent[data-position="right"]::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid var(--modal-bg, white);
+}
+
 .ModalFade {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
@@ -312,7 +354,6 @@ src/modal.tsx
 
 .ModalScale {
     opacity: 0;
-    transform: scale(0.9);
     transition: all 0.3s ease-in-out;
 }
 

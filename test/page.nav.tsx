@@ -6,7 +6,7 @@ import { Portal } from "solid-js/web";
 export function NavTest() {
 
     const [toggle, setToggle] = createSignal(false);
-    const [isModalOpen, setIsModalOpen] = createSignal(false);
+    const [isModalOpen, setIsModalOpen] = createSignal(true);
 
 
     return <>
@@ -59,51 +59,66 @@ export function NavTest() {
             Open Modal
         </button>
 
-        {/* <N.Modal
-            isOpen={isModalOpen()}
-            onClose={() => setIsModalOpen(false)}
-            title="Welcome"
-        >
-            <div>
-                <p>This is an animated modal!</p>
-                <button
-                    class={CssUI.MaterialButton}
-                    onClick={() => setIsModalOpen(false)}
-                >
-                    Close
-                </button>
-            </div>
-        </N.Modal> */}
+        {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, null)}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', null,)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', 200,)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, null, null,)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, -300, -300,)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, 10, 1000,)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, 1000, 0,)} */}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, 1000, -100,)} */}
+        {DummyModal(isModalOpen, setIsModalOpen, 10, 10, 'bottomright')}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, 100, 500)} */}
 
-        {/* <N.Modal
-            isOpen={isModalOpen()}
-            onClose={() => setIsModalOpen(false)}
-            title="Welcome"
-            position={{
-                x: '20%',
-                y: 50,
-                align: 'topcenter'
-            }}
-        >
-            <div>Top Aligned Content</div>
-        </N.Modal> */}
-
-        <N.Modal
-            isOpen={isModalOpen()}
-            onClose={() => setIsModalOpen(false)}
-            animation="slide"
-            position={{
-                x: 100,
-                y: 500,
-                align: 'leftcenter'
-            }}
-        >
-            <div>Animated Modal Content</div>
-        </N.Modal>
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, 40, 30, 'top')} */}
+        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, 850, 80, 'bottom')} */}
 
         <PaginationTest />
 
     </>
+}
+
+function DummyModal(isModalOpen, setIsModalOpen,
+    left: number | string, top: number | string,
+    corner: 'topleft' | 'topright' | 'bottomleft' | 'bottomright') {
+    return <N.Modal
+        isOpen={isModalOpen()}
+        onClose={() => setIsModalOpen(false)}
+        animation="slide"
+        fixed={{
+            x: left,
+            y: top,
+            corner: corner
+        }}
+    >
+        <div>{left}, {top}</div>
+    </N.Modal>;
+}
+
+function DummyModalAnchor(isModalOpen, setIsModalOpen, left, top, offset, align) {
+    return <N.Modal
+        isOpen={isModalOpen()}
+        onClose={() => setIsModalOpen(false)}
+        anchor={{
+            align: align,
+            offset: offset,
+            element: (setRef) => {
+                return <button
+                    ref={setRef}
+                    style={{
+                        background: "red",
+                        position: "fixed",
+                        left: `${left}px`,
+                        top: `${top}px`
+                    }}
+                >
+                    Click me
+                </button>;
+            }
+        }}
+    >
+        <div>Anc{left}, {top}, {align}</div>
+    </N.Modal>;
 }
 
 function PaginationTest() {
