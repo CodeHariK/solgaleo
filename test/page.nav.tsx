@@ -1,7 +1,7 @@
 import { createMemo, createSignal, For } from "solid-js";
-import { CssUI, IconHome, ThemeToggle } from "../src/gen";
+import { CssUI, DragBox, GridLayout, IconHome, ThemeToggle } from "../src/gen";
 import * as N from "../src/nav/gen";
-import { Portal } from "solid-js/web";
+import { TestHeader } from "./common";
 
 export function NavTest() {
 
@@ -9,79 +9,121 @@ export function NavTest() {
     const [isModalOpen, setIsModalOpen] = createSignal(true);
 
 
-    return <>
-        <N.Breadcrumbs items={[
-            {
-                element: <IconHome />,
-                link: "/",
-                fn: () => console.log("Hello")
-            },
-            {
-                element: <span>Products</span>,
-                link: "/products"
-            },
-            {
-                element: <span>Category</span>
-            }
-        ]} />
+    return <GridLayout
+        header={<TestHeader />}
+    >
+        <>
+            <N.Breadcrumbs items={[
+                {
+                    element: <IconHome />,
+                    link: "/",
+                    fn: () => console.log("Hello")
+                },
+                {
+                    element: <span>Products</span>,
+                    link: "/products"
+                },
+                {
+                    element: <span>Category</span>
+                }
+            ]} />
 
-        <N.Header
-            iconSrc="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png"
-            title={<p>Solgaleo</p>}
-            links={[
-                <N.HeaderLinks href="/products" title="Products" />,
-                <N.HeaderLinks href="/account" title="Accounts" />,
-                <N.HeaderLinks href="/docs" title="Docs" />
-            ]}
-            rightChildren={<ThemeToggle />}
-        />
+            <N.Header
+                iconSrc="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png"
+                title={<p>Solgaleo</p>}
+                links={[
+                    <N.HeaderLinks href="/products" title="Products" />,
+                    <N.HeaderLinks href="/account" title="Accounts" />,
+                    <N.HeaderLinks href="/docs" title="Docs" />
+                ]}
+                rightChildren={<ThemeToggle />}
+            />
 
-        <N.TransitionWidget
-            showFirstWidget={toggle()}
-            one={
-                <button class={CssUI.OutlinedButton} onclick={() => setToggle(prev => !prev)}>
-                    One
-                </button>
-            }
-            two={
-                <button class={CssUI.MaterialButton} onclick={() => setToggle(prev => !prev)}>
-                    Two
-                </button>
-            }
-        />
+            <N.TransitionWidget
+                showFirstWidget={toggle()}
+                one={
+                    <button class={CssUI.OutlinedButton} onclick={() => setToggle(prev => !prev)}>
+                        One
+                    </button>
+                }
+                two={
+                    <button class={CssUI.MaterialButton} onclick={() => setToggle(prev => !prev)}>
+                        Two
+                    </button>
+                }
+            />
 
-        {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
+            {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
 
-        <button
-            class={CssUI.MaterialButton}
-            onClick={() => setIsModalOpen(true)}
+            <button
+                class={CssUI.MaterialButton}
+                onClick={() => setIsModalOpen(true)}
+            >
+                Open Modal
+            </button>
+
+
+            {/* <N.Modal
+            isOpen={isModalOpen()}
+            onClose={() => setIsModalOpen(false)}
+            anchor={{
+                align: "bottom",
+                offset: 10,
+                element: (ref, setRef) => {
+                    return <DragBox anchorRef={ref} setAnchorRef={setRef} />;
+                }
+            }}
         >
-            Open Modal
-        </button>
+            <div>button</div>
+        </N.Modal> */}
 
-        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
+
+            {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
         {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
         {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
         {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')} */}
 
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "100px", "20%", 10, 'left')}
-        {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "20%", 10, 'left')}
-        {DummyModalAnchor(isModalOpen, setIsModalOpen, "300px", "40%", 10, 'left')} */}
+            {/* {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
+        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
+        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
+        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')} */}
 
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "20px", "60%", 10, 'right')} */}
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "60%", 10, 'right')} */}
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "300px", "80%", 10, 'right')} */}
+            {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'left')}
 
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, "80%", 0, 'top')} */}
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "80%", 0, 'top')} */}
-        {DummyModalAnchor(isModalOpen, setIsModalOpen, 40, "10%", 0, 'top')}
-        {DummyModalAnchor(isModalOpen, setIsModalOpen, "90%", "10%", 0, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'right')}
 
-        {/* {DummyModalAnchor(isModalOpen, setIsModalOpen, "50%", '850px', 0, 'bottom')} */}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'top')}
 
-        <PaginationTest />
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'bottom')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'bottom')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'bottom')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'bottom')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'bottom')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'bottom')} */}
 
-    </>
+            <PaginationTest />
+
+        </>
+    </GridLayout>
 }
 
 function DummyModal(isModalOpen, setIsModalOpen,
@@ -101,7 +143,7 @@ function DummyModal(isModalOpen, setIsModalOpen,
     </N.Modal>;
 }
 
-function DummyModalAnchor(isModalOpen, setIsModalOpen, left, top, offset, align) {
+function DummyModalAnchor(fixed: boolean, isModalOpen, setIsModalOpen, left, top, offset, align) {
     return <N.Modal
         isOpen={isModalOpen()}
         onClose={() => setIsModalOpen(false)}
@@ -111,12 +153,12 @@ function DummyModalAnchor(isModalOpen, setIsModalOpen, left, top, offset, align)
             element: (setRef) => {
                 return <button
                     ref={setRef}
-                    style={{
+                    style={fixed ? {
                         background: "red",
                         position: "fixed",
                         left: left,
                         top: top
-                    }}
+                    } : { background: "green", }}
                 >
                     Click me
                 </button>;

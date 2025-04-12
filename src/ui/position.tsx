@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
+import { createSignal, onMount, onCleanup, createEffect, Setter, Accessor } from "solid-js";
 
 import { type JSX } from 'solid-js';
 import { CssUI } from "./gen.ts";
@@ -238,13 +238,16 @@ export function PositionBox({ name, align, children, visible }: {
     }
 }
 
-export function DragBox() {
+export function DragBox({ anchorRef, setAnchorRef }: {
+    anchorRef: Accessor<HTMLButtonElement>
+    setAnchorRef: Setter<HTMLButtonElement>,
+}) {
     const [position, setPosition] = createSignal({ x: 0, y: 0 });
     const [dragging, setDragging] = createSignal(false);
     const [startPos, setStartPos] = createSignal({ x: 0, y: 0 });
 
     const updatePosition = () => {
-        const box = document.getElementById("box");
+        const box = anchorRef();
         if (box) {
             const rect = box.getBoundingClientRect();
             setPosition({
@@ -265,7 +268,7 @@ export function DragBox() {
             const deltaX = event.clientX - startPos().x;
             const deltaY = event.clientY - startPos().y;
 
-            const box = document.getElementById("box");
+            const box = anchorRef();
             if (box) {
                 setPosition({
                     x: position().x + deltaX,
@@ -295,7 +298,7 @@ export function DragBox() {
     .SolDragBox {
         position: fixed; 
         inset: 0px;
-        background-color: #FECACA; 
+        background-color: #ea83834e; 
         pointer-events: none; 
     }
 
@@ -307,7 +310,7 @@ export function DragBox() {
         width: 10rem; 
         height: 10rem; 
         color: #ffffff; 
-        background-color: #3B82F6; 
+        background-color: #f3f63b33; 
         cursor: move; 
         pointer-events: auto; 
     }
@@ -316,7 +319,7 @@ export function DragBox() {
     return (
         <div class={CssUI.SolDragBox}>
             <div
-                id="box"
+                ref={setAnchorRef}
                 style={{ position: "absolute", left: `${position().x}px`, top: `${position().y}px`, "z-index": 1000 }}
                 onMouseDown={onMouseDown}
             >

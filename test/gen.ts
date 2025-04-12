@@ -6,6 +6,7 @@ export * from "./page.nav.tsx";
 export * from "./page.adv.tsx";
 export * from "./storybook.tsx";
 export * from "./page.svg.tsx";
+export * from "./common.tsx";
 export * from "./NotFound.tsx";
 export * from "./page.ui.tsx";
 

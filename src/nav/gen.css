@@ -7,10 +7,16 @@ src/modal.tsx
 */
 
 .light {
+    --HeaderLink-col: #374151;
+    --HeaderLink-col-hover: red;
+    --HeaderLink-col-active: yellow;
     --ModalContent-bg: #4d84dc40;
 }
 
 .night {
+    --HeaderLink-col: #ffffff ;
+    --HeaderLink-col-hover: green ;
+    --HeaderLink-col-active: pink;
     --ModalContent-bg: #4d84dc40;
 }
 
@@ -132,17 +138,17 @@ src/modal.tsx
     display: block;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
-    color: var(--text-color, #374151);
     text-decoration: none;
     transition: color 0.2s;
+    color: var(--HeaderLink-col);
 }
 
 .HeaderLink:hover {
-    color: var(--link-hover-color, #4f46e5);
+    color: var(--HeaderLink-col-hover);
 }
 
 .HeaderLink:active {
-    color: var(--link-active-color, #4338ca);
+    color: var(--HeaderLink-col-active);
 }
 
 .HeaderNav {
@@ -250,6 +256,7 @@ src/modal.tsx
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     z-index: 50;
+    pointer-events: none;
 }
 
 .ModalOverlay.Show {

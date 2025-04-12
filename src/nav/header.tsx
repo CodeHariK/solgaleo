@@ -2,42 +2,40 @@ import { JSX } from "solid-js/jsx-runtime";
 import { CssNAV } from "./gen";
 
 /* CSS:
-// ...existing code...
-
 .HeaderLink {
     display: block;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
-    color: var(--text-color, #374151);
     text-decoration: none;
     transition: color 0.2s;
+    color: var : #374151 : #ffffff ;
 }
 
 .HeaderLink:hover {
-    color: var(--link-hover-color, #4f46e5);
+    color: var : red : green ;
 }
 
 .HeaderLink:active {
-    color: var(--link-active-color, #4338ca);
+    color: var : yellow : pink;
 }
 */
 
 export function HeaderLinks({ href, title, fn }: { href: string, title: string, fn?: (href: string) => void }) {
     const handleLinkClick = (event: MouseEvent) => {
-        event.preventDefault();
-        if (fn) fn(href);
+        if (fn) {
+            event.preventDefault();
+            fn(href)
+        };
     };
 
-    return <li>
-        <a
-            onClick={handleLinkClick}
-            href={href}
-            title={title}
-            class={CssNAV.HeaderLink}
-        >
-            {title}
-        </a>
-    </li>;
+    return <a
+        onClick={handleLinkClick}
+        href={href}
+        title={title}
+        class={CssNAV.HeaderLink}
+    >
+        {title}
+    </a>
 }
 
 /* CSS:

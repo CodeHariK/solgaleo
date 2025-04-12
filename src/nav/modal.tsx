@@ -1,7 +1,7 @@
 // import { createSignal, Setter } from "solid-js";
 // import { IconCross } from "../svg/svg";
 
-import { Setter, Show, createEffect, createSignal, onCleanup } from "solid-js";
+import { Accessor, Setter, Show, createEffect, createSignal, onCleanup } from "solid-js";
 import { Portal } from "solid-js/web";
 import { CssNAV } from "./gen";
 
@@ -22,6 +22,8 @@ import { type JSX } from 'solid-js';
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     z-index: 50;
+    
+    pointer-events: none;
 }
 
 .ModalOverlay.Show {
@@ -175,7 +177,7 @@ type ModalProps = {
         corner?: CornerPosition;
     },
     anchor?: {
-        element: (anchorRef: Setter<HTMLButtonElement>) => JSX.Element,
+        element: (anchorRef: Accessor<HTMLButtonElement>, setAnchorRef: Setter<HTMLButtonElement>) => JSX.Element,
         align?: AnchorAlign;
         offset?: number;
     };
@@ -188,6 +190,8 @@ export function Modal(props: ModalProps) {
 
     const [anchorRef, setAnchorRef] = createSignal<HTMLButtonElement>();
 
+    const [position, setPosition] = createSignal<JSX.CSSProperties>({});
+
     const animation = props.animation || 'scale';
 
     // Handle escape key
@@ -196,15 +200,80 @@ export function Modal(props: ModalProps) {
     };
 
     // Handle scroll lock
-    const lockScroll = () => {
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`;
-    };
+    // const lockScroll = () => {
+    //     document.body.style.overflow = 'hidden';
+    //     document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`;
+    // };
 
     const unlockScroll = () => {
         document.body.style.overflow = '';
         document.body.style.paddingRight = '';
     };
+
+    const handleViewportChange = () => {
+        setPosition(adjustPosition(getPosition()));
+    };
+
+    createEffect(() => {
+        if (props.isOpen) {
+            setPosition(adjustPosition(getPosition()));
+            document.addEventListener("keydown", handleEscape);
+            window.addEventListener("resize", handleViewportChange);
+            window.addEventListener("scroll", handleViewportChange);
+            // Delay to trigger animation
+            setTimeout(() => setIsVisible(true), 10);
+        } else {
+            setIsVisible(false);
+            unlockScroll();
+            document.removeEventListener("keydown", handleEscape);
+            window.removeEventListener("resize", handleViewportChange);
+            window.removeEventListener("scroll", handleViewportChange);
+        }
+
+
+        const anchor = anchorRef();
+        // if (!anchor || !props.isOpen) return;
+
+        console.log(anchor)
+
+        // Watch for size changes
+        const resizeObserver = new ResizeObserver(() => {
+            handleViewportChange();
+        });
+
+        // Watch for position/attribute changes
+        const mutationObserver = new MutationObserver((mutations) => {
+            const hasPositionChange = mutations.some(mutation =>
+                mutation.type === 'attributes' &&
+                (mutation.attributeName === 'style' ||
+                    mutation.attributeName === 'class')
+            );
+            console.log("Mutation", anchor.style.left, anchor.style.top, hasPositionChange)
+            if (hasPositionChange) {
+                handleViewportChange();
+            }
+        });
+
+        // Start observing
+        resizeObserver.observe(anchor);
+        mutationObserver.observe(anchor, {
+            attributes: true,
+            attributeFilter: ['style', 'class']
+        });
+
+        // Cleanup
+        onCleanup(() => {
+            resizeObserver.disconnect();
+            mutationObserver.disconnect();
+        });
+    });
+
+    onCleanup(() => {
+        unlockScroll();
+        document.removeEventListener("keydown", handleEscape);
+        window.removeEventListener("resize", handleViewportChange);
+        window.removeEventListener("scroll", handleViewportChange);
+    });
 
     const getAnchorPosition = () => {
         if (!modalRef || !anchorRef()) return {};
@@ -221,11 +290,11 @@ export function Modal(props: ModalProps) {
         // Check if anchor is outside viewport
         if (anchorRect.left > windowWidth || anchorRect.right < 0 ||
             anchorRect.top > windowHeight || anchorRect.bottom < 0) {
-            styles.display = "none"
+            setIsVisible(false)
             return styles;
         }
 
-        const margin = 10;
+        const margin = 0;
 
         switch (anchorAlign) {
             case 'top':
@@ -239,21 +308,28 @@ export function Modal(props: ModalProps) {
                     styles.right = `${right}px`;
                 }
 
-                styles.top = `${anchorRect.top - modalRect.height}px`;
-                console.log("height", modalRect.height)
-                // styles.top = `${anchorRect.top - modalRect.height - offset}px`;
+                {
+                    let top = anchorRect.top - modalRect.height - offset
+                    if (top < 0) top = anchorRect.bottom
+                    styles.top = `${top}px`;
+                }
                 break;
 
             case 'bottom':
-                if (anchorRect.left + (anchorRect.width / 2) + (modalRect.width / 2) > windowWidth) {
-                    styles.right = `${windowWidth - anchorRect.right}px`;
+                if (anchorRect.left < windowWidth / 2) {
+                    let left = anchorRect.left - (modalRect.width / 2) + (anchorRect.width / 2)
+                    if (left < 0) left = margin
+                    styles.left = `${left}px`;
                 } else {
-                    styles.left = `${anchorRect.left + (anchorRect.width / 2) - (modalRect.width / 2)}px`;
+                    let right = windowWidth - (anchorRect.right + (modalRect.width / 2) - (anchorRect.width / 2))
+                    if (right < 0) right = margin
+                    styles.right = `${right}px`;
                 }
-                if (anchorRect.bottom + modalRect.height + offset > windowHeight) {
-                    styles.bottom = `${windowHeight - anchorRect.top}px`;
-                } else {
-                    styles.top = `${anchorRect.bottom + offset}px`;
+
+                {
+                    let top = anchorRect.bottom + offset
+                    if (top + modalRect.height > windowHeight) top = anchorRect.top - modalRect.height - offset
+                    styles.top = `${top}px`;
                 }
                 break;
 
@@ -268,10 +344,14 @@ export function Modal(props: ModalProps) {
                     styles.right = `${right}px`;
                 }
 
-                if (anchorRect.top + (anchorRect.height / 2) + (modalRect.height / 2) > windowHeight) {
-                    styles.bottom = `${windowHeight - anchorRect.bottom}px`;
-                } else {
-                    styles.top = `${anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)}px`;
+                {
+                    let top = anchorRect.top - (modalRect.height / 2) + (anchorRect.height / 2) - offset
+                    if (top < 0) top = margin
+                    if (top + modalRect.height > windowHeight) {
+                        styles.bottom = `${margin}px`;
+                    } else {
+                        styles.top = `${top}px`;
+                    }
                 }
 
                 break;
@@ -287,23 +367,25 @@ export function Modal(props: ModalProps) {
                     styles.left = `${left}px`;
                 }
 
-                if (anchorRect.top + (anchorRect.height / 2) + (modalRect.height / 2) > windowHeight) {
-                    styles.bottom = `${windowHeight - anchorRect.bottom}px`;
-                } else {
-                    styles.top = `${anchorRect.top + (anchorRect.height / 2) - (modalRect.height / 2)}px`;
+                {
+                    let top = anchorRect.top - modalRect.height / 2 - offset + (anchorRect.height / 2)
+                    if (top < 0) top = margin
+                    if (top + modalRect.height > windowHeight) {
+                        styles.bottom = `${margin}px`;
+                    } else {
+                        styles.top = `${top}px`;
+                    }
                 }
 
                 break;
         }
-
-        console.log(modalRect.width)
 
         return styles;
     };
 
     // Check and adjust position to stay within bounds
     const adjustPosition = (styles: JSX.CSSProperties) => {
-        if (!modalRef || !props || props.anchor) return styles;
+        if (!modalRef || !props) return styles;
 
         const modalRect = modalRef.getBoundingClientRect();
         const windowWidth = window.innerWidth;
@@ -349,36 +431,7 @@ export function Modal(props: ModalProps) {
         return adjustedStyles;
     };
 
-    const [, setResize] = createSignal({});  // Force re-render on resize/scroll
-
-    const handleViewportChange = () => {
-        setResize({}); // Trigger re-render
-    };
-
-    createEffect(() => {
-        if (props.isOpen) {
-            document.addEventListener("keydown", handleEscape);
-            window.addEventListener("resize", handleViewportChange);
-            window.addEventListener("scroll", handleViewportChange);
-            // Delay to trigger animation
-            setTimeout(() => setIsVisible(true), 10);
-        } else {
-            setIsVisible(false);
-            unlockScroll();
-            document.removeEventListener("keydown", handleEscape);
-            window.removeEventListener("resize", handleViewportChange);
-            window.removeEventListener("scroll", handleViewportChange);
-        }
-    });
-
-    onCleanup(() => {
-        unlockScroll();
-        document.removeEventListener("keydown", handleEscape);
-        window.removeEventListener("resize", handleViewportChange);
-        window.removeEventListener("scroll", handleViewportChange);
-    });
-
-    const getPositionStyles = () => {
+    const getPosition = () => {
 
         if (!props) return {};
         if (props.anchor) return getAnchorPosition();
@@ -421,14 +474,12 @@ export function Modal(props: ModalProps) {
                 break;
         }
 
-        console.log(styles)
-
         return styles;
     };
 
     return (
         <>
-            {props?.anchor && props.anchor.element(setAnchorRef)}
+            {props?.anchor && props.anchor.element(anchorRef, setAnchorRef)}
 
             <Show when={props.isOpen}>
                 <Portal>
@@ -445,7 +496,7 @@ export function Modal(props: ModalProps) {
                             ${props ? CssNAV.ModalPositioned : ''}
                             ${CssNAV[`Modal${animation.charAt(0).toUpperCase() + animation.slice(1)}`]}
                             `}
-                            style={adjustPosition(getPositionStyles())}
+                            style={position()}
                         >
                             <button
                                 class={CssNAV.ModalClose}

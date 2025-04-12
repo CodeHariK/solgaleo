@@ -7,7 +7,7 @@ import { CssUI } from "./gen.ts";
     width: 100%;
     height: 100vh;
     display: grid;
-    gap: 1rem;
+    gap: .1rem;
 }
 // Mode 1: Fixed header/footer
 .GridLayoutFixed {
@@ -15,49 +15,66 @@ import { CssUI } from "./gen.ts";
         "header  header  header"
         "left   middle  right"
         "footer footer  footer";
-    grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
+    grid-template-columns: auto 1fr auto;
     grid-template-rows: auto 1fr auto;
+}
+
+// When sides are missing, middle expands
+.GridLayoutFixed:not(:has(nav)) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "header"
+        "middle"
+        "footer";
+}
+
+.GridLayoutFixed:has(nav):not(:has(aside)) {
+    grid-template-columns: minmax(200px, 15%) 1fr;
+    grid-template-areas:
+        "header header"
+        "left   middle"
+        "footer footer";
 }
 
 // Mode 2: Scrollable header/footer
 .GridLayoutScroll {
-    grid-template-areas:
-        "left   middle  right";
-    grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
-    grid-template-rows: 1fr;
-    overflow-y: auto;
+    grid-template-areas: "left middle right";
+    grid-template-columns: auto 1fr auto;
+}
+
+.GridLayoutScroll:not(:has(nav)) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "middle";
+}
+
+.GridLayoutScroll:has(nav):not(:has(aside)) {
+    grid-template-columns: minmax(200px, 15%) 1fr;
+    grid-template-areas: "left middle";
 }
 
 .GridHeader {
     grid-area: header;
-    background: var(--header-bg, #f3f4f6);
-    padding: 1rem;
 }
 
 .GridFooter {
     grid-area: footer;
-    background: var(--footer-bg, #f3f4f6);
-    padding: 1rem;
 }
 
 .GridLeft {
     grid-area: left;
     overflow-y: auto;
-    background: var(--left-bg, #ffffff);
     border-right: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridRight {
     grid-area: right;
     overflow-y: auto;
-    background: var(--right-bg, #ffffff);
     border-left: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridMiddle {
     grid-area: middle;
     overflow-y: auto;
-    background: var(--middle-bg, #ffffff);
 }
 
 // For the scrollable mode, wrap header/footer inside middle
@@ -78,10 +95,21 @@ import { CssUI } from "./gen.ts";
     grid-template-areas:
         "header header header"
         "left  middle right";
-    grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
-    grid-template-rows: auto 1fr;
-    overflow-y: auto;
-    max-height: 100vh;
+    grid-template-columns: auto 1fr auto;
+}
+
+.GridLayoutFlow:not(:has(nav)) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "header"
+        "middle";
+}
+
+.GridLayoutFlow:has(nav):not(:has(aside)) {
+    grid-template-columns: minmax(200px, 15%) 1fr;
+    grid-template-areas:
+        "header header"
+        "left  middle";
 }
 
 // Keep side panels in position but allow content to flow
@@ -123,55 +151,55 @@ type GridLayoutProps = {
     footer?: JSX.Element;
     left?: JSX.Element;
     right?: JSX.Element;
-    middle?: JSX.Element;
+    children?: JSX.Element;
     mode?: 'fixed' | 'scroll' | 'flow';
 };
 
 export function GridLayout({
-    header = 'Header',
-    footer = 'Footer',
-    left = <p>Hello</p>,
-    right = <List />,
-    middle = <List />,
+    header,
+    footer,
+    left,
+    right,
+    children,
     mode = 'fixed'
 }: GridLayoutProps) {
 
     if (mode == 'fixed') {
         return (
             <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFixed}`}>
-                <header class={CssUI.GridHeader}>{header}</header>
-                <nav class={CssUI.GridLeft}>{left}</nav>
-                <section class={CssUI.GridMiddle}>{middle}</section>
-                <aside class={CssUI.GridRight}>{right}</aside>
-                <footer class={CssUI.GridFooter}>{footer}</footer>
+                {header && <header class={CssUI.GridHeader}>{header}</header>}
+                {left && <nav class={CssUI.GridLeft}>{left}</nav>}
+                {children && <section class={CssUI.GridMiddle}>{children}</section>}
+                {right && <aside class={CssUI.GridRight}>{right}</aside>}
+                {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
             </main>
         )
     } else if (mode == 'scroll') {
         return (
             <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutScroll}`}>
-                <nav class={CssUI.GridLeft}>{left}</nav>
+                {left && <nav class={CssUI.GridLeft}>{left}</nav>}
                 <section class={CssUI.GridMiddle}>
                     <div class={CssUI.GridScrollContainer}>
-                        <header class={CssUI.GridHeader}>{header}</header>
-                        <div class={CssUI.GridContent}>{middle}</div>
-                        <footer class={CssUI.GridFooter}>{footer}</footer>
+                        {header && <header class={CssUI.GridHeader}>{header}</header>}
+                        {children && <div class={CssUI.GridContent}>{children}</div>}
+                        {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
                     </div>
                 </section>
-                <aside class={CssUI.GridRight}>{right}</aside>
+                {right && <aside class={CssUI.GridRight}>{right}</aside>}
             </main>
         )
     } else {
         return (
             <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFlow}`}>
-                <header class={CssUI.GridHeader}>{header}</header>
-                <nav class={CssUI.GridLeft}>{left}</nav>
+                {header && <header class={CssUI.GridHeader}>{header}</header>}
+                {left && <nav class={CssUI.GridLeft}>{left}</nav>}
                 <section class={CssUI.GridMiddle}>
                     <div class={CssUI.GridScrollContainer}>
-                        <div class={CssUI.GridContent}>{middle}</div>
+                        {children && <div class={CssUI.GridContent}>{children}</div>}
                     </div>
                 </section>
-                <aside class={CssUI.GridRight}>{right}</aside>
-                <footer class={CssUI.GridFooter}>{footer}</footer>
+                {right && <aside class={CssUI.GridRight}>{right}</aside>}
+                {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
             </main>
         )
     }
@@ -225,7 +253,6 @@ export function GridLayout({
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
 }
 */
-
 
 export function List() {
     return (

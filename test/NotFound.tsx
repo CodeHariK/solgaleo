@@ -1,5 +1,4 @@
 
-import { Footer } from '../src/nav/footer';
 import { Header } from '../src/nav/header';
 
 import { ThemeToggle } from '../src/ui/theme_toggle';
@@ -11,7 +10,7 @@ export function NotFound() {
    return (
       <SpaceLayout title='Page Not Found'
          header={<Header rightChildren={<ThemeToggle />} />}
-         footer={<Footer />}>
+         footer={<div>Footer</div>}>
 
          <section>
             <div class="mx-auto max-w-screen-sm text-center">

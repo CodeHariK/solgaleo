@@ -3,6 +3,16 @@ import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/ad
 export function AdvTest() {
     return <>
 
+        <SuperTable table={{
+            heading: [
+                <p>Hello</p>, <p>Hi</p>,
+            ],
+            rows: [
+                [<p>1</p>, <p>2</p>,],
+                [<p>A</p>, <p>B</p>,]
+            ]
+        }} />
+
         <Treeview
             direction="vertical"
             defaultExpanded={true}
@@ -77,17 +87,6 @@ export function AdvTest() {
                 },
             ]
         } />
-
-        <SuperTable table={{
-            heading: [
-                <p>Hello</p>, <p>Hi</p>,
-            ],
-            rows: [
-                [<p>1</p>, <p>2</p>,],
-                [<p>A</p>, <p>B</p>,]
-            ]
-        }} />
-
     </>
 }
 

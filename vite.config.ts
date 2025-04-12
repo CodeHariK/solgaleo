@@ -30,7 +30,7 @@ export default defineConfig({
         svg: path.resolve(__dirname, "src/svg/gen.ts"),
         ui: path.resolve(__dirname, "src/ui/gen.ts"),
       },
-      // fileName: (format, name) => `solgaleo.${name}.${format}.js`,
+      fileName: (format, name) => `solgaleo.${name}.${format}.js`,
     },
     rollupOptions: {
       external: ["solid-js"],
@@ -39,6 +39,6 @@ export default defineConfig({
       },
     },
     // cssMinify: true,
-    cssCodeSplit: true,
+    // cssCodeSplit: true,
   },
 });

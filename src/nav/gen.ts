@@ -42,6 +42,9 @@ export const CssNAV = {
     ModalSlide: "ModalSlide",
     ModalScale: "ModalScale",
 
+    varHeaderLinkCol: "--HeaderLink-col",
+    varHeaderLinkColHover: "--HeaderLink-col-hover",
+    varHeaderLinkColActive: "--HeaderLink-col-active",
     varModalContentBg: "--ModalContent-bg"
 } as const;
 

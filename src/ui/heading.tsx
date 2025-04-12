@@ -55,6 +55,17 @@ li {
     line-height: 1.25rem;
 }
 
+a {
+    color: var : #ffe4c4 : #ffe4c4;
+
+    :hover {
+        color: var : #ffac90 : #ffac90;
+    }
+    :active {
+        color: var : #cf90ff : #cf90ff;
+    }
+}
+
 @media (min-width: 768px) {
 }
 
