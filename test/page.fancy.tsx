@@ -1,7 +1,11 @@
 import { FlickerText, Marquee, RainbowImage, RainbowText, Terminal, TypeWriter } from "../src/fancy/gen";
+import { GridLayout } from "../src/ui/gen";
+import { TestHeader } from "./common";
 
 export function FancyTest() {
-    return <>
+    return <GridLayout
+        header={<TestHeader />}
+    >
         <FlickerText text="Flicker text" />
 
         {/* <GlitterCard /> */}
@@ -27,5 +31,5 @@ export function FancyTest() {
 
         <TypeWriter />
 
-    </>
+    </GridLayout>
 }

@@ -20,7 +20,7 @@ import { CssNAV } from "./gen";
 }
 */
 
-export function HeaderLinks({ href, title, fn }: { href: string, title: string, fn?: (href: string) => void }) {
+export function HeaderLink({ href, title, fn }: { href: string, title: string, fn?: (href: string) => void }) {
     const handleLinkClick = (event: MouseEvent) => {
         if (fn) {
             event.preventDefault();
@@ -40,20 +40,18 @@ export function HeaderLinks({ href, title, fn }: { href: string, title: string, 
 
 /* CSS:
 .HeaderNav {
-    max-width: 1280px;
     margin: 0 auto;
     padding: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-smooth: antialiased;
 }
 
-@media (min-width: 1536px) {
-    .HeaderNav {
-        padding: 0;
-    }
-}
+// @media (min-width: 1536px) {
+//     .HeaderNav {
+//         padding: 0;
+//     }
+// }
 
 .HeaderLeft {
     display: flex;
@@ -87,10 +85,9 @@ export function HeaderLinks({ href, title, fn }: { href: string, title: string, 
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
-    padding: 0.75rem 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 800px) {
     .HeaderLinks {
         display: flex;
     }
@@ -114,30 +111,28 @@ export function Header({ iconSrc, title, links, rightChildren }: {
     links?: JSX.Element | JSX.Element[],
     rightChildren?: JSX.Element | JSX.Element[]
 }) {
-    return <header>
-        <nav class={CssNAV.HeaderNav}>
-            <div class={CssNAV.HeaderLeft}>
-                <a href="/" class={CssNAV.HeaderLogo}>
-                    <div class={CssNAV.HeaderLogoContent}>
-                        {iconSrc && (
-                            <div class={CssNAV.HeaderIcon}>
-                                <img src={iconSrc} />
-                            </div>
-                        )}
-                        {title}
-                    </div>
-                </a>
+    return <nav class={CssNAV.HeaderNav}>
+        <div class={CssNAV.HeaderLeft}>
+            <a href="/" class={CssNAV.HeaderLogo}>
+                <div class={CssNAV.HeaderLogoContent}>
+                    {iconSrc && (
+                        <div class={CssNAV.HeaderIcon}>
+                            <img src={iconSrc} />
+                        </div>
+                    )}
+                    {title}
+                </div>
+            </a>
 
-                <ul class={CssNAV.HeaderLinks}>
-                    {links}
-                </ul>
-            </div>
+            <ul class={CssNAV.HeaderLinks}>
+                {links}
+            </ul>
+        </div>
 
-            <div class={CssNAV.HeaderRight}>
-                {rightChildren}
-            </div>
-        </nav>
-    </header>
+        <div class={CssNAV.HeaderRight}>
+            {rightChildren}
+        </div>
+    </nav>
 }
 
 /* CSS:

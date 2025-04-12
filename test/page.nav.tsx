@@ -12,58 +12,57 @@ export function NavTest() {
     return <GridLayout
         header={<TestHeader />}
     >
-        <>
-            <N.Breadcrumbs items={[
-                {
-                    element: <IconHome />,
-                    link: "/",
-                    fn: () => console.log("Hello")
-                },
-                {
-                    element: <span>Products</span>,
-                    link: "/products"
-                },
-                {
-                    element: <span>Category</span>
-                }
-            ]} />
+        <N.Breadcrumbs items={[
+            {
+                element: <IconHome />,
+                link: "/",
+                fn: () => console.log("Hello")
+            },
+            {
+                element: <span>Products</span>,
+                link: "/products"
+            },
+            {
+                element: <span>Category</span>
+            }
+        ]} />
 
-            <N.Header
-                iconSrc="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png"
-                title={<p>Solgaleo</p>}
-                links={[
-                    <N.HeaderLinks href="/products" title="Products" />,
-                    <N.HeaderLinks href="/account" title="Accounts" />,
-                    <N.HeaderLinks href="/docs" title="Docs" />
-                ]}
-                rightChildren={<ThemeToggle />}
-            />
+        <N.Header
+            iconSrc="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png"
+            title={<p>Solgaleo</p>}
+            links={[
+                <N.HeaderLink href="/products" title="Products" />,
+                <N.HeaderLink href="/account" title="Accounts" />,
+                <N.HeaderLink href="/docs" title="Docs" />
+            ]}
+            rightChildren={<ThemeToggle />}
+        />
 
-            <N.TransitionWidget
-                showFirstWidget={toggle()}
-                one={
-                    <button class={CssUI.OutlinedButton} onclick={() => setToggle(prev => !prev)}>
-                        One
-                    </button>
-                }
-                two={
-                    <button class={CssUI.MaterialButton} onclick={() => setToggle(prev => !prev)}>
-                        Two
-                    </button>
-                }
-            />
+        <N.TransitionWidget
+            showFirstWidget={toggle()}
+            one={
+                <button class={CssUI.OutlinedButton} onclick={() => setToggle(prev => !prev)}>
+                    One
+                </button>
+            }
+            two={
+                <button class={CssUI.MaterialButton} onclick={() => setToggle(prev => !prev)}>
+                    Two
+                </button>
+            }
+        />
 
-            {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
+        {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
 
-            <button
-                class={CssUI.MaterialButton}
-                onClick={() => setIsModalOpen(true)}
-            >
-                Open Modal
-            </button>
+        <button
+            class={CssUI.MaterialButton}
+            onClick={() => setIsModalOpen(true)}
+        >
+            Open Modal
+        </button>
 
 
-            {/* <N.Modal
+        {/* <N.Modal
             isOpen={isModalOpen()}
             onClose={() => setIsModalOpen(false)}
             anchor={{
@@ -78,17 +77,17 @@ export function NavTest() {
         </N.Modal> */}
 
 
-            {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
         {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
         {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
         {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')} */}
 
-            {/* {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
+        {/* {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')} */}
 
-            {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
+        {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'left')}
@@ -120,9 +119,8 @@ export function NavTest() {
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'bottom')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'bottom')} */}
 
-            <PaginationTest />
+        <PaginationTest />
 
-        </>
     </GridLayout>
 }
 

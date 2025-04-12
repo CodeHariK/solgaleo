@@ -3,40 +3,39 @@ import { useNavigate, useLocation } from '@solidjs/router';
 import { CssNAV } from './gen';
 
 /* CSS:
-.tabs-container {
+.TabsContainer {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 }
 
-.tabs-levels {
+.TabsLevels {
     display: flex;
     flex-direction: column;
 }
 
-.tab-level {
+.TabLevel {
     display: flex;
     flex-direction: row;
-    // gap: 0.75rem;
+    align-self: start;
 }
 
-.tab-button {
+.TabButton {
     padding: 0.2rem .5rem;
     border: none;
     transition: all 0.2s ease;
-    background: var(--primary-color, #565656);
+    background: var(--primary-color, #6a5dad);
 }
     
-.tab-button.active {
-    background: var(--primary-color, #972579);
+.TabButton.active {
+    background: var(--primary-color, #279725);
     color: white;
 }
 
-.tab-content {
+.TabContent {
     flex: 1;
     overflow: auto;
-    background: #f94d4d;
 }
 
 */
@@ -45,6 +44,13 @@ type RoutedTabsProps = {
     tabs: Tab[];
     defaultTab?: string;
     id: string; // Add unique identifier
+    styles?: {
+        container?: JSX.CSSProperties;    // Additional styles for TabsContainer
+        levels?: JSX.CSSProperties;       // Additional styles for TabsLevels
+        level?: JSX.CSSProperties;        // Additional styles for each TabLevel
+        button?: JSX.CSSProperties;       // Additional styles for TabButton
+        content?: JSX.CSSProperties;      // Additional styles for TabContent
+    };
 };
 
 export function RoutedTabs(props: RoutedTabsProps) {
@@ -103,6 +109,7 @@ export function RoutedTabs(props: RoutedTabsProps) {
                     navigate(`${route}?${params.toString()}`);
                 }
             }
+            styles={props.styles}
         />
     );
 }
@@ -118,6 +125,13 @@ type TabsProps = {
     tabs: Tab[];
     defaultTab?: string;
     onTabChange?: (tabId: string) => void;
+    styles?: {
+        container?: JSX.CSSProperties;    // Additional styles for TabsContainer
+        levels?: JSX.CSSProperties;       // Additional styles for TabsLevels
+        level?: JSX.CSSProperties;        // Additional styles for each TabLevel
+        button?: JSX.CSSProperties;       // Additional styles for TabButton
+        content?: JSX.CSSProperties;      // Additional styles for TabContent
+    };
 };
 
 function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
@@ -194,15 +208,16 @@ export function Tabs(props: TabsProps) {
     });
 
     return (
-        <div class={CssNAV.TabsContainer}>
-            <div class={CssNAV.TabsLevels}>
+        <div class={CssNAV.TabsContainer} style={props.styles?.container}>
+            <div class={CssNAV.TabsLevels} style={props.styles?.levels}>
                 <For each={visibleTabs()}>
                     {(levelTabs, level) => (
-                        <div class={CssNAV.TabLevel} style={{ "padding-left": `${level() * 0}rem` }}>
+                        <div class={CssNAV.TabLevel} style={{ ...props.styles?.level, "padding-left": `${level() * 1}rem` }}>
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button
                                         class={`${CssNAV.TabButton} ${activePath()[level()] === tab.id ? 'active' : ''}`}
+                                        style={props.styles?.button}
                                         onClick={() => handleTabClick(tab, level())}
                                     >
                                         {tab.label}
@@ -214,11 +229,9 @@ export function Tabs(props: TabsProps) {
                 </For>
             </div>
 
-            <div class={CssNAV.TabContent}>
+            <div class={CssNAV.TabContent} style={props.styles?.content}>
                 {tabContent()}
             </div>
-
-            <br />
         </div>
     );
 }

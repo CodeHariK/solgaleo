@@ -1,10 +1,13 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input } from '../src/ui/gen.ts';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout } from '../src/ui/gen.ts';
 import { IconCart, IconCross, IconDown, IconGoogle } from '../src/svg/gen.ts';
+import { TestHeader } from './common.tsx';
 
 export function InputTest() {
-    return <>
+    return <GridLayout
+        header={<TestHeader />}
+    >
 
         <PositionBox
             name={<>{<IconCart />}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{<IconDown />}</>}>
@@ -119,7 +122,7 @@ export function InputTest() {
         <h6>h6: The electron is a subatomic particle with a negative one elementary electric charge.</h6>
         <p>p: The electron is a subatomic particle with a negative one elementary electric charge.</p>
 
-    </>
+    </GridLayout>
 }
 
 export const validationSchema = yup.object().shape({

@@ -1,7 +1,11 @@
 import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
+import { GridLayout } from "../src/ui/gen";
+import { TestHeader } from "./common";
 
 export function AdvTest() {
-    return <>
+    return <GridLayout
+        header={<TestHeader />}
+    >
 
         <SuperTable table={{
             heading: [
@@ -87,7 +91,7 @@ export function AdvTest() {
                 },
             ]
         } />
-    </>
+    </GridLayout>
 }
 
 let sampleTreeData = [

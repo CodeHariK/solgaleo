@@ -139,11 +139,6 @@ import { Component } from "solid-js";
 }
 */
 
-function getRandomColor() {
-    const colors = ["#9573d9", "#ff5733", "#33ff57", "#5733ff", "#ff33a1"];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
 type BlogItem = {
     title: string;
     tags: string[];
@@ -152,6 +147,7 @@ type BlogItem = {
 };
 
 import { createSignal, createEffect, onCleanup } from "solid-js";
+import { RandomColor } from "../utils/color";
 
 export const BlogList: Component<{ blogs: BlogItem[] }> = (props) => {
     const [activeBlog, setActiveBlog] = createSignal(""); // Track the currently visible blog
@@ -190,7 +186,7 @@ export const BlogList: Component<{ blogs: BlogItem[] }> = (props) => {
                 {props.blogs.map((blog) => (
                     <div id={blog.title.replace(" ", "_")} class="blog-item">
                         <h2 class="blog-title" style={{
-                            "--blog-underline-color": getRandomColor()
+                            "--blog-underline-color": RandomColor()
                         }}>{blog.title}</h2>
                         <div class="blog-meta">
                             {blog.tags.map((tag) => (

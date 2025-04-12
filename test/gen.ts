@@ -5,6 +5,8 @@ export * from "./modal1.tsx";
 export * from "./page.nav.tsx";
 export * from "./page.adv.tsx";
 export * from "./storybook.tsx";
+export * from "./page.grid.tsx";
+export * from "./page.tabs.tsx";
 export * from "./page.svg.tsx";
 export * from "./common.tsx";
 export * from "./NotFound.tsx";
@@ -15,6 +17,9 @@ export const CssTEST = {
     IconGrid: "IconGrid",
     IconItem: "IconItem",
     IconLabel: "IconLabel",
+    ListContainer: "ListContainer",
+    List: "List",
+    ListItem: "ListItem",
     Stepper: "stepper",
     Box: "box",
     Svg: "svg",

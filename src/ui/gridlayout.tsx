@@ -9,18 +9,21 @@ import { CssUI } from "./gen.ts";
     display: grid;
     gap: .1rem;
 }
-// Mode 1: Fixed header/footer
+
+//   ******    Mode 1: Fixed header/footer   ******    
+
+// Base layout with all panels
 .GridLayoutFixed {
     grid-template-areas:
         "header  header  header"
         "left   middle  right"
         "footer footer  footer";
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
     grid-template-rows: auto 1fr auto;
 }
 
-// When sides are missing, middle expands
-.GridLayoutFixed:not(:has(nav)) {
+// When both side panels are missing
+.GridLayoutFixed:not(:has(> .GridLeft)):not(:has(> .GridRight)) {
     grid-template-columns: 1fr;
     grid-template-areas:
         "header"
@@ -28,7 +31,17 @@ import { CssUI } from "./gen.ts";
         "footer";
 }
 
-.GridLayoutFixed:has(nav):not(:has(aside)) {
+// When only left panel is missing
+.GridLayoutFixed:not(:has(> .GridLeft)):has(> .GridRight) {
+    grid-template-columns: 1fr minmax(200px, 15%);
+    grid-template-areas:
+        "header  header"
+        "middle  right"
+        "footer  footer";
+}
+
+// When only right panel is missing
+.GridLayoutFixed:has(> .GridLeft):not(:has(> .GridRight)) {
     grid-template-columns: minmax(200px, 15%) 1fr;
     grid-template-areas:
         "header header"
@@ -36,21 +49,28 @@ import { CssUI } from "./gen.ts";
         "footer footer";
 }
 
-// Mode 2: Scrollable header/footer
+//   ******    Mode 2: Scrollable header/footer   ******    
+
 .GridLayoutScroll {
     grid-template-areas: "left middle right";
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
 }
 
-.GridLayoutScroll:not(:has(nav)) {
+.GridLayoutScroll:not(:has(> .GridLeft)):not(:has(> .GridRight)) {
     grid-template-columns: 1fr;
     grid-template-areas: "middle";
 }
 
-.GridLayoutScroll:has(nav):not(:has(aside)) {
+.GridLayoutScroll:not(:has(> .GridLeft)):has(> .GridRight) {
+    grid-template-columns: 1fr minmax(200px, 15%);
+    grid-template-areas: "middle right";
+}
+
+.GridLayoutScroll:has(> .GridLeft):not(:has(> .GridRight)) {
     grid-template-columns: minmax(200px, 15%) 1fr;
     grid-template-areas: "left middle";
 }
+
 
 .GridHeader {
     grid-area: header;
@@ -90,22 +110,30 @@ import { CssUI } from "./gen.ts";
     padding: 1rem;
 }
 
-// Mode 3: Everything flows together with side panels
+//   ******    Mode 3: Everything flows together with side panels   ******    
+
 .GridLayoutFlow {
     grid-template-areas:
         "header header header"
         "left  middle right";
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
 }
 
-.GridLayoutFlow:not(:has(nav)) {
+.GridLayoutFlow:not(:has(> .GridLeft)):not(:has(> .GridRight)) {
     grid-template-columns: 1fr;
     grid-template-areas:
         "header"
         "middle";
 }
 
-.GridLayoutFlow:has(nav):not(:has(aside)) {
+.GridLayoutFlow:not(:has(> .GridLeft)):has(> .GridRight) {
+    grid-template-columns: 1fr minmax(200px, 15%);
+    grid-template-areas:
+        "header header"
+        "middle right";
+}
+
+.GridLayoutFlow:has(> .GridLeft):not(:has(> .GridRight)) {
     grid-template-columns: minmax(200px, 15%) 1fr;
     grid-template-areas:
         "header header"
@@ -203,74 +231,4 @@ export function GridLayout({
             </main>
         )
     }
-}
-
-/*CSS:
-
-.ListContainer {
-    padding: 1rem;
-}
-
-.List {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.ListItem {
-    min-height: 200px;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    color: white;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    transition: transform 0.2s ease-in-out;
-}
-
-.ListItem:hover {
-    transform: translateY(-2px);
-}
-
-.Red {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-}
-
-.Orange {
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-}
-
-.Blue {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-}
-
-.Green {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-}
-*/
-
-export function List() {
-    return (
-        <div class={CssUI.ListContainer}>
-            <ul class={CssUI.List}>
-                <li class={`${CssUI.ListItem} ${CssUI.Red}`}>
-                    Panel Item 1
-                </li>
-                <li class={`${CssUI.ListItem} ${CssUI.Orange}`}>
-                    Panel Item 2
-                </li>
-                <li class={`${CssUI.ListItem} ${CssUI.Blue}`}>
-                    Panel Item 3
-                </li>
-                <li class={`${CssUI.ListItem} ${CssUI.Green}`}>
-                    Panel Item 4
-                </li>
-            </ul>
-        </div>
-    );
 }

@@ -1,5 +1,6 @@
 import * as svg from '../src/svg/gen'
-import { CssTEST } from './gen.ts'
+import { GridLayout } from '../src/ui/gridlayout.tsx';
+import { CssTEST, TestHeader } from './gen.ts'
 
 /* CSS:
 .IconGrid {
@@ -65,7 +66,9 @@ export function SvgTest() {
         { component: svg.IconCopy, name: 'Copy' },
     ];
 
-    return (
+    return <GridLayout
+        header={<TestHeader />}
+    >
         <div class={CssTEST.IconGrid}>
             {icons.map(({ component: Icon, name }) => (
                 <div class={CssTEST.IconItem}>
@@ -74,5 +77,5 @@ export function SvgTest() {
                 </div>
             ))}
         </div>
-    );
+    </GridLayout>
 }
