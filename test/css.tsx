@@ -72,8 +72,6 @@
         0 0 30px var(--neon-pink);
 }
 
-
-
 @keyframes flicker {
 
     0%,
@@ -85,9 +83,7 @@
     }
 }
 
-
-
-p { padding-left: 4rem; color: var:; background: red; }
+p { font-size: 1rem; color: var:; background: inherit; }
 
 h2 {
     line-height: 1.5rem;

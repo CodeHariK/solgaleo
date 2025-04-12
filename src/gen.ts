@@ -12,6 +12,14 @@ export const CssSRC = {
     ItemsCenter: "items-center",
     Gap2: "gap-2",
 
+    varPrimary: "--primary",
+    varPrimaryContainer: "--primary-container",
+    varSecondary: "--secondary",
+    varSecondaryContainer: "--secondary-container",
+    varSurface: "--surface",
+    varSurfaceContainer: "--surface-container",
+    varError: "--error",
+    varErrorContainer: "--error-container",
     varBodyBg: "--body-bg",
     varBodyCol: "--body-col"
 } as const;

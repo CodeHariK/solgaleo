@@ -1,5 +1,17 @@
 /*CSS:
 
+--primary : var : #6750A4 : #D0BCFF ;
+--primary-container : var : #EADDFF : #4F378B ;
+
+--secondary : var #625B71 : #CCC2DC ;
+--secondary-container : var : #E8DEF8 : #4A4458 ;
+
+--surface : var #FEF7FF : #141218 ;
+--surface-container : var : #F3EDF7 : #211F26 ;
+
+--error : var : B3261E : #F2B8B5 ;
+--error-container : var : #F9DEDC : #8C1D18 ;
+
 *::-webkit-scrollbar {
   height: 8px;
   width: 6px;

@@ -5,7 +5,7 @@ button {
     padding: 0.625rem 1rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var : black : white;
+    color: var(--primary);
     background: transparent;
     border: none;
     transition-property: all;
@@ -19,10 +19,10 @@ button:hover {
 }
 
 .IconButton {
-    --icon-bg: var : #73737346;
+    --icon-bg: var(--surface-container);
     --icon-border-radius: var : 100rem;
-    --icon-border: var : 0px solid #cbd5e1;
-    --icon-hover-bg: var : #a465a7;
+    --icon-border: none;
+    --icon-hover-bg: var(--primary-container);
 
     padding: .5rem;
     background: var(--icon-bg);
@@ -33,11 +33,11 @@ button:hover {
 }
 
 .MaterialButton {
-    --mat-bg: var : #5d2c5f;
-    --mat-color: var : #ffffff;
-    --mat-border: var : 0px solid #cbd5e1;
-    --mat-hover-bg: var : #a465a7;
-    --mat-hover-color: var : #ffffff;
+    --mat-bg: var(--primary);
+    --mat-color: var(--surface);
+    --mat-border: none;
+    --mat-hover-bg: var(--primary-container);
+    --mat-hover-color: var(--primary);
 
     color: var(--mat-color);
     background: var(--mat-bg);
@@ -49,11 +49,11 @@ button:hover {
 }
 
 .OutlinedButton {
-    --out-bg: var : transparent;
-    --out-color: var : #475569 : #fff;
-    --out-border: var : 1px solid #cbd5e1;
-    --out-hover-bg: var : #c2c2c238 : #7d8dff4d;
-    --out-hover-color: var : #6636e8 : #fff;
+    --out-bg: transparent;
+    --out-color: var(--primary);
+    --out-border: 1px solid var(--primary);
+    --out-hover-bg: var(--primary-container);
+    --out-hover-color: var(--primary);
 
     color: var(--out-color);
     background: var(--out-bg);

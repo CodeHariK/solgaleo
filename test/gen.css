@@ -179,9 +179,9 @@ css.tsx
 }
 
 p {
-    padding-left: 4rem;
+    font-size: 1rem;
     color: var(--p-col);
-    background: red;
+    background: inherit;
     font-size: 1rem;
 }
 

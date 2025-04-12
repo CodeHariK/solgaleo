@@ -21,18 +21,6 @@ import { CssNAV } from './gen';
     align-self: start;
 }
 
-.TabButton {
-    padding: 0.2rem .5rem;
-    border: none;
-    transition: all 0.2s ease;
-    background: var(--primary-color, #6a5dad);
-}
-    
-.TabButton.active {
-    background: var(--primary-color, #279725);
-    color: white;
-}
-
 .TabContent {
     flex: 1;
     overflow: auto;
@@ -216,7 +204,7 @@ export function Tabs(props: TabsProps) {
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button
-                                        class={`${CssNAV.TabButton} ${activePath()[level()] === tab.id ? 'active' : ''}`}
+                                        class={`${activePath()[level()] === tab.id ? 'active' : ''}`}
                                         style={props.styles?.button}
                                         onClick={() => handleTabClick(tab, level())}
                                     >

@@ -16,7 +16,6 @@ export const CssNAV = {
     TabsContainer: "TabsContainer",
     TabsLevels: "TabsLevels",
     TabLevel: "TabLevel",
-    TabButton: "TabButton",
     TabContent: "TabContent",
     Breadcrumb: "Breadcrumb",
     BreadcrumbLinks: "BreadcrumbLinks",

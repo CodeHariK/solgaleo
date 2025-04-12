@@ -26,38 +26,31 @@ src/input.tsx
     --SolDropdownItem-border: none;
     --SolDropdownItem-col-hover: #d4d4d4;
     --SolDropdownItem-bg-hover: #6b6b6b;
-    --icon-bg: #73737346;
+    --icon-bg: var(--surface-container);
     --icon-border-radius: 100rem;
-    --icon-hover-bg: #a465a7;
-    --mat-color: #ffffff;
-    --mat-bg: #5d2c5f;
-    --mat-border: 0px solid #cbd5e1;
-    --mat-hover-color: #ffffff;
-    --mat-hover-bg: #a465a7;
-    --out-color: #475569;
+    --icon-hover-bg: var(--primary-container);
+    --mat-color: var(--surface);
+    --mat-bg: var(--primary);
+    --mat-border: none;
+    --mat-hover-color: var(--primary);
+    --mat-hover-bg: var(--primary-container);
+    --out-color: var(--primary);
     --out-bg: transparent;
-    --out-border: 1px solid #cbd5e1;
-    --out-hover-color: #6636e8;
-    --out-hover-bg: #c2c2c238;
-    --button-col: black;
-    --icon-border: 0px solid #cbd5e1;
+    --out-border: 1px solid var(--primary);
+    --out-hover-color: var(--primary);
+    --out-hover-bg: var(--primary-container);
+    --icon-border: none;
     --theme-toggle-col: #60A5FA;
     --theme-toggle-bg-hover: #F3F4F6;
     --input-accent-color: #7a23b4;
     --label-disabled-color: #6B7280;
-    --label-col: #111827;
-    --label-p-col: #6B7280;
-    --input-bg: #ffffff;
     --label-transform-x: 0.6rem;
     --label-transform-y: -1.0rem;
     --label-scale: 0.85;
-    --input-label-focus-color: #983daf;
-    --input-label-focus-bg: white;
-    --Input-Input-input--Input-textarea-col: #111827;
-    --Input-Input--input-col-placeholder: #ae81e4;
-    --Input-label-col: #6B7280;
+    --input-label-focus-color: var(--primary);
+    --input-label-focus-bg: var(--surface);
+    --input-bg: #ffffff;
     --Input-label-border: 1px solid transparent;
-    --ErrorText-col: red;
 }
 
 .night {
@@ -78,38 +71,31 @@ src/input.tsx
     --SolDropdownItem-border: none;
     --SolDropdownItem-col-hover: #4b4b4b;
     --SolDropdownItem-bg-hover: #d7d7d7;
-    --icon-bg: #73737346;
+    --icon-bg: var(--surface-container);
     --icon-border-radius: 100rem;
-    --icon-hover-bg: #a465a7;
-    --mat-color: #ffffff;
-    --mat-bg: #5d2c5f;
-    --mat-border: 0px solid #cbd5e1;
-    --mat-hover-color: #ffffff;
-    --mat-hover-bg: #a465a7;
-    --out-color: #fff;
+    --icon-hover-bg: var(--primary-container);
+    --mat-color: var(--surface);
+    --mat-bg: var(--primary);
+    --mat-border: none;
+    --mat-hover-color: var(--primary);
+    --mat-hover-bg: var(--primary-container);
+    --out-color: var(--primary);
     --out-bg: transparent;
-    --out-border: 1px solid #cbd5e1;
-    --out-hover-color: #fff;
-    --out-hover-bg: #7d8dff4d;
-    --button-col: white;
-    --icon-border: 0px solid #cbd5e1;
+    --out-border: 1px solid var(--primary);
+    --out-hover-color: var(--primary);
+    --out-hover-bg: var(--primary-container);
+    --icon-border: none;
     --theme-toggle-col: #3B82F6 ;
     --theme-toggle-bg-hover: #374151 ;
     --input-accent-color: #7a23b4;
     --label-disabled-color: #9CA3AF;
-    --label-col: #9b51ef ;
-    --label-p-col: #ae93cc;
-    --input-bg: #3b3b3b;
     --label-transform-x: 0.6rem;
     --label-transform-y: -1.0rem;
     --label-scale: 0.85;
-    --input-label-focus-color: #983daf;
-    --input-label-focus-bg: white;
-    --Input-Input-input--Input-textarea-col: #ffffff;
-    --Input-Input--input-col-placeholder: #ae81e4;
-    --Input-label-col: #A1A1AA;
+    --input-label-focus-color: var(--primary);
+    --input-label-focus-bg: var(--surface);
+    --input-bg: #3b3b3b;
     --Input-label-border: 1px solid transparent;
-    --ErrorText-col: red;
 }
 
 .SolPositionBox {
@@ -423,7 +409,7 @@ button {
     padding: 0.625rem 1rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--button-col);
+    color: var(--primary);
     background: transparent;
     border: none;
     transition-property: all;
@@ -490,7 +476,7 @@ fieldset div {
 
 input[type="checkbox"],
 input[type="radio"] {
-    accent-color: var(--input-accent-color);
+    accent-color: var(--input-accent-color, var(--primary));
     width: 1rem;
     height: 1rem;
     margin: .25rem;
@@ -509,12 +495,12 @@ select {
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: #ececec;
-    background-color: #2b2a2a;
+    color: var(--primary);
+    background-color: var(--surface);
 }
 
 label {
-    color: var(--label-col);
+    color: var(--primary);
     background: transparent;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -524,7 +510,7 @@ label {
 }
 
 label[aria-disabled="true"] {
-    color: var(--label-disabled-color);
+    color: var(--label-disabled-color, var(--secondary));
     cursor: not-allowed;
     opacity: 0.75;
 }
@@ -533,13 +519,13 @@ label p {
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 400;
-    color: var(--label-p-col);
+    color: var(--secondary);
 }
 
 .Input {
     position: relative;
-    background: var(--input-bg);
-    border-bottom: 2px solid #d1d5db;
+    background: var(--input-bg, var(--surface));
+    border-bottom: 2px solid var(--primary-container);
 }
 
 .Input>input,
@@ -547,7 +533,7 @@ label p {
     width: 100%;
     padding: .5rem;
     font-size: 0.875rem;
-    color: var(--Input-Input-input--Input-textarea-col);
+    color: var(--primary);
     background: transparent;
     border: none;
     outline: none;
@@ -567,7 +553,7 @@ label p {
 
 .Input> input::placeholder,
 .Input> textarea::placeholder {
-    color: var(--Input-Input--input-col-placeholder);
+    color: var(--secondary);
 }
 
 .Input[data-has-label="true"] > input::placeholder,
@@ -582,7 +568,7 @@ label p {
 
 .Input> input:focus::placeholder,
 .Input> textarea:focus::placeholder {
-    color: var(--Input-Input--input-col-placeholder);
+    color: var(--primary);
     transition: color 0.2s ease-out;
 }
 
@@ -590,7 +576,7 @@ label p {
     position: absolute;
     top: 0rem;
     left: 1rem;
-    color: var(--Input-label-col);
+    color: var(--secondary);
     border: var(--Input-label-border);
     font-size: 0.875rem;
     white-space: nowrap;
@@ -641,22 +627,39 @@ label p {
 }
 
 .ErrorTextInput {
-    border-color: #EF4444;
+    border-color: var(--error);
 }
 
 .ErrorText {
     margin-top: 0.5rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: var(--ErrorText-col);
+    color: var(--error);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    background: var(--input-label-focus-color, #983daf);
+    cursor: pointer;
+    margin-top: -0.4rem;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0.3rem;
+    background: var(--primary);
+    border-radius: 0.25rem;
 }
 
 .RangeValue {
     position: absolute;
     left: var(--value-left, 0);
     transform: translateX(-50%);
-    background: var(--input-label-focus-color, #983daf);
-    color: white;
+    background: var(--primary);
+    color: var(--surface);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
     font-size: 0.75rem;

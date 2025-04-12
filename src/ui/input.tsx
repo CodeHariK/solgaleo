@@ -18,7 +18,7 @@ fieldset div {
 
 input[type="checkbox"], input[type="radio"] {
     --input-accent-color: var:#7a23b4:#7a23b4;
-    accent-color: var(--input-accent-color);
+    accent-color: var(--input-accent-color, var(--primary));
     width: 1rem;
     height: 1rem;
     margin: .25rem;
@@ -38,12 +38,12 @@ select {
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: #ececec;
-    background-color: #2b2a2a;
+    color: var(--primary);
+    background-color: var(--surface);
 }
 
 label {
-    color: var : #111827 : #9b51ef ;
+    color: var(--primary);
     background: transparent;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -54,7 +54,7 @@ label {
 
 label[aria-disabled="true"] {
     --label-disabled-color: var:#6B7280:#9CA3AF;
-    color: var(--label-disabled-color);
+    color: var(--label-disabled-color, var(--secondary));
     cursor: not-allowed;
     opacity: 0.75;
 }
@@ -63,7 +63,7 @@ label p {
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 400;
-    color: var : #6B7280 : #ae93cc;
+    color: var(--secondary);
 }
 
 */
@@ -223,17 +223,17 @@ export function Select(props: SelectProps) {
 .Input {
     position: relative;
     --input-bg : var : #ffffff : #3b3b3b;
-    background: var(--input-bg);
-    // border: var : 1px solid #d1d5db : 1px solid #525252;
+    background: var(--input-bg, var(--surface));
+    // border: var : 1px solid var(--primary-container);
     // border-radius: var : 0.5rem;
-    border-bottom: 2px solid #d1d5db;
+    border-bottom: 2px solid var(--primary-container);
 
     >input, >textarea {
         width: 100%;
         padding: .5rem;
 
         font-size: 0.875rem;
-        color: var : #111827 : #ffffff;
+        color: var(--primary);
         background: transparent;
         border: none;
         outline: none;
@@ -249,7 +249,7 @@ export function Select(props: SelectProps) {
     }
 
     > input::placeholder, > textarea::placeholder {
-        color: var : #9ca3af : #737373;
+        color: var(--secondary);
     }
     [data-has-label="true"] > input::placeholder, [data-has-label="true"] > textarea::placeholder {
         color: transparent;
@@ -259,7 +259,7 @@ export function Select(props: SelectProps) {
     }
 
     > input:focus::placeholder, > textarea:focus::placeholder {
-        color: var : #ae81e4 : #ae81e4;
+        color: var(--primary);
         transition: color 0.2s ease-out;
     }
 
@@ -267,7 +267,7 @@ export function Select(props: SelectProps) {
         position: absolute;
         top: 0rem;
         left: 1rem;
-        color: var : #6B7280 : #A1A1AA;
+        color: var(--secondary);
         border: var : 1px solid transparent;
         font-size: 0.875rem;
         white-space: nowrap;
@@ -289,8 +289,8 @@ export function Select(props: SelectProps) {
         --label-transform-x: 0.6rem;
         --label-transform-y: -1.0rem;
         --label-scale: 0.85;
-        --input-label-focus-color: #983daf;
-        --input-label-focus-bg: white;
+        --input-label-focus-color: var(--primary);
+        --input-label-focus-bg: var(--surface);
 
         transform: 
             translateX(var(--label-transform-x))
@@ -328,31 +328,31 @@ export function Select(props: SelectProps) {
 }
 
 .ErrorTextInput {
-    border-color: #EF4444;
+    border-color: var(--error);
 }
 
 .ErrorText {
     margin-top: 0.5rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: var : red;
+    color: var(--error);
 }
 
 input[type="range"]::-webkit-slider-thumb {
-    // -webkit-appearance: none;
-    // height: 1rem;
-    // width: 1rem;
-    // border-radius: 50%;
-    // background: var(--input-label-focus-color, #983daf);
-    // cursor: pointer;
-    // margin-top: -0.3rem;
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    background: var(--input-label-focus-color, #983daf);
+    cursor: pointer;
+    margin-top: -0.4rem;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-    // width: 100%;
-    // height: 0.25rem;
-    // background: #d1d5db;
-    // border-radius: 0.25rem;
+    width: 100%;
+    height: 0.3rem;
+    background: var(--primary);
+    border-radius: 0.25rem;
 }
 
 .RangeValue {
@@ -360,8 +360,8 @@ input[type="range"]::-webkit-slider-runnable-track {
     // top: -2rem;
     left: var(--value-left, 0);
     transform: translateX(-50%);
-    background: var(--input-label-focus-color, #983daf);
-    color: white;
+    background: var(--primary);
+    color: var(--surface);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
     font-size: 0.75rem;
