@@ -198,31 +198,6 @@ src/modal.tsx
     }
 }
 
-.TransitionContainer {
-    position: relative;
-}
-
-.TransitionItem {
-    opacity: 0;
-    transition: opacity 300ms ease-in-out;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-}
-
-.Show {
-    opacity: 1;
-    position: relative;
-    pointer-events: auto;
-}
-
-.Hide {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
 .ModalOverlay {
     position: fixed;
     top: 0;

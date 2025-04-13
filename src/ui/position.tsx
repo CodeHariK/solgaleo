@@ -21,7 +21,7 @@ export function PositionBox({ name, align, children, visible }: {
     // const alignment = { x: Math.random() * .8 - .4, y: Math.random() * .8 - .4 }
 
     let overlay: HTMLDivElement | undefined;
-    let anchor: HTMLButtonElement | undefined;
+    let anchor: HTMLDivElement | undefined;
 
     const handleMouseEnter = (event: MouseEvent) => {
         const target = event.target as Node;
@@ -118,7 +118,7 @@ export function PositionBox({ name, align, children, visible }: {
 
     /*CSS:
 
-    .SolPositionBox {
+    .PositionBox {
         display: inline-flex;
 
         // div {
@@ -140,42 +140,24 @@ export function PositionBox({ name, align, children, visible }: {
         }
     }
     
-    .SolPositionBox > button {
-        color: var : #9c40ca;
-        background: var : transparent;
-        border: var : none;
-        display: inline-flex;
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        column-gap: 0.5rem;
-        align-items: center;
-        border-radius: 0.5rem;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        font-weight: 500;
-    }
-    
-    .SolPositionBox > button:hover {
+    .PositionBox > button:hover {
         color: var : #90328b : #faa0f6;
         background-color: var : #efefef : #353535;
     }
     */
 
     return (
-        <div class={CssUI.SolPositionBox}
+        <div class={CssUI.PositionBox}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <button
-                ref={anchor}
+            <span ref={anchor}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             // onMouseDown={onMouseDown}
             >
                 {name}
-            </button>
+            </span>
 
             <div>
                 <div ref={overlay}
@@ -189,7 +171,6 @@ export function PositionBox({ name, align, children, visible }: {
                         "transition-timing-function": "cubic-bezier(0.4, 0, 0.2, 1)",
                         "transition-duration": "300ms",
                         "pointer-events": "auto",
-                        "box-shadow": "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset",
                     }}
                 >
                     {children}

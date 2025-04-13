@@ -1,7 +1,7 @@
 import { Key } from "@solid-primitives/keyed";
 import { useSpaceContext } from "./spaceform";
 import { createSignal, type JSX } from "solid-js";
-import { IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
+import { IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 
 import { CssUI } from "./gen.ts";
 
@@ -29,17 +29,35 @@ input[type="checkbox"]:disabled, input[type="radio"]:disabled {
 }
 
 select {
-    // display: block;
-    // width: 100%;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border-width: 1px;
-    border-color: #D1D5DB;
+    border-color: var(--primary-container);
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--primary);
     background-color: var(--surface);
+    appearance: none;
+
+    :disabled {
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+
+    :hover ~ .SelectChevron {
+        transform: translateX(-150%) scale(1.2);
+        transition: transform 0.15s ease;
+    }
+}
+
+.SelectChevron {
+    transform: translateX(-150%);
+    align-self: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    pointer-events: none;
+    color: var(--primary);
 }
 
 label {
@@ -199,21 +217,24 @@ export function Select(props: SelectProps) {
         <fieldset>
             {props.header && <legend>{props.header}</legend>}
 
-            <select
-                id={props.id}
-                name={props.id}
-                value={state().values[props.id] || ""}
-                disabled={props.disabled}
-                onChange={(e) => handleChange(props.id, e.target.value)}
-            >
-                <Key each={props.options} by="value">
-                    {(option) => (
-                        <option value={option().value} >
-                            {option().label}
-                        </option>
-                    )}
-                </Key>
-            </select>
+            <div>
+                <select
+                    id={props.id}
+                    name={props.id}
+                    value={state().values[props.id] || ""}
+                    disabled={props.disabled}
+                    onChange={(e) => handleChange(props.id, e.target.value)}
+                >
+                    <Key each={props.options} by="value">
+                        {(option) => (
+                            <option value={option().value} >
+                                {option().label}
+                            </option>
+                        )}
+                    </Key>
+                </select>
+                <IconDown props={{ class: CssUI.SelectChevron }} />
+            </div>
         </fieldset>
     );
 }
@@ -338,21 +359,39 @@ export function Select(props: SelectProps) {
     color: var(--error);
 }
 
+input[type="range"] {
+    padding: 0;
+    -webkit-appearance: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.Input[data-is-range="true"] {
+    border-bottom: none;
+}
+
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 1rem;
     width: 1rem;
     border-radius: 50%;
-    background: var(--input-label-focus-color, #983daf);
+    background: none;
     cursor: pointer;
-    margin-top: -0.4rem;
+    margin-top: -0.25rem;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 0.3rem;
-    background: var(--primary);
+    height: 0.5rem;
+    // background: var(--primary);
     border-radius: 0.25rem;
+        background: linear-gradient(
+        to right,
+        var(--primary) 0%,
+        var(--primary) var(--value-left, 0%),
+        var(--primary-container) var(--value-left, 0%),
+        var(--primary-container) 100%
+    );
 }
 
 .RangeValue {
@@ -360,7 +399,7 @@ input[type="range"]::-webkit-slider-runnable-track {
     // top: -2rem;
     left: var(--value-left, 0);
     transform: translateX(-50%);
-    background: var(--primary);
+    background: var(--secondary-container);
     color: var(--surface);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
@@ -418,6 +457,7 @@ export function Input(props: InputProps) {
                 data-has-icon={!!(props.icon || props.type === "password")}
                 data-has-label={!!props.label}
                 data-is-range={props.type === "range"}
+                style={{ "--value-left": rangeLeft() }}
             >
 
                 {(props.icon || props.type === "password") && (
@@ -473,10 +513,7 @@ export function Input(props: InputProps) {
                 }
 
                 {props.type === "range" && (
-                    <div
-                        class={CssUI.RangeValue}
-                        style={{ "--value-left": rangeLeft() }}
-                    >
+                    <div class={CssUI.RangeValue}>
                         {state().values[props.name] || props.min || 0}
                     </div>
                 )}

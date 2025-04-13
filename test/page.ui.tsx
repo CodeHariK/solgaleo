@@ -1,10 +1,17 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout } from '../src/ui/gen.ts';
-import { IconCart, IconCross, IconDown, IconGoogle } from '../src/svg/gen.ts';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, ImageUploader } from '../src/ui/gen.ts';
+import { IconCart, IconCross, IconDown, IconFilter, IconGoogle } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 
-export function InputTest() {
+export function UiTest() {
+
+    return <ImageUploader uploadFunc={(formdata) => {
+        console.log('File from FormData:', JSON.stringify(formdata.get('item')));
+
+        return { valid: true, info: <p>{JSON.stringify(formdata.get('item'))}</p> }
+    }} />
+
     return <GridLayout
         header={<TestHeader />}
     >
@@ -22,7 +29,59 @@ export function InputTest() {
 
         <Dropdown<string>
             fn={(data) => { console.log(data) }}
+            button={
+                <button class={CssUI.OutlinedButton} >
+                    <IconFilter />
+                    <span>Filter</span>
+                    <IconDown />
+                </button>
+            }
             items={[
+                {
+                    header: "Settings",
+                    subitems: [
+                        {
+                            element: <span>Profile</span>,
+                            data: "profile",
+                            children: [
+                                {
+                                    element: <span>Edit Info</span>,
+                                    data: "profile.edit",
+                                    children: [
+                                        {
+                                            element: <span>Profile</span>,
+                                            data: "profile",
+                                            children: [
+                                                {
+                                                    element: <span>Edit Info</span>,
+                                                    data: "profile.edit"
+                                                },
+                                                {
+                                                    element: <span>Privacy</span>,
+                                                    data: "profile.privacy"
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                {
+                                    element: <span>Privacy</span>,
+                                    data: "profile.privacy"
+                                }
+                            ]
+                        },
+                        {
+                            element: <span>Account</span>,
+                            data: "account",
+                            children: [
+                                {
+                                    element: <span>Security</span>,
+                                    data: "account.security"
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
                     header: "Names",
                     subitems: [

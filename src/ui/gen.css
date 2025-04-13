@@ -1,5 +1,6 @@
 /*
 src/position.tsx
+src/uploadpic.tsx
 src/gridlayout.tsx
 src/heading.tsx
 src/dropdown.tsx
@@ -9,28 +10,25 @@ src/input.tsx
 */
 
 .light {
-    --SolPositionBox--button-col: #9c40ca;
-    --SolPositionBox--button-bg: transparent;
-    --SolPositionBox--button-border: none;
-    --SolPositionBox--button-col-hover: #90328b;
-    --SolPositionBox--button-background-color-hover: #efefef;
+    --PositionBox--button-col-hover: #90328b;
+    --PositionBox--button-background-color-hover: #efefef;
     --a-col: #ffe4c4;
     --a--col-hover: #ffac90;
     --a--col-active: #cf90ff;
-    --SolDropdown-bg: #e0e0e0;
-    --SolDropdownHeader-col: #9c40ca;
-    --SolDropdownHeader-bg: #cfcfcf;
-    --SolDropdownHeader-border: none;
-    --SolDropdownItem-col: #343434;
-    --SolDropdownItem-bg: #ebebeb;
-    --SolDropdownItem-border: none;
-    --SolDropdownItem-col-hover: #d4d4d4;
-    --SolDropdownItem-bg-hover: #6b6b6b;
+    --Dropdown-bg: #e0e0e0;
+    --DropdownHeader-col: #9c40ca;
+    --DropdownHeader-bg: #cfcfcf;
+    --DropdownHeader-border: none;
+    --DropdownItem-col: #343434;
+    --DropdownItem-bg: #ebebeb;
+    --DropdownItem-border: none;
+    --DropdownItem-col-hover: #d4d4d4;
+    --DropdownItem-bg-hover: #6b6b6b;
     --icon-bg: var(--surface-container);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
     --mat-color: var(--surface);
-    --mat-bg: var(--primary);
+    --mat-bg: var(--primary-container);
     --mat-border: none;
     --mat-hover-color: var(--primary);
     --mat-hover-bg: var(--primary-container);
@@ -54,28 +52,25 @@ src/input.tsx
 }
 
 .night {
-    --SolPositionBox--button-col: #9c40ca;
-    --SolPositionBox--button-bg: transparent;
-    --SolPositionBox--button-border: none;
-    --SolPositionBox--button-col-hover: #faa0f6;
-    --SolPositionBox--button-background-color-hover: #353535;
+    --PositionBox--button-col-hover: #faa0f6;
+    --PositionBox--button-background-color-hover: #353535;
     --a-col: #ffe4c4;
     --a--col-hover: #ffac90;
     --a--col-active: #cf90ff;
-    --SolDropdown-bg: #575757;
-    --SolDropdownHeader-col: #8a87e3;
-    --SolDropdownHeader-bg: #454545;
-    --SolDropdownHeader-border: none;
-    --SolDropdownItem-col: #f8f8f8;
-    --SolDropdownItem-bg: #4f4f4f;
-    --SolDropdownItem-border: none;
-    --SolDropdownItem-col-hover: #4b4b4b;
-    --SolDropdownItem-bg-hover: #d7d7d7;
+    --Dropdown-bg: #575757;
+    --DropdownHeader-col: #8a87e3;
+    --DropdownHeader-bg: #454545;
+    --DropdownHeader-border: none;
+    --DropdownItem-col: #f8f8f8;
+    --DropdownItem-bg: #4f4f4f;
+    --DropdownItem-border: none;
+    --DropdownItem-col-hover: #4b4b4b;
+    --DropdownItem-bg-hover: #d7d7d7;
     --icon-bg: var(--surface-container);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
     --mat-color: var(--surface);
-    --mat-bg: var(--primary);
+    --mat-bg: var(--primary-container);
     --mat-border: none;
     --mat-hover-color: var(--primary);
     --mat-hover-bg: var(--primary-container);
@@ -98,37 +93,20 @@ src/input.tsx
     --Input-label-border: 1px solid transparent;
 }
 
-.SolPositionBox {
+.PositionBox {
     display: inline-flex;
 }
 
-.SolPositionBox>div {
+.PositionBox>div {
     position: fixed;
     inset: 0px;
     z-index: 10;
     pointer-events: none;
 }
 
-.SolPositionBox>button {
-    color: var(--SolPositionBox--button-col);
-    background: var(--SolPositionBox--button-bg);
-    border: var(--SolPositionBox--button-border);
-    display: inline-flex;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    column-gap: 0.5rem;
-    align-items: center;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-}
-
-.SolPositionBox>button:hover {
-    color: var(--SolPositionBox--button-col-hover);
-    background-color: var(--SolPositionBox--button-background-color-hover);
+.PositionBox>button:hover {
+    color: var(--PositionBox--button-col-hover);
+    background-color: var(--PositionBox--button-background-color-hover);
 }
 
 .SolDragBox {
@@ -149,6 +127,53 @@ src/input.tsx
     background-color: #f3f63b33;
     cursor: move;
     pointer-events: auto;
+}
+
+.UploadContainer {
+    display: inline-block;
+}
+
+.Dropzone {
+    width: 300px;
+    height: 250px;
+    border: 2px dashed var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    margin: 0.5rem;
+    border-radius: 1rem;
+    color: var(--secondary);
+}
+
+.DropzoneDragging {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.ImagePreview {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    display: block;
+    margin: 0 auto;
+}
+
+.ImagePreviewInvalid {
+    filter: blur(8px);
+}
+
+.InvalidMessage {
+    position: absolute;
+    color: var(--surface);
+    background: var(--primary);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.HiddenInput {
+    display: none;
 }
 
 .GridLayout {
@@ -374,33 +399,60 @@ a:active {
     border-radius: 9999px;
 }
 
-.SolDropdown {
-    background: var(--SolDropdown-bg);
+.Dropdown {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    background: var(--Dropdown-bg);
     border-radius: .3rem;
     padding: .3rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.SolDropdownHeader {
-    color: var(--SolDropdownHeader-col);
-    background: var(--SolDropdownHeader-bg);
-    border: var(--SolDropdownHeader-border);
+.Dropdown ul {
+    list-style-type: none;
+    padding-left: 0rem;
+    margin: 0.2rem 0;
+}
+
+.DropdownHeader {
+    color: var(--DropdownHeader-col);
+    background: var(--DropdownHeader-bg);
+    border: var(--DropdownHeader-border);
     padding: 0.3rem;
 }
 
-.SolDropdownItem {
-    color: var(--SolDropdownItem-col);
-    background: var(--SolDropdownItem-bg);
-    border: var(--SolDropdownItem-border);
-    display: inline-flex;
-    padding: 0.3rem;
+.DropdownItem {
+    color: var(--DropdownItem-col);
+    background: var(--DropdownItem-bg);
+    border: var(--DropdownItem-border);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 0.3rem;
+    cursor: pointer;
 }
 
-.SolDropdownItem:hover {
-    color: var(--SolDropdownItem-col-hover);
-    background: var(--SolDropdownItem-bg-hover);
+.DropdownItem:hover {
+    color: var(--DropdownItem-col-hover);
+    background: var(--DropdownItem-bg-hover);
+}
+
+ul.DropdownNested {
+    padding-left: 1rem;
+    margin: 0.2rem 0;
+}
+
+.DropdownToggle {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    transition: transform 0.2s;
+}
+
+.DropdownToggle.open {
+    transform: rotate(90deg);
 }
 
 button {
@@ -410,7 +462,7 @@ button {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--primary);
-    background: transparent;
+    background: var(--surface-container);
     border: none;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -491,12 +543,32 @@ select {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border-width: 1px;
-    border-color: #D1D5DB;
+    border-color: var(--primary-container);
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--primary);
     background-color: var(--surface);
+    appearance: none;
+}
+
+select:disabled {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+select:hover~.SelectChevron {
+    transform: translateX(-150%) scale(1.2);
+    transition: transform 0.15s ease;
+}
+
+.SelectChevron {
+    transform: translateX(-150%);
+    align-self: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    pointer-events: none;
+    color: var(--primary);
 }
 
 label {
@@ -637,28 +709,45 @@ label p {
     color: var(--error);
 }
 
+input[type="range"] {
+    padding: 0;
+    -webkit-appearance: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.Input[data-is-range="true"] {
+    border-bottom: none;
+}
+
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 1rem;
     width: 1rem;
     border-radius: 50%;
-    background: var(--input-label-focus-color, #983daf);
+    background: none;
     cursor: pointer;
-    margin-top: -0.4rem;
+    margin-top: -0.25rem;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 0.3rem;
-    background: var(--primary);
+    height: 0.5rem;
     border-radius: 0.25rem;
+    background: linear-gradient(
+        to right,
+        var(--primary) 0%,
+        var(--primary) var(--value-left, 0%),
+        var(--primary-container) var(--value-left, 0%),
+        var(--primary-container) 100%
+    );
 }
 
 .RangeValue {
     position: absolute;
     left: var(--value-left, 0);
     transform: translateX(-50%);
-    background: var(--primary);
+    background: var(--secondary-container);
     color: var(--surface);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;

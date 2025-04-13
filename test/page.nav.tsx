@@ -5,9 +5,7 @@ import { TestHeader } from "./common";
 
 export function NavTest() {
 
-    const [toggle, setToggle] = createSignal(false);
     const [isModalOpen, setIsModalOpen] = createSignal(true);
-
 
     return <GridLayout
         header={<TestHeader />}
@@ -38,20 +36,6 @@ export function NavTest() {
             rightChildren={<ThemeToggle />}
         />
 
-        <N.TransitionWidget
-            showFirstWidget={toggle()}
-            one={
-                <button class={CssUI.OutlinedButton} onclick={() => setToggle(prev => !prev)}>
-                    One
-                </button>
-            }
-            two={
-                <button class={CssUI.MaterialButton} onclick={() => setToggle(prev => !prev)}>
-                    Two
-                </button>
-            }
-        />
-
         {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
 
         <button
@@ -62,7 +46,7 @@ export function NavTest() {
         </button>
 
 
-        {/* <N.Modal
+        <N.Modal
             isOpen={isModalOpen()}
             onClose={() => setIsModalOpen(false)}
             anchor={{
@@ -74,18 +58,18 @@ export function NavTest() {
             }}
         >
             <div>button</div>
-        </N.Modal> */}
+        </N.Modal>
 
 
-        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
+        {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
         {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
         {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
-        {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')} */}
+        {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')}
 
-        {/* {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
+        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
-        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')} */}
+        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')}
 
         {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'left')}

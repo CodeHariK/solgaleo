@@ -7,6 +7,7 @@ export * from "./marquee.tsx";
 export * from "./flicker.tsx";
 export * from "./glittercard.tsx";
 export * from "./rainbow.tsx";
+export * from "./transition.tsx";
 
 
 export const CssFANCY = {
@@ -34,6 +35,12 @@ export const CssFANCY = {
     SRainbow: "SRainbow",
     SRaincon: "SRaincon",
     SRainconGrad: "SRainconGrad",
+    TransitionContainer: "TransitionContainer",
+    TransitionItem: "TransitionItem",
+    TransitionEnter: "TransitionEnter",
+    TransitionEnterActive: "TransitionEnterActive",
+    TransitionExit: "TransitionExit",
+    TransitionExitActive: "TransitionExitActive",
 
     varBannerBorder: "--banner-border",
     varBannerBg: "--banner-bg",

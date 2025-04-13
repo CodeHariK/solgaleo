@@ -1,5 +1,6 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { CssNAV } from "./gen";
+import { A } from "@solidjs/router";
 
 /* CSS:
 .HeaderLink {
@@ -28,14 +29,14 @@ export function HeaderLink({ href, title, fn }: { href: string, title: string, f
         };
     };
 
-    return <a
+    return <A
         onClick={handleLinkClick}
         href={href}
         title={title}
         class={CssNAV.HeaderLink}
     >
         {title}
-    </a>
+    </A>
 }
 
 /* CSS:
@@ -113,7 +114,7 @@ export function Header({ iconSrc, title, links, rightChildren }: {
 }) {
     return <nav class={CssNAV.HeaderNav}>
         <div class={CssNAV.HeaderLeft}>
-            <a href="/" class={CssNAV.HeaderLogo}>
+            <A href="/" class={CssNAV.HeaderLogo}>
                 <div class={CssNAV.HeaderLogoContent}>
                     {iconSrc && (
                         <div class={CssNAV.HeaderIcon}>
@@ -122,7 +123,7 @@ export function Header({ iconSrc, title, links, rightChildren }: {
                     )}
                     {title}
                 </div>
-            </a>
+            </A>
 
             <ul class={CssNAV.HeaderLinks}>
                 {links}
@@ -134,44 +135,3 @@ export function Header({ iconSrc, title, links, rightChildren }: {
         </div>
     </nav>
 }
-
-/* CSS:
-
-.TransitionContainer {
-    position: relative;
-}
-
-.TransitionItem {
-    opacity: 0;
-    transition: opacity 300ms ease-in-out;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-}
-
-.Show {
-    opacity: 1;
-    position: relative;
-    pointer-events: auto;
-}
-
-.Hide {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-}
-*/
-
-export function TransitionWidget(props: { showFirstWidget: boolean, one: JSX.Element, two: JSX.Element }) {
-    return (
-        <div class={CssNAV.TransitionContainer}>
-            <div class={`${CssNAV.TransitionItem} ${props.showFirstWidget ? CssNAV.Show : CssNAV.Hide}`}>
-                {props.one}
-            </div>
-            <div class={`${CssNAV.TransitionItem} ${!props.showFirstWidget ? CssNAV.Show : CssNAV.Hide}`}>
-                {props.two}
-            </div>
-        </div>
-    );
-};

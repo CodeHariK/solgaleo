@@ -29,10 +29,6 @@ export const CssNAV = {
     HeaderIcon: "HeaderIcon",
     HeaderLinks: "HeaderLinks",
     HeaderRight: "HeaderRight",
-    TransitionContainer: "TransitionContainer",
-    TransitionItem: "TransitionItem",
-    Show: "Show",
-    Hide: "Hide",
     ModalOverlay: "ModalOverlay",
     ModalContent: "ModalContent",
     ModalPositioned: "ModalPositioned",
@@ -40,6 +36,7 @@ export const CssNAV = {
     ModalFade: "ModalFade",
     ModalSlide: "ModalSlide",
     ModalScale: "ModalScale",
+    Show: "Show",
 
     varHeaderLinkCol: "--HeaderLink-col",
     varHeaderLinkColHover: "--HeaderLink-col-hover",

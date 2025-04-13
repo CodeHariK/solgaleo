@@ -12,7 +12,7 @@ export function TestHeader() {
             <HeaderLink href='/adv' title='Adv' />,
             <HeaderLink href='/svg' title='Svg' />,
             <HeaderLink href='/fancy' title='Fancy' />,
-            <HeaderLink href='/input' title='Input' />,
+            <HeaderLink href='/ui' title='Ui' />,
             <HeaderLink href='/grid' title='Grid' />,
             <HeaderLink href='/tabs?two.light=home&two.night=settings.account.security&one.night=settings.account.notifications&one.light=settings.profile' title='Tabs' />,
         ]}

@@ -1,6 +1,7 @@
 {
   "name": "solgaleo",
   "version": "0.0.1",
+  "homepage": "https://codeharik.github.io/solgaleo",
   "type": "module",
   "private": false,
   "exports": {
@@ -43,7 +44,9 @@
     "build": "tsc -b && vite build",
     "test": "vite --config test/vite.config.ts",
     "test:build": "tsc -p test/tsconfig.json && vite build --config test/vite.config.ts",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "bun run build && bun run test:build",
+    "deploy": "gh-pages -d dist-test"
   },
   "peerDependencies": {
     "@solid-primitives/keyed": "^1.5.0",
@@ -76,5 +79,8 @@
     "dist/*.js",
     "dist/*.d.ts",
     "dist/*.css"
-  ]
+  ],
+  "dependencies": {
+    "gh-pages": "^6.3.0"
+  }
 }

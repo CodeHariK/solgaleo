@@ -1,17 +1,67 @@
-import { createSignal, Setter } from 'solid-js';
+import { createSignal, type JSX } from 'solid-js';
+import { CssUI } from './gen';
+
+/* CSS:
+.UploadContainer {
+    display: inline-block;
+}
+
+.Dropzone {
+    width: 300px;
+    height: 250px;
+    border: 2px dashed var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    margin: 0.5rem;
+    border-radius: 1rem;
+    color: var(--secondary);
+}
+.DropzoneDragging {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.ImagePreview {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    display: block;
+    margin: 0 auto;
+}
+.ImagePreviewInvalid {
+    filter: blur(8px);
+}
+
+.InvalidMessage {
+    position: absolute;
+    color: var(--surface);
+    background: var(--primary);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.HiddenInput {
+    display: none;
+}
+*/
 
 type ImageUploaderProps = {
-    uploadFunc: (formdata: FormData, setImageValid: Setter<boolean>, setImageCategories: Setter<{}>) => void;
+    uploadFunc: (formdata: FormData) => { valid: boolean, info: JSX.Element };
 };
 
-export const ImageUploader = (props: ImageUploaderProps) => {
+export function ImageUploader(props: ImageUploaderProps) {
     const [imageValid, setImageValid] = createSignal(true);
-    const [imageCategories, setImageCategories] = createSignal({});
+    const [imageCategories, setImageCategories] = createSignal<JSX.Element>();
     const [imageSrc, setImageSrc] = createSignal('');
     const [isDragging, setIsDragging] = createSignal(false);
     const [fileInputRef, setFileInputRef] = createSignal<HTMLInputElement | null>(null);
+    const [selectedFile, setSelectedFile] = createSignal<File | string | null>(null);
 
-    const uploadFile = async (file: File | string) => {
+    const uploadFile = async () => {
+        const file = selectedFile();
         if (!file) {
             alert('Please select a file.');
             return;
@@ -20,29 +70,15 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         const formData = new FormData();
         formData.append('item', file);
 
+        console.log('File from FormData:', formData.get('item'));
+
         try {
-            // const response = await fetch('http://localhost:6543/upload', {
-            //     method: 'POST',
-            //     body: formData,
-            // });
-
-            props.uploadFunc(formData, setImageValid, setImageCategories)
-
-            // if (!response.ok) {
-            //     throw new Error('Network response was not ok');
-            // }
-
-            // const result = await response.json();
-            // setImageValid(result.valid.valid)
-            // setImageCategories(result.class)
-            // console.log('File uploaded successfully:', result);
+            let { valid, info } = props.uploadFunc(formData)
+            setImageValid(valid)
+            setImageCategories(info)
         } catch (error) {
             console.error('Error uploading file:', error);
         }
-    };
-
-    const displayImage = (src: string) => {
-        setImageSrc(src);
     };
 
     const handleDrop = (event: DragEvent) => {
@@ -54,8 +90,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             // os file drag
             const file = items[0].getAsFile();
             if (file && file.type.startsWith('image/')) {
-                displayImage(URL.createObjectURL(file));
-                uploadFile(file);
+                setImageSrc(URL.createObjectURL(file));
+                setSelectedFile(file);
             } else {
                 alert('Please drop a valid image file.');
             }
@@ -63,8 +99,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             // browser file drag
             const url = event.dataTransfer?.getData('text/uri-list');
             if (url) {
-                displayImage(url);
-                uploadFile(url)
+                setImageSrc(url);
+                setSelectedFile(url)
             }
         }
     };
@@ -76,8 +112,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => {
-                displayImage(reader.result as string);
-                uploadFile(file);
+                setImageSrc(reader.result as string);
+                setSelectedFile(file);
             };
 
             // Reset the input value to allow the same file to be uploaded again
@@ -86,40 +122,56 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     };
 
     return (
-        <div class="inline-block">
+        <div class={CssUI.UploadContainer}>
             <div
                 id="dropzone"
-                class={`w-[300px] h-[250px] border-2 border-dashed flex items-center justify-center overflow-hidden text-center m-2 rounded-2xl
-                    ${isDragging() ? 'border-black text-black' : 'border-gray-300 text-gray-500'}`}
-
+                class={`${CssUI.Dropzone} ${isDragging() ? CssUI.DropzoneDragging : ''}`}
                 onDragOver={(event) => {
                     event.preventDefault();
                     setIsDragging(true);
                 }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleDrop}
-                onClick={() => fileInputRef()?.click()}
+                onClick={() => {
+                    setImageValid(true)
+                    fileInputRef()?.click()
+                }}
             >
-                {!imageSrc() ?
+                {!imageSrc() ? (
                     "Drag and drop an image here"
-                    :
+                ) : (
                     <img
                         id="imagePreview"
-                        class={`w-full h-auto flex-shrink-0 block mx-auto ${imageValid() ? '' : 'blur-lg'}`}
+                        class={`${CssUI.ImagePreview} ${!imageValid() ? CssUI.ImagePreviewInvalid : ''}`}
                         src={imageSrc()}
-                    />}
-                {(imageSrc() && !imageValid()) ? <div class='absolute text-white bg-black'>Image not valid</div> : <></>}
+                    />
+                )}
+                {(imageSrc() && !imageValid()) && (
+                    <div class={CssUI.InvalidMessage}>Image not valid</div>
+                )}
             </div>
-            {JSON.stringify(imageCategories())}
+            {imageCategories()}
             <input
                 type="file"
                 id="fileInput"
                 accept="image/*"
-                style={{ display: 'none' }}
+                class={CssUI.HiddenInput}
                 ref={setFileInputRef}
                 onChange={handleFileInputChange}
             />
-            <button onClick={(event) => { event.preventDefault(); fileInputRef()?.click() }}>Upload</button>
+            <button
+                onClick={(event) => {
+                    event.preventDefault();
+                    if (imageSrc()) {
+                        uploadFile();
+                    } else {
+                        setImageValid(true)
+                        fileInputRef()?.click();
+                    }
+                }}
+            >
+                {imageSrc() ? 'Upload' : 'Select Image'}
+            </button>
         </div>
     );
 };

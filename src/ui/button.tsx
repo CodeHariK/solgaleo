@@ -6,7 +6,7 @@ button {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--primary);
-    background: transparent;
+    background: var(--surface-container);
     border: none;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -33,7 +33,7 @@ button:hover {
 }
 
 .MaterialButton {
-    --mat-bg: var(--primary);
+    --mat-bg: var(--primary-container);
     --mat-color: var(--surface);
     --mat-border: none;
     --mat-hover-bg: var(--primary-container);

@@ -7,7 +7,7 @@
 --secondary-container : var : #E8DEF8 : #4A4458 ;
 
 --surface : var #FEF7FF : #141218 ;
---surface-container : var : #F3EDF7 : #211F26 ;
+--surface-container : var : #F3EDF775 : #382f4f75 ;
 
 --error : var : B3261E : #F2B8B5 ;
 --error-container : var : #F9DEDC : #8C1D18 ;

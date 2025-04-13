@@ -2,7 +2,7 @@
 import { render } from 'solid-js/web'
 
 import { AdvTest } from './page.adv';
-import { InputTest } from './page.ui';
+import { UiTest } from './page.ui';
 import { NavTest } from './page.nav';
 import { Route, Router } from '@solidjs/router';
 import { GridLayout } from '../src/ui/gridlayout';
@@ -16,7 +16,7 @@ import { TabTest } from './page.tabs';
 
 // Solgaleo.AddTheme("custom")
 
-render(() => <Router>
+render(() => <Router base="/solgaleo">
     <Route path="/" component={
         () => <GridLayout
             header={<TestHeader />}
@@ -26,8 +26,26 @@ render(() => <Router>
     <Route path="/adv" component={AdvTest} />
     <Route path="/svg" component={SvgTest} />
     <Route path="/fancy" component={FancyTest} />
-    <Route path="/input" component={InputTest} />
+    <Route path="/ui" component={UiTest} />
     <Route path="/grid" component={GridTest} />
     <Route path="/tabs" component={TabTest} />
+    <Route path="*" component={NotFound} />
 </Router>,
     document.body!)
+
+function NotFound() {
+    return (
+        <GridLayout
+            header={<TestHeader />}
+        >
+            <div style={{
+                "display": "flex",
+                "align-items": "center",
+                "justify-content": "center",
+                "height": "100%"
+            }}>
+                <h1>404 - Page Not Found</h1>
+            </div>
+        </GridLayout>
+    );
+}

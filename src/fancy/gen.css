@@ -6,6 +6,7 @@ src/marquee.tsx
 src/flicker.tsx
 src/glittercard.tsx
 src/rainbow.tsx
+src/transition.tsx
 */
 
 .light {
@@ -462,4 +463,36 @@ src/rainbow.tsx
     100% {
         background-position: 0% 50%;
     }
+}
+
+.TransitionContainer {
+    position: relative;
+    min-height: 100px;
+}
+
+.TransitionItem {
+    position: absolute;
+    width: 100%;
+}
+
+.TransitionEnter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.TransitionEnterActive {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 300ms ease-out;
+}
+
+.TransitionExit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.TransitionExitActive {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 300ms ease-in;
 }

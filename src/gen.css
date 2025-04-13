@@ -8,7 +8,7 @@ base.tsx
     --secondary: var #625B71 : #CCC2DC ;
     --secondary-container: #E8DEF8;
     --surface: var #FEF7FF : #141218 ;
-    --surface-container: #F3EDF7;
+    --surface-container: #F3EDF775;
     --error: B3261E;
     --error-container: #F9DEDC;
     --body-bg: white;
@@ -21,7 +21,7 @@ base.tsx
     --secondary: var #625B71 : #CCC2DC ;
     --secondary-container: #4A4458 ;
     --surface: var #FEF7FF : #141218 ;
-    --surface-container: #211F26 ;
+    --surface-container: #382f4f75 ;
     --error: #F2B8B5 ;
     --error-container: #8C1D18 ;
     --body-bg: black ;
