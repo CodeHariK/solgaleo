@@ -94,7 +94,7 @@ type CheckboxOption = {
 }
 
 type CheckboxGroupProps = {
-    id: string;
+    name: string;
     header?: string;
     horizontal?: boolean;
     checkboxes: Array<CheckboxOption>;
@@ -114,13 +114,13 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
                     <div>
                         <input
                             id={option().value}
+                            name={props.name}
                             type="checkbox"
-                            name={props.id}
                             value={option().value}
-                            checked={new Set(state().values[props.id]).has(option().value) || false}
+                            checked={new Set(state().values[props.name]).has(option().value) || false}
                             disabled={option().disabled}
                             onInput={() => {
-                                let s = new Set<string>(state().values[props.id])
+                                let s = new Set<string>(state().values[props.name])
                                 if (s.has(option().value)) {
                                     s.delete(option().value)
                                 } else {
@@ -128,7 +128,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
                                 }
                                 props.onChange?.(s)
                                 handleChange(
-                                    props.id,
+                                    props.name,
                                     props.checkboxes.filter((c) => {
                                         return s.has(c.value);
                                     }).map((c) => c.value))
@@ -155,7 +155,7 @@ type RadioOption = {
 };
 
 type RadioGroupProps = {
-    id: string;
+    name: string;
     header?: string;
     horizontal?: boolean;
     options: Array<RadioOption>;
@@ -174,13 +174,13 @@ export function RadioGroup(props: RadioGroupProps) {
                     <div>
                         <input
                             id={`radio-${option().value}`}
+                            name={props.name}
                             type="radio"
-                            name={props.id}
                             value={option().value}
-                            checked={state().values[props.id] === option().value}
+                            checked={state().values[props.name] === option().value}
                             disabled={option().disabled}
                             onChange={(e) => {
-                                handleChange(props.id, e.target.value)
+                                handleChange(props.name, e.target.value)
                                 props.onChange?.(e.target.value);
                             }}
                         />
@@ -204,7 +204,7 @@ type SelectOption = {
 };
 
 type SelectProps = {
-    id: string;
+    name: string;
     header?: string;
     options: Array<SelectOption>;
     disabled?: boolean;
@@ -219,11 +219,10 @@ export function Select(props: SelectProps) {
 
             <div>
                 <select
-                    id={props.id}
-                    name={props.id}
-                    value={state().values[props.id] || ""}
+                    name={props.name}
+                    value={state().values[props.name] || ""}
                     disabled={props.disabled}
-                    onChange={(e) => handleChange(props.id, e.target.value)}
+                    onChange={(e) => handleChange(props.name, e.target.value)}
                 >
                     <Key each={props.options} by="value">
                         {(option) => (
@@ -353,7 +352,6 @@ export function Select(props: SelectProps) {
 }
 
 .ErrorText {
-    margin-top: 0.5rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--error);
@@ -400,7 +398,7 @@ input[type="range"]::-webkit-slider-runnable-track {
     left: var(--value-left, 0);
     transform: translateX(-50%);
     background: var(--secondary-container);
-    color: var(--surface);
+    color: var(--secondary);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
     font-size: 0.75rem;

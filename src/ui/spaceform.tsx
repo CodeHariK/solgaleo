@@ -1,5 +1,6 @@
 import { createSignal, createContext, useContext, Show, type JSX } from 'solid-js';
 import { ObjectSchema } from 'yup';
+import { CssUI } from './gen';
 
 export type SpaceState = {
     values: Record<string, any>; // Use appropriate types for your form values
@@ -132,6 +133,6 @@ export function SpaceFormError() {
     const { state } = context;
 
     return (
-        <div>{state().formerror}</div>
+        <div class={CssUI.ErrorText}>{state().formerror}</div>
     );
 }

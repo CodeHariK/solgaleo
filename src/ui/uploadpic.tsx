@@ -1,31 +1,35 @@
+import { useSpaceContext } from "./spaceform";
 import { createSignal, type JSX } from 'solid-js';
 import { CssUI } from './gen';
 
 /* CSS:
 .UploadContainer {
-    display: inline-block;
+    // display: inline-block;
+    border: 2px dashed var(--primary);
+    margin: 0.5rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: baseline;
+    width: max-content;
 }
 
 .Dropzone {
-    width: 300px;
-    height: 250px;
-    border: 2px dashed var(--primary);
+    min-height: 250px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     text-align: center;
-    margin: 0.5rem;
-    border-radius: 1rem;
-    color: var(--secondary);
+    cursor: pointer;
 }
 .DropzoneDragging {
-    border-color: var(--primary);
-    color: var(--primary);
+    background: var(--surface);
 }
 
 .ImagePreview {
-    width: 100%;
+    // width: 100%;
     height: auto;
     flex-shrink: 0;
     display: block;
@@ -48,64 +52,94 @@ import { CssUI } from './gen';
 }
 */
 
-type ImageUploaderProps = {
+type FileUploaderProps = {
+    name: string;
+    header?: string;
+    accept: string[];
     uploadFunc: (formdata: FormData) => { valid: boolean, info: JSX.Element };
 };
 
-export function ImageUploader(props: ImageUploaderProps) {
-    const [imageValid, setImageValid] = createSignal(true);
-    const [imageCategories, setImageCategories] = createSignal<JSX.Element>();
+export function FileUploader(props: FileUploaderProps) {
+    const [fileValid, setFildValid] = createSignal(true);
+    const [fileInfo, setFileInfo] = createSignal<JSX.Element>();
     const [imageSrc, setImageSrc] = createSignal('');
     const [isDragging, setIsDragging] = createSignal(false);
     const [fileInputRef, setFileInputRef] = createSignal<HTMLInputElement | null>(null);
-    const [selectedFile, setSelectedFile] = createSignal<File | string | null>(null);
+
+    const { state, handleChange } = useSpaceContext();
 
     const uploadFile = async () => {
-        const file = selectedFile();
-        if (!file) {
+        const formData = state().values[props.name];
+        if (!formData) {
             alert('Please select a file.');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('item', file);
-
-        console.log('File from FormData:', formData.get('item'));
-
         try {
             let { valid, info } = props.uploadFunc(formData)
-            setImageValid(valid)
-            setImageCategories(info)
+            setFildValid(valid)
+            setFileInfo(info)
         } catch (error) {
             console.error('Error uploading file:', error);
         }
     };
 
+    function handleFormData(file: File | string) {
+        const formData = new FormData();
+
+        if (file instanceof File) {
+            formData.append('file', file);
+        } else if (typeof file === "string") {
+            if (file.startsWith("data:image")) {
+                formData.append('data', file);
+            } else {
+                formData.append('url', file);
+            }
+        }
+
+        formData.forEach((_value, key) => {
+            console.log(key, _value)
+        })
+
+        handleChange(props.name, formData);
+    }
+
     const handleDrop = (event: DragEvent) => {
         event.preventDefault();
         setIsDragging(false);
+
+        setFildValid(true)
+
         const items = event.dataTransfer?.items;
+
+        // for (let i = 0; i < items.length; i++) {
+        //     console.log(items[i], items[i].kind, items[i].type)
+        // }
 
         if (items && items[0].kind === 'file') {
             // os file drag
             const file = items[0].getAsFile();
-            if (file && file.type.startsWith('image/')) {
-                setImageSrc(URL.createObjectURL(file));
-                setSelectedFile(file);
-            } else {
-                alert('Please drop a valid image file.');
+            console.log(file.type)
+            if (file && startsWithPattern(file.type, props.accept)) {
+                if (startsWithPattern(file.type, ["image/"])) {
+                    setImageSrc(URL.createObjectURL(file));
+                }
+                handleFormData(file);
             }
         } else {
             // browser file drag
             const url = event.dataTransfer?.getData('text/uri-list');
             if (url) {
                 setImageSrc(url);
-                setSelectedFile(url)
+
+                handleFormData(url);
             }
         }
     };
 
     const handleFileInputChange = (event: Event) => {
+        setFildValid(true)
+
         const target = event.target as HTMLInputElement;
         const file = target.files?.[0];
         if (file) {
@@ -113,7 +147,8 @@ export function ImageUploader(props: ImageUploaderProps) {
             reader.readAsDataURL(file);
             reader.onload = () => {
                 setImageSrc(reader.result as string);
-                setSelectedFile(file);
+
+                handleFormData(file);
             };
 
             // Reset the input value to allow the same file to be uploaded again
@@ -122,56 +157,91 @@ export function ImageUploader(props: ImageUploaderProps) {
     };
 
     return (
-        <div class={CssUI.UploadContainer}>
-            <div
-                id="dropzone"
-                class={`${CssUI.Dropzone} ${isDragging() ? CssUI.DropzoneDragging : ''}`}
-                onDragOver={(event) => {
-                    event.preventDefault();
-                    setIsDragging(true);
-                }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={handleDrop}
-                onClick={() => {
-                    setImageValid(true)
-                    fileInputRef()?.click()
-                }}
-            >
-                {!imageSrc() ? (
-                    "Drag and drop an image here"
-                ) : (
-                    <img
-                        id="imagePreview"
-                        class={`${CssUI.ImagePreview} ${!imageValid() ? CssUI.ImagePreviewInvalid : ''}`}
-                        src={imageSrc()}
-                    />
-                )}
-                {(imageSrc() && !imageValid()) && (
-                    <div class={CssUI.InvalidMessage}>Image not valid</div>
-                )}
+
+        <fieldset>
+            {props.header && <legend>{props.header}</legend>}
+
+            <div class={CssUI.UploadContainer}>
+                <div
+                    class={`${CssUI.Dropzone} ${isDragging() ? CssUI.DropzoneDragging : ''}`}
+                    onDragOver={(event) => {
+                        event.preventDefault();
+                        setIsDragging(true);
+                    }}
+                    onDragLeave={() => setIsDragging(false)}
+                    onDrop={handleDrop}
+                    onClick={() => { fileInputRef()?.click() }}
+                >
+                    {!imageSrc() ? (
+                        "Drag and drop an image here"
+                    ) : (
+                        <img
+                            class={`${CssUI.ImagePreview} ${!fileValid() ? CssUI.ImagePreviewInvalid : ''}`}
+                            src={imageSrc()}
+                            onChange={(_) => {
+                                setFildValid(true)
+                            }}
+                            onError={(_) => {
+                                setFildValid(false)
+                            }}
+                        />
+                    )}
+                    {(imageSrc() && !fileValid()) && (
+                        <div class={CssUI.InvalidMessage}>Image not valid</div>
+                    )}
+                </div>
+
+                {state().values[props.name] &&
+                    (() => {
+                        const file = state().values[props.name].get('file') as File;
+
+                        if (!file) return
+
+                        return <>
+                            <p>Name: {file.name}</p>
+                            <p>Size: {(file.size / 1024).toFixed(2)} KB</p>
+                            <p>Type: {file.type}</p>
+                            <p>Last Modified: {new Date(file.lastModified).toLocaleString()}</p>
+                        </>
+                    })()
+                }
+
+                {fileInfo()}
+
+                <input
+                    name={props.name}
+                    type="file"
+                    accept={props.accept.join(",")}
+                    class={CssUI.HiddenInput}
+                    ref={setFileInputRef}
+                    onChange={handleFileInputChange}
+                />
+                <button
+                    onClick={(event) => {
+                        event.preventDefault();
+                        if (imageSrc()) {
+                            uploadFile();
+                        } else {
+                            fileInputRef()?.click();
+                        }
+                    }}
+                >
+                    {imageSrc() ? 'Upload' : 'Select'}
+                </button>
             </div>
-            {imageCategories()}
-            <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                class={CssUI.HiddenInput}
-                ref={setFileInputRef}
-                onChange={handleFileInputChange}
-            />
-            <button
-                onClick={(event) => {
-                    event.preventDefault();
-                    if (imageSrc()) {
-                        uploadFile();
-                    } else {
-                        setImageValid(true)
-                        fileInputRef()?.click();
-                    }
-                }}
-            >
-                {imageSrc() ? 'Upload' : 'Select Image'}
-            </button>
-        </div>
+        </fieldset>
     );
 };
+
+function startsWithPattern(inputString: string, patterns: string[]) {
+    for (const pattern of patterns) {
+        // Convert the string pattern to a RegExp object
+        const regex = new RegExp('^' + pattern.replace(/\*\*/g, '.*').replace(/\*/g, '[^/]*'));
+
+        // Test the input string against the regex
+        if (regex.test(inputString)) {
+            return true; // Return true if there's a match
+        }
+    }
+    return false; // Return false if no patterns match
+}

@@ -20,7 +20,7 @@ export function Modal1() {
                         <Input name="firstname" label='Your Full Name*' type="text" placeholder="Enter your first name" />
                         <Input name="email" label='Your Email*' type="text" placeholder="Enter your email here" />
 
-                        <Select header="Country" id="country" options={[
+                        <Select header="Country" name="country" options={[
                             { value: "us", label: "United States" },
                             { value: "ca", label: "Canada" },
                             { value: "fr", label: "France" },

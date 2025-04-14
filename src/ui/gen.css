@@ -27,7 +27,7 @@ src/input.tsx
     --icon-bg: var(--surface-container);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
-    --mat-color: var(--surface);
+    --mat-color: var(--primary);
     --mat-bg: var(--primary-container);
     --mat-border: none;
     --mat-hover-color: var(--primary);
@@ -69,7 +69,7 @@ src/input.tsx
     --icon-bg: var(--surface-container);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
-    --mat-color: var(--surface);
+    --mat-color: var(--primary);
     --mat-bg: var(--primary-container);
     --mat-border: none;
     --mat-hover-color: var(--primary);
@@ -130,30 +130,31 @@ src/input.tsx
 }
 
 .UploadContainer {
-    display: inline-block;
+    border: 2px dashed var(--primary);
+    margin: 0.5rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: baseline;
+    width: max-content;
 }
 
 .Dropzone {
-    width: 300px;
-    height: 250px;
-    border: 2px dashed var(--primary);
+    min-height: 250px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     text-align: center;
-    margin: 0.5rem;
-    border-radius: 1rem;
-    color: var(--secondary);
+    cursor: pointer;
 }
 
 .DropzoneDragging {
-    border-color: var(--primary);
-    color: var(--primary);
+    background: var(--surface);
 }
 
 .ImagePreview {
-    width: 100%;
     height: auto;
     flex-shrink: 0;
     display: block;
@@ -456,7 +457,7 @@ ul.DropdownNested {
 }
 
 button {
-    display: flex;
+    display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
     font-size: 0.75rem;
@@ -473,6 +474,7 @@ button {
 
 button:hover {
     opacity: 0.9;
+    background: var(--surface);
 }
 
 .IconButton {
@@ -703,7 +705,6 @@ label p {
 }
 
 .ErrorText {
-    margin-top: 0.5rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--error);
@@ -748,7 +749,7 @@ input[type="range"]::-webkit-slider-runnable-track {
     left: var(--value-left, 0);
     transform: translateX(-50%);
     background: var(--secondary-container);
-    color: var(--surface);
+    color: var(--secondary);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
     font-size: 0.75rem;

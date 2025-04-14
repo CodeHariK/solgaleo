@@ -1,16 +1,16 @@
 /*CSS:
 
---primary : var : #6750A4 : #D0BCFF ;
---primary-container : var : #EADDFF : #4F378B ;
+--primary : var : #6750A4 : #D0BCFF;
+--primary-container : var : #EADDFF : #4F378B;
 
---secondary : var #625B71 : #CCC2DC ;
---secondary-container : var : #E8DEF8 : #4A4458 ;
+--secondary : var : #625B71 : #CCC2DC;
+--secondary-container : var : #E8DEF8 : #4A4458;
 
---surface : var #FEF7FF : #141218 ;
---surface-container : var : #F3EDF775 : #382f4f75 ;
+--surface : var : #FEF7FF : #64626b87;
+--surface-container : var : #F3EDF775 : #4234678f;
 
---error : var : B3261E : #F2B8B5 ;
---error-container : var : #F9DEDC : #8C1D18 ;
+--error : var : #B3261E : #ff7262;
+--error-container : var : #F9DEDC : #8C1D18;
 
 *::-webkit-scrollbar {
   height: 8px;

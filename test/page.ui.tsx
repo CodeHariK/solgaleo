@@ -1,16 +1,10 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, ImageUploader } from '../src/ui/gen.ts';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader } from '../src/ui/gen.ts';
 import { IconCart, IconCross, IconDown, IconFilter, IconGoogle } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 
 export function UiTest() {
-
-    return <ImageUploader uploadFunc={(formdata) => {
-        console.log('File from FormData:', JSON.stringify(formdata.get('item')));
-
-        return { valid: true, info: <p>{JSON.stringify(formdata.get('item'))}</p> }
-    }} />
 
     return <GridLayout
         header={<TestHeader />}
@@ -128,12 +122,12 @@ export function UiTest() {
             }}
         >
 
-            <CheckboxGroup header="Countries" id={"hello"} checkboxes={checkboxes} />
+            <CheckboxGroup header="Countries" name={"hello"} checkboxes={checkboxes} />
 
-            <Select id="country" options={selectOptions} header="Country" />
+            <Select name="country" options={selectOptions} header="Country" />
 
             <RadioGroup
-                id="countries"
+                name="countries"
                 header="Countries"
                 horizontal
                 options={[
@@ -157,12 +151,23 @@ export function UiTest() {
 
             <RatingsBar ratings={3.8} reviews={5} />
 
+            <FileUploader
+                name='pic'
+                accept={["image/*", "application/*"]}
+                uploadFunc={() => {
+                    return {
+                        valid: false,
+                        info: <>Hello</>
+                    }
+                }} />
+
             <SpaceFormError />
 
             <button type="submit">Submit</button>
             <button type="reset">Reset</button>
 
             <SpaceDebugInfo />
+
         </SpaceForm>
 
         <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>

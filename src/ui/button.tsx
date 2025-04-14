@@ -1,6 +1,6 @@
 /*CSS:
 button {
-    display: flex;
+    display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
     font-size: 0.75rem;
@@ -16,6 +16,7 @@ button {
 }
 button:hover {
     opacity: 0.9;
+    background: var(--surface);
 }
 
 .IconButton {
@@ -34,7 +35,7 @@ button:hover {
 
 .MaterialButton {
     --mat-bg: var(--primary-container);
-    --mat-color: var(--surface);
+    --mat-color: var(--primary);
     --mat-border: none;
     --mat-hover-bg: var(--primary-container);
     --mat-hover-color: var(--primary);
