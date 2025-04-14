@@ -154,7 +154,7 @@ export function UiTest() {
             <FileUploader
                 name='pic'
                 accept={["image/*", "application/*"]}
-                uploadFunc={() => {
+                uploadFunc={async () => {
                     return {
                         valid: false,
                         info: <>Hello</>

@@ -1,6 +1,5 @@
 /*
 src/position.tsx
-src/uploadpic.tsx
 src/gridlayout.tsx
 src/heading.tsx
 src/dropdown.tsx
@@ -12,9 +11,9 @@ src/input.tsx
 .light {
     --PositionBox--button-col-hover: #90328b;
     --PositionBox--button-background-color-hover: #efefef;
+    --a-hover-col: #ffac90;
+    --a-active-col: #cf90ff;
     --a-col: #ffe4c4;
-    --a--col-hover: #ffac90;
-    --a--col-active: #cf90ff;
     --Dropdown-bg: #e0e0e0;
     --DropdownHeader-col: #9c40ca;
     --DropdownHeader-bg: #cfcfcf;
@@ -54,9 +53,9 @@ src/input.tsx
 .night {
     --PositionBox--button-col-hover: #faa0f6;
     --PositionBox--button-background-color-hover: #353535;
+    --a-hover-col: #ffac90;
+    --a-active-col: #cf90ff;
     --a-col: #ffe4c4;
-    --a--col-hover: #ffac90;
-    --a--col-active: #cf90ff;
     --Dropdown-bg: #575757;
     --DropdownHeader-col: #8a87e3;
     --DropdownHeader-bg: #454545;
@@ -127,54 +126,6 @@ src/input.tsx
     background-color: #f3f63b33;
     cursor: move;
     pointer-events: auto;
-}
-
-.UploadContainer {
-    border: 2px dashed var(--primary);
-    margin: 0.5rem;
-    border-radius: 1rem;
-    padding: 1rem;
-    flex-direction: column;
-    align-items: baseline;
-    width: max-content;
-}
-
-.Dropzone {
-    min-height: 250px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    text-align: center;
-    cursor: pointer;
-}
-
-.DropzoneDragging {
-    background: var(--surface);
-}
-
-.ImagePreview {
-    height: auto;
-    flex-shrink: 0;
-    display: block;
-    margin: 0 auto;
-}
-
-.ImagePreviewInvalid {
-    filter: blur(8px);
-}
-
-.InvalidMessage {
-    position: absolute;
-    color: var(--surface);
-    background: var(--primary);
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-}
-
-.HiddenInput {
-    display: none;
 }
 
 .GridLayout {
@@ -378,11 +329,12 @@ a {
 }
 
 a:hover {
-    color: var(--a--col-hover);
+    color: var(--a-hover-col);
 }
 
-a:active {
-    color: var(--a--col-active);
+a:active,
+a.active {
+    color: var(--a-active-col);
 }
 
 @media (min-width: 768px) {
@@ -760,4 +712,52 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]:hover ~ .RangeValue,
 input[type="range"]:focus ~ .RangeValue {
     opacity: 1;
+}
+
+.UploadContainer {
+    border: 2px dashed var(--primary);
+    margin: 0.5rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: baseline;
+    width: max-content;
+}
+
+.Dropzone {
+    min-height: 250px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+}
+
+.DropzoneDragging {
+    background: var(--surface);
+}
+
+.ImagePreview {
+    height: auto;
+    flex-shrink: 0;
+    display: block;
+    margin: 0 auto;
+}
+
+.ImagePreviewInvalid {
+    filter: blur(8px);
+}
+
+.InvalidMessage {
+    position: absolute;
+    color: var(--surface);
+    background: var(--primary);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.HiddenInput {
+    display: none;
 }

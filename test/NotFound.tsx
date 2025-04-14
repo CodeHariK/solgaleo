@@ -9,7 +9,7 @@ import { SpaceLayout } from '../src/ui/SpaceLayout';
 export function NotFound() {
    return (
       <SpaceLayout title='Page Not Found'
-         header={<Header rightChildren={<ThemeToggle />} />}
+         header={<Header right={<ThemeToggle />} />}
          footer={<div>Footer</div>}>
 
          <section>

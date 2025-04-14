@@ -21,12 +21,8 @@ export const CssNAV = {
     BreadcrumbLinks: "BreadcrumbLinks",
     BreadcrumbLink: "BreadcrumbLink",
     BreadcrumbSeparator: "BreadcrumbSeparator",
-    HeaderLink: "HeaderLink",
     HeaderNav: "HeaderNav",
     HeaderLeft: "HeaderLeft",
-    HeaderLogo: "HeaderLogo",
-    HeaderLogoContent: "HeaderLogoContent",
-    HeaderIcon: "HeaderIcon",
     HeaderLinks: "HeaderLinks",
     HeaderRight: "HeaderRight",
     ModalOverlay: "ModalOverlay",
@@ -38,9 +34,6 @@ export const CssNAV = {
     ModalScale: "ModalScale",
     Show: "Show",
 
-    varHeaderLinkCol: "--HeaderLink-col",
-    varHeaderLinkColHover: "--HeaderLink-col-hover",
-    varHeaderLinkColActive: "--HeaderLink-col-active",
     varModalContentBg: "--ModalContent-bg"
 } as const;
 

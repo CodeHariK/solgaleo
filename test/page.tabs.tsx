@@ -1,8 +1,33 @@
+import { createEffect } from "solid-js";
 import { RoutedTabs } from "../src/gen";
 import { GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
+function updateCurrentPageUrl(basePath: string, params: string): void {
+    // Create a URL object from the base path
+    const url = new URL(basePath, window.location.origin); // Use the current origin
+
+    // Split the params string into individual key-value pairs
+    const pairs = params.split('&');
+
+    // Add each parameter to the URL
+    pairs.forEach(pair => {
+        const [key, value] = pair.split('=');
+        if (key && value) {
+            url.searchParams.set(key, decodeURIComponent(value)); // Decode value to handle any encoded characters
+        }
+    });
+
+    // Update the current page URL without reloading
+    window.history.pushState({}, '', url.toString());
+}
+
+
 export function TabTest() {
+
+    createEffect(() => {
+        updateCurrentPageUrl(location.pathname, "two.light=home&two.night=settings.profile&one.night=settings.account.security&one.light=settings.account.notifications");
+    })
 
     return <GridLayout
         header={<TestHeader />}

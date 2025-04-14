@@ -26,14 +26,13 @@ export function NavTest() {
         ]} />
 
         <N.Header
-            iconSrc="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png"
-            title={<p>Solgaleo</p>}
+            title={<p><img src="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png" />Solgaleo</p>}
             links={[
-                <N.HeaderLink href="/products" title="Products" />,
-                <N.HeaderLink href="/account" title="Accounts" />,
-                <N.HeaderLink href="/docs" title="Docs" />
+                <a href="/products" title="Products" />,
+                <a href="/account" title="Accounts" />,
+                <a href="/docs" title="Docs" />
             ]}
-            rightChildren={<ThemeToggle />}
+            right={<ThemeToggle />}
         />
 
         {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}

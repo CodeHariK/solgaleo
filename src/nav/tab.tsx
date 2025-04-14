@@ -1,5 +1,4 @@
 import { For, createSignal, JSX, createEffect } from 'solid-js';
-import { useNavigate, useLocation } from '@solidjs/router';
 import { CssNAV } from './gen';
 
 /* CSS:
@@ -28,6 +27,17 @@ import { CssNAV } from './gen';
 
 */
 
+function updateQueryParam(key: string, value: string): void {
+    // Get the current URL
+    const url = new URL(window.location.href);
+
+    // Update the query parameter
+    url.searchParams.set(key, value);
+
+    // Update the browser's address bar
+    window.history.pushState({}, '', url.toString());
+}
+
 type RoutedTabsProps = {
     tabs: Tab[];
     defaultTab?: string;
@@ -42,9 +52,6 @@ type RoutedTabsProps = {
 };
 
 export function RoutedTabs(props: RoutedTabsProps) {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const baseRoute = location.pathname;
 
     // Parse query params instead of hash
     const parseParams = () => {
@@ -76,6 +83,8 @@ export function RoutedTabs(props: RoutedTabsProps) {
             }
         };
 
+        handleLocationChange()
+
         window.addEventListener('popstate', handleLocationChange);
         return () => window.removeEventListener('popstate', handleLocationChange);
     });
@@ -93,8 +102,7 @@ export function RoutedTabs(props: RoutedTabsProps) {
                     const params = new URLSearchParams(location.search);
                     params.set(props.id, tabId);
 
-                    const route = baseRoute || location.pathname;
-                    navigate(`${route}?${params.toString()}`);
+                    updateQueryParam(props.id, tabId);
                 }
             }
             styles={props.styles}

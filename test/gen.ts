@@ -1,7 +1,6 @@
 
 import "./gen.css"
 export * from "./page.fancy.tsx";
-export * from "./modal1.tsx";
 export * from "./page.nav.tsx";
 export * from "./page.adv.tsx";
 export * from "./storybook.tsx";

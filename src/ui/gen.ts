@@ -2,7 +2,6 @@ import '../gen.css'
 import "./gen.css"
 export * from "./position.tsx";
 export * from "./ratingsbar.tsx";
-export * from "./uploadpic.tsx";
 export * from "./gridlayout.tsx";
 export * from "./heading.tsx";
 export * from "./SpaceLayout.tsx";
@@ -15,13 +14,6 @@ export * from "./spaceform.tsx";
 export const CssUI = {
     PositionBox: "PositionBox",
     SolDragBox: "SolDragBox",
-    UploadContainer: "UploadContainer",
-    Dropzone: "Dropzone",
-    DropzoneDragging: "DropzoneDragging",
-    ImagePreview: "ImagePreview",
-    ImagePreviewInvalid: "ImagePreviewInvalid",
-    InvalidMessage: "InvalidMessage",
-    HiddenInput: "HiddenInput",
     GridLayout: "GridLayout",
     GridLayoutFixed: "GridLayoutFixed",
     GridLayoutScroll: "GridLayoutScroll",
@@ -33,6 +25,7 @@ export const CssUI = {
     GridScrollContainer: "GridScrollContainer",
     GridContent: "GridContent",
     GridLayoutFlow: "GridLayoutFlow",
+    Active: "active",
     Avatar: "avatar",
     Dropdown: "Dropdown",
     DropdownHeader: "DropdownHeader",
@@ -49,14 +42,19 @@ export const CssUI = {
     ErrorTextInput: "ErrorTextInput",
     ErrorText: "ErrorText",
     RangeValue: "RangeValue",
+    UploadContainer: "UploadContainer",
+    Dropzone: "Dropzone",
+    DropzoneDragging: "DropzoneDragging",
+    ImagePreview: "ImagePreview",
+    ImagePreviewInvalid: "ImagePreviewInvalid",
+    InvalidMessage: "InvalidMessage",
+    HiddenInput: "HiddenInput",
 
     varPositionBoxButtonColHover: "--PositionBox--button-col-hover",
     varPositionBoxButtonBackgroundColorHover: "--PositionBox--button-background-color-hover",
-    varPrimary: "--primary",
-    varSurface: "--surface",
+    varAHoverCol: "--a-hover-col",
+    varAActiveCol: "--a-active-col",
     varACol: "--a-col",
-    varAColHover: "--a--col-hover",
-    varAColActive: "--a--col-active",
     varDropdownBg: "--Dropdown-bg",
     varDropdownHeaderCol: "--DropdownHeader-col",
     varDropdownHeaderBg: "--DropdownHeader-bg",
@@ -66,7 +64,9 @@ export const CssUI = {
     varDropdownItemBorder: "--DropdownItem-border",
     varDropdownItemColHover: "--DropdownItem-col-hover",
     varDropdownItemBgHover: "--DropdownItem-bg-hover",
+    varPrimary: "--primary",
     varSurfaceContainer: "--surface-container",
+    varSurface: "--surface",
     varPrimaryContainer: "--primary-container",
     varIconBg: "--icon-bg",
     varIconBorderRadius: "--icon-border-radius",

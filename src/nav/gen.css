@@ -7,16 +7,10 @@ src/modal.tsx
 */
 
 .light {
-    --HeaderLink-col: #374151;
-    --HeaderLink-col-hover: red;
-    --HeaderLink-col-active: yellow;
     --ModalContent-bg: #4d84dc40;
 }
 
 .night {
-    --HeaderLink-col: #ffffff ;
-    --HeaderLink-col-hover: green ;
-    --HeaderLink-col-active: pink;
     --ModalContent-bg: #4d84dc40;
 }
 
@@ -122,23 +116,6 @@ src/modal.tsx
     margin: 0 0.5rem;
 }
 
-.HeaderLink {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: color 0.2s;
-    color: var(--HeaderLink-col);
-}
-
-.HeaderLink:hover {
-    color: var(--HeaderLink-col-hover);
-}
-
-.HeaderLink:active {
-    color: var(--HeaderLink-col-active);
-}
-
 .HeaderNav {
     margin: 0 auto;
     padding: 0 1rem;
@@ -147,49 +124,25 @@ src/modal.tsx
     justify-content: space-between;
 }
 
+.HeaderNav a {
+    text-decoration: none;
+}
+
 .HeaderLeft {
     display: flex;
     align-items: center;
     gap: 2rem;
 }
 
-.HeaderLogo {
-    text-decoration: none;
-}
-
-.HeaderLogoContent {
+.HeaderLinks {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-}
-
-.HeaderIcon {
-    min-width: 4rem;
-}
-
-.HeaderIcon img {
-    display: block;
-    width: auto;
-    height: 3rem;
-}
-
-.HeaderLinks {
-    display: none;
-    list-style-type: none;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.5rem;
+    gap: 2rem;
 }
 
 .HeaderRight {
     display: flex;
     align-items: center;
-}
-
-@media (min-width: 800px) {
-    .HeaderLinks {
-        display: flex;
-    }
 }
 
 @media (min-width: 1024px) {

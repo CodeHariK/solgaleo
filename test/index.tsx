@@ -1,6 +1,5 @@
-/* @refresh reload */
+// /* @refresh reload */
 import { render } from 'solid-js/web'
-
 import { AdvTest } from './page.adv';
 import { UiTest } from './page.ui';
 import { NavTest } from './page.nav';
@@ -12,9 +11,10 @@ import { TestHeader } from './common';
 import { GridTest } from './page.grid';
 import { TabTest } from './page.tabs';
 
-// import * as Solgaleo from "solgaleo";
-
-// Solgaleo.AddTheme("custom")
+// Theme customization
+import "./custom.css"
+import { AddTheme } from "../src/ui/theme_toggle"
+AddTheme("custom")
 
 render(() => <Router base="/solgaleo">
     <Route path="/" component={
@@ -32,6 +32,7 @@ render(() => <Router base="/solgaleo">
     <Route path="*" component={NotFound} />
 </Router>,
     document.body!)
+
 
 function NotFound() {
     return (

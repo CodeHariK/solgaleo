@@ -59,10 +59,12 @@ a {
     color: var : #ffe4c4 : #ffe4c4;
 
     :hover {
-        color: var : #ffac90 : #ffac90;
+        --a-hover-col: var : #ffac90 : #ffac90;
+        color: var(--a-hover-col);
     }
-    :active {
-        color: var : #cf90ff : #cf90ff;
+    :active, .active {
+        --a-active-col: var : #cf90ff : #cf90ff; 
+        color: var(--a-active-col);
     }
 }
 

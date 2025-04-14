@@ -1,22 +1,26 @@
 import { For, JSX } from "solid-js";
-import { Header, HeaderLink } from "../src/nav/header";
+import { Header } from "../src/nav/header";
 import { CssTEST } from "./gen";
 import { RandomColor } from "../src/utils/color";
 import { ThemeToggle } from "../src/gen";
+import { A } from "@solidjs/router";
 
 export function TestHeader() {
     return <Header
-        title={"Solgaleo"}
+        title={<A href="/">
+            <img src="./logo.png" />
+            <p>Solgaleo</p>
+        </A>}
         links={[
-            <HeaderLink href='/nav' title='Nav' />,
-            <HeaderLink href='/adv' title='Adv' />,
-            <HeaderLink href='/svg' title='Svg' />,
-            <HeaderLink href='/fancy' title='Fancy' />,
-            <HeaderLink href='/ui' title='Ui' />,
-            <HeaderLink href='/grid' title='Grid' />,
-            <HeaderLink href='/tabs?two.light=home&two.night=settings.account.security&one.night=settings.account.notifications&one.light=settings.profile' title='Tabs' />,
+            <A href='/nav' title='Nav'>Nav</A>,
+            <A href='/adv' title='Adv' >Adv</A>,
+            <A href='/svg' title='Svg' >Svg</A>,
+            <A href='/fancy' title='Fancy' >Fancy</A>,
+            <A href='/ui' title='Ui' >Ui</A>,
+            <A href='/grid' title='Grid'>Grid</A>,
+            <A href='/tabs?two.light=home&two.night=settings.account.security&one.night=settings.account.notifications&one.light=settings.profile' title='Tabs' >Tabs</A>,
         ]}
-        rightChildren={[
+        right={[
             <ThemeToggle />
         ]}
     />;

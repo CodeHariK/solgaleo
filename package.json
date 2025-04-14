@@ -6,7 +6,7 @@
   "private": false,
   "exports": {
     ".": {
-      "types": "./dist/solgaleo.index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/solgaleo.index.es.js"
     },
     "./adv": {
@@ -20,10 +20,6 @@
     "./nav": {
       "types": "./dist/nav/gen.d.ts",
       "import": "./dist/solgaleo.nav.es.js"
-    },
-    "./pages": {
-      "types": "./dist/pages/gen.d.ts",
-      "import": "./dist/solgaleo.pages.es.js"
     },
     "./svg": {
       "types": "./dist/svg/gen.d.ts",
@@ -48,17 +44,20 @@
     "predeploy": "bun run build && bun run test:build",
     "deploy": "gh-pages -d dist-test"
   },
+  "dependencies": {},
   "peerDependencies": {
     "@solid-primitives/keyed": "^1.5.0",
-    "@solidjs/router": "^0.15.3",
     "@solidjs/meta": "^0.29.4",
     "solid-js": "^1.9.5",
+    "solid-transition-group": "^0.3.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.8",
+    "@solidjs/router": "^0.15.3",
+    "@types/bun": "^1.2.9",
+    "gh-pages": "^6.3.0",
     "typescript": "~5.7.3",
-    "vite": "^6.2.5",
+    "vite": "^6.2.6",
     "vite-plugin-dts": "^4.5.3",
     "vite-plugin-solid": "^2.11.6"
   },
@@ -79,8 +78,5 @@
     "dist/*.js",
     "dist/*.d.ts",
     "dist/*.css"
-  ],
-  "dependencies": {
-    "gh-pages": "^6.3.0"
-  }
+  ]
 }

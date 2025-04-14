@@ -11,4 +11,17 @@
   <script type="module" src="/src/index.tsx"></script>
 </body>
 
+<script>
+  if (
+    localStorage.getItem("theme") === "night" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("night");
+  } else {
+    document.documentElement.classList.remove("night");
+  }
+</script>
+
+
 </html>
