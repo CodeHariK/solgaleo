@@ -15,6 +15,12 @@ export default defineConfig({
       writeBundle() {
         fs.copyFileSync('test/404.html', 'dist-test/404.html');
       }
+    },
+    {
+      name: 'copy-logo',
+      writeBundle() {
+        fs.copyFileSync('test/logo.png', 'dist-test/logo.png');
+      }
     }
   ],
   build: {

@@ -3,22 +3,23 @@ import { Header } from "../src/nav/header";
 import { CssTEST } from "./gen";
 import { RandomColor } from "../src/utils/color";
 import { ThemeToggle } from "../src/gen";
-import { A } from "@solidjs/router";
+
+const baseroute = "/solgaleo"
 
 export function TestHeader() {
     return <Header
-        title={<A href="/">
-            <img src="./logo.png" />
+        title={<a href="/">
+            <img src={baseroute + "/logo.png"} alt="solgaleo" />
             <p>Solgaleo</p>
-        </A>}
+        </a>}
         links={[
-            <A href='/nav' title='Nav'>Nav</A>,
-            <A href='/adv' title='Adv' >Adv</A>,
-            <A href='/svg' title='Svg' >Svg</A>,
-            <A href='/fancy' title='Fancy' >Fancy</A>,
-            <A href='/ui' title='Ui' >Ui</A>,
-            <A href='/grid' title='Grid'>Grid</A>,
-            <A href='/tabs?two.light=home&two.night=settings.account.security&one.night=settings.account.notifications&one.light=settings.profile' title='Tabs' >Tabs</A>,
+            <a href={baseroute + '/nav'} title='Nav'>Nav</a>,
+            <a href={baseroute + '/adv'} title='Adv' >Adv</a>,
+            <a href={baseroute + '/svg'} title='Svg' >Svg</a>,
+            <a href={baseroute + '/fancy'} title='Fancy' >Fancy</a>,
+            <a href={baseroute + '/ui'} title='Ui' >Ui</a>,
+            <a href={baseroute + '/grid'} title='Grid'>Grid</a>,
+            <a href={baseroute + '/tabs?two.light=home&two.night=settings.account.security&one.night=settings.account.notifications&one.light=settings.profile'} title='Tabs' >Tabs</a>,
         ]}
         right={[
             <ThemeToggle />

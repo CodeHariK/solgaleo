@@ -64,4 +64,46 @@ button:hover {
     color: var(--out-hover-color);
     background: var(--out-hover-bg);
 }
+
+.ErrorButton {
+    color: var(--error);
+    background: var(--error-container);
+}
 */
+
+
+import { createSignal, JSX } from "solid-js";
+import { CssUI } from "./gen";
+
+interface AsyncButtonProps {
+    onClick: () => Promise<void>; // Async function to be executed
+    children: JSX.Element; // Button content
+}
+
+export function AsyncButton(props: AsyncButtonProps) {
+    const [isLoading, setIsLoading] = createSignal(false);
+    const [hasError, setHasError] = createSignal(false);
+
+    const handleClick = async () => {
+        setIsLoading(true);
+        setHasError(false); // Reset error state before the async call
+        try {
+            await props.onClick(); // Call the async function
+        } catch (error) {
+            console.error(error); // Log the error
+            setHasError(true); // Set error state
+        } finally {
+            setIsLoading(false); // Always reset loading state
+        }
+    };
+
+    return (
+        <button
+            onClick={handleClick}
+            disabled={isLoading()} // Disable button while loading
+            class={hasError() ? CssUI.ErrorButton : ""} // Apply error class if there's an error
+        >
+            {isLoading() ? "Loading..." : props.children}
+        </button>
+    );
+};

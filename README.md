@@ -52,5 +52,27 @@ import * as SVG from "solgaleo/svg"
 ```ts
 import "./custom.css"
 import * as UI from "solgaleo/ui"
-UI.AddTheme("custom")
+UI.AddTheme({
+    name: "custom",
+    type: "light",
+})
+
+** custom.css **
+
+.custom {
+  --svg-size: 3rem;
+}
+
+```
+
+### Example
+
+```
+--- simple example in /example directory
+cd example
+bun run dev
+
+--- advance example /test
+bun run test
+bun run test:buile
 ```

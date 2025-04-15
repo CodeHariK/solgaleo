@@ -4,14 +4,11 @@ import { CssNAV } from "./gen";
 /* CSS:
 .HeaderNav {
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: .4rem 1rem;
     display: flex;
     align-items: center;
+    max-height: 3rem; 
     justify-content: space-between;
-
-    a {
-        text-decoration: none;
-    }
 }
 
 // @media (min-width: 1536px) {
@@ -21,9 +18,21 @@ import { CssNAV } from "./gen";
 // }
 
 .HeaderLeft {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+
+    a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    img {
+        height: 2.4rem; 
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
 }
 .HeaderLinks {
     display: flex;

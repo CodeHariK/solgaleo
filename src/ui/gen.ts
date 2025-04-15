@@ -3,9 +3,11 @@ import "./gen.css"
 export * from "./position.tsx";
 export * from "./ratingsbar.tsx";
 export * from "./gridlayout.tsx";
+export * from "./accordion.tsx";
 export * from "./heading.tsx";
 export * from "./SpaceLayout.tsx";
 export * from "./dropdown.tsx";
+export * from "./button.tsx";
 export * from "./theme_toggle.tsx";
 export * from "./input.tsx";
 export * from "./spaceform.tsx";
@@ -25,6 +27,10 @@ export const CssUI = {
     GridScrollContainer: "GridScrollContainer",
     GridContent: "GridContent",
     GridLayoutFlow: "GridLayoutFlow",
+    Accordion: "accordion",
+    AccordionItem: "accordion-item",
+    AccordionHeader: "accordion-header",
+    AccordionContent: "accordion-content",
     Active: "active",
     Avatar: "avatar",
     Dropdown: "Dropdown",
@@ -35,6 +41,7 @@ export const CssUI = {
     IconButton: "IconButton",
     MaterialButton: "MaterialButton",
     OutlinedButton: "OutlinedButton",
+    ErrorButton: "ErrorButton",
     SelectChevron: "SelectChevron",
     Input: "Input",
     InputIcon: "InputIcon",
@@ -81,6 +88,8 @@ export const CssUI = {
     varOutBorder: "--out-border",
     varOutHoverColor: "--out-hover-color",
     varOutHoverBg: "--out-hover-bg",
+    varError: "--error",
+    varErrorContainer: "--error-container",
     varIconBorder: "--icon-border",
     varThemeToggleCol: "--theme-toggle-col",
     varThemeToggleBgHover: "--theme-toggle-bg-hover",
@@ -92,7 +101,6 @@ export const CssUI = {
     varLabelScale: "--label-scale",
     varInputLabelFocusColor: "--input-label-focus-color",
     varInputLabelFocusBg: "--input-label-focus-bg",
-    varError: "--error",
     varSecondaryContainer: "--secondary-container",
     varInputBg: "--input-bg",
     varInputLabelBorder: "--Input-label-border"

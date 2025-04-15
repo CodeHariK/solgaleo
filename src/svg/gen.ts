@@ -6,8 +6,7 @@ export * from "./svg.tsx";
 export const CssSVG = {
     AnimateSpin: "animate-spin",
 
-    varIconWidth: "--icon-width",
-    varIconHeight: "--icon-height"
+    varSvgSize: "--svg-size"
 } as const;
 
 export type CssSVGType = keyof typeof CssSVG;

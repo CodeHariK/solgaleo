@@ -21,12 +21,12 @@ import { CssTEST, TestHeader } from './gen.ts'
     transition: all 0.2s;
 
     svg{
-        background: #5c1d5c;
+        background: #5c1d5c11;
     }
 }
 
 .IconItem:hover {
-    background: #fe81e732;
+    background: #fe81e720;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }

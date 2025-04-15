@@ -1,5 +1,6 @@
 import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
-import { GridLayout } from "../src/ui/gen";
+import { IconCross, IconTableHeading } from "../src/svg/gen";
+import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
 export function AdvTest() {
@@ -7,15 +8,89 @@ export function AdvTest() {
         header={<TestHeader />}
     >
 
-        <SuperTable table={{
-            heading: [
-                <p>Hello</p>, <p>Hi</p>,
-            ],
-            rows: [
-                [<p>1</p>, <p>2</p>,],
-                [<p>A</p>, <p>B</p>,]
-            ]
-        }} />
+        <SuperTable
+            table={{
+                heading: [
+                    <p>Hello</p>, <p>Hi</p>,
+                ],
+                rows: [
+                    [<p>1</p>, <p>2</p>,],
+                    [<p>A</p>, <p>B</p>,]
+                ]
+            }} />
+
+        <SuperTable
+
+            // style={{
+            //     width: "60%",
+            //     "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
+            // }}
+
+            table={{
+                heading: [
+                    <><p>User Agent </p><IconTableHeading /></>,
+                    <><p>Started </p><IconTableHeading /></>,
+                    <><p>Active </p><IconTableHeading /></>,
+                    <><p>Valid </p><IconTableHeading /></>,
+                    <>Revoke</>,
+                ],
+                rows: [
+                    ...[
+                        {
+                            agent: "Hello",
+                            iat: 1744696177,
+                            exp: 1744696177,
+                        },
+                        {
+                            agent: "Hello",
+                            iat: 1744696177,
+                            exp: 1744696177,
+                        },
+                        {
+                            agent: "Hello",
+                            iat: 1744696177,
+                            exp: 1744696177,
+                        },
+                        {
+                            agent: "Hello",
+                            iat: 1744696177,
+                            exp: 1744696177,
+                        },
+                    ].map((s, _i) =>
+                        [
+                            <p>{s.agent}</p>,
+
+                            <p>{(() => {
+                                let d = new Date(Number(s.iat) * 1000)
+                                return d.toLocaleDateString() + " (" + d.toLocaleTimeString() + ")"
+                            })()}</p>,
+                            <p>Active</p>,
+                            <p>{s.exp.toString()}</p>,
+                            <button class={CssUI.IconButton}><IconCross /></button>
+                        ]
+                    ) ?? []
+                ],
+            }}
+            headerstart={<div>
+                <h3>Login sessions</h3>
+            </div>}
+            headerend={
+                <div class="flex flex-row gap-2 shrink-0 sm:flex-row">
+                    <button class={CssUI.OutlinedButton}>Revoke All</button>
+                    <button class={CssUI.MaterialButton}>Logout</button>
+                </div>
+            }
+            footerstart={
+                <p>Page 1 of 10</p>
+            }
+            footerend={
+                <div class="flex gap-1">
+                    <button class={CssUI.MaterialButton}>Previous</button>
+                    <button class={CssUI.MaterialButton}>Next</button>
+                </div>
+            }
+        ></SuperTable>
+
 
         <Treeview
             direction="vertical"

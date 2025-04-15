@@ -1,42 +1,88 @@
 import { type JSX } from 'solid-js';
+import { CssADV } from './gen';
+
+/*CSS:
+
+.SuperTable {
+    // width: max-content;
+    display: flex; 
+    flex-direction: column; 
+    border-radius: 0.75rem; 
+    background-clip: border-box; 
+
+    table {
+        margin-top: 0.5rem; 
+        text-align: left; 
+        table-layout: auto; 
+    }
+
+    tr {
+    }
+        
+    th {
+        white-space: nowrap; 
+        padding: .4rem;
+        border: 1px solid blue;
+        text-wrap-style: balance;
+
+        * {
+            display: inline;
+            vertical-align: middle;
+        }
+    }
+    td {
+        padding: .2rem;
+        border: 1px solid red;
+    }
+}
+
+.TableHeader {
+    display: flex;
+    overflow: hidden;
+    margin - left: 1rem;
+    margin - right: 1rem;
+    margin - top: 1rem;
+    justify - content: space - between;
+    align - items: center;
+    border - radius: 0;
+    background - clip: border - box;
+}
+
+.TableFooter {
+    display: flex;
+    padding: 0.75rem;
+    justify - content: space - between;
+    align - items: center;
+}
+
+*/
 
 export type TableProps = {
     heading: JSX.Element[];
     rows: JSX.Element[][];
-    class?: string[];
+    style?: JSX.CSSProperties;
 }
 
 export function Table(props: TableProps) {
-    return <>
-        <table class="w-full mt-2 text-left table-auto min-w-max over">
-            <thead>
+    return <table>
+        <thead>
+            <tr>
+                {props.heading.map((e) => (
+                    <th class="">{e}</th>
+                ))}
+            </tr>
+        </thead>
+
+        <tbody>
+            {props.rows.map((row) => (
                 <tr>
-                    {props.heading.map((e) => (
-                        <th
-                            class="bg-[var(--table-header-bg)] p-4 cursor-pointer border-y border-slate-200">
-                            <p
-                                class="flex items-center justify-between font-sans text-sm  font-normal leading-none text-slate-500 night:text-slate-100"
-                            >
-                                {e}
-                            </p>
-                        </th>
+                    {row.map((item, _i) => (
+                        <td>{item}</td>
                     ))}
                 </tr>
-            </thead>
-
-            <tbody>
-                {props.rows.map((row) => (
-                    <tr>
-                        {row.map((item, i) => (
-                            <td class={`p-4 border-b border-slate-200 night:border-slate-600 ${(props.class ?? [])[i]}`}>
-                                {item}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    </>;
+            ))}
+        </tbody>
+    </table>
 }
 
 export type SuperTableProps = {
@@ -46,32 +92,29 @@ export type SuperTableProps = {
     footerstart?: JSX.Element;
     footerend?: JSX.Element;
     class?: string;
-    width?: number | string;
+    style?: JSX.CSSProperties;
 };
 
 export function SuperTable(props: SuperTableProps) {
     return (
-        <div
-            class={`${props.class || ''} mx-auto`}
-            style={{ width: typeof props.width === "number" ? `${props.width}px` : props.width }}  // ✅ Convert number to string
+        <div class={[props.class, CssADV.SuperTable].join(" ")}
+            style={props.style}
         >
-            <div class="bg-[var(--table-bg)] flex flex-col w-full h-full shadow-md rounded-xl bg-clip-border">
-                {!(props.headerstart || props.headerend) ? null : (
-                    <div class="flex items-center justify-between mx-4 mt-4 overflow-hidden rounded-none bg-clip-border">
-                        {props.headerstart}
-                        {props.headerend}
-                    </div>
-                )}
+            {!(props.headerstart || props.headerend) ? null : (
+                <div class={CssADV.TableHeader}>
+                    {props.headerstart}
+                    {props.headerend}
+                </div>
+            )}
 
-                <Table heading={props.table.heading} rows={props.table.rows} class={props.table.class} />
+            <Table heading={props.table.heading} rows={props.table.rows} style={props.table.style} />
 
-                {!(props.footerstart || props.footerend) ? null : (
-                    <div class="flex items-center justify-between p-3">
-                        {props.footerstart}
-                        {props.footerend}
-                    </div>
-                )}
-            </div>
+            {!(props.footerstart || props.footerend) ? null : (
+                <div class={CssADV.TableFooter}>
+                    {props.footerstart}
+                    {props.footerend}
+                </div>
+            )}
         </div>
     );
 }

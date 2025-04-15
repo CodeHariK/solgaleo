@@ -1,10 +1,25 @@
 import { createSignal, onMount } from "solid-js";
 
-let THEMECOUNT = 0
-let THEME = ["light", "night"];
+type Theme = {
+    name: string;
+    type: 'light' | 'night';
+}
 
-export function AddTheme(theme: string) {
-    THEME.push(theme)
+let THEMECOUNT = 0
+let THEME: Theme[] = [
+    {
+        name: "light",
+        type: "light",
+    },
+    {
+        name: "night",
+        type: "night",
+    }];
+
+export function AddTheme(theme: Theme) {
+    if (theme.name != "light" && theme.name != "night") {
+        THEME.push(theme)
+    }
 }
 
 export function AllTheme() {
@@ -14,11 +29,19 @@ export function AllTheme() {
 export function CurrentTheme() {
     const savedTheme = localStorage.getItem("theme");
 
-    if (THEME.includes(savedTheme)) {
+    if (THEME.filter((e) => e.name == savedTheme)) {
         return savedTheme
     } else {
         const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
         return prefersNight ? "night" : "light";
+    }
+}
+
+function changeTheme(newTheme: Theme) {
+    if (newTheme.name != "light" && newTheme.name != "night") {
+        document.documentElement.className = newTheme.type + " " + newTheme.name;
+    } else {
+        document.documentElement.className = newTheme.name;
     }
 }
 
@@ -30,17 +53,18 @@ export function ThemeToggle() {
     const toggleTheme = () => {
         THEMECOUNT = (THEMECOUNT + 1) % THEME.length
         const newTheme = THEME[THEMECOUNT]
-        setTheme(newTheme);
-        document.documentElement.className = newTheme;
-        localStorage.setItem("theme", newTheme);
+        console.log(newTheme)
+        setTheme(newTheme.name);
+        changeTheme(newTheme);
+        localStorage.setItem("theme", newTheme.name);
     };
 
     // Detect system theme preference and apply it on mount
     onMount(() => {
         const savedTheme = CurrentTheme();
         setTheme(savedTheme);
-        document.documentElement.className = theme();
-        THEMECOUNT = THEME.indexOf(savedTheme)
+        THEMECOUNT = THEME.findIndex((e) => e.name == savedTheme)
+        changeTheme(THEME[THEMECOUNT]);
     });
 
     /*CSS:

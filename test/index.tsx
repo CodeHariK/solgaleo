@@ -14,7 +14,10 @@ import { TabTest } from './page.tabs';
 // Theme customization
 import "./custom.css"
 import { AddTheme } from "../src/ui/theme_toggle"
-AddTheme("custom")
+AddTheme({
+    name: "custom",
+    type: "light",
+})
 
 render(() => <Router base="/solgaleo">
     <Route path="/" component={

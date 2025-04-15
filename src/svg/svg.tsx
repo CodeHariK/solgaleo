@@ -36,14 +36,13 @@ function toProp(props?: IconProps) {
 }
 
 svg {
-    --icon-width: var : 1.3rem;
-    --icon-height: var : 1.3rem;
+    --svg-size: var : 1.3rem;
 
     display: inline-block;
     // margin: .4rem;
     // border-radius: 1rem;
-    width: var(--icon-width);
-    height: var(--icon-height);
+    width: var(--svg-size);
+    height: var(--svg-size);
     color: currentColor;
     // background: var(--icon-bg);
     // --svg-ring-width: 4px;

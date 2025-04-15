@@ -118,20 +118,26 @@ src/modal.tsx
 
 .HeaderNav {
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: .4rem 1rem;
     display: flex;
     align-items: center;
+    max-height: 3rem;
     justify-content: space-between;
 }
 
-.HeaderNav a {
+.HeaderLeft a {
     text-decoration: none;
-}
-
-.HeaderLeft {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
+}
+
+.HeaderLeft img {
+    height: 2.4rem;
+}
+
+.HeaderLeft p {
+    font-size: 1.1rem;
 }
 
 .HeaderLinks {

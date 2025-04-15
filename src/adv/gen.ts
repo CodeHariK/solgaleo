@@ -23,6 +23,9 @@ export const CssADV = {
     BlogContainer: "blog-container",
     BlogSidebar: "blog-sidebar",
     BlogLink: "blog-link",
+    SuperTable: "SuperTable",
+    TableHeader: "TableHeader",
+    TableFooter: "TableFooter",
     Stepper: "stepper",
 
     varSMarkdownBg: "--SMarkdown-bg",

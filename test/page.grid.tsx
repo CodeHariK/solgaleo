@@ -11,112 +11,132 @@ export function GridTest() {
                 {
                     id: "fixed-all-3",
                     label: "fixed-all-3",
-                    content: <GridLayout
-                        header={<TestHeader />}
-                        left={
-                            <List children={[
-                                "one",
-                                "two",
-                                "three",
-                                "four",
-                                "five",
-                            ]} />}
-                        right={<List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />}
-                    >
-                        <List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />
-                    </GridLayout>
+                    content: <FixedAll3 />
                 },
                 {
                     id: "fixed-middle",
                     label: "fixed-middle",
-                    content: <GridLayout
-                        header={<TestHeader />}
-                    >
-                        <List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />
-                    </GridLayout>
+                    content: <FixedMiddle />
                 },
                 {
                     id: "fixed-empty",
                     label: "fixed-empty",
-                    content: <GridLayout
-                        header={<TestHeader />}
-                    >
-                    </GridLayout>
+                    content: <FixedEmpty />
                 },
                 {
                     id: "fixed-left",
                     label: "fixed-left",
-                    content: <GridLayout
-                        header={<TestHeader />}
-                        left={<List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />
-                        }
-                    >
-                    </GridLayout>
+                    content: <FixedLeft />
                 },
                 {
                     id: "fixed-right",
                     label: "fixed-right",
-                    content: <GridLayout
-                        header={<TestHeader />}
-                        right={<List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />
-                        }
-                    >
-                    </GridLayout>
+                    content: <FixedRight />
                 },
                 {
                     id: "fixed-left-right",
                     label: "fixed-left-right",
-                    content: <GridLayout
-                        header={<TestHeader />}
-                        left={<List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />}
-                        right={<List children={[
-                            "one",
-                            "two",
-                            "three",
-                            "four",
-                            "five",
-                        ]} />
-                        }
-                    >
-                    </GridLayout>
+                    content: <FixedLeftRight />
                 }
             ]}
         />
     </GridLayout>
+}
+
+function FixedLeftRight() {
+    return <GridLayout
+        header={<TestHeader />}
+        left={<List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />}
+        right={<List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />}
+    >
+    </GridLayout>;
+}
+
+function FixedRight() {
+    return <GridLayout
+        header={<TestHeader />}
+        right={<List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />}
+    >
+    </GridLayout>;
+}
+
+function FixedLeft() {
+    return <GridLayout
+        header={<TestHeader />}
+        left={<List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />}
+    >
+    </GridLayout>;
+}
+
+function FixedEmpty() {
+    return <GridLayout
+        header={<TestHeader />}
+    >
+    </GridLayout>;
+}
+
+function FixedMiddle() {
+    return <GridLayout
+        header={<TestHeader />}
+    >
+        <List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />
+    </GridLayout>;
+}
+
+function FixedAll3() {
+    return <GridLayout
+        header={<TestHeader />}
+        left={<List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />}
+        right={<List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />}
+    >
+        <List children={[
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+        ]} />
+    </GridLayout>;
 }
