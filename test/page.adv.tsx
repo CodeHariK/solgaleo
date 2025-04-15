@@ -1,4 +1,4 @@
-import { AccordionGrid, BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
+import { Table, BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
 import { CssSRC } from "../src/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
@@ -9,69 +9,82 @@ export function AdvTest() {
         header={<TestHeader />}
     >
 
-        <SuperTable
-            table={{
-                heading: [
-                    <p>Hello</p>, <p>Hi</p>,
-                ],
-                rows: [
-                    [<p>1</p>, <p>2</p>,],
-                    [<p>A</p>, <p>B</p>,]
-                ]
-            }} />
 
         <SuperTable
 
-            // style={{
-            //     width: "60%",
-            //     "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
-            // }}
-
-            table={{
-                heading: [
-                    <><p>User Agent </p><IconTableHeading /></>,
-                    <><p>Started </p><IconTableHeading /></>,
-                    <><p>Active </p><IconTableHeading /></>,
-                    <><p>Valid </p><IconTableHeading /></>,
-                    <>Revoke</>,
-                ],
-                rows: [
-                    ...[
-                        {
-                            agent: "Hello",
-                            iat: 1744696177,
-                            exp: 1744696177,
-                        },
-                        {
-                            agent: "Hello",
-                            iat: 1744696177,
-                            exp: 1744696177,
-                        },
-                        {
-                            agent: "Hello",
-                            iat: 1744696177,
-                            exp: 1744696177,
-                        },
-                        {
-                            agent: "Hello",
-                            iat: 1744696177,
-                            exp: 1744696177,
-                        },
-                    ].map((s, _i) =>
-                        [
-                            <p>{s.agent}</p>,
-
-                            <p>{(() => {
-                                let d = new Date(Number(s.iat) * 1000)
-                                return d.toLocaleDateString() + " (" + d.toLocaleTimeString() + ")"
-                            })()}</p>,
-                            <p>Active</p>,
-                            <p>{s.exp.toString()}</p>,
-                            <button class={CssUI.IconButton}><IconCross /></button>
-                        ]
-                    ) ?? []
-                ],
+            tableStyle={{
+                "max-height": "300px",
+                "overflow-y": "scroll",
+                margin: "10px",
             }}
+
+            style={{
+                margin: "10px",
+                padding: "10px",
+                background: "var(--surface-container)",
+                width: "90%",
+                "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
+            }}
+
+            tableArray={["red", "blue", "yellow", "green", "purple"].map((e) => {
+                return {
+                    headerItems: [
+                        <><p>User Agent </p><IconTableHeading /></>,
+                        <><p>Started </p><IconTableHeading /></>,
+                        <><p>Active </p><IconTableHeading /></>,
+                        <><p>Valid </p><IconTableHeading /></>,
+                        <>Revoke</>,
+                    ],
+                    rowStyle: {
+                        "grid-template-columns": `1fr 2fr 1fr 1fr 1fr`
+                    },
+                    headerCellStyle: {
+                        border: "1px solid yellow",
+                        margin: ".1rem",
+                        padding: "10px"
+                    },
+                    headerStyle: {
+                        background: `var(${CssSRC.varPrimaryContainer})`,
+                        "grid-template-columns": `1fr 2fr 1fr 1fr 1fr`,
+                    },
+                    rowCellStyle: (row, col) => {
+                        return {
+                            padding: "10px",
+                            border: "1px solid red",
+                            margin: ".1rem",
+                            background: (col == 1 || row == 1) ? "red" : ""
+                        }
+                    },
+                    data: [
+                        { agent: "Hello", iat: 1744696177, exp: 1744696177 },
+                        { agent: "Hello", iat: 1744696177, exp: 1744696177 },
+                        { agent: "Hello", iat: 1744696177, exp: 1744696177 },
+                        { agent: "Hello", iat: 1744696177, exp: 1744696177 },
+                        { agent: "Hello", iat: 1744696177, exp: 1744696177 },
+                        { agent: "Hello", iat: 1744696177, exp: 1744696177 },
+                    ].map((s, _i) => {
+                        return {
+                            // info: <p>`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the `</p>,
+
+                            hiddenDetails: <div>More info about John Doe...</div>,
+
+                            rowItems: [
+                                <p>{s.agent}</p>,
+
+                                <p>{(() => {
+                                    let d = new Date(Number(s.iat) * 1000)
+                                    return d.toLocaleDateString() + " (" + d.toLocaleTimeString() + ")"
+                                })()}</p>,
+                                <p>Active</p>,
+                                <p>{s.exp.toString()}</p>,
+                                <button class={CssUI.IconButton}><IconCross /></button>
+                            ]
+                        }
+                    }
+                    )
+                }
+            })}
+
             headerstart={<div>
                 <h3>Login sessions</h3>
             </div>}
@@ -91,49 +104,6 @@ export function AdvTest() {
                 </div>
             }
         ></SuperTable>
-
-        <AccordionGrid
-            tableArray={
-
-                ["red", "blue", "yellow", "green", "purple"].map((e) => {
-                    return {
-                        title: e,
-                        rowStyle: {
-                            "grid-template-columns": `4fr 1fr 1fr 1fr`
-                        },
-                        headerCellStyle: {
-                            border: "1px solid blue",
-                            margin: ".1rem"
-                        },
-                        headerStyle: {
-                            background: `var(${CssSRC.varSurfaceContainer})`,
-                            // padding: "10px",
-                            "grid-template-columns": `4fr 1fr 1fr 1fr`,
-                        },
-                        cellStyle: {
-                            padding: "10px",
-                            border: "1px solid red",
-                            margin: ".1rem",
-                        },
-                        headerItems: [
-
-                            <><span>User</span><IconTableHeading /></>,
-                            <><span>Age</span><IconTableHeading /></>,
-                            <><span>Age</span><IconTableHeading /></>,
-                            <div>Occupation</div>],
-                        data:
-                            [1, 2, 3].map((e, i) => {
-                                return {
-                                    // info: <p>`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the`</p>,
-                                    hiddenDetails: <div>More info about John Doe...</div>,
-                                    rowItems: [<div>{i}</div>, <div>Hello</div>, <div>Dev</div>, <div>Name</div>]
-                                }
-                            }),
-                    }
-
-                })
-
-            } />
 
         <Treeview
             direction="vertical"

@@ -3,7 +3,6 @@ import "./gen.css"
 export * from "./md.tsx";
 export * from "./treeview.tsx";
 export * from "./blog.tsx";
-export * from "./table2.tsx";
 export * from "./table.tsx";
 export * from "./stepper.tsx";
 
@@ -24,14 +23,13 @@ export const CssADV = {
     BlogContainer: "blog-container",
     BlogSidebar: "blog-sidebar",
     BlogLink: "blog-link",
-    TableGridContainer: "TableGridContainer",
-    TableHeaderContainer: "TableHeaderContainer",
-    TableHeaderItem: "TableHeaderItem",
-    TableRowDetails: "TableRowDetails",
-    TableRowDetailsShow: "TableRowDetailsShow",
     SuperTable: "SuperTable",
     TableHeader: "TableHeader",
     TableFooter: "TableFooter",
+    TableHeaderContainer: "TableHeaderContainer",
+    CellItem: "CellItem",
+    TableRowDetails: "TableRowDetails",
+    TableRowDetailsShow: "TableRowDetailsShow",
     Stepper: "stepper",
 
     varSMarkdownBg: "--SMarkdown-bg",

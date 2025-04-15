@@ -2,7 +2,6 @@
 src/md.tsx
 src/treeview.tsx
 src/blog.tsx
-src/table2.tsx
 src/table.tsx
 src/stepper.tsx
 */
@@ -262,9 +261,25 @@ src/stepper.tsx
     }
 }
 
-.TableGridContainer {
-    max-height: 300px;
-    overflow-y: auto;
+.SuperTable {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    background-clip: border-box;
+}
+
+.TableHeader {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+    background-clip: border - box;
+}
+
+.TableFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .TableHeaderContainer {
@@ -275,9 +290,8 @@ src/stepper.tsx
     z-index: 10;
 }
 
-.TableHeaderItem {
+.CellItem {
     display: flex;
-    padding: 10px;
     align-items: center;
 }
 
@@ -292,55 +306,6 @@ src/stepper.tsx
     padding: 1rem;
     max-height: 4rem;
     opacity: 1;
-}
-
-.SuperTable {
-    display: flex;
-    flex-direction: column;
-    border-radius: 0.75rem;
-    background-clip: border-box;
-}
-
-.SuperTable table {
-    margin-top: 0.5rem;
-    text-align: left;
-    table-layout: auto;
-}
-
-.SuperTable th {
-    white-space: nowrap;
-    padding: .4rem;
-    border: 1px solid blue;
-    text-wrap-style: balance;
-}
-
-.SuperTable th * {
-    display: inline;
-    vertical-align: middle;
-}
-
-.SuperTable td {
-    padding: .2rem;
-    border: 1px solid red;
-}
-
-.TableHeader {
-    display: flex;
-    overflow: hidden;
-    margin - left: 1rem;
-    margin - right: 1rem;
-    margin - top: 1rem;
-    justify - content: space - between;
-    align - items: center;
-    border - radius: 0;
-    background - clip: border - box;
-}
-
-.TableFooter {
-    display: flex;
-    padding: 0.75rem;
-    justify - content: space - between;
-    align - items: center;
 }
 
 .stepper {
