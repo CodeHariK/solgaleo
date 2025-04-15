@@ -3,8 +3,8 @@ base.tsx
 */
 
 .light {
-    --primary: #6750A4;
     --primary-container: #EADDFF;
+    --primary: #6750A4;
     --secondary: #625B71;
     --secondary-container: #E8DEF8;
     --surface: #FEF7FF;
@@ -16,8 +16,8 @@ base.tsx
 }
 
 .night {
-    --primary: #D0BCFF;
     --primary-container: #4F378B;
+    --primary: #D0BCFF;
     --secondary: #CCC2DC;
     --secondary-container: #4A4458;
     --surface: #64626b87;
@@ -30,7 +30,7 @@ base.tsx
 
 *::-webkit-scrollbar {
     height: 8px;
-    width: 6px;
+    width: 8px;
 }
 
 *::-webkit-scrollbar-track {
@@ -38,7 +38,7 @@ base.tsx
 }
 
 *::-webkit-scrollbar-thumb {
-    background: #e0cbcb22;
+    background: var(--primary-container);
     border-radius: 100vh;
 }
 

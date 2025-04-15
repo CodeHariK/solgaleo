@@ -2,6 +2,7 @@
 src/md.tsx
 src/treeview.tsx
 src/blog.tsx
+src/table2.tsx
 src/table.tsx
 src/stepper.tsx
 */
@@ -259,6 +260,38 @@ src/stepper.tsx
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+.TableGridContainer {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.TableHeaderContainer {
+    display: grid;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.TableHeaderItem {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+.TableRowDetails {
+    overflow: hidden;
+    transition: max-height .8s ease, opacity 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+}
+
+.TableRowDetailsShow {
+    padding: 1rem;
+    max-height: 4rem;
+    opacity: 1;
 }
 
 .SuperTable {

@@ -1,4 +1,5 @@
-import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
+import { AccordionGrid, BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
+import { CssSRC } from "../src/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -91,6 +92,48 @@ export function AdvTest() {
             }
         ></SuperTable>
 
+        <AccordionGrid
+            tableArray={
+
+                ["red", "blue", "yellow", "green", "purple"].map((e) => {
+                    return {
+                        title: e,
+                        rowStyle: {
+                            "grid-template-columns": `4fr 1fr 1fr 1fr`
+                        },
+                        headerCellStyle: {
+                            border: "1px solid blue",
+                            margin: ".1rem"
+                        },
+                        headerStyle: {
+                            background: `var(${CssSRC.varSurfaceContainer})`,
+                            // padding: "10px",
+                            "grid-template-columns": `4fr 1fr 1fr 1fr`,
+                        },
+                        cellStyle: {
+                            padding: "10px",
+                            border: "1px solid red",
+                            margin: ".1rem",
+                        },
+                        headerItems: [
+
+                            <><span>User</span><IconTableHeading /></>,
+                            <><span>Age</span><IconTableHeading /></>,
+                            <><span>Age</span><IconTableHeading /></>,
+                            <div>Occupation</div>],
+                        data:
+                            [1, 2, 3].map((e, i) => {
+                                return {
+                                    // info: <p>`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the`</p>,
+                                    hiddenDetails: <div>More info about John Doe...</div>,
+                                    rowItems: [<div>{i}</div>, <div>Hello</div>, <div>Dev</div>, <div>Name</div>]
+                                }
+                            }),
+                    }
+
+                })
+
+            } />
 
         <Treeview
             direction="vertical"

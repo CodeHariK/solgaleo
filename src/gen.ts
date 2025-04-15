@@ -12,8 +12,8 @@ export const CssSRC = {
     ItemsCenter: "items-center",
     Gap2: "gap-2",
 
-    varPrimary: "--primary",
     varPrimaryContainer: "--primary-container",
+    varPrimary: "--primary",
     varSecondary: "--secondary",
     varSecondaryContainer: "--secondary-container",
     varSurface: "--surface",

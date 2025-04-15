@@ -38,6 +38,7 @@ export function CurrentTheme() {
 }
 
 function changeTheme(newTheme: Theme) {
+    if (!newTheme) return
     if (newTheme.name != "light" && newTheme.name != "night") {
         document.documentElement.className = newTheme.type + " " + newTheme.name;
     } else {
@@ -53,7 +54,6 @@ export function ThemeToggle() {
     const toggleTheme = () => {
         THEMECOUNT = (THEMECOUNT + 1) % THEME.length
         const newTheme = THEME[THEMECOUNT]
-        console.log(newTheme)
         setTheme(newTheme.name);
         changeTheme(newTheme);
         localStorage.setItem("theme", newTheme.name);
