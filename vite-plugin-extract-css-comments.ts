@@ -369,6 +369,7 @@ export default function ExtractCssComments(dir: string): Plugin {
                         k.startsWith("--primary") ||
                         k.startsWith("--secondary") ||
                         k.startsWith("--surface") ||
+                        k.startsWith("--disabled") ||
                         k.startsWith("--error")
                     ))
                     .map(([k, v]) => (v != "" && v != ";")

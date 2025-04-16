@@ -1,5 +1,4 @@
-import { Table, BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
-import { CssSRC } from "../src/gen";
+import { BlogList, MiniMarkdown, Stepper, SuperTable, Treeview } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -9,24 +8,23 @@ export function AdvTest() {
         header={<TestHeader />}
     >
 
-
         <SuperTable
 
             tableStyle={{
                 "max-height": "300px",
                 "overflow-y": "scroll",
-                margin: "10px",
+                margin: "10px 0px",
             }}
 
             style={{
                 margin: "10px",
-                padding: "10px",
-                background: "var(--surface-container)",
+                padding: "15px",
+                background: "var(--surface)",
                 width: "90%",
                 "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
             }}
 
-            tableArray={["red", "blue", "yellow", "green", "purple"].map((e) => {
+            tableArray={["#a550d3", "#d75d3c", "#41a358",].map((tableHeaderColor) => {
                 return {
                     headerItems: [
                         <><p>User Agent </p><IconTableHeading /></>,
@@ -38,21 +36,21 @@ export function AdvTest() {
                     rowStyle: {
                         "grid-template-columns": `1fr 2fr 1fr 1fr 1fr`
                     },
-                    headerCellStyle: {
-                        border: "1px solid yellow",
-                        margin: ".1rem",
-                        padding: "10px"
-                    },
                     headerStyle: {
-                        background: `var(${CssSRC.varPrimaryContainer})`,
                         "grid-template-columns": `1fr 2fr 1fr 1fr 1fr`,
+                    },
+                    headerCellStyle: () => {
+                        return {
+                            margin: ".1rem",
+                            padding: "10px",
+                            background: tableHeaderColor,
+                        }
                     },
                     rowCellStyle: (row, col) => {
                         return {
                             padding: "10px",
-                            border: "1px solid red",
                             margin: ".1rem",
-                            background: (col == 1 || row == 1) ? "red" : ""
+                            background: (col == 1 || row == 1) ? tableHeaderColor : ""
                         }
                     },
                     data: [
@@ -89,7 +87,7 @@ export function AdvTest() {
                 <h3>Login sessions</h3>
             </div>}
             headerend={
-                <div class="flex flex-row gap-2 shrink-0 sm:flex-row">
+                <div class="flex gap2">
                     <button class={CssUI.OutlinedButton}>Revoke All</button>
                     <button class={CssUI.MaterialButton}>Logout</button>
                 </div>
@@ -98,7 +96,7 @@ export function AdvTest() {
                 <p>Page 1 of 10</p>
             }
             footerend={
-                <div class="flex gap-1">
+                <div class="flex gap2">
                     <button class={CssUI.MaterialButton}>Previous</button>
                     <button class={CssUI.MaterialButton}>Next</button>
                 </div>

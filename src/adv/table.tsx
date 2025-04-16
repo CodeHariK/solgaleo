@@ -94,9 +94,9 @@ type TableProps = {
     }[];
     headerItems: JSX.Element[];
     headerStyle?: JSX.CSSProperties,
-    headerCellStyle?: JSX.CSSProperties,
+    headerCellStyle?: (colIndex: number, tableIndex: number) => JSX.CSSProperties,
     rowStyle?: JSX.CSSProperties,
-    rowCellStyle?: (rowIndex, colIndex, tableIndex) => JSX.CSSProperties
+    rowCellStyle?: (rowIndex: number, colIndex: number, tableIndex: number) => JSX.CSSProperties
 };
 
 export function Table({ tableStyle, tableArray }: {
@@ -120,9 +120,9 @@ export function Table({ tableStyle, tableArray }: {
                                 display: "contents"
                             }}>
                                 <For each={table.headerItems}>
-                                    {(headerItem) => <div
+                                    {(headerItem, headerCol) => <div
                                         class={CssADV.CellItem}
-                                        style={table.headerCellStyle}
+                                        style={table.headerCellStyle(headerCol(), tableIndex())}
                                     >{headerItem}</div>}
                                 </For>
                             </div>

@@ -1,14 +1,52 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton } from '../src/ui/gen.ts';
+import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
 import { IconCart, IconCross, IconDown, IconFilter, IconGoogle } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
+import { createSignal } from 'solid-js';
 
 export function UiTest() {
+
+    const [progress, setProgress] = createSignal(64);
 
     return <GridLayout
         header={<TestHeader />}
     >
+
+        <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
+
+            <button>BaseButton</button >
+            <button class={CssUI.MaterialButton}>MaterialButton</button>
+            <button class={CssUI.OutlinedButton}>OutlinedButton</button>
+            <button class={CssUI.IconButton} onClick={() => {
+                setProgress(80)
+            }}><IconGoogle /></button>
+
+            <AsyncButton onClick={async (): Promise<void> => {
+                // Simulate an async operation (e.g., API call)
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        const shouldFail = Math.random() < 0.5; // 50% chance to fail
+                        if (shouldFail) {
+                            reject(new Error("Something went wrong!"));
+                        } else {
+                            resolve(); // Resolve without returning a value
+                        }
+                    }, 2000);
+                });
+            }}>
+                Click Me
+            </AsyncButton>
+        </div>
+
+        <ProgressBar progress={progress} />
+
+        <Accordion items={[
+            { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
+            { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
+            { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
+        ]} />
+
 
         <PositionBox
             name={<>{<IconCart />}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{<IconDown />}</>}>
@@ -139,6 +177,10 @@ export function UiTest() {
                 ]}
             />
 
+            <ToggleSwitch name="toggle" onChange={(newState) => {
+                console.log("Toggle is now:", newState ? "On" : "Off");
+            }} />
+
             <Input name="password1" type="password" label='label' placeholder="placeholder"
                 end={[
                     <button class={CssUI.IconButton} type="reset"><IconCross /></button>,
@@ -169,36 +211,6 @@ export function UiTest() {
             <SpaceDebugInfo />
 
         </SpaceForm>
-
-        <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
-
-            <button>BaseButton</button >
-            <button class={CssUI.MaterialButton}>MaterialButton</button>
-            <button class={CssUI.OutlinedButton}>OutlinedButton</button>
-            <button class={CssUI.IconButton}><IconGoogle /></button>
-
-            <AsyncButton onClick={async (): Promise<void> => {
-                // Simulate an async operation (e.g., API call)
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        const shouldFail = Math.random() < 0.5; // 50% chance to fail
-                        if (shouldFail) {
-                            reject(new Error("Something went wrong!"));
-                        } else {
-                            resolve(); // Resolve without returning a value
-                        }
-                    }, 2000);
-                });
-            }}>
-                Click Me
-            </AsyncButton>
-        </div>
-
-        <Accordion items={[
-            { title: "Section 1", content: "Content for section 1." },
-            { title: "Section 2", content: "Content for section 2." },
-            { title: "Section 3", content: "Content for section 3." },
-        ]} />
 
         <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>
         <h2>h2: The electron is a subatomic particle with a negative one elementary electric charge.</h2>
@@ -251,3 +263,4 @@ const selectOptions = [
     { value: "fr", label: "France" },
     { value: "de", label: "Germany" }
 ];
+

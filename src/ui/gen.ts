@@ -1,12 +1,11 @@
 import '../gen.css'
 import "./gen.css"
 export * from "./position.tsx";
-export * from "./ratingsbar.tsx";
 export * from "./gridlayout.tsx";
 export * from "./accordion.tsx";
-export * from "./heading.tsx";
 export * from "./SpaceLayout.tsx";
 export * from "./dropdown.tsx";
+export * from "./bar.tsx";
 export * from "./button.tsx";
 export * from "./theme_toggle.tsx";
 export * from "./input.tsx";
@@ -27,22 +26,23 @@ export const CssUI = {
     GridScrollContainer: "GridScrollContainer",
     GridContent: "GridContent",
     GridLayoutFlow: "GridLayoutFlow",
-    Accordion: "accordion",
-    AccordionItem: "accordion-item",
-    AccordionHeader: "accordion-header",
-    AccordionContent: "accordion-content",
-    Active: "active",
-    Avatar: "avatar",
+    AccordionLabel: "AccordionLabel",
+    AccordionContent: "AccordionContent",
     Dropdown: "Dropdown",
     DropdownHeader: "DropdownHeader",
     DropdownItem: "DropdownItem",
     DropdownNested: "DropdownNested",
     DropdownToggle: "DropdownToggle",
+    Progress: "Progress",
+    ProgressFill: "ProgressFill",
     IconButton: "IconButton",
     MaterialButton: "MaterialButton",
     OutlinedButton: "OutlinedButton",
     ErrorButton: "ErrorButton",
     SelectChevron: "SelectChevron",
+    ToggleSwitch: "ToggleSwitch",
+    ToggleThumb: "ToggleThumb",
+    ToggleChecked: "ToggleChecked",
     Input: "Input",
     InputIcon: "InputIcon",
     InputEnd: "InputEnd",
@@ -59,9 +59,7 @@ export const CssUI = {
 
     varPositionBoxButtonColHover: "--PositionBox--button-col-hover",
     varPositionBoxButtonBackgroundColorHover: "--PositionBox--button-background-color-hover",
-    varAHoverCol: "--a-hover-col",
-    varAActiveCol: "--a-active-col",
-    varACol: "--a-col",
+    varSurface: "--surface",
     varDropdownBg: "--Dropdown-bg",
     varDropdownHeaderCol: "--DropdownHeader-col",
     varDropdownHeaderBg: "--DropdownHeader-bg",
@@ -72,8 +70,7 @@ export const CssUI = {
     varDropdownItemColHover: "--DropdownItem-col-hover",
     varDropdownItemBgHover: "--DropdownItem-bg-hover",
     varPrimary: "--primary",
-    varSurfaceContainer: "--surface-container",
-    varSurface: "--surface",
+    varSecondary: "--secondary",
     varPrimaryContainer: "--primary-container",
     varIconBg: "--icon-bg",
     varIconBorderRadius: "--icon-border-radius",
@@ -93,9 +90,8 @@ export const CssUI = {
     varIconBorder: "--icon-border",
     varThemeToggleCol: "--theme-toggle-col",
     varThemeToggleBgHover: "--theme-toggle-bg-hover",
-    varSecondary: "--secondary",
+    varDisabled: "--disabled",
     varInputAccentColor: "--input-accent-color",
-    varLabelDisabledColor: "--label-disabled-color",
     varLabelTransformX: "--label-transform-x",
     varLabelTransformY: "--label-transform-y",
     varLabelScale: "--label-scale",

@@ -1,73 +1,63 @@
-// src/Accordion.tsx
 import { createSignal, JSX } from "solid-js";
+import { CssUI } from "./gen";
 
 /*CSS:
-.accordion {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-}
 
-.accordion-item {
-    border-bottom: 1px solid #ccc;
-}
-
-.accordion-header {
+.AccordionLabel {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
+    background: var(--surface);
     cursor: pointer;
-    background: transparent;
-    transition: background 0.3s;
+    justify-content: space-between;
+    padding: .5rem;
+    
+    :hover {
+        background: var(--surface); 
+    }
 }
 
-.accordion-header:hover {
-    background-color: #e1e1e144;
-}
-
-.accordion-content {
+.AccordionContent {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    padding: 0 15px;
-}
-
-.accordion-content.open {
-    max-height: 200px; 
-    padding: 15px;
+    transition: max-height 0.35s ease-out, opacity 0.35s ease-out;
+    opacity: 0;
 }
 
 */
 
-function AccordionItem(props: { title: JSX.Element, children: JSX.Element }) {
+function AccordionItem(props: { title: string, children: JSX.Element }) {
     const [isOpen, setIsOpen] = createSignal(false);
 
-    const toggle = () => setIsOpen(!isOpen());
+    const toggle = () => {
+        setIsOpen(!isOpen());
+    };
 
     return (
-        <div class="accordion-item">
-            <div class="accordion-header" onClick={toggle}>
-                <h3>{props.title}</h3>
-                <span>{isOpen() ? "−" : "+"}</span>
+        <>
+            <div class={CssUI.AccordionLabel} onClick={toggle}>
+                {props.title}
             </div>
-            <div class={`accordion-content ${isOpen() ? "open" : ""}`}>
+            <div
+                class={CssUI.AccordionContent}
+                style={isOpen() ? {
+                    "max-height": "20rem",
+                    opacity: 1,
+                    "overflow-y": "scroll",
+                } : {}}
+            >
                 {props.children}
             </div>
-        </div>
+        </>
     );
-};
+}
 
 export function Accordion(props: { items: { title: string, content: JSX.Element }[] }) {
     return (
-        <div class="accordion">
+        <>
             {props.items.map((item) => (
                 <AccordionItem title={item.title}>
                     {item.content}
                 </AccordionItem>
             ))}
-        </div>
+        </>
     );
-};
+}

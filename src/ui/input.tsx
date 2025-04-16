@@ -16,7 +16,7 @@ fieldset div {
 }
 
 input[type="checkbox"], input[type="radio"] {
-    --input-accent-color: var:#7a23b4:#7a23b4;
+    --input-accent-color: var(--primary);
     accent-color: var(--input-accent-color, var(--primary));
     width: 1rem;
     height: 1rem;
@@ -70,8 +70,7 @@ label {
 }
 
 label[aria-disabled="true"] {
-    --label-disabled-color: var:#6B7280:#9CA3AF;
-    color: var(--label-disabled-color, var(--secondary));
+    color: var(--disabled);
     cursor: not-allowed;
     opacity: 0.75;
 }
@@ -80,7 +79,7 @@ label p {
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 400;
-    color: var(--secondary);
+    color: color-mix(in srgb, currentColor 75%, transparent);
 }
 
 */
@@ -207,6 +206,7 @@ type SelectProps = {
     header?: string;
     options: Array<SelectOption>;
     disabled?: boolean;
+    onChange?: (value: string) => void;
 };
 
 export function Select(props: SelectProps) {
@@ -221,7 +221,12 @@ export function Select(props: SelectProps) {
                     name={props.name}
                     value={state().values[props.name] || ""}
                     disabled={props.disabled}
-                    onChange={(e) => handleChange(props.name, e.target.value)}
+                    onChange={
+                        (e) => {
+                            handleChange(props.name, e.target.value)
+                            props.onChange(e.target.value)
+                        }
+                    }
                 >
                     <Key each={props.options} by="value">
                         {(option) => (
@@ -232,6 +237,66 @@ export function Select(props: SelectProps) {
                     </Key>
                 </select>
                 <IconDown props={{ class: CssUI.SelectChevron }} />
+            </div>
+        </fieldset>
+    );
+}
+
+/*CSS:
+.ToggleSwitch {
+    width: 60px;
+    height: 30px;
+    background-color: var(--surface);
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.ToggleThumb {
+    width: 26px;
+    height: 26px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.ToggleChecked .ToggleThumb {
+    transform: translateX(30px); 
+}
+
+.ToggleChecked {
+    background: var(--primary-container);
+}
+
+*/
+
+interface ToggleSwitchProps {
+    name: string;
+    onChange?: (value: boolean) => void;
+}
+
+export function ToggleSwitch(props: ToggleSwitchProps) {
+    const { state, handleChange } = useSpaceContext();
+
+    const toggleValue = () => {
+        const newValue = !state().values[props.name];
+        handleChange(props.name, newValue);
+        props.onChange(newValue)
+    };
+
+    return (
+        <fieldset>
+            <div
+                classList={{
+                    [CssUI.ToggleChecked]: state().values[props.name],
+                }}
+                class={CssUI.ToggleSwitch}
+                onClick={toggleValue}>
+                <div class={CssUI.ToggleThumb}></div>
             </div>
         </fieldset>
     );
@@ -268,7 +333,7 @@ export function Select(props: SelectProps) {
     }
 
     > input::placeholder, > textarea::placeholder {
-        color: var(--secondary);
+        color: var(--primary);
     }
     [data-has-label="true"] > input::placeholder, [data-has-label="true"] > textarea::placeholder {
         color: transparent;
@@ -286,7 +351,7 @@ export function Select(props: SelectProps) {
         position: absolute;
         top: 0rem;
         left: 1rem;
-        color: var(--secondary);
+        color: var(--primary);
         border: var : 1px solid transparent;
         font-size: 0.875rem;
         white-space: nowrap;
@@ -300,6 +365,11 @@ export function Select(props: SelectProps) {
     :has([data-has-icon="false"]) label {
         display: none;
     }
+
+    :has(input[type="range"]) {
+        margin: 0rem 1rem;
+    }
+
     > input:focus-within ~ label,
     > textarea:focus-within ~ label,
     > input:not(:placeholder-shown) ~ label,

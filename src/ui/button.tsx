@@ -6,7 +6,7 @@ button {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--primary);
-    background: var(--surface-container);
+    background: var(--surface);
     border: none;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -20,7 +20,7 @@ button:hover {
 }
 
 .IconButton {
-    --icon-bg: var(--surface-container);
+    --icon-bg: var(--surface);
     --icon-border-radius: var : 100rem;
     --icon-border: none;
     --icon-hover-bg: var(--primary-container);

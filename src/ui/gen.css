@@ -2,8 +2,8 @@
 src/position.tsx
 src/gridlayout.tsx
 src/accordion.tsx
-src/heading.tsx
 src/dropdown.tsx
+src/bar.tsx
 src/button.tsx
 src/theme_toggle.tsx
 src/input.tsx
@@ -12,9 +12,6 @@ src/input.tsx
 .light {
     --PositionBox--button-col-hover: #90328b;
     --PositionBox--button-background-color-hover: #efefef;
-    --a-hover-col: #ffac90;
-    --a-active-col: #cf90ff;
-    --a-col: #ffe4c4;
     --Dropdown-bg: #e0e0e0;
     --DropdownHeader-col: #9c40ca;
     --DropdownHeader-bg: #cfcfcf;
@@ -24,7 +21,7 @@ src/input.tsx
     --DropdownItem-border: none;
     --DropdownItem-col-hover: #d4d4d4;
     --DropdownItem-bg-hover: #6b6b6b;
-    --icon-bg: var(--surface-container);
+    --icon-bg: var(--surface);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
     --mat-color: var(--primary);
@@ -40,8 +37,7 @@ src/input.tsx
     --icon-border: none;
     --theme-toggle-col: #60A5FA;
     --theme-toggle-bg-hover: #F3F4F6;
-    --input-accent-color: #7a23b4;
-    --label-disabled-color: #6B7280;
+    --input-accent-color: var(--primary);
     --label-transform-x: 0.6rem;
     --label-transform-y: -1.0rem;
     --label-scale: 0.85;
@@ -54,9 +50,6 @@ src/input.tsx
 .night {
     --PositionBox--button-col-hover: #faa0f6;
     --PositionBox--button-background-color-hover: #353535;
-    --a-hover-col: #ffac90;
-    --a-active-col: #cf90ff;
-    --a-col: #ffe4c4;
     --Dropdown-bg: #575757;
     --DropdownHeader-col: #8a87e3;
     --DropdownHeader-bg: #454545;
@@ -66,7 +59,7 @@ src/input.tsx
     --DropdownItem-border: none;
     --DropdownItem-col-hover: #4b4b4b;
     --DropdownItem-bg-hover: #d7d7d7;
-    --icon-bg: var(--surface-container);
+    --icon-bg: var(--surface);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
     --mat-color: var(--primary);
@@ -82,8 +75,7 @@ src/input.tsx
     --icon-border: none;
     --theme-toggle-col: #3B82F6 ;
     --theme-toggle-bg-hover: #374151 ;
-    --input-accent-color: #7a23b4;
-    --label-disabled-color: #9CA3AF;
+    --input-accent-color: var(--primary);
     --label-transform-x: 0.6rem;
     --label-transform-y: -1.0rem;
     --label-scale: 0.85;
@@ -278,117 +270,23 @@ src/input.tsx
     margin-top: 1rem;
 }
 
-.accordion {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-.accordion-item {
-    border-bottom: 1px solid #ccc;
-}
-
-.accordion-header {
+.AccordionLabel {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
+    background: var(--surface);
     cursor: pointer;
-    background: transparent;
-    transition: background 0.3s;
+    justify-content: space-between;
+    padding: .5rem;
 }
 
-.accordion-header:hover {
-    background-color: #e1e1e144;
+.AccordionLabel:hover {
+    background: var(--surface);
 }
 
-.accordion-content {
+.AccordionContent {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    padding: 0 15px;
-}
-
-.accordion-content.open {
-    max-height: 200px;
-    padding: 15px;
-}
-
-h1 {
-    font-size: 1.9rem;
-    line-height: 2rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-}
-
-h2 {
-    font-size: 1.7rem;
-    line-height: 1.8rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-}
-
-h3 {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-}
-
-h4 {
-    font-size: 1.3rem;
-    line-height: 1.7rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-}
-
-h5 {
-    font-size: 1.1rem;
-    line-height: 1.6rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-}
-
-h6 {
-    font-size: 1rem;
-    line-height: 1.4rem;
-    font-weight: 400;
-}
-
-p,
-li {
-    font-size: 0.85rem;
-    line-height: 1.25rem;
-}
-
-a {
-    color: var(--a-col);
-}
-
-a:hover {
-    color: var(--a-hover-col);
-}
-
-a:active,
-a.active {
-    color: var(--a-active-col);
-}
-
-@media (min-width: 768px) {
-}
-
-@media (min-width: 1024px) {}
-
-.avatar {
-    display: inline-block;
-    object-fit: cover;
-    object-position: center;
-    position: relative;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 9999px;
+    transition: max-height 0.35s ease-out, opacity 0.35s ease-out;
+    opacity: 0;
 }
 
 .Dropdown {
@@ -447,6 +345,22 @@ ul.DropdownNested {
     transform: rotate(90deg);
 }
 
+.Progress {
+    height: 20px;
+    background: var(--surface);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.ProgressFill {
+    height: 100%;
+    background: linear-gradient(90deg,
+        var(--primary) 0%, 
+        var(--secondary) 50%,
+        var(--primary) 100%);
+    transition: width 0.2s ease-in-out;
+}
+
 button {
     display: inline-flex;
     gap: 0.5rem;
@@ -454,7 +368,7 @@ button {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--primary);
-    background: var(--surface-container);
+    background: var(--surface);
     border: none;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -580,7 +494,7 @@ label {
 }
 
 label[aria-disabled="true"] {
-    color: var(--label-disabled-color, var(--secondary));
+    color: var(--disabled);
     cursor: not-allowed;
     opacity: 0.75;
 }
@@ -589,7 +503,36 @@ label p {
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 400;
-    color: var(--secondary);
+    color: color-mix(in srgb, currentColor 75%, transparent);
+}
+
+.ToggleSwitch {
+    width: 60px;
+    height: 30px;
+    background-color: var(--surface);
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.ToggleThumb {
+    width: 26px;
+    height: 26px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.ToggleChecked .ToggleThumb {
+    transform: translateX(30px);
+}
+
+.ToggleChecked {
+    background: var(--primary-container);
 }
 
 .Input {
@@ -623,7 +566,7 @@ label p {
 
 .Input> input::placeholder,
 .Input> textarea::placeholder {
-    color: var(--secondary);
+    color: var(--primary);
 }
 
 .Input[data-has-label="true"] > input::placeholder,
@@ -646,7 +589,7 @@ label p {
     position: absolute;
     top: 0rem;
     left: 1rem;
-    color: var(--secondary);
+    color: var(--primary);
     border: var(--Input-label-border);
     font-size: 0.875rem;
     white-space: nowrap;
@@ -660,6 +603,10 @@ label p {
 
 .Input:has([data-has-icon="false"]) label {
     display: none;
+}
+
+.Input:has(input[type="range"]) {
+    margin: 0rem 1rem;
 }
 
 .Input> input:focus-within ~ label,
