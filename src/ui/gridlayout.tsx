@@ -1,6 +1,7 @@
 import { JSX } from "solid-js";
 
 import { CssUI } from "./gen.ts";
+import { MetaProvider, Title } from "@solidjs/meta";
 
 /*CSS:
 .GridLayout {
@@ -175,6 +176,7 @@ import { CssUI } from "./gen.ts";
 */
 
 type GridLayoutProps = {
+    title?: string,
     header?: JSX.Element;
     footer?: JSX.Element;
     left?: JSX.Element;
@@ -184,6 +186,7 @@ type GridLayoutProps = {
 };
 
 export function GridLayout({
+    title,
     header,
     footer,
     left,
@@ -194,41 +197,58 @@ export function GridLayout({
 
     if (mode == 'fixed') {
         return (
-            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFixed}`}>
-                {header && <header class={CssUI.GridHeader}>{header}</header>}
-                {left && <nav class={CssUI.GridLeft}>{left}</nav>}
-                {children && <section class={CssUI.GridMiddle}>{children}</section>}
-                {right && <aside class={CssUI.GridRight}>{right}</aside>}
-                {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
-            </main>
+            <MetaProvider>
+                <Title>{title}</Title>
+
+                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFixed}`}>
+                    {header && <header class={CssUI.GridHeader}>{header}</header>}
+                    {left && <nav class={CssUI.GridLeft}>{left}</nav>}
+                    {children && <section class={CssUI.GridMiddle}>{children}</section>}
+                    {right && <aside class={CssUI.GridRight}>{right}</aside>}
+                    {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
+                </main>
+            </MetaProvider>
+
         )
     } else if (mode == 'scroll') {
         return (
-            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutScroll}`}>
-                {left && <nav class={CssUI.GridLeft}>{left}</nav>}
-                <section class={CssUI.GridMiddle}>
-                    <div class={CssUI.GridScrollContainer}>
-                        {header && <header class={CssUI.GridHeader}>{header}</header>}
-                        {children && <div class={CssUI.GridContent}>{children}</div>}
-                        {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
-                    </div>
-                </section>
-                {right && <aside class={CssUI.GridRight}>{right}</aside>}
-            </main>
+
+            <MetaProvider>
+                <Title>{title}</Title>
+
+                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutScroll}`}>
+                    {left && <nav class={CssUI.GridLeft}>{left}</nav>}
+                    <section class={CssUI.GridMiddle}>
+                        <div class={CssUI.GridScrollContainer}>
+                            {header && <header class={CssUI.GridHeader}>{header}</header>}
+                            {children && <div class={CssUI.GridContent}>{children}</div>}
+                            {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
+                        </div>
+                    </section>
+                    {right && <aside class={CssUI.GridRight}>{right}</aside>}
+                </main>
+
+            </MetaProvider>
         )
     } else {
         return (
-            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFlow}`}>
-                {header && <header class={CssUI.GridHeader}>{header}</header>}
-                {left && <nav class={CssUI.GridLeft}>{left}</nav>}
-                <section class={CssUI.GridMiddle}>
-                    <div class={CssUI.GridScrollContainer}>
-                        {children && <div class={CssUI.GridContent}>{children}</div>}
-                    </div>
-                </section>
-                {right && <aside class={CssUI.GridRight}>{right}</aside>}
-                {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
-            </main>
+
+            <MetaProvider>
+                <Title>{title}</Title>
+
+                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFlow}`}>
+                    {header && <header class={CssUI.GridHeader}>{header}</header>}
+                    {left && <nav class={CssUI.GridLeft}>{left}</nav>}
+                    <section class={CssUI.GridMiddle}>
+                        <div class={CssUI.GridScrollContainer}>
+                            {children && <div class={CssUI.GridContent}>{children}</div>}
+                        </div>
+                    </section>
+                    {right && <aside class={CssUI.GridRight}>{right}</aside>}
+                    {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
+                </main>
+
+            </MetaProvider>
         )
     }
 }

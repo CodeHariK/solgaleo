@@ -1,8 +1,24 @@
 import { onCleanup, onMount } from "solid-js";
+import { CssFANCY } from "./gen";
 
 /*CSS:
-#ghost {
-    position: absolute;
+.GhostCon {
+    --ghostWaveColor: var(--primary);
+    --ghostColor: var(--primary-container);
+    --ghostEyeColor: var(--secondary);
+    --ghostCircleSize: 10px;
+    --ghostCircleDistance: 5px;
+    --ghostCircleRadius: 11.18px;
+
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    padding: 50px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9999;
 }
 
 .ghost {
@@ -16,7 +32,7 @@ import { onCleanup, onMount } from "solid-js";
     animation: float 3s ease-out infinite;
 }
 
-.ghost__eyes {
+.GhostEyes {
     display: flex;
     gap: 25px;
     padding-top: 44px;
@@ -24,24 +40,24 @@ import { onCleanup, onMount } from "solid-js";
     position: relative;
 }
 
-.ghost__eyes_eye {
+.GhostEye {
     width: 10px;
     height: 16px;
-    border: 6px solid var(--waveColor);
+    border: 6px solid var(--ghostEyeColor);
     border-radius: 100px;
     clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
     transition: .1s;
 }
 
-.ghost:hover .ghost__eyes_eye,
-#ghost.active .ghost__eyes_eye {
-    background: var(--waveColor);
-    border-color: yellow;
+.ghost:hover .GhostEye,
+.GhostCon.active .GhostEye {
+    background: var(--ghostWaveColor);
+    border-color: var(--ghostEyeColor);
     clip-path: none;
     height: 25px;
 }
 
-.ghost__waves {
+.GhostWaves {
     display: flex;
     position: absolute;
     bottom: -32px;
@@ -50,27 +66,23 @@ import { onCleanup, onMount } from "solid-js";
     overflow: hidden;
 }
 
-.ghost__wave {
+.GhostWave {
     width: 200%;
     height: 30px;
-    background: var(--waveColor);
+    background: var(--ghostWaveColor);
     flex-shrink: 0;
 
     animation: ghost-wave 3s linear infinite;
 
-    --size: 10px;
-    --p: 5px;
-    --R: 11.18px;
-
     -webkit-mask:
-        radial-gradient(var(--R) at 50% calc(100% - (var(--size) + var(--p))), blue 99%, #0000 101%) calc(50% - 2*var(--size)) 0/calc(4*var(--size)) 100%,
-        radial-gradient(var(--R) at 50% calc(100% + var(--p)), #0000 99%, red 101%) 50% calc(100% - var(--size))/calc(4*var(--size)) 100% repeat-x;
+        radial-gradient(var(--ghostCircleRadius) at 50% calc(100% - (var(--ghostCircleSize) + var(--ghostCircleDistance))), blue 99%, #0000 101%) calc(50% - 2*var(--ghostCircleSize)) 0/calc(4*var(--ghostCircleSize)) 100%,
+        radial-gradient(var(--ghostCircleRadius) at 50% calc(100% + var(--ghostCircleDistance)), #0000 99%, red 101%) 50% calc(100% - var(--ghostCircleSize))/calc(4*var(--ghostCircleSize)) 100% repeat-x;
 }
 
-.ghost__mouth {
+.GhostMouth {
     width: 44px;
     height: 8px;
-    background: #000;
+    background: var(--ghostEyeColor);
     border-radius: 10px;
     margin: 16px auto 0;
     position: relative;
@@ -78,15 +90,15 @@ import { onCleanup, onMount } from "solid-js";
     transition: .1s;
 }
 
-.ghost:hover .ghost__mouth:before,
-#ghost.active .ghost__mouth:before {
+.ghost:hover .GhostMouth:before,
+.GhostCon.active .GhostMouth:before {
     display: none;
 }
 
-.ghost:hover .ghost__mouth,
-#ghost.active .ghost__mouth {
+.ghost:hover .GhostMouth,
+.GhostCon.active .GhostMouth {
     animation: none;
-    background: #000;
+    background: var(--ghostEyeColor);
     width: 32px;
     height: 29px;
     clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
@@ -94,42 +106,30 @@ import { onCleanup, onMount } from "solid-js";
     margin-top: 1px;
 }
 
-#ghost.active .ghost {
+.GhostCon.active .ghost {
     animation: none;
 }
 
 @keyframes ghost-wave {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
-
 @keyframes sleep {
-    0% {
-        width: 44px;
-    }
-
-    50% {
-        width: 26px;
-    }
-
-    100% {
-        width: 44px;
-    }
+    0% { width: 44px; }
+    50% { width: 26px; }
+    100% { width: 44px; }
 }
-
 @keyframes float {
-    50% {
-        transform: translate(0, 20px);
-    }
+    50% { transform: translate(0, 20px); }
 }
+
 */
 
-export const GhostComponent = ({ ghostColor, waveColor }: { ghostColor?: string, waveColor?: string }) => {
+export const GhostComponent = ({ ghostColor, waveColor, eyeColor }: {
+    ghostColor?: string,
+    waveColor?: string,
+    eyeColor?: string
+}) => {
     let ghost: HTMLDivElement | undefined;
 
     let ghostX = 0;
@@ -144,8 +144,8 @@ export const GhostComponent = ({ ghostColor, waveColor }: { ghostColor?: string,
     const handleMouseMove = (event: MouseEvent) => {
         ghost!.classList.add("active");
 
-        targetX = event.pageX - 55;
-        targetY = event.pageY - 550;
+        targetX = event.pageX - 100
+        targetY = event.pageY - 20
 
         if (!moving) {
             moving = true;
@@ -154,7 +154,9 @@ export const GhostComponent = ({ ghostColor, waveColor }: { ghostColor?: string,
     };
 
     const animateGhost = () => {
-        if (!ghost) return;
+        if (!ghost) {
+            return;
+        }
 
         const diffX = targetX - ghostX;
         const diffY = targetY - ghostY;
@@ -172,8 +174,8 @@ export const GhostComponent = ({ ghostColor, waveColor }: { ghostColor?: string,
         ghostX += diffX / 10;
         ghostY += diffY / 10;
 
-        const skewDegrees = linearMap(skewX, 0, 50, 0, -25);
-        const scaleYValue = linearMap(scale, 0, 50, 1, 2.0);
+        const skewDegrees = linearMap(skewX, 0, 50, 0, -15);
+        const scaleYValue = linearMap(scale, 0, 50, 1, 1.5);
 
         ghost.style.transform = `translate(${ghostX}px, ${ghostY}px) skew(${skewDegrees}deg) rotate(${-skewDegrees}deg) scaleY(${scaleYValue})`;
 
@@ -205,21 +207,22 @@ export const GhostComponent = ({ ghostColor, waveColor }: { ghostColor?: string,
         });
     });
 
-    return <div id="ghost" ref={ghost}>
-        <div class="ghost"
+    return <div class={CssFANCY.GhostCon} ref={ghost}>
+        <div class={CssFANCY.Ghost}
             style={{
-                "--ghostColor": ghostColor || "#a81fac87",
-                "--waveColor": waveColor || "#ffff0091",
+                [CssFANCY.varGhostColor]: ghostColor,
+                [CssFANCY.varGhostWaveColor]: waveColor,
+                [CssFANCY.varGhostEyeColor]: eyeColor,
             }}
         >
-            <div class="ghost__waves">
-                <div class="ghost__wave"></div>
+            <div class="GhostWaves">
+                <div class="GhostWave"></div>
             </div>
-            <div class="ghost__eyes">
-                <div class="ghost__eyes_eye"></div>
-                <div class="ghost__eyes_eye"></div>
+            <div class="GhostEyes">
+                <div class="GhostEye"></div>
+                <div class="GhostEye"></div>
             </div>
-            <div class="ghost__mouth"></div>
+            <div class="GhostMouth"></div>
         </div>
-    </div>;
+    </div>
 }

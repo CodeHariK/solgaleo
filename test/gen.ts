@@ -3,7 +3,6 @@ import "./gen.css"
 export * from "./page.fancy.tsx";
 export * from "./page.nav.tsx";
 export * from "./page.adv.tsx";
-export * from "./storybook.tsx";
 export * from "./page.grid.tsx";
 export * from "./page.tabs.tsx";
 export * from "./page.svg.tsx";

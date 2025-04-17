@@ -1,5 +1,5 @@
 import { For, JSX } from "solid-js";
-import { Header } from "../src/nav/header";
+import { AA, Header } from "../src/nav/header";
 import { CssTEST } from "./gen";
 import { RandomColor } from "../src/utils/color";
 import { ThemeToggle } from "../src/gen";
@@ -19,14 +19,14 @@ export function TestHeader() {
             <a href={baseroute + '/fancy'} title='Fancy' >Fancy</a>,
             <a href={baseroute + '/ui'} title='Ui' >Ui</a>,
             <a href={baseroute + '/grid'} title='Grid'>Grid</a>,
-            <a href={baseroute + '/tabs?two.light=home&two.night=settings.account.security&one.night=settings.account.notifications&one.light=settings.profile'} title='Tabs' >Tabs</a>,
+            <AA href="/tabs" >TabsL</AA>,
+            <AA href="/tabs?two.light=settings.profile&two.night=home&one.night=settings.account.security&one.light=settings.account.notifications" >TabL2</AA>,
         ]}
         right={[
             <ThemeToggle />
         ]}
     />;
 }
-
 
 /*CSS:
 

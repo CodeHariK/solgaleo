@@ -9,6 +9,12 @@ export function UiTest() {
 
     const [progress, setProgress] = createSignal(64);
 
+    //                 AllTheme().map((t) =>
+    //                     <section class={t}>
+    //                         {t}
+    //                         <Story />
+    //                     </section>)
+
     return <GridLayout
         header={<TestHeader />}
     >

@@ -12,11 +12,12 @@ src/transition.tsx
 .light {
     --banner-border: #40224e;
     --banner-bg: #bd53ee;
-    --ghostColor: ;
-    --waveColor: ;
-    --R: 11.18px;
-    --size: 10px;
-    --p: 5px;
+    --ghostColor: var(--primary-container);
+    --ghostEyeColor: var(--secondary);
+    --ghostWaveColor: var(--primary);
+    --ghostCircleRadius: 11.18px;
+    --ghostCircleSize: 10px;
+    --ghostCircleDistance: 5px;
     --sterm-border-color: ;
     --sterm-bg-color: ;
     --flicker-shadow: #36e2f8;
@@ -28,11 +29,12 @@ src/transition.tsx
 .night {
     --banner-border: #bd53ee;
     --banner-bg: #40224e;
-    --ghostColor: ;
-    --waveColor: ;
-    --R: 11.18px;
-    --size: 10px;
-    --p: 5px;
+    --ghostColor: var(--primary-container);
+    --ghostEyeColor: var(--secondary);
+    --ghostWaveColor: var(--primary);
+    --ghostCircleRadius: 11.18px;
+    --ghostCircleSize: 10px;
+    --ghostCircleDistance: 5px;
     --sterm-border-color: ;
     --sterm-bg-color: ;
     --flicker-shadow: #36e2f8;
@@ -57,8 +59,16 @@ src/transition.tsx
     margin-top: .5rem;
 }
 
-#ghost {
-    position: absolute;
+.GhostCon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 50px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9999;
 }
 
 .ghost {
@@ -72,7 +82,7 @@ src/transition.tsx
     animation: float 3s ease-out infinite;
 }
 
-.ghost__eyes {
+.GhostEyes {
     display: flex;
     gap: 25px;
     padding-top: 44px;
@@ -80,24 +90,24 @@ src/transition.tsx
     position: relative;
 }
 
-.ghost__eyes_eye {
+.GhostEye {
     width: 10px;
     height: 16px;
-    border: 6px solid var(--waveColor);
+    border: 6px solid var(--ghostEyeColor);
     border-radius: 100px;
     clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
     transition: .1s;
 }
 
-.ghost:hover .ghost__eyes_eye,
-#ghost.active .ghost__eyes_eye {
-    background: var(--waveColor);
-    border-color: yellow;
+.ghost:hover .GhostEye,
+.GhostCon.active .GhostEye {
+    background: var(--ghostWaveColor);
+    border-color: var(--ghostEyeColor);
     clip-path: none;
     height: 25px;
 }
 
-.ghost__waves {
+.GhostWaves {
     display: flex;
     position: absolute;
     bottom: -32px;
@@ -106,20 +116,20 @@ src/transition.tsx
     overflow: hidden;
 }
 
-.ghost__wave {
+.GhostWave {
     width: 200%;
     height: 30px;
-    background: var(--waveColor);
+    background: var(--ghostWaveColor);
     flex-shrink: 0;
     animation: ghost-wave 3s linear infinite;
-    -webkit-mask: radial-gradient(var(--R) at 50% calc(100% - (var(--size) + var(--p))), blue 99%, #0000 101%) calc(50% - 2*var(--size)) 0/calc(4*var(--size)) 100%,
-        radial-gradient(var(--R) at 50% calc(100% + var(--p)), #0000 99%, red 101%) 50% calc(100% - var(--size))/calc(4*var(--size)) 100% repeat-x;
+    -webkit-mask: radial-gradient(var(--ghostCircleRadius) at 50% calc(100% - (var(--ghostCircleSize) + var(--ghostCircleDistance))), blue 99%, #0000 101%) calc(50% - 2*var(--ghostCircleSize)) 0/calc(4*var(--ghostCircleSize)) 100%,
+        radial-gradient(var(--ghostCircleRadius) at 50% calc(100% + var(--ghostCircleDistance)), #0000 99%, red 101%) 50% calc(100% - var(--ghostCircleSize))/calc(4*var(--ghostCircleSize)) 100% repeat-x;
 }
 
-.ghost__mouth {
+.GhostMouth {
     width: 44px;
     height: 8px;
-    background: #000;
+    background: var(--ghostEyeColor);
     border-radius: 10px;
     margin: 16px auto 0;
     position: relative;
@@ -127,15 +137,15 @@ src/transition.tsx
     transition: .1s;
 }
 
-.ghost:hover .ghost__mouth:before,
-#ghost.active .ghost__mouth:before {
+.ghost:hover .GhostMouth:before,
+.GhostCon.active .GhostMouth:before {
     display: none;
 }
 
-.ghost:hover .ghost__mouth,
-#ghost.active .ghost__mouth {
+.ghost:hover .GhostMouth,
+.GhostCon.active .GhostMouth {
     animation: none;
-    background: #000;
+    background: var(--ghostEyeColor);
     width: 32px;
     height: 29px;
     clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
@@ -143,35 +153,23 @@ src/transition.tsx
     margin-top: 1px;
 }
 
-#ghost.active .ghost {
+.GhostCon.active .ghost {
     animation: none;
 }
 
 @keyframes ghost-wave {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 @keyframes sleep {
-    0% {
-        width: 44px;
-    }
-    50% {
-        width: 26px;
-    }
-    100% {
-        width: 44px;
-    }
+    0% { width: 44px; }
+    50% { width: 26px; }
+    100% { width: 44px; }
 }
 
 @keyframes float {
-    50% {
-        transform: translate(0, 20px);
-    }
+    50% { transform: translate(0, 20px); }
 }
 
 .Typewriter {

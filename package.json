@@ -50,14 +50,14 @@
     "@solidjs/meta": "^0.29.4",
     "solid-js": "^1.9.5",
     "solid-transition-group": "^0.3.0",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "@solidjs/router": "^0.15.3"
   },
   "devDependencies": {
-    "@solidjs/router": "^0.15.3",
-    "@types/bun": "^1.2.9",
+    "@types/bun": "^1.2.10",
     "gh-pages": "^6.3.0",
     "typescript": "~5.7.3",
-    "vite": "^6.2.6",
+    "vite": "^6.3.1",
     "vite-plugin-dts": "^4.5.3",
     "vite-plugin-solid": "^2.11.6"
   },

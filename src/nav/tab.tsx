@@ -1,4 +1,4 @@
-import { For, createSignal, JSX, createEffect } from 'solid-js';
+import { For, createSignal, JSX, createEffect, onMount } from 'solid-js';
 import { CssNAV } from './gen';
 
 /* CSS:
@@ -38,6 +38,11 @@ function updateQueryParam(key: string, value: string): void {
     window.history.pushState({}, '', url.toString());
 }
 
+function getQueryParam(key: string): string | null {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(key);
+}
+
 type RoutedTabsProps = {
     tabs: Tab[];
     defaultTab?: string;
@@ -75,13 +80,15 @@ export function RoutedTabs(props: RoutedTabsProps) {
     const [currentTab, setCurrentTab] = createSignal(getCurrentTab());
 
     // Listen for route changes using location.search
-    createEffect(() => {
+    onMount(() => {
         const handleLocationChange = () => {
             const newTab = getCurrentTab();
             if (newTab !== currentTab()) {
                 setCurrentTab(newTab);
             }
         };
+
+        console.log("RoutedTabs createEffect", getCurrentTab(), currentTab(), getQueryParam(props.id))
 
         handleLocationChange()
 
@@ -96,6 +103,9 @@ export function RoutedTabs(props: RoutedTabsProps) {
             defaultTab={currentTab()}
             onTabChange={
                 (tabId: string) => {
+
+                    console.log(tabId)
+
                     setCurrentTab(tabId);
 
                     // Update URL while preserving other tab states
@@ -181,14 +191,16 @@ export function Tabs(props: TabsProps) {
     }
 
     const handleTabClick = (tab: Tab, level: number) => {
-        // Check if we're clicking the same tab at the same level
-        if (activePath()[level] === tab.id) {
-            return; // Do nothing if clicking the same tab
-        }
+        // // Check if we're clicking the same tab at the same level
+        // if (activePath()[level] === tab.id) {
+        //     return; // Do nothing if clicking the same tab
+        // }
 
         const newPath = [...activePath().slice(0, level), tab.id];
 
         updateContent(newPath)
+
+        console.log(newPath, tab.id)
 
         props.onTabChange?.(newPath.join('.'));
     };
@@ -208,7 +220,11 @@ export function Tabs(props: TabsProps) {
             <div class={CssNAV.TabsLevels} style={props.styles?.levels}>
                 <For each={visibleTabs()}>
                     {(levelTabs, level) => (
-                        <div class={CssNAV.TabLevel} style={{ ...props.styles?.level, "padding-left": `${level() * 1}rem` }}>
+                        <div class={CssNAV.TabLevel}
+                            style={{
+                                ...props.styles?.level,
+                                "padding-left": `${level() * 1}rem`
+                            }}>
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button

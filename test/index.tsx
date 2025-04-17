@@ -14,6 +14,7 @@ import { TabTest } from './page.tabs';
 // Theme customization
 import "./custom.css"
 import { AddTheme } from "../src/ui/theme_toggle"
+import { NotFound } from './NotFound';
 AddTheme({
     name: "custom",
     type: "light",
@@ -36,20 +37,3 @@ render(() => <Router base="/solgaleo">
 </Router>,
     document.body!)
 
-
-function NotFound() {
-    return (
-        <GridLayout
-            header={<TestHeader />}
-        >
-            <div style={{
-                "display": "flex",
-                "align-items": "center",
-                "justify-content": "center",
-                "height": "100%"
-            }}>
-                <h1>404 - Page Not Found</h1>
-            </div>
-        </GridLayout>
-    );
-}

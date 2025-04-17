@@ -1,5 +1,6 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { CssNAV } from "./gen";
+import { A } from "@solidjs/router";
 
 /* CSS:
 .HeaderNav {
@@ -50,6 +51,18 @@ import { CssNAV } from "./gen";
     }
 }
 */
+
+export function AA({ children, href, title }: { children: JSX.Element, href: string, title?: string }) {
+    const handleClick = () => {
+        window.history.pushState({}, '', href);
+    };
+
+    return (
+        <A href={href} onClick={handleClick} title={title}>
+            {children}
+        </A>
+    );
+}
 
 export function Header({ title, links, right: right }: {
     title?: JSX.Element | JSX.Element[],
