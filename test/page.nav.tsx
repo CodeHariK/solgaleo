@@ -60,15 +60,15 @@ export function NavTest() {
         </N.Modal>
 
 
-        {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
         {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
         {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
-        {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')}
+        {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')} */}
 
-        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
+        {/* {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
         {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
-        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')}
+        {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')} */}
 
         {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'left')}

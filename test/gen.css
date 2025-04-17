@@ -1,10 +1,12 @@
 /*
+page.adv.tsx
 page.svg.tsx
 common.tsx
 css.tsx
 */
 
 .light {
+    --blog-title-color: ;
     --visibility: ;
     --svg-ring-width: 4px;
     --svg-ring-color: #82f680;
@@ -32,6 +34,7 @@ css.tsx
 }
 
 .night {
+    --blog-title-color: ;
     --visibility: ;
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
@@ -56,6 +59,31 @@ css.tsx
     --hello--stepper-col: blue;
     --marquee-span-col: #fff;
     --p-col: ;
+}
+
+.blog-title {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    color: var(--blog-title-color);
+    display: inline-block;
+    position: relative;
+    margin-bottom: .7rem;
+}
+
+.blog-item:hover .blog-title {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: .4rem;
+    text-decoration-color: var(--primary);
+}
+
+.blog-meta {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: .4em;
+    margin: 4px 0;
 }
 
 .IconGrid {

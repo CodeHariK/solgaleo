@@ -45,7 +45,6 @@ export function SvgTest() {
         { component: svg.IconAddUser, name: 'Add User' },
         { component: svg.IconTableHeading, name: 'Table Heading' },
         { component: svg.IconPen, name: 'Pen' },
-        { component: svg.IconGoogle, name: 'Google' },
         { component: svg.IconTick, name: 'Tick' },
         { component: svg.IconCross, name: 'Cross' },
         { component: svg.IconUnlock, name: 'Unlock' },
@@ -72,7 +71,7 @@ export function SvgTest() {
         <div class={CssTEST.IconGrid}>
             {icons.map(({ component: Icon, name }) => (
                 <div class={CssTEST.IconItem}>
-                    <Icon props={{ size: 4 }} />
+                    <Icon style={{ width: "4rem", height: "4rem" }} />
                     <span class={CssTEST.IconLabel}>{name}</span>
                 </div>
             ))}

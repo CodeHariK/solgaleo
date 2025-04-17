@@ -13,6 +13,9 @@ export * from "./page.ui.tsx";
 
 
 export const CssTEST = {
+    BlogTitle: "blog-title",
+    BlogItem: "blog-item",
+    BlogMeta: "blog-meta",
     IconGrid: "IconGrid",
     IconItem: "IconItem",
     IconLabel: "IconLabel",
@@ -30,6 +33,8 @@ export const CssTEST = {
     AppTextInput: "AppTextInput",
     Potato: "potato",
 
+    varBlogTitleColor: "--blog-title-color",
+    varPrimary: "--primary",
     varVisibility: "--visibility",
     varSvgRingWidth: "--svg-ring-width",
     varSvgRingColor: "--svg-ring-color",

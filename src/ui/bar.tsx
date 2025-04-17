@@ -11,10 +11,10 @@ export function RatingsBar(props: { ratings?: number, reviews?: number }) {
         <div class="flex items-center gap2">
             <div class="flex items-center">
                 <For each={Array(filledStars())}>
-                    {() => <IconStar props={{ color: "#fde047" }} />}
+                    {() => <IconStar style={{ color: "#fde047" }} />}
                 </For>
                 <For each={Array(emptyStars())}>
-                    {() => <IconStar props={{ color: "#000000" }} />}
+                    {() => <IconStar style={{ color: "#000000" }} />}
                 </For>
             </div>
 

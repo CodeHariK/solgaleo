@@ -276,14 +276,14 @@ export function DragBox({ anchorRef, setAnchorRef }: {
 
     /*CSS:
 
-    .SolDragBox {
+    .DragBox {
         position: fixed; 
         inset: 0px;
         background-color: #ea83834e; 
         pointer-events: none; 
     }
 
-    .SolDragBox > div {
+    .DragBox > div {
         display: flex; 
         padding: 1rem; 
         justify-content: center; 
@@ -298,7 +298,7 @@ export function DragBox({ anchorRef, setAnchorRef }: {
     */
 
     return (
-        <div class={CssUI.SolDragBox}>
+        <div class={CssUI.DragBox}>
             <div
                 ref={setAnchorRef}
                 style={{ position: "absolute", left: `${position().x}px`, top: `${position().y}px`, "z-index": 1000 }}

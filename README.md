@@ -60,7 +60,16 @@ UI.AddTheme({
 ** custom.css **
 
 .custom {
-  --svg-size: 3rem;
+  --spacing: 1rem;
+
+  --primary: #f06432;
+  --primary-container: #ffdbcc8b;
+  --secondary: #845ec2;
+  --secondary-container: #e4d8f7;
+  --surface: #fffffcc6;
+  --error: #B3261E;
+  --error-container: #F9DEDC;
+  --disabled: #9CA3AF;
 }
 
 ```

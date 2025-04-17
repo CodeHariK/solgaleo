@@ -1,7 +1,7 @@
 
 import * as yup from 'yup';
 import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
-import { IconCart, IconCross, IconDown, IconFilter, IconGoogle } from '../src/svg/gen.ts';
+import { IconCart, IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 import { createSignal } from 'solid-js';
 
@@ -20,7 +20,7 @@ export function UiTest() {
             <button class={CssUI.OutlinedButton}>OutlinedButton</button>
             <button class={CssUI.IconButton} onClick={() => {
                 setProgress(80)
-            }}><IconGoogle /></button>
+            }}><IconHome /></button>
 
             <AsyncButton onClick={async (): Promise<void> => {
                 // Simulate an async operation (e.g., API call)

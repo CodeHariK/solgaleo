@@ -101,14 +101,14 @@ src/input.tsx
     background-color: var(--PositionBox--button-background-color-hover);
 }
 
-.SolDragBox {
+.DragBox {
     position: fixed;
     inset: 0px;
     background-color: #ea83834e;
     pointer-events: none;
 }
 
-.SolDragBox>div {
+.DragBox>div {
     display: flex;
     padding: 1rem;
     justify-content: center;

@@ -2,7 +2,7 @@ import { type JSX } from 'solid-js';
 import { CssFANCY } from './gen';
 
 /*CSS:
-.SRainbow {
+.Rainbow {
     background: linear-gradient(to right,
             blueviolet,
             lawngreen,
@@ -24,7 +24,7 @@ import { CssFANCY } from './gen';
     }
 }
 
-.SRaincon {
+.Raincon {
     background-image: var(--rainsrc);
     -webkit-mask-image: var(--rainsrc);
     -webkit-mask-size: cover;
@@ -33,7 +33,7 @@ import { CssFANCY } from './gen';
     height: var(--rainsize);
     display: inline-block;
 }
-.SRainconGrad {
+.RainconGrad {
     background-image: linear-gradient(-45deg,
             #ee76526e,
             #e73c7e9a,
@@ -61,7 +61,7 @@ import { CssFANCY } from './gen';
 */
 
 export function RainbowText(props: { children: JSX.Element }) {
-    return <span class={CssFANCY.SRainbow}>{props.children}</span>
+    return <span class={CssFANCY.Rainbow}>{props.children}</span>
 }
 
 
@@ -70,12 +70,12 @@ export function RainbowImage(props: {
     src: string;
 }) {
     return <div
-        class={CssFANCY.SRaincon}
+        class={CssFANCY.Raincon}
         style={{
             [CssFANCY.varRainsize]: props.size,
             [CssFANCY.varRainsrc]: `url(${props.src})`,
         }}>
-        <div class={CssFANCY.SRainconGrad}>
+        <div class={CssFANCY.RainconGrad}>
             <slot />
         </div>
     </div>

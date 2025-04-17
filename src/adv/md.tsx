@@ -2,18 +2,15 @@ import { Component, JSX } from "solid-js";
 import { CssADV } from "./gen";
 
 /*CSS:
-.SMarkdown {
-    background: var : #ffe0fd : red;
-    border-radius: 1rem;
-    border: 1px solid black;
+.Markdown {
+    background: var(--surface);
 }
-.SMarkdownCode {
-    color : var : white;
-    background: var : #232323 : #15ff00;
+.MarkdownCode {
+    background: var : var(--surface);
     
     >div {
         padding: .5rem;
-        background: var : #585858 : blue;
+        background: var(--primary-container);
         display: flex;
         justify-content: space-between;
     }
@@ -25,7 +22,7 @@ interface MiniMarkdownProps {
 }
 export const MiniMarkdown: Component<MiniMarkdownProps> = (props) => {
     const jsxContent = () => parseMarkdownToJSX(props.content);
-    return <div class={CssADV.SMarkdown}>{jsxContent()}</div>;
+    return <div class={CssADV.Markdown}>{jsxContent()}</div>;
 };
 
 
@@ -59,7 +56,7 @@ function parseMarkdownToJSX(text: string): JSX.Element[] {
                     l.replace(/</g, "&lt;").replace(/>/g, "&gt;")).join("\n");
 
             result.push(
-                <div class={CssADV.SMarkdownCode}>
+                <div class={CssADV.MarkdownCode}>
                     <div>
                         {codeLang}
                         <button onclick={() => { navigator.clipboard.writeText(code) }}>Copy</button>

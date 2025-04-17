@@ -1,7 +1,7 @@
 import { CssFANCY } from "./gen";
 
 /* CSS:
-.SMarquee{
+.Marquee{
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -29,7 +29,7 @@ import { CssFANCY } from "./gen";
 */
 
 export function Marquee() {
-    return <div class={CssFANCY.SMarquee}>
+    return <div class={CssFANCY.Marquee}>
         <span>Hello World&nbsp;</span>
         <span>Hello World&nbsp;</span>
         <span>Hello World&nbsp;</span>

@@ -1,4 +1,5 @@
 /*
+animation.tsx
 base.tsx
 */
 
@@ -32,6 +33,17 @@ base.tsx
     --disabled: #9CA3AF ;
     --body-bg: black ;
     --body-col: white;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 *::-webkit-scrollbar {

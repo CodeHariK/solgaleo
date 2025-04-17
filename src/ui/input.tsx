@@ -236,7 +236,7 @@ export function Select(props: SelectProps) {
                         )}
                     </Key>
                 </select>
-                <IconDown props={{ class: CssUI.SelectChevron }} />
+                <IconDown className={CssUI.SelectChevron} />
             </div>
         </fieldset>
     );

@@ -174,7 +174,7 @@ src/transition.tsx
     }
 }
 
-.STypewriter {
+.Typewriter {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -195,7 +195,7 @@ src/transition.tsx
     }
 }
 
-.STerminalWindow {
+.TerminalWindow {
     z-index: 0;
     height: 100%;
     max-height: 400px;
@@ -206,17 +206,17 @@ src/transition.tsx
     background: var(--sterm-bg-color);
 }
 
-.STerminalWindow pre {
+.TerminalWindow pre {
     padding: 1rem;
 }
 
-.STerminalWindow code {
+.TerminalWindow code {
     display: grid;
     gap: 0.25rem;
     overflow: auto;
 }
 
-.STerminalHeader {
+.TerminalHeader {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -224,44 +224,44 @@ src/transition.tsx
     padding: 1rem;
 }
 
-.STerminalHeader div {
+.TerminalHeader div {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
 }
 
-.STerminalHeader div div {
+.TerminalHeader div div {
     height: 0.5rem;
     width: 0.5rem;
     border-radius: 9999px;
 }
 
-.STerminalHeader div div:nth-child(1) {
+.TerminalHeader div div:nth-child(1) {
     background-color: #ef4444;
 }
 
-.STerminalHeader div div:nth-child(2) {
+.TerminalHeader div div:nth-child(2) {
     background-color: #eab308;
 }
 
-.STerminalHeader div div:nth-child(3) {
+.TerminalHeader div div:nth-child(3) {
     background-color: #22c55e;
 }
 
-.STerminalLine {
+.TerminalLine {
     font-size: 0.875rem;
     font-weight: normal;
     letter-spacing: -0.025em;
 }
 
-.SMarquee {
+.Marquee {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
 }
 
-.SMarquee span {
+.Marquee span {
     text-transform: uppercase;
     will-change: transform;
     transform: translateX(0);
@@ -406,7 +406,7 @@ src/transition.tsx
     text-transform: uppercase;
 }
 
-.SRainbow {
+.Rainbow {
     background: linear-gradient(to right,
             blueviolet,
             lawngreen,
@@ -419,7 +419,7 @@ src/transition.tsx
     background-size: 400% 100%;
 }
 
-.SRaincon {
+.Raincon {
     background-image: var(--rainsrc);
     -webkit-mask-image: var(--rainsrc);
     -webkit-mask-size: cover;
@@ -429,7 +429,7 @@ src/transition.tsx
     display: inline-block;
 }
 
-.SRainconGrad {
+.RainconGrad {
     background-image: linear-gradient(-45deg,
             #ee76526e,
             #e73c7e9a,

@@ -14,7 +14,7 @@ export * from "./spaceform.tsx";
 
 export const CssUI = {
     PositionBox: "PositionBox",
-    SolDragBox: "SolDragBox",
+    DragBox: "DragBox",
     GridLayout: "GridLayout",
     GridLayoutFixed: "GridLayoutFixed",
     GridLayoutScroll: "GridLayoutScroll",

@@ -1,29 +1,11 @@
 import { type JSX } from "solid-js";
 
 type IconProps = {
-    class?: string;
+    className?: string;
     style?: JSX.CSSProperties;
-    color?: string;
-    size?: number;
     strokeWidth?: number;
     fill?: boolean;
 };
-
-function toProp(props?: IconProps) {
-    if (!props) return {};
-
-    const styles: Record<string, string> = {};
-
-    if (props.color) {
-        styles.color = props.color;
-    }
-    if (props.size) {
-        styles.width = `${props.size}rem`;
-        styles.height = `${props.size}rem`;
-    }
-
-    return styles ? { ...props.style, style: styles } : {};
-}
 
 /* CSS:
 @keyframes spin {
@@ -51,27 +33,28 @@ svg {
 }
 */
 
-export function IconPhone({ props }: { props?: IconProps }) {
+export function IconPhone({ className, style, strokeWidth, fill }: IconProps) {
+
     return <svg
         viewBox="-2 -2 22 22"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
     >
         <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
     </svg>
 }
 
-export function IconKey({ props }: { props?: IconProps }) {
+export function IconKey({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="-1 -1 26 26"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linejoin="round"
     >
         <path
@@ -81,14 +64,14 @@ export function IconKey({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconAddUser({ props }: { props?: IconProps }) {
+export function IconAddUser({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
     >
         <path
             d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z">
@@ -96,14 +79,14 @@ export function IconAddUser({ props }: { props?: IconProps }) {
     </svg>;
 }
 
-export function IconTableHeading({ props }: { props?: IconProps }) {
+export function IconTableHeading({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="3 3 18 18"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -111,14 +94,14 @@ export function IconTableHeading({ props }: { props?: IconProps }) {
     </svg>;
 }
 
-export function IconPen({ props }: { props?: IconProps }) {
+export function IconPen({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="-2 -2 28 28"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -128,29 +111,14 @@ export function IconPen({ props }: { props?: IconProps }) {
     </svg>;
 }
 
-export function IconGoogle({ props }: { props?: IconProps }) {
-    return <svg
-        viewBox="-3 -2 52 52"
-        {...toProp(props)}
-        class={props?.class}
-    >
-        <g fill="none" fill-rule="evenodd">
-            <path fill="#FBBC05" d="M9.8 24c0-1.5.3-3 .7-4.4l-7.9-6a23.5 23.5 0 0 0 0 20.8l8-6c-.5-1.4-.8-2.9-.8-4.4" />
-            <path fill="#EB4335" d="M23.7 10.1c3.3 0 6.3 1.2 8.7 3.1l6.8-6.8a23.4 23.4 0 0 0-36.6 7.2l8 6c1.8-5.5 7-9.5 13.1-9.5" />
-            <path fill="#34A853" d="M23.7 37.9c-6.2 0-11.3-4-13.2-9.5l-7.9 6A23.4 23.4 0 0 0 39 41.6l-7.5-5.8c-2.1 1.3-4.8 2-7.8 2" />
-            <path fill="#4285F4" d="M46.1 24c0-1.4-.2-2.9-.5-4.3H23.7v9.1h12.6c-.6 3-2.3 5.5-4.8 7l7.5 5.8c4.3-4 7.1-10 7.1-17.6" />
-        </g>
-    </svg>;
-}
-
-export function IconTick({ props }: { props?: IconProps }) {
+export function IconTick({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="50 -900 840 840"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "none" : "currentColor"}
-        stroke={props?.fill ? "currentColor" : "none"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -158,14 +126,14 @@ export function IconTick({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconCross({ props }: { props?: IconProps }) {
+export function IconCross({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 20 20"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "none" : "currentColor"}
-        stroke={props?.fill ? "currentColor" : "none"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -174,15 +142,15 @@ export function IconCross({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconUnlock({ props }: { props?: IconProps }) {
+export function IconUnlock({ className, style, strokeWidth, fill }: IconProps) {
     return (
         <svg
             viewBox="-1 -1 26 26"
-            {...toProp(props)}
-            class={props?.class}
-            fill={props?.fill ? "currentColor" : "none"}
-            stroke={props?.fill ? "none" : "currentColor"}
-            stroke-width={props?.strokeWidth ?? 2}
+            style={style}
+            class={className}
+            fill={fill ? "currentColor" : "none"}
+            stroke={fill ? "none" : "currentColor"}
+            stroke-width={strokeWidth ?? 2}
             stroke-linecap="round"
             stroke-linejoin="round"
         >
@@ -193,14 +161,14 @@ export function IconUnlock({ props }: { props?: IconProps }) {
     );
 }
 
-export function IconLock({ props }: { props?: IconProps }) {
+export function IconLock({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="-1 -1 26 26"
-        {...toProp(props)}
-        class={props?.class}
-        stroke={props?.fill ? "currentColor" : "none"}
-        fill={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        stroke={fill ? "currentColor" : "none"}
+        fill={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -208,14 +176,14 @@ export function IconLock({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconEmail({ props }: { props?: IconProps }) {
+export function IconEmail({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -223,14 +191,14 @@ export function IconEmail({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconStar({ props }: { props?: IconProps }) {
+export function IconStar({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -239,15 +207,15 @@ export function IconStar({ props }: { props?: IconProps }) {
 
 }
 
-export function IconHeart({ props }: { props?: IconProps }) {
+export function IconHeart({ className, style, strokeWidth, fill }: IconProps) {
     return (
         <svg
             viewBox="0 0 24 24"
-            {...toProp(props)}
-            class={props?.class}
-            fill={props?.fill ? "currentColor" : "none"}
-            stroke={props?.fill ? "none" : "currentColor"}
-            stroke-width={props?.strokeWidth ?? 2}
+            style={style}
+            class={className}
+            fill={fill ? "currentColor" : "none"}
+            stroke={fill ? "none" : "currentColor"}
+            stroke-width={strokeWidth ?? 2}
             stroke-linecap="round"
             stroke-linejoin="round"
         >
@@ -256,15 +224,15 @@ export function IconHeart({ props }: { props?: IconProps }) {
     );
 }
 
-export function IconCart({ props }: { props?: IconProps }) {
+export function IconCart({ className, style, strokeWidth, fill }: IconProps) {
     return (
         <svg
             viewBox="0 0 24 24"
-            {...toProp(props)}
-            class={props?.class}
-            fill={props?.fill ? "currentColor" : "none"}
-            stroke={props?.fill ? "none" : "currentColor"}
-            stroke-width={props?.strokeWidth ?? 2}
+            style={style}
+            class={className}
+            fill={fill ? "currentColor" : "none"}
+            stroke={fill ? "none" : "currentColor"}
+            stroke-width={strokeWidth ?? 2}
             stroke-linecap="round"
             stroke-linejoin="round"
         >
@@ -273,15 +241,15 @@ export function IconCart({ props }: { props?: IconProps }) {
     );
 }
 
-export function IconDown({ props }: { props?: IconProps }) {
+export function IconDown({ className, style, strokeWidth, fill }: IconProps) {
     return (
         <svg
             viewBox="0 0 24 24"
-            {...toProp(props)}
-            class={props?.class}
-            fill={props?.fill ? "currentColor" : "none"}
-            stroke={props?.fill ? "none" : "currentColor"}
-            stroke-width={props?.strokeWidth ?? 2}
+            style={style}
+            class={className}
+            fill={fill ? "currentColor" : "none"}
+            stroke={fill ? "none" : "currentColor"}
+            stroke-width={strokeWidth ?? 2}
             stroke-linecap="round"
             stroke-linejoin="round"
         >
@@ -290,16 +258,16 @@ export function IconDown({ props }: { props?: IconProps }) {
     );
 }
 
-export function IconChevronLeft({ props }: { props?: IconProps }) {
+export function IconChevronLeft({ className, style, strokeWidth, fill }: IconProps) {
 
     return (
         <svg
             viewBox="180 -800 640 640"
-            {...toProp(props)}
-            class={props?.class}
-            fill={props?.fill ? "none" : "currentColor"}
-            stroke={props?.fill ? "currentColor" : "none"}
-            stroke-width={props?.strokeWidth ?? 2}
+            style={style}
+            class={className}
+            fill={fill ? "none" : "currentColor"}
+            stroke={fill ? "currentColor" : "none"}
+            stroke-width={strokeWidth ?? 2}
             stroke-linecap="round"
             stroke-linejoin="round"
         >
@@ -308,16 +276,16 @@ export function IconChevronLeft({ props }: { props?: IconProps }) {
     );
 }
 
-export function IconChevronRight({ props }: { props?: IconProps }) {
+export function IconChevronRight({ className, style, strokeWidth, fill }: IconProps) {
 
     return (
         <svg
             viewBox="100 -800 640 640"
-            {...toProp(props)}
-            class={props?.class}
-            fill={props?.fill ? "none" : "currentColor"}
-            stroke={props?.fill ? "currentColor" : "none"}
-            stroke-width={props?.strokeWidth ?? 2}
+            style={style}
+            class={className}
+            fill={fill ? "none" : "currentColor"}
+            stroke={fill ? "currentColor" : "none"}
+            stroke-width={strokeWidth ?? 2}
             stroke-linecap="round"
             stroke-linejoin="round"
         >
@@ -326,14 +294,14 @@ export function IconChevronRight({ props }: { props?: IconProps }) {
     );
 }
 
-export function IconSearch({ props }: { props?: IconProps }) {
+export function IconSearch({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="-2 -2 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -341,14 +309,14 @@ export function IconSearch({ props }: { props?: IconProps }) {
     </svg>;
 }
 
-export function IconFilter({ props }: { props?: IconProps }) {
+export function IconFilter({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -356,14 +324,14 @@ export function IconFilter({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconUser({ props }: { props?: IconProps }) {
+export function IconUser({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="2 2 20 20"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -371,14 +339,14 @@ export function IconUser({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconDelete({ props }: { props?: IconProps }) {
+export function IconDelete({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -386,14 +354,14 @@ export function IconDelete({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconLoading({ props }: { props?: IconProps }) {
+export function IconLoading({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 100 101"
-        {...toProp(props)}
-        class={["animate-spin", props?.class].join(" ")}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={["animate-spin", className].join(" ")}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -402,14 +370,14 @@ export function IconLoading({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconRocket({ props }: { props?: IconProps }) {
+export function IconRocket({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="-1 -1 26 26"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "none" : "currentColor"}
-        stroke={props?.fill ? "currentColor" : "none"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -417,13 +385,13 @@ export function IconRocket({ props }: { props?: IconProps }) {
     </svg>
 }
 
-export function IconCopy({ props }: { props?: IconProps } = {}) {
+export function IconCopy({ className, style, strokeWidth, fill }: IconProps) {
     return <svg viewBox="0 0 24 24"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
@@ -431,13 +399,13 @@ export function IconCopy({ props }: { props?: IconProps } = {}) {
     </svg>
 }
 
-export function IconHome({ props }: { props?: IconProps } = {}) {
+export function IconHome({ className, style, strokeWidth, fill }: IconProps) {
     return <svg viewBox="0 0 20 20"
-        {...toProp(props)}
-        class={props?.class}
-        fill={props?.fill ? "currentColor" : "none"}
-        stroke={props?.fill ? "none" : "currentColor"}
-        stroke-width={props?.strokeWidth ?? 2}
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >

@@ -2,7 +2,7 @@ import { CssFANCY } from "./gen";
 
 /* CSS:
 
-.STypewriter {
+.Typewriter {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -31,11 +31,11 @@ type TerminalLine = {
 };
 
 export function TypeWriter() {
-    return <p class={CssFANCY.STypewriter}>Hi there, I'm a Typewriter Animation made in pure CSS!</p>
+    return <p class={CssFANCY.Typewriter}>Hi there, I'm a Typewriter Animation made in pure CSS!</p>
 }
 
 /* CSS:
-.STerminalWindow {
+.TerminalWindow {
     z-index: 0;
     height: 100%;
     max-height: 400px;
@@ -56,7 +56,7 @@ export function TypeWriter() {
     }
 }
 
-.STerminalHeader {
+.TerminalHeader {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -86,7 +86,7 @@ export function TypeWriter() {
     }
 }
 
-.STerminalLine {
+.TerminalLine {
     font-size: 0.875rem;
     font-weight: normal;
     letter-spacing: -0.025em;
@@ -96,8 +96,8 @@ export function TypeWriter() {
 
 export function Terminal({ lines }: { lines: TerminalLine[] }) {
     return (
-        <div class={CssFANCY.STerminalWindow}>
-            <div class={CssFANCY.STerminalHeader}>
+        <div class={CssFANCY.TerminalWindow}>
+            <div class={CssFANCY.TerminalHeader}>
                 <div><div /><div /><div /></div>
             </div>
             <pre>
@@ -107,8 +107,8 @@ export function Terminal({ lines }: { lines: TerminalLine[] }) {
 
                         return (
                             <span classList={{
-                                [CssFANCY.STerminalLine]: true,
-                                [CssFANCY.STypewriter]: line.input,
+                                [CssFANCY.TerminalLine]: true,
+                                [CssFANCY.Typewriter]: line.input,
                             }} style={{
                                 "animation-delay": line.input ? `${delay}s, ${delay}s;` : '',
                                 color: line.color

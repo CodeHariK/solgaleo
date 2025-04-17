@@ -22,7 +22,7 @@ import { IconRocket } from "../svg/svg";
 export function Banner() {
     return <aside aria-label="Tip" class="banner">
         <h5 aria-hidden="true">
-            <IconRocket props={{ color: "white", size: 1.33, }} />
+            <IconRocket style={{ color: "white", width: "1.33rem", height: "1.33rem", }} />
             Tip
         </h5>
         <div>
