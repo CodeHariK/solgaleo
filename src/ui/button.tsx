@@ -1,20 +1,23 @@
 /*CSS:
-button {
+button, .IconButton, .MaterialButton, .OutlinedButton,
+.MaterialRoundButton, .OutlinedRoundButton, .Tag {
     display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
     font-size: 0.75rem;
     font-weight: 600;
+    align-items: center;
     color: var(--primary);
     background: var(--surface);
-    border: none;
+    border: 1px solid transparent;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
     user-select: none;
     cursor: pointer;
 }
-button:hover {
+button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
+.MaterialRoundButton:hover, .OutlinedRoundButton:hover {
     opacity: 0.9;
     background: var(--surface);
 }
@@ -22,7 +25,7 @@ button:hover {
 .IconButton {
     --icon-bg: var(--surface);
     --icon-border-radius: var : 100rem;
-    --icon-border: none;
+    --icon-border: 1px solid transparent;
     --icon-hover-bg: var(--primary-container);
 
     padding: .5rem;
@@ -33,10 +36,10 @@ button:hover {
     background: var(--icon-hover-bg);
 }
 
-.MaterialButton {
+.MaterialButton, .MaterialRoundButton {
     --mat-bg: var(--primary-container);
     --mat-color: var(--primary);
-    --mat-border: none;
+    --mat-border: 1px solid transparent;
     --mat-hover-bg: var(--primary-container);
     --mat-hover-color: var(--primary);
 
@@ -44,12 +47,12 @@ button:hover {
     background: var(--mat-bg);
     border: var(--mat-border);
 }
-.MaterialButton:hover {
+.MaterialButton:hover, .MaterialRoundButton:hover {
     color: var(--mat-hover-color);
     background: var(--mat-hover-bg);
 }
 
-.OutlinedButton {
+.OutlinedButton, .OutlinedRoundButton {
     --out-bg: transparent;
     --out-color: var(--primary);
     --out-border: 1px solid var(--primary);
@@ -60,15 +63,28 @@ button:hover {
     background: var(--out-bg);
     border: var(--out-border);
 }
-.OutlinedButton:hover {
+.OutlinedButton:hover, .OutlinedRoundButton:hover {
     color: var(--out-hover-color);
     background: var(--out-hover-bg);
+}
+
+.OutlinedRoundButton {
+    border-radius: 2rem;
+}
+.MaterialRoundButton {
+    border-radius: 2rem;
+}
+.GradientTag {
+    background: linear-gradient(45deg, var(--primary-container), var(--secondary-container));
+    border-radius: 2rem;
+    padding: .3rem .5rem; 
 }
 
 .ErrorButton {
     color: var(--error);
     background: var(--error-container);
 }
+
 */
 
 

@@ -5,7 +5,6 @@ src/accordion.tsx
 src/dropdown.tsx
 src/bar.tsx
 src/button.tsx
-src/theme_toggle.tsx
 src/input.tsx
 */
 
@@ -26,7 +25,7 @@ src/input.tsx
     --icon-hover-bg: var(--primary-container);
     --mat-color: var(--primary);
     --mat-bg: var(--primary-container);
-    --mat-border: none;
+    --mat-border: 1px solid transparent;
     --mat-hover-color: var(--primary);
     --mat-hover-bg: var(--primary-container);
     --out-color: var(--primary);
@@ -34,9 +33,7 @@ src/input.tsx
     --out-border: 1px solid var(--primary);
     --out-hover-color: var(--primary);
     --out-hover-bg: var(--primary-container);
-    --icon-border: none;
-    --theme-toggle-col: #60A5FA;
-    --theme-toggle-bg-hover: #F3F4F6;
+    --icon-border: 1px solid transparent;
     --input-accent-color: var(--primary);
     --label-transform-x: 0.6rem;
     --label-transform-y: -1.0rem;
@@ -64,7 +61,7 @@ src/input.tsx
     --icon-hover-bg: var(--primary-container);
     --mat-color: var(--primary);
     --mat-bg: var(--primary-container);
-    --mat-border: none;
+    --mat-border: 1px solid transparent;
     --mat-hover-color: var(--primary);
     --mat-hover-bg: var(--primary-container);
     --out-color: var(--primary);
@@ -72,9 +69,7 @@ src/input.tsx
     --out-border: 1px solid var(--primary);
     --out-hover-color: var(--primary);
     --out-hover-bg: var(--primary-container);
-    --icon-border: none;
-    --theme-toggle-col: #3B82F6 ;
-    --theme-toggle-bg-hover: #374151 ;
+    --icon-border: 1px solid transparent;
     --input-accent-color: var(--primary);
     --label-transform-x: 0.6rem;
     --label-transform-y: -1.0rem;
@@ -361,15 +356,22 @@ ul.DropdownNested {
     transition: width 0.2s ease-in-out;
 }
 
-button {
+button,
+.IconButton,
+.MaterialButton,
+.OutlinedButton,
+.MaterialRoundButton,
+.OutlinedRoundButton,
+.Tag {
     display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
     font-size: 0.75rem;
     font-weight: 600;
+    align-items: center;
     color: var(--primary);
     background: var(--surface);
-    border: none;
+    border: 1px solid transparent;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
@@ -377,7 +379,12 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button:hover,
+.IconButton:hover,
+.MaterialButton:hover,
+.OutlinedButton:hover,
+.MaterialRoundButton:hover,
+.OutlinedRoundButton:hover {
     opacity: 0.9;
     background: var(--surface);
 }
@@ -392,41 +399,49 @@ button:hover {
     background: var(--icon-hover-bg);
 }
 
-.MaterialButton {
+.MaterialButton,
+.MaterialRoundButton {
     color: var(--mat-color);
     background: var(--mat-bg);
     border: var(--mat-border);
 }
 
-.MaterialButton:hover {
+.MaterialButton:hover,
+.MaterialRoundButton:hover {
     color: var(--mat-hover-color);
     background: var(--mat-hover-bg);
 }
 
-.OutlinedButton {
+.OutlinedButton,
+.OutlinedRoundButton {
     color: var(--out-color);
     background: var(--out-bg);
     border: var(--out-border);
 }
 
-.OutlinedButton:hover {
+.OutlinedButton:hover,
+.OutlinedRoundButton:hover {
     color: var(--out-hover-color);
     background: var(--out-hover-bg);
+}
+
+.OutlinedRoundButton {
+    border-radius: 2rem;
+}
+
+.MaterialRoundButton {
+    border-radius: 2rem;
+}
+
+.GradientTag {
+    background: linear-gradient(45deg, var(--primary-container), var(--secondary-container));
+    border-radius: 2rem;
+    padding: .3rem .5rem;
 }
 
 .ErrorButton {
     color: var(--error);
     background: var(--error-container);
-}
-
-#theme-toggle {
-    padding: 0.625rem;
-    border-radius: 0.5rem;
-    color: var(--theme-toggle-col);
-}
-
-#theme-toggle:hover {
-    background: var(--theme-toggle-bg-hover);
 }
 
 fieldset {

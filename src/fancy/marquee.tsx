@@ -1,3 +1,4 @@
+import { For, JSX } from "solid-js";
 import { CssFANCY } from "./gen";
 
 /* CSS:
@@ -12,10 +13,7 @@ import { CssFANCY } from "./gen";
         will-change: transform;
         transform: translateX(0);
         white-space: nowrap;
-        animation: marqueeAnim 24s linear infinite;
-        font-size: 200px;
-        font-weight: 900;
-        color: #b3ff98;
+        animation: marqueeAnim 8s linear infinite;
     }
 }
 @keyframes marqueeAnim {
@@ -28,11 +26,19 @@ import { CssFANCY } from "./gen";
 }
 */
 
-export function Marquee() {
-    return <div class={CssFANCY.Marquee}>
-        <span>Hello World&nbsp;</span>
-        <span>Hello World&nbsp;</span>
-        <span>Hello World&nbsp;</span>
-        <span>Hello World&nbsp;</span>
+export function Marquee({ child, repeatCount, className, style }: {
+    child: () => JSX.Element,
+    repeatCount: number,
+    className?: string,
+    style?: JSX.CSSProperties,
+}) {
+    return <div class={CssFANCY.Marquee} classList={{ className: className != null }} style={style}>
+        <For each={Array.from({ length: repeatCount })}>
+            {() => (
+                <span>
+                    {child()}
+                </span>
+            )}
+        </For>
     </div>;
 }

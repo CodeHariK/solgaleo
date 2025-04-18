@@ -1,11 +1,11 @@
-import { GridLayout, RoutedTabs } from '../src/gen';
+import { GridLayout, Tabs } from '../src/gen';
 import { List, TestHeader } from './common';
 
 export function GridTest() {
     return <GridLayout
         header={<TestHeader />}
     >
-        <RoutedTabs
+        <Tabs
             id='grid'
             tabs={[
                 {

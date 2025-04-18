@@ -1,23 +1,16 @@
-
+import { JSX } from "solid-js";
 import { CssFANCY } from "./gen";
 
 /*CSS:
-.SFlickerText {
-    --flicker-shadow: #36e2f8;
-    font-size: 4rem;
-    font-weight: bold;
-    font-size: 1.5rem;
+.FlickerText {
+    --flicker-shadow: var : #36e2f8;
+
     color: var : #3694f8;
     letter-spacing: 5px;
-    margin-bottom: 10px;
-    text-shadow:
-        0 0 10px var(--flicker-shadow),
-        0 0 20px var(--flicker-shadow),
-        0 0 30px var(--flicker-shadow);
-    animation: flicker 2s infinite alternate;
+    animation: AnimFlicker 2s infinite alternate;
 }
 
-@keyframes flicker {
+@keyframes AnimFlicker {
 
     0%,
     19%,
@@ -28,9 +21,8 @@ import { CssFANCY } from "./gen";
     56%,
     100% {
         text-shadow:
-            0 0 10px var(--flicker-shadow),
-            0 0 20px var(--flicker-shadow),
-            0 0 30px var(--flicker-shadow);
+            0 0 2rem var(--flicker-shadow),
+            0 0 3rem var(--flicker-shadow);
     }
 
     20%,
@@ -42,6 +34,10 @@ import { CssFANCY } from "./gen";
 
 */
 
-export function FlickerText(props: { text: string }) {
-    return <span class={CssFANCY.SFlickerText}>{props.text}</span>;
+export function FlickerText({ children, style, class: className }: {
+    children: JSX.Element,
+    style?: JSX.CSSProperties,
+    class?: string
+}) {
+    return <span class={[CssFANCY.FlickerText, className].join(" ")} style={style}>{children}</span>;
 }

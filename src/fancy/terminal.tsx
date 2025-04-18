@@ -103,14 +103,14 @@ export function Terminal({ lines }: { lines: TerminalLine[] }) {
             <pre>
                 <code>
                     {lines.map((line, i) => {
-                        const delay = i * 0.4;
+                        const delay = i * 1.5;
 
                         return (
                             <span classList={{
                                 [CssFANCY.TerminalLine]: true,
                                 [CssFANCY.Typewriter]: line.input,
                             }} style={{
-                                "animation-delay": line.input ? `${delay}s, ${delay}s;` : '',
+                                "animation-delay": line.input ? `${delay}s` : '',
                                 color: line.color
                             }}>
                                 {line.text}

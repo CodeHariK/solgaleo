@@ -1,5 +1,6 @@
 import { For, createSignal, JSX, createEffect, onMount, onCleanup } from 'solid-js';
 import { CssNAV } from './gen';
+import { CssUI } from '../gen';
 
 /* CSS:
 .TabsContainer {
@@ -49,10 +50,18 @@ const parseParams = () => {
     return result;
 };
 
-type RoutedTabsProps = {
+type Tab = {
+    id: string;
+    label: string;
+    content?: JSX.Element;
+    children?: Tab[];
+};
+
+type TabsProps = {
+    id: string;
     tabs: Tab[];
     defaultTab?: string;
-    id: string; // Add unique identifier
+    onTabChange?: (tabId: string) => void;
     styles?: {
         container?: JSX.CSSProperties;    // Additional styles for TabsContainer
         levels?: JSX.CSSProperties;       // Additional styles for TabsLevels
@@ -62,7 +71,26 @@ type RoutedTabsProps = {
     };
 };
 
-export function RoutedTabs(props: RoutedTabsProps) {
+export function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
+    const result: Tab[][] = [tabs];
+    let current = tabs;
+    let currentTab: Tab | undefined;
+
+    for (const pathId of path) {
+        currentTab = current.find(t => t.id === pathId);
+        if (currentTab?.children) {
+            result.push(currentTab.children);
+            current = currentTab.children;
+        }
+    }
+
+    return result;
+}
+
+export function Tabs(props: TabsProps) {
+    const [activePath, setActivePath] = createSignal<string[]>([]);
+    const [visibleTabs, setVisibleTabs] = createSignal<Tab[][]>([props.tabs]);
+    const [tabContent, setTabContent] = createSignal<JSX.Element | undefined>();
 
     // Get current instance's tab state
     const getCurrentTab = () => {
@@ -89,83 +117,21 @@ export function RoutedTabs(props: RoutedTabsProps) {
     });
 
     onCleanup(() => {
-        console.log("cleanup")
         window.removeEventListener('route-change', handleLocationChange)
         window.removeEventListener('popstate', handleLocationChange);
     })
 
-    return (
-        <Tabs
-            tabs={props.tabs}
-            defaultTab={currentTab()}
-            onTabChange={
-                (tabId: string) => {
-
-                    setCurrentTab(tabId);
-
-                    // Update URL while preserving other tab states
-                    const params = new URLSearchParams(location.search);
-                    params.set(props.id, tabId);
-
-                    updateQueryParam(props.id, tabId);
-                }
-            }
-            styles={props.styles}
-        />
-    );
-}
-
-type Tab = {
-    id: string;
-    label: string;
-    content?: JSX.Element;
-    children?: Tab[];
-};
-
-type TabsProps = {
-    tabs: Tab[];
-    defaultTab?: string;
-    onTabChange?: (tabId: string) => void;
-    styles?: {
-        container?: JSX.CSSProperties;    // Additional styles for TabsContainer
-        levels?: JSX.CSSProperties;       // Additional styles for TabsLevels
-        level?: JSX.CSSProperties;        // Additional styles for each TabLevel
-        button?: JSX.CSSProperties;       // Additional styles for TabButton
-        content?: JSX.CSSProperties;      // Additional styles for TabContent
-    };
-};
-
-function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
-    const result: Tab[][] = [tabs];
-    let current = tabs;
-    let currentTab: Tab | undefined;
-
-    for (const pathId of path) {
-        currentTab = current.find(t => t.id === pathId);
-        if (currentTab?.children) {
-            result.push(currentTab.children);
-            current = currentTab.children;
-        }
-    }
-
-    return result;
-}
-
-export function Tabs(props: TabsProps) {
-    const [activePath, setActivePath] = createSignal<string[]>([]);
-    const [visibleTabs, setVisibleTabs] = createSignal<Tab[][]>([props.tabs]);
-    const [tabContent, setTabContent] = createSignal<JSX.Element | undefined>();
 
     function updateContent(path: string[]) {
 
         // Set initial content
         let content: JSX.Element | undefined;
-        let current = props.tabs;
+        let allTabs = props.tabs;
 
         let leaf = ""
 
         for (const pathId of path) {
-            const tab = current.find(t => t.id === pathId);
+            const tab = allTabs.find(t => t.id === pathId);
             if (tab?.content) {
                 content = tab.content
                 leaf = ""
@@ -173,7 +139,7 @@ export function Tabs(props: TabsProps) {
                 content = tab?.children[0]?.content
                 leaf = tab?.children[0]?.id
             }
-            if (tab?.children) current = tab.children;
+            if (tab?.children) allTabs = tab.children;
         }
         setTabContent(content);
 
@@ -186,24 +152,26 @@ export function Tabs(props: TabsProps) {
     }
 
     const handleTabClick = (tab: Tab, level: number) => {
-        // // Check if we're clicking the same tab at the same level
-        // if (activePath()[level] === tab.id) {
-        //     return; // Do nothing if clicking the same tab
-        // }
-
         const newPath = [...activePath().slice(0, level), tab.id];
 
         updateContent(newPath)
 
-        props.onTabChange?.(newPath.join('.'));
+        let tabId = newPath.join('.')
+
+        setCurrentTab(tabId);
+
+        // Update URL while preserving other tab states
+        const params = new URLSearchParams(location.search);
+        params.set(props.id, tabId);
+
+        updateQueryParam(props.id, tabId);
+
+        props.onTabChange?.(tabId);
     };
 
-    // Initialize from defaultTab if provided
     createEffect(() => {
-        if (props.defaultTab) {
-            // Split by dot instead of slash
-            const path = props.defaultTab.split('.');
-
+        if (currentTab()) {
+            const path = currentTab().split('.');
             updateContent(path);
         }
     });
@@ -221,7 +189,7 @@ export function Tabs(props: TabsProps) {
                             <For each={levelTabs}>
                                 {(tab) => (
                                     <button
-                                        class={`${activePath()[level()] === tab.id ? 'active' : ''}`}
+                                        class={`${activePath()[level()] === tab.id ? CssUI.MaterialButton : CssUI.OutlinedButton}`}
                                         style={props.styles?.button}
                                         onClick={() => handleTabClick(tab, level())}
                                     >

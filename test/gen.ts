@@ -57,7 +57,7 @@ export const CssTEST = {
     varHelloCol: "--hello-col",
     varHelloStepperCol: "--hello--stepper-col",
     varMarqueeSpanCol: "--marquee-span-col",
-    varPCol: "--p-col"
+    varFieldfontCol: "--fieldfont-col"
 } as const;
 
 export type CssTESTType = keyof typeof CssTEST;

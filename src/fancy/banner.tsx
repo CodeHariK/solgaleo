@@ -1,8 +1,11 @@
+import { JSX } from "solid-js";
+import { IconRocket } from "../svg/svg";
+
 /* CSS:
 .banner {
     padding: 1rem;
-    background: var:#bd53ee:#40224e;
-    --banner-border: var:#40224e:#bd53ee;
+    background: var(--surface);
+    --banner-border: var(--primary);
     border-inline-start: .25rem solid var(--banner-border);
     
     h5 {
@@ -14,25 +17,39 @@
     div {
         margin-top: .5rem;
     }
+
+    ol {
+        list-style: none;
+        counter-reset: cupcake;
+        padding-left: 16px;
+    }
+
+    ol li {
+        counter-increment: cupcake;
+    }
+
+    ol li:before {
+        content: counters(cupcake, '.') ' ';
+        color: var(--secondary);
+        font-weight: bold;
+        // font-family: cursive;
+    }
+
+    ol ol {
+        padding-left: 20px;
+    }
 }
 */
 
-import { IconRocket } from "../svg/svg";
-
-export function Banner() {
+export function Banner({ title, info, children }: { title: string, info?: string, children?: JSX.Element }) {
     return <aside aria-label="Tip" class="banner">
         <h5 aria-hidden="true">
-            <IconRocket style={{ color: "white", width: "1.33rem", height: "1.33rem", }} />
-            Tip
+            <IconRocket style={{ width: "2rem", height: "2rem", }} />
+            {title}
         </h5>
         <div>
-            <p>Although most developers will stick to just one UI framework, Astro supports multiple frameworks in the same project. This allows you to:</p>
-            <ul>
-                <li>Choose the framework that is best for each component.</li>
-                <li>Learn a new framework without needing to start a new project.</li>
-                <li>Collaborate with others even when working in different frameworks.</li>
-                <li>Incrementally convert an existing site to another framework with no downtime.</li>
-            </ul>
+            <p>{info}</p>
+            {children}
         </div>
     </aside>;
 }

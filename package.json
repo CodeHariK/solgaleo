@@ -49,7 +49,6 @@
     "@solid-primitives/keyed": "^1.5.0",
     "@solidjs/meta": "^0.29.4",
     "solid-js": "^1.9.5",
-    "solid-transition-group": "^0.3.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

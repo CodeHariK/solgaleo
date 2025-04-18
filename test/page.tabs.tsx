@@ -1,4 +1,4 @@
-import { RoutedTabs } from "../src/gen";
+import { Tabs } from "../src/gen";
 import { GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
@@ -18,7 +18,7 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <RoutedTabs
+                    <Tabs
                         tabs={tabs()}
                         defaultTab="home"
                         id="two.light"
@@ -30,7 +30,7 @@ export function TabTest() {
                 </div>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <RoutedTabs
+                    <Tabs
                         tabs={tabs()}
                         defaultTab="home"
                         id="two.night"
@@ -51,7 +51,7 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <RoutedTabs
+                    <Tabs
                         tabs={tabs()}
                         defaultTab="home"
                         id="one.light"
@@ -63,7 +63,7 @@ export function TabTest() {
                 </div>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <RoutedTabs
+                    <Tabs
                         tabs={tabs()}
                         defaultTab="home"
                         id="one.night"

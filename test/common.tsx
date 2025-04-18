@@ -17,7 +17,8 @@ export function TestHeader() {
             <AA href={'/fancy'} title='Fancy' >Fancy</AA>,
             <AA href={'/ui'} title='Ui' >Ui</AA>,
             <AA href={'/grid'} title='Grid'>Grid</AA>,
-            <AA href="/tabs?two.light=settings.profile&two.night=home&one.night=settings.account.security&one.light=settings.account.notifications" >Tab</AA>,
+            <AA href="/tabs" >Tab</AA>,
+            <AA href="/tabs?two.light=settings.profile&two.night=home&one.night=settings.account.security&one.light=settings.account.notifications" >Tabs</AA>,
         ]}
         right={[
             <ThemeToggle />

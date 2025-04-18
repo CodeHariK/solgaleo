@@ -11,10 +11,10 @@ import { CssFANCY } from './gen';
             deepskyblue);
     -webkit-background-clip: text;
     color: transparent;
-    animation: SRainbowAnim 6s ease-in-out infinite;
+    animation: AnimRainbow 6s ease-in-out infinite;
     background-size: 400% 100%;
 }
-@keyframes SRainbowAnim {
+@keyframes AnimRainbow {
     0%,
     100% {
         background-position: 0 0;
@@ -42,12 +42,12 @@ import { CssFANCY } from './gen';
             #23d5ab9a);
     background-size: 400%;
     background-repeat: no-repeat;
-    animation: SRainconAnim 5s ease infinite;
+    animation: AnimRaincon 5s ease infinite;
     width: inherit;
     height: inherit;
 }
 
-@keyframes SRainconAnim {
+@keyframes AnimRaincon {
     0% {
         background-position: 0% 50%;
     }
@@ -60,8 +60,14 @@ import { CssFANCY } from './gen';
 }
 */
 
-export function RainbowText(props: { children: JSX.Element }) {
-    return <span class={CssFANCY.Rainbow}>{props.children}</span>
+export function RainbowText({ children, style, class: className }: {
+    children: JSX.Element,
+    style?: JSX.CSSProperties,
+    class?: string
+}) {
+    return <span class={[CssFANCY.Rainbow, className].join(" ")} style={style}>
+        {children}
+    </span>
 }
 
 

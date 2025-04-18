@@ -30,7 +30,7 @@ css.tsx
     --hello-col: orange;
     --hello--stepper-col: orange;
     --marquee-span-col: #000;
-    --p-col: ;
+    --fieldfont-col: ;
 }
 
 .night {
@@ -58,7 +58,7 @@ css.tsx
     --hello-col: blue;
     --hello--stepper-col: blue;
     --marquee-span-col: #fff;
-    --p-col: ;
+    --fieldfont-col: ;
 }
 
 .blog-title {
@@ -206,11 +206,9 @@ css.tsx
         0 0 30px var(--neon-pink);
 }
 
-p {
+fieldfont {
     font-size: 1rem;
-    color: var(--p-col);
-    background: inherit;
-    font-size: 1rem;
+    color: var(--fieldfont-col);
 }
 
 h2 {
@@ -220,6 +218,10 @@ h2 {
 h2:focus::placeholder {
     color: var(--input-placeholder);
     transition: color 0.2s ease-out;
+}
+
+p {
+    font-size: 1rem;
 }
 
 .Glitter[data-has-label="true"]:focus,

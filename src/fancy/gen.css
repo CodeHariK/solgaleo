@@ -6,12 +6,10 @@ src/marquee.tsx
 src/flicker.tsx
 src/glittercard.tsx
 src/rainbow.tsx
-src/transition.tsx
 */
 
 .light {
-    --banner-border: #40224e;
-    --banner-bg: #bd53ee;
+    --banner-border: var(--primary);
     --ghostColor: var(--primary-container);
     --ghostEyeColor: var(--secondary);
     --ghostWaveColor: var(--primary);
@@ -21,14 +19,13 @@ src/transition.tsx
     --sterm-border-color: ;
     --sterm-bg-color: ;
     --flicker-shadow: #36e2f8;
-    --SFlickerText-col: #3694f8;
+    --FlickerText-col: #3694f8;
     --rainsrc: ;
     --rainsize: ;
 }
 
 .night {
-    --banner-border: #bd53ee;
-    --banner-bg: #40224e;
+    --banner-border: var(--primary);
     --ghostColor: var(--primary-container);
     --ghostEyeColor: var(--secondary);
     --ghostWaveColor: var(--primary);
@@ -38,14 +35,14 @@ src/transition.tsx
     --sterm-border-color: ;
     --sterm-bg-color: ;
     --flicker-shadow: #36e2f8;
-    --SFlickerText-col: #3694f8;
+    --FlickerText-col: #3694f8;
     --rainsrc: ;
     --rainsize: ;
 }
 
 .banner {
     padding: 1rem;
-    background: var(--banner-bg);
+    background: var(--surface);
     border-inline-start: .25rem solid var(--banner-border);
 }
 
@@ -57,6 +54,26 @@ src/transition.tsx
 
 .banner div {
     margin-top: .5rem;
+}
+
+.banner ol {
+    list-style: none;
+    counter-reset: cupcake;
+    padding-left: 16px;
+}
+
+.banner ol li {
+    counter-increment: cupcake;
+}
+
+.banner ol li:before {
+    content: counters(cupcake, '.') ' ';
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+.banner ol ol {
+    padding-left: 20px;
 }
 
 .GhostCon {
@@ -264,10 +281,7 @@ src/transition.tsx
     will-change: transform;
     transform: translateX(0);
     white-space: nowrap;
-    animation: marqueeAnim 24s linear infinite;
-    font-size: 200px;
-    font-weight: 900;
-    color: #b3ff98;
+    animation: marqueeAnim 8s linear infinite;
 }
 
 @keyframes marqueeAnim {
@@ -279,20 +293,13 @@ src/transition.tsx
     }
 }
 
-.SFlickerText {
-    font-size: 4rem;
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: var(--SFlickerText-col);
+.FlickerText {
+    color: var(--FlickerText-col);
     letter-spacing: 5px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--flicker-shadow),
-        0 0 20px var(--flicker-shadow),
-        0 0 30px var(--flicker-shadow);
-    animation: flicker 2s infinite alternate;
+    animation: AnimFlicker 2s infinite alternate;
 }
 
-@keyframes flicker {
+@keyframes AnimFlicker {
     0%,
     19%,
     21%,
@@ -302,9 +309,8 @@ src/transition.tsx
     56%,
     100% {
         text-shadow:
-            0 0 10px var(--flicker-shadow),
-            0 0 20px var(--flicker-shadow),
-            0 0 30px var(--flicker-shadow);
+            0 0 2rem var(--flicker-shadow),
+            0 0 3rem var(--flicker-shadow);
     }
     20%,
     24%,
@@ -316,7 +322,6 @@ src/transition.tsx
 .card {
     width: 100%;
     max-width: 400px;
-    background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.9));
     border-radius: 16px;
     padding: 2rem;
     position: relative;
@@ -336,9 +341,8 @@ src/transition.tsx
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg,
-            rgba(131, 58, 180, 0.3),
-            rgba(253, 29, 29, 0.3),
-            rgba(252, 176, 69, 0.3));
+        var(--primary-container),
+        var(--secondary-container));
     z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -352,17 +356,6 @@ src/transition.tsx
     opacity: 1;
 }
 
-.badge {
-    display: inline-block;
-    padding: 0.5em 1em;
-    background: linear-gradient(45deg, #833ab4, #fd1d1d);
-    border-radius: 20px;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-}
-
 .title {
     font-size: 1.8rem;
     color: white;
@@ -374,7 +367,6 @@ src/transition.tsx
 }
 
 .card .description {
-    color: #aaa;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -413,7 +405,7 @@ src/transition.tsx
             deepskyblue);
     -webkit-background-clip: text;
     color: transparent;
-    animation: SRainbowAnim 6s ease-in-out infinite;
+    animation: AnimRainbow 6s ease-in-out infinite;
     background-size: 400% 100%;
 }
 
@@ -436,12 +428,12 @@ src/transition.tsx
             #23d5ab9a);
     background-size: 400%;
     background-repeat: no-repeat;
-    animation: SRainconAnim 5s ease infinite;
+    animation: AnimRaincon 5s ease infinite;
     width: inherit;
     height: inherit;
 }
 
-@keyframes SRainbowAnim {
+@keyframes AnimRainbow {
     0%,
     100% {
         background-position: 0 0;
@@ -451,7 +443,7 @@ src/transition.tsx
     }
 }
 
-@keyframes SRainconAnim {
+@keyframes AnimRaincon {
     0% {
         background-position: 0% 50%;
     }
@@ -461,36 +453,4 @@ src/transition.tsx
     100% {
         background-position: 0% 50%;
     }
-}
-
-.TransitionContainer {
-    position: relative;
-    min-height: 100px;
-}
-
-.TransitionItem {
-    position: absolute;
-    width: 100%;
-}
-
-.TransitionEnter {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.TransitionEnterActive {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 300ms ease-out;
-}
-
-.TransitionExit {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.TransitionExitActive {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: all 300ms ease-in;
 }

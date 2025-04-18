@@ -1,10 +1,11 @@
 import { onCleanup, onMount } from "solid-js";
+import { CssUI } from "../gen";
 
 /*CSS:
 .card {
     width: 100%;
     max-width: 400px;
-    background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.9));
+    // background: var(--surface);
     border-radius: 16px;
     padding: 2rem;
     position: relative;
@@ -24,9 +25,8 @@ import { onCleanup, onMount } from "solid-js";
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg,
-            rgba(131, 58, 180, 0.3),
-            rgba(253, 29, 29, 0.3),
-            rgba(252, 176, 69, 0.3));
+        var(--primary-container),
+        var(--secondary-container));
     z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -40,17 +40,6 @@ import { onCleanup, onMount } from "solid-js";
     opacity: 1;
 }
 
-.badge {
-    display: inline-block;
-    padding: 0.5em 1em;
-    background: linear-gradient(45deg, #833ab4, #fd1d1d);
-    border-radius: 20px;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-}
-
 .title {
     font-size: 1.8rem;
     color: white;
@@ -62,7 +51,6 @@ import { onCleanup, onMount } from "solid-js";
 }
 
 .card .description {
-    color: #aaa;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -131,12 +119,13 @@ export function GlitterCard() {
 
     return (
         <div ref={cardRef} class="card">
-            <span class="badge">Featured</span>
+            <span class={`${CssUI.IconButton} mb4`}>Featured</span>
             <h2 class="title">Modern Design Card</h2>
             <p class="description">
                 A beautifully crafted card component featuring glassmorphism, smooth animations,
                 and gradient accents. Perfect for showcasing content in a modern and elegant way.
             </p>
+
             <div class="stats">
                 <div class="stat">
                     <div class="stat-value">100%</div>
@@ -151,6 +140,7 @@ export function GlitterCard() {
                     <div class="stat-label">Animations</div>
                 </div>
             </div>
+
         </div>
     );
 }

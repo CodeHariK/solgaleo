@@ -1,4 +1,5 @@
 import { createSignal, onMount } from "solid-js";
+import { CssUI } from "./gen";
 
 export type Theme = {
     name: string;
@@ -48,13 +49,13 @@ function changeTheme(newTheme: Theme) {
 
 export function ThemeToggle() {
     // Signal to store the current theme ("light" or "dark")
-    const [theme, setTheme] = createSignal("light");
+    const [theme, setTheme] = createSignal<Theme>({ name: "light", type: "light" });
 
     // Function to manually toggle between light and dark themes
     const toggleTheme = () => {
         THEMECOUNT = (THEMECOUNT + 1) % THEME.length
         const newTheme = THEME[THEMECOUNT]
-        setTheme(newTheme.name);
+        setTheme(newTheme);
         changeTheme(newTheme);
         localStorage.setItem("theme", newTheme.name);
     };
@@ -62,30 +63,20 @@ export function ThemeToggle() {
     // Detect system theme preference and apply it on mount
     onMount(() => {
         const savedTheme = CurrentTheme();
-        setTheme(savedTheme);
         THEMECOUNT = THEME.findIndex((e) => e.name == savedTheme)
-        changeTheme(THEME[THEMECOUNT]);
+        let theme = THEME[THEMECOUNT]
+        changeTheme(theme);
+        setTheme(theme);
     });
-
-    /*CSS:
-        #theme-toggle {
-            padding: 0.625rem; 
-            border-radius: 0.5rem; 
-            color: var : #60A5FA : #3B82F6 ; 
-        }
-        #theme-toggle:hover {
-            background: var : #F3F4F6 : #374151 ; 
-        }
-    */
 
     return (
         <button
-            id="theme-toggle"
+            class={CssUI.IconButton}
             type="button"
             onClick={toggleTheme}
-        > {theme() === "light" ?
+        > {theme().name} {theme().type === "night" ?
+
             <svg
-                class="w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +84,6 @@ export function ThemeToggle() {
             </svg>
             :
             <svg
-                class="w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"

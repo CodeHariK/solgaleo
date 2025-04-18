@@ -1,11 +1,11 @@
 .custom {
     --spacing: 1rem;
 
-    --primary: #f06432;
-    --primary-container: #ffdbcc8b;
-    --secondary: #845ec2;
-    --secondary-container: #e4d8f7;
-    --surface: #fffffcc6;
+    --primary: #58a028;
+    --primary-container: #def4b8;
+    --secondary: #e7ff5f;
+    --secondary-container: rgb(255, 255, 199);
+    --surface: #3db62a1e;
     --error: #B3261E;
     --error-container: #F9DEDC;
     --disabled: #9CA3AF;

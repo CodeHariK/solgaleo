@@ -83,7 +83,7 @@
     }
 }
 
-p { font-size: 1rem; color: var:; background: inherit; }
+fieldfont { font-size: 1rem; color: var:; }
 
 h2 {
     line-height: 1.5rem;
