@@ -1,4 +1,4 @@
-import { For, createSignal, JSX, createEffect, onMount } from 'solid-js';
+import { For, createSignal, JSX, createEffect, onMount, onCleanup } from 'solid-js';
 import { CssNAV } from './gen';
 
 /* CSS:
@@ -38,10 +38,16 @@ function updateQueryParam(key: string, value: string): void {
     window.history.pushState({}, '', url.toString());
 }
 
-function getQueryParam(key: string): string | null {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(key);
-}
+const parseParams = () => {
+    const params = new URLSearchParams(location.search);
+    const result: Record<string, string> = {};
+
+    for (const [key, value] of params.entries()) {
+        result[key] = value;
+    }
+
+    return result;
+};
 
 type RoutedTabsProps = {
     tabs: Tab[];
@@ -58,18 +64,6 @@ type RoutedTabsProps = {
 
 export function RoutedTabs(props: RoutedTabsProps) {
 
-    // Parse query params instead of hash
-    const parseParams = () => {
-        const params = new URLSearchParams(location.search);
-        const result: Record<string, string> = {};
-
-        for (const [key, value] of params.entries()) {
-            result[key] = value;
-        }
-
-        return result;
-    };
-
     // Get current instance's tab state
     const getCurrentTab = () => {
         const states = parseParams();
@@ -79,23 +73,26 @@ export function RoutedTabs(props: RoutedTabsProps) {
 
     const [currentTab, setCurrentTab] = createSignal(getCurrentTab());
 
+    const handleLocationChange = () => {
+        const newTab = getCurrentTab();
+
+        if (newTab !== currentTab()) {
+            setCurrentTab(newTab);
+        }
+    };
+
     // Listen for route changes using location.search
     onMount(() => {
-        const handleLocationChange = () => {
-            const newTab = getCurrentTab();
-            if (newTab !== currentTab()) {
-                setCurrentTab(newTab);
-            }
-        };
-
-        console.log("RoutedTabs createEffect", getCurrentTab(), currentTab(), getQueryParam(props.id))
-
         handleLocationChange()
-
+        window.addEventListener('route-change', handleLocationChange);
         window.addEventListener('popstate', handleLocationChange);
-        return () => window.removeEventListener('popstate', handleLocationChange);
     });
 
+    onCleanup(() => {
+        console.log("cleanup")
+        window.removeEventListener('route-change', handleLocationChange)
+        window.removeEventListener('popstate', handleLocationChange);
+    })
 
     return (
         <Tabs
@@ -103,8 +100,6 @@ export function RoutedTabs(props: RoutedTabsProps) {
             defaultTab={currentTab()}
             onTabChange={
                 (tabId: string) => {
-
-                    console.log(tabId)
 
                     setCurrentTab(tabId);
 
@@ -199,8 +194,6 @@ export function Tabs(props: TabsProps) {
         const newPath = [...activePath().slice(0, level), tab.id];
 
         updateContent(newPath)
-
-        console.log(newPath, tab.id)
 
         props.onTabChange?.(newPath.join('.'));
     };

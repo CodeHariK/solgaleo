@@ -1,19 +1,8 @@
-import { createEffect } from "solid-js";
 import { RoutedTabs } from "../src/gen";
 import { GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
-function updateCurrentPageUrl(): void {
-    const url = new URL(window.location.href);
-
-    window.history.pushState({}, '', url.toString());
-}
-
 export function TabTest() {
-
-    createEffect(() => {
-        console.log(window.location.href)
-    })
 
     return <GridLayout
         header={<TestHeader />}
@@ -40,7 +29,7 @@ export function TabTest() {
                     />
                 </div>
 
-                {/* <div style={{ border: "1px solid red", width: "100%" }}>
+                <div style={{ border: "1px solid red", width: "100%" }}>
                     <RoutedTabs
                         tabs={tabs()}
                         defaultTab="home"
@@ -51,11 +40,11 @@ export function TabTest() {
                             content: { margin: "1rem", padding: "1rem", border: "1px solid red", "border-radius": "20px" }
                         }}
                     />
-                </div> */}
+                </div>
 
             </div>
 
-            {/* <div style={{
+            <div style={{
                 display: "flex",
                 "flex-direction": "row",
                 height: "100%",
@@ -83,7 +72,7 @@ export function TabTest() {
                         }}
                     />
                 </div>
-            </div> */}
+            </div>
 
         </div>
 

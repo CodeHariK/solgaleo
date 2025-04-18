@@ -1,6 +1,6 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { CssNAV } from "./gen";
-import { A } from "@solidjs/router";
+import { useSolContext } from "../ui/router";
 
 /* CSS:
 .HeaderNav {
@@ -52,15 +52,51 @@ import { A } from "@solidjs/router";
 }
 */
 
-export function AA({ children, href, title }: { children: JSX.Element, href: string, title?: string }) {
+export function IMG({ children, src, title, alt, style, className }: {
+    children?: JSX.Element,
+    src: string,
+    title?: string,
+    alt?: string,
+    style?: JSX.CSSProperties,
+    className?: string
+}) {
+    const { data } = useSolContext();
+
+    return (
+        <img src={data.baseroute + src} alt={alt} title={title} style={style} class={className}>
+            {children}
+        </img>
+    );
+
+}
+
+export function AA({ children, href, title, style, className }: {
+    children: JSX.Element,
+    href: string,
+    title?: string,
+    style?: JSX.CSSProperties,
+    className?: string
+}) {
+    const { data } = useSolContext();
+
     const handleClick = () => {
-        window.history.pushState({}, '', href);
+        let oldRoute = window.location.href
+        setTimeout(() => {
+            const routeChangeEvent = new CustomEvent('route-change', {
+                detail:
+                {
+                    oldRoute: oldRoute,
+                    newRoute: window.location.href,
+                }
+            });
+            window.dispatchEvent(routeChangeEvent);
+        }, 10)
     };
 
     return (
-        <A href={href} onClick={handleClick} title={title}>
+        <a href={data.baseroute + href} onClick={handleClick} title={title} style={style} class={className}>
             {children}
-        </A>
+        </a>
     );
 }
 

@@ -45,7 +45,7 @@ export function GridTest() {
 
 function FixedLeftRight() {
     return <GridLayout
-        header={<TestHeader />}
+        // header={<TestHeader />}
         left={<List children={[
             "one",
             "two",
@@ -66,7 +66,7 @@ function FixedLeftRight() {
 
 function FixedRight() {
     return <GridLayout
-        header={<TestHeader />}
+        // header={<TestHeader />}
         right={<List children={[
             "one",
             "two",
@@ -80,7 +80,7 @@ function FixedRight() {
 
 function FixedLeft() {
     return <GridLayout
-        header={<TestHeader />}
+        // header={<TestHeader />}
         left={<List children={[
             "one",
             "two",
@@ -94,14 +94,14 @@ function FixedLeft() {
 
 function FixedEmpty() {
     return <GridLayout
-        header={<TestHeader />}
+    // header={<TestHeader />}
     >
     </GridLayout>;
 }
 
 function FixedMiddle() {
     return <GridLayout
-        header={<TestHeader />}
+    // header={<TestHeader />}
     >
         <List children={[
             "one",
@@ -115,7 +115,7 @@ function FixedMiddle() {
 
 function FixedAll3() {
     return <GridLayout
-        header={<TestHeader />}
+        // header={<TestHeader />}
         left={<List children={[
             "one",
             "two",

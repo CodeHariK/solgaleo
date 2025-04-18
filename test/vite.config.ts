@@ -2,6 +2,9 @@ import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
 import path from "path";
 import fs from "fs";
+
+import devtools from 'solid-devtools/vite'
+
 import ExtractCssComments from "../vite-plugin-extract-css-comments";
 
 export default defineConfig({
@@ -9,6 +12,18 @@ export default defineConfig({
   base: '/solgaleo',
   plugins: [
     solid(),
+
+
+    devtools({
+      autoname: true,
+      // pass `true` or an object with options
+      locator: {
+        targetIDE: 'vscode',
+        componentLocation: true,
+        jsxLocation: true,
+      },
+    }),
+
     ExtractCssComments("test"),
     {
       name: 'copy-404',

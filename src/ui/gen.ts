@@ -3,6 +3,7 @@ import "./gen.css"
 export * from "./position.tsx";
 export * from "./gridlayout.tsx";
 export * from "./accordion.tsx";
+export * from "./router.tsx";
 export * from "./dropdown.tsx";
 export * from "./bar.tsx";
 export * from "./button.tsx";

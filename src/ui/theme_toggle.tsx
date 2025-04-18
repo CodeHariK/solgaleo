@@ -1,6 +1,6 @@
 import { createSignal, onMount } from "solid-js";
 
-type Theme = {
+export type Theme = {
     name: string;
     type: 'light' | 'night';
 }
