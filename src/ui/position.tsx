@@ -279,7 +279,7 @@ export function DragBox({ anchorRef, setAnchorRef }: {
     .DragBox {
         position: fixed; 
         inset: 0px;
-        background-color: #ea83834e; 
+        background-color: #e7e7e727; 
         pointer-events: none; 
     }
 
@@ -291,7 +291,7 @@ export function DragBox({ anchorRef, setAnchorRef }: {
         width: 10rem; 
         height: 10rem; 
         color: #ffffff; 
-        background-color: #f3f63b33; 
+        background-color: #ff3fc2d6; 
         cursor: move; 
         pointer-events: auto; 
     }

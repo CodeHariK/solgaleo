@@ -27,11 +27,7 @@ export const CssNAV = {
     HeaderRight: "HeaderRight",
     ModalOverlay: "ModalOverlay",
     ModalContent: "ModalContent",
-    ModalPositioned: "ModalPositioned",
-    ModalFade: "ModalFade",
-    ModalSlide: "ModalSlide",
-    ModalScale: "ModalScale",
-    Show: "Show",
+    ModalContentShow: "ModalContentShow",
 
     varPrimaryContainer: "--primary-container",
     varPrimary: "--primary",

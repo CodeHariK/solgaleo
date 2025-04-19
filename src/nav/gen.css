@@ -163,14 +163,9 @@ src/modal.tsx
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    opacity: 1;
     z-index: 50;
     pointer-events: none;
-}
-
-.ModalOverlay.Show {
-    opacity: 1;
 }
 
 .ModalContent {
@@ -181,94 +176,15 @@ src/modal.tsx
     max-width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    opacity: 0;
-    transition: all 0.2s ease-in-out;
     pointer-events: auto;
-    position: relative;
-    max-width: min(90vw, var(--modal-max-width, 600px));
-    max-height: min(90vh, var(--modal-max-height, 800px));
-}
-
-.ModalContent.Show {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.ModalPositioned {
     position: fixed;
     transform-origin: center;
-}
-
-.ModalContent[data-position="top"]::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--modal-bg, white);
-}
-
-.ModalContent[data-position="bottom"]::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid var(--modal-bg, white);
-}
-
-.ModalContent[data-position="left"]::after {
-    content: '';
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid var(--modal-bg, white);
-}
-
-.ModalContent[data-position="right"]::after {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid var(--modal-bg, white);
-}
-
-.ModalFade {
+    transform: scale(1) translateY(50px);
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
 }
 
-.ModalSlide {
-    opacity: 0;
-    transform: translateY(20px);
+.ModalContentShow {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
     transition: all 0.3s ease-in-out;
-}
-
-.ModalScale {
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-.Show.ModalFade {
-    opacity: 1;
-}
-
-.Show.ModalSlide {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.Show.ModalScale {
-    opacity: 1;
-    transform: scale(1);
 }

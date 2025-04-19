@@ -75,7 +75,7 @@ export function ThemeToggle() {
             class={CssUI.IconButton}
             type="button"
             onClick={toggleTheme}
-        > {theme().name} {theme().type === "night" ? <IconMoon /> : <IconSun />}
+        > {theme()?.name} {theme()?.type === "night" ? <IconMoon /> : <IconSun />}
         </button>
     );
 }
