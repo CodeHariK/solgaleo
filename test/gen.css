@@ -11,25 +11,25 @@ css.tsx
     --svg-ring-width: 4px;
     --svg-ring-color: #82f680;
     --marquee-width: ;
-    --keyframes-marquee-100-height: ;
-    --keyframes-marquee-100-col: red;
+    --keyframes-marqu2ee-100-height: ;
+    --keyframes-marqu2ee-100-col: red;
     --marquee-font-color: ;
     --marquee-span-bg: ;
     --neon-pink: ;
     --input-placeholder: ;
-    --stepper-decoration: ;
-    --stepper-border: ;
-    --stepper-display: ;
-    --box-stepper-bg-hover: yellow;
-    --box-stepper-col-hover: ;
+    --dom-decoration: ;
+    --dom-border: ;
+    --dom-display: ;
+    --box-dom-bg-hover: yellow;
+    --box-dom-col-hover: ;
     --box-hello: 4px;
     --box-hi: ;
     --box-alola: ;
     --svg-ring-bg: #3b82f6;
-    --svg-background-color: #A7F3D0;
-    --hello-col: orange;
+    --s2g-background-color: #A7F3D0;
+    --hell2o-col: orange;
     --hello--stepper-col: orange;
-    --marquee-span-col: #000;
+    --marqu2ee-span-col: #000;
     --fieldfont-col: ;
 }
 
@@ -39,25 +39,25 @@ css.tsx
     --svg-ring-width: 4px;
     --svg-ring-color: #3b82f680;
     --marquee-width: ;
-    --keyframes-marquee-100-height: ;
-    --keyframes-marquee-100-col: blue;
+    --keyframes-marqu2ee-100-height: ;
+    --keyframes-marqu2ee-100-col: blue;
     --marquee-font-color: ;
     --marquee-span-bg: ;
     --neon-pink: ;
     --input-placeholder: ;
-    --stepper-decoration: ;
-    --stepper-border: 1px solid blue;
-    --stepper-display: ;
-    --box-stepper-bg-hover: red;
-    --box-stepper-col-hover: ;
+    --dom-decoration: ;
+    --dom-border: 1px solid blue;
+    --dom-display: ;
+    --box-dom-bg-hover: red;
+    --box-dom-col-hover: ;
     --box-hello: 4px;
     --box-hi: ;
     --box-alola: ;
     --svg-ring-bg: #3b82f6;
-    --svg-background-color: #A7F3D0;
-    --hello-col: blue;
+    --s2g-background-color: #A7F3D0;
+    --hell2o-col: blue;
     --hello--stepper-col: blue;
-    --marquee-span-col: #fff;
+    --marqu2ee-span-col: #fff;
     --fieldfont-col: ;
 }
 
@@ -150,52 +150,52 @@ css.tsx
     transform: translateY(-2px);
 }
 
-.stepper {
+.dom {
     position: fixed;
-    decoration: var(--stepper-decoration);
-    border: var(--stepper-border);
-    display: var(--stepper-display);
+    decoration: var(--dom-decoration);
+    border: var(--dom-border);
+    display: var(--dom-display);
 }
 
-.box .stepper:hover {
+.box .dom:hover {
     visibility: var(--visibility);
-    background: var(--box-stepper-bg-hover);
-    color: var(--box-stepper-col-hover);
+    background: var(--box-dom-bg-hover);
+    color: var(--box-dom-col-hover);
 }
 
-.svg {
+.s2g {
     box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
-    background-color: var(--svg-background-color);
+    background-color: var(--s2g-background-color);
 }
 
-#hello {
-    color: var(--hello-col);
+#hell2o {
+    color: var(--hell2o-col);
 }
 
 #hello>.stepper {
     color: var(--hello--stepper-col);
 }
 
-.marquee {
+.marqu2ee {
     font-color: var(--marquee-font-color);
 }
 
-.marquee span {
-    color: var(--marquee-span-col);
+.marqu2ee span {
+    color: var(--marqu2ee-span-col);
     font-size: 200px;
     background: var(--marquee-span-bg);
 }
 
-.typewriter-animation {
+.typewri2ter-animation {
     animation: typewriter 5s steps(50) 1s 1 normal both,
         blinkingCursor 500ms steps(50) infinite normal;
 }
 
-.tab-level:not(:last-child)::after {
+.tab-le2vel:not(:last-child)::after {
     content: '';
 }
 
-.tab-level.level-2 {
+.tab-lev2el.level-2 {
     padding-left: 4rem;
     background: rgba(0, 0, 0, 0.03);
 }
@@ -209,19 +209,16 @@ css.tsx
 fieldfont {
     font-size: 1rem;
     color: var(--fieldfont-col);
+    font-size: 1rem;
 }
 
-h2 {
+field2 {
     line-height: 1.5rem;
 }
 
-h2:focus::placeholder {
+field2:focus::placeholder {
     color: var(--input-placeholder);
     transition: color 0.2s ease-out;
-}
-
-p {
-    font-size: 1rem;
 }
 
 .Glitter[data-has-label="true"]:focus,
@@ -240,12 +237,12 @@ p {
     width: 100%;
 }
 
-@keyframes marquee {
+@keyframes marqu2ee {
     100% {
         transform: translateX(-100%);
         width: var(--marquee-width);
-        height: var(--keyframes-marquee-100-height);
-        color: var(--keyframes-marquee-100-col);
+        height: var(--keyframes-marqu2ee-100-height);
+        color: var(--keyframes-marqu2ee-100-col);
     }
 }
 
@@ -265,7 +262,7 @@ p {
 }
 
 @media (min-width: 900px) {
-    h6 {
+    f6 {
         font-size: 1rem;
         line-height: 1.4rem;
         font-weight: 400;

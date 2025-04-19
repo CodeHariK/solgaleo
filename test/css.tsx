@@ -1,15 +1,15 @@
 
 /* CSS:
-.stepper {
+.dom {
     position: fixed;
     decoration: var:;
 }
-.stepper {
+.dom {
     border: var::1px solid blue;
     display: var::;
     superhello:;
 }
-.box .stepper:hover {
+.box .dom:hover {
     visibility: var(--visibility);
     background: var:yellow:red;
     color: var::;
@@ -17,7 +17,7 @@
     --box-hi: var::;
     --box-alola: var:;
 }
-.svg {
+.s2g {
     --svg-ring-width: 4px;
     --svg-ring-bg: var : #3b82f6;
     --svg-ring-color: var : #82f680 : #3b82f680;
@@ -25,7 +25,7 @@
     background-color: var:#A7F3D0:#A7F3D0;
 }
 
-#hello {
+#hell2o {
     color: var: orange : blue;
 }
 
@@ -33,7 +33,7 @@
     color: var: orange : blue;
 }
 
-@keyframes marquee {
+@keyframes marqu2ee {
     100% {
         transform: translateX(-100%);
         width: var(--marquee-width);
@@ -41,7 +41,7 @@
         color : var:red:blue;
     }
 }
-.marquee {
+.marqu2ee {
     font-color: var(--marquee-font-color);
     span {
         color: var: #000: #fff;
@@ -50,17 +50,17 @@
     }
 }
 
-.typewriter-animation {
+.typewri2ter-animation {
     animation:
         typewriter 5s steps(50) 1s 1 normal both,
         blinkingCursor 500ms steps(50) infinite normal;
 }
 
-.tab-level:not(:last-child)::after {
+.tab-le2vel:not(:last-child)::after {
     content: '';
 }
 
-.tab-level.level-2 {
+.tab-lev2el.level-2 {
     padding-left: 4rem;
     background: rgba(0, 0, 0, 0.03);
 }
@@ -85,7 +85,7 @@
 
 fieldfont { font-size: 1rem; color: var:; }
 
-h2 {
+field2 {
     line-height: 1.5rem;
 
     :focus::placeholder {
@@ -94,7 +94,7 @@ h2 {
     }
 }
 
-p { font-size: 1rem; }
+fieldfont { font-size: 1rem; }
 
 .Glitter {
     [data-has-label="true"] {
@@ -123,7 +123,7 @@ p { font-size: 1rem; }
 }
 
 @media (min-width: 900px) {
-    h6 {
+    f6 {
         font-size: 1rem;
         line-height: 1.4rem;
         font-weight: 400;

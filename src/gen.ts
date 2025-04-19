@@ -21,9 +21,9 @@ export const CssSRC = {
     JustifyStart: "justify-start",
     JustifyEnd: "justify-end",
     JustifyCenter: "justify-center",
-    JustifyBetween: "justify-between",
-    JustifyAround: "justify-around",
-    JustifyEvenly: "justify-evenly",
+    SpaceBetween: "space-between",
+    SpaceAround: "space-around",
+    SpaceEvenly: "space-evenly",
     WFull: "w-full",
     WScreen: "w-screen",
     HFull: "h-full",
@@ -135,17 +135,18 @@ export const CssSRC = {
 
     varSurface: "--surface",
     varPrimaryContainer: "--primary-container",
+    varBodyBg: "--body-bg",
+    varBodyCol: "--body-col",
+    varSpacing: "--spacing",
     varPrimary: "--primary",
     varAHoverCol: "--a-hover-col",
     varAActiveCol: "--a-active-col",
-    varSpacing: "--spacing",
     varSecondary: "--secondary",
     varSecondaryContainer: "--secondary-container",
     varError: "--error",
     varErrorContainer: "--error-container",
     varDisabled: "--disabled",
-    varBodyBg: "--body-bg",
-    varBodyCol: "--body-col"
+    varDisabledContainer: "--disabled-container"
 } as const;
 
 export type CssSRCType = keyof typeof CssSRC;

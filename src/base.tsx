@@ -1,6 +1,9 @@
 /*CSS:
 
---spacing: 1rem;
+--spacing: .9rem;
+
+--body-bg : var : white : black;
+--body-col : var : black : white;
 
 --primary : var : #6750A4 : #d8c8fa;
 --primary-container : var : #EADDFF : #4F378B;
@@ -13,7 +16,12 @@
 --error : var : #B3261E : #ff7262;
 --error-container : var : #F9DEDC : #8C1D18;
 
---disabled : var : #6B7280: #9CA3AF ;
+--disabled : var : #bdbdbd: #bcbcbc ;
+--disabled-container : var : #e7e7e7: #7d7d7d ;
+
+--a-hover-col: var : #ffac90 : #ffac90;
+--a-active-col: var : #cf90ff : #cf90ff; 
+
 
 *::-webkit-scrollbar {
   width: 8px;
@@ -45,8 +53,8 @@
 }
 
 body {
-  background: var : white : black ;
-  color: var : black : white;
+  background: var(--body-bg);
+  color: var(--body-col);
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -71,26 +79,11 @@ select {
   font: inherit;
 }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+p,h1,h2,h3,h4,h5,h6 {
   overflow-wrap: break-word;
 }
 
-p {
-  text-wrap: pretty;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1,h2,h3,h4,h5,h6 {
   text-wrap: balance;
 }
 
@@ -103,63 +96,82 @@ h6 {
 //-------
 
 h1 {
-    font-size: 1.9rem;
-    line-height: 2rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+  font-size: calc(var(--spacing) * 2);
+  font-weight: 700;
+  line-height: calc(var(--spacing) * 2);
+  letter-spacing: -0.04rem;
+  word-spacing: -0.4rem;
 }
 
 h2 {
-    font-size: 1.7rem;
-    line-height: 1.8rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+  font-size: calc(var(--spacing) * 1.75);
+  font-weight: 600;
+  line-height: calc(var(--spacing) * 1.75);
+  letter-spacing: -0.035rem;
+  word-spacing: -0.3rem;
 }
 
 h3 {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+  font-size: calc(var(--spacing) * 1.5);
+  font-weight: 500;
+  line-height: calc(var(--spacing) * 1.6);
+  letter-spacing: -0.03rem;
+  word-spacing: -0.25rem;
 }
 
 h4 {
-    font-size: 1.3rem;
-    line-height: 1.7rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+  font-size: calc(var(--spacing) * 1.4);
+  font-weight: 400;
+  line-height: calc(var(--spacing) * 1.5);
+  letter-spacing: -0.025rem;
+  word-spacing: -0.15rem;
 }
 
 h5 {
-    font-size: 1.1rem;
-    line-height: 1.6rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+  font-size: calc(var(--spacing) * 1.25);
+  font-weight: 300;
+  line-height: calc(var(--spacing) * 1.25);
+  letter-spacing: -0.015rem;
+  word-spacing: -0.25rem;
 }
 
 h6 {
-    font-size: 1rem;
-    line-height: 1.4rem;
-    font-weight: 400;
+  font-size: calc(var(--spacing) * 1.1);
+  font-weight: 300;
+  line-height: calc(var(--spacing) * 1.25);
+  letter-spacing: -0.01rem;
+  word-spacing: -0.05rem;
 }
 
 p,
 li {
-    font-size: 0.85rem;
-    line-height: 1.25rem;
+  text-wrap: pretty;
+
+  font-size: var(--spacing);
+  line-height: calc(var(--spacing) * 1.25);
+  letter-spacing: -0.01rem;
+  word-spacing: -0.05rem;
 }
 
 a {
-    color: var(--primary);
+  color: var(--primary);
+  :hover {
+    color: var(--a-hover-col);
+  }
+  :active, .active {
+    color: var(--a-active-col);
+  }
+}
 
-    :hover {
-        --a-hover-col: var : #ffac90 : #ffac90;
-        color: var(--a-hover-col);
-    }
-    :active, .active {
-        --a-active-col: var : #cf90ff : #cf90ff; 
-        color: var(--a-active-col);
-    }
+pre {
+  overflow: auto;    
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+hr {
+  border: 1px solid var(--secondary);
+  margin: .3rem 0rem;
 }
 
 @media (min-width: 768px) {
@@ -184,9 +196,9 @@ a {
 .justify-start { justify-content: flex-start; }
 .justify-end { justify-content: flex-end; }
 .justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-around { justify-content: space-around; }
-.justify-evenly { justify-content: space-evenly; }
+.space-between { justify-content: space-between; }
+.space-around { justify-content: space-around; }
+.space-evenly { justify-content: space-evenly; }
 
 .w-full { width: 100%; }
 .w-screen { width: 100vw; }

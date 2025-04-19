@@ -118,7 +118,12 @@ export function SpaceDebugInfo() {
     const { state } = context;
 
     return (
-        <div>{JSON.stringify(state(), null, 2)}
+        <div class="m2 border-basic p4 br8">
+            <h5>Spaceform debug info</h5>
+            <hr />
+            <pre>
+                {JSON.stringify(state(), null, 2)}
+            </pre>
         </div>
     );
 }

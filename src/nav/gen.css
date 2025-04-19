@@ -7,11 +7,11 @@ src/modal.tsx
 */
 
 .light {
-    --ModalContent-bg: #4d84dc40;
+
 }
 
 .night {
-    --ModalContent-bg: #4d84dc40;
+
 }
 
 .PaginationNav {
@@ -36,23 +36,17 @@ src/modal.tsx
     justify-content: center;
     height: 2rem;
     padding: 0 0.75rem;
-    border: 1px solid var(--border-color, #e5e7eb);
+    border: 1px solid var(--primary-container);
     background: var(--bg-color, white);
-    color: var(--text-color, #6b7280);
+    color: var(--primary);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
-.PaginationButton:hover:not(:disabled):not(.PaginationActive) {
-    background: var(--hover-bg, #f3f4f6);
-    color: var(--hover-text, #374151);
-    border-color: var(--hover-border, #d1d5db);
-}
-
 .PaginationActive {
-    background: var(--active-bg, #4f46e5) !important;
-    color: white !important;
-    border-color: var(--active-bg, #4f46e5) !important;
+    background: var(--primary);
+    color: var(--primary-container);
+    border-color: var(--primary);
 }
 
 .PaginationItem {
@@ -95,24 +89,27 @@ src/modal.tsx
 .BreadcrumbLinks {
     list-style-type: none;
     display: flex;
-    gap: 1rem;
     align-items: center;
     margin: 0;
     padding: 0;
 }
 
+.BreadcrumbLinks li {
+    display: flex;
+}
+
 .BreadcrumbLink {
-    color: #9ca3af;
+    color: var(--primary);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .BreadcrumbLink:hover {
-    color: #e05050;
+    color: var(--secondary);
 }
 
 .BreadcrumbSeparator {
-    color: #d1d5db;
+    color: var(--primary);
     margin: 0 0.5rem;
 }
 
@@ -177,15 +174,16 @@ src/modal.tsx
 }
 
 .ModalContent {
-    background: var(--ModalContent-bg);
-    padding: 2rem;
+    background: var(--surface);
+    padding: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px var(--surface);
     max-width: 90%;
     max-height: 90vh;
     overflow-y: auto;
     opacity: 0;
     transition: all 0.2s ease-in-out;
+    pointer-events: auto;
     position: relative;
     max-width: min(90vw, var(--modal-max-width, 600px));
     max-height: min(90vh, var(--modal-max-height, 800px));
@@ -199,22 +197,6 @@ src/modal.tsx
 .ModalPositioned {
     position: fixed;
     transform-origin: center;
-}
-
-.ModalClose {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    border: none;
-    background: red;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    transition: background 0.2s;
-}
-
-.ModalClose:hover {
-    background: rgba(0, 0, 0, 0.1);
 }
 
 .ModalContent[data-position="top"]::after {

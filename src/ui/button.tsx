@@ -7,6 +7,7 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
     font-size: 0.75rem;
     font-weight: 600;
     align-items: center;
+    justify-content: center;
     color: var(--primary);
     background: var(--surface);
     border: 1px solid transparent;
@@ -16,10 +17,18 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
     user-select: none;
     cursor: pointer;
 }
+
 button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
 .MaterialRoundButton:hover, .OutlinedRoundButton:hover {
     opacity: 0.9;
     background: var(--surface);
+}
+
+button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
+.MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
+    color: var(--disabled);
+    background: var(--disabled-container);
+    cursor: not-allowed;
 }
 
 .IconButton {

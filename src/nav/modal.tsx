@@ -1,12 +1,13 @@
 // import { createSignal, Setter } from "solid-js";
 // import { IconCross } from "../svg/svg";
 
-import { Accessor, Setter, Show, createEffect, createSignal, onCleanup } from "solid-js";
+import { Accessor, Setter, Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { Portal } from "solid-js/web";
 import { CssNAV } from "./gen";
 
 
 import { type JSX } from 'solid-js';
+import { CssUI } from "../gen";
 
 /* CSS:
 .ModalOverlay {
@@ -15,26 +16,23 @@ import { type JSX } from 'solid-js';
     left: 0;
     right: 0;
     bottom: 0;
-    // background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     z-index: 50;
-    
     pointer-events: none;
 }
-
 .ModalOverlay.Show {
     opacity: 1;
 }
 
 .ModalContent {
-    background: var : #4d84dc40;
-    padding: 2rem;
+    background: var(--surface);
+    padding: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px var(--surface);
     max-width: 90%;
     max-height: 90vh;
     overflow-y: auto;
@@ -42,12 +40,12 @@ import { type JSX } from 'solid-js';
     opacity: 0;
     transition: all 0.2s ease-in-out;
 
+    pointer-events: auto;
 
     position: relative;
     max-width: min(90vw, var(--modal-max-width, 600px));
     max-height: min(90vh, var(--modal-max-height, 800px));
 }
-
 .ModalContent.Show {
     transform: scale(1);
     opacity: 1;
@@ -58,21 +56,8 @@ import { type JSX } from 'solid-js';
     transform-origin: center;
 }
 
-.ModalClose {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    border: none;
-    background: red;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    transition: background 0.2s;
-}
 
-.ModalClose:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
+
 
 
 
@@ -232,7 +217,7 @@ export function Modal(props: ModalProps) {
 
 
         const anchor = anchorRef();
-        // if (!anchor || !props.isOpen) return;
+        if (!anchor || !props.isOpen) return;
 
         console.log(anchor)
 
@@ -268,9 +253,20 @@ export function Modal(props: ModalProps) {
         });
     });
 
+    function windowClickCloser(e) {
+        if (isVisible() && !(anchorRef()?.contains(e.target) || modalRef.contains(e.target))) {
+            props.onClose()
+        }
+    }
+
+    onMount(() => {
+        document.addEventListener("click", windowClickCloser)
+    })
+
     onCleanup(() => {
         unlockScroll();
         document.removeEventListener("keydown", handleEscape);
+        document.removeEventListener("click", windowClickCloser);
         window.removeEventListener("resize", handleViewportChange);
         window.removeEventListener("scroll", handleViewportChange);
     });
@@ -483,13 +479,8 @@ export function Modal(props: ModalProps) {
 
             <Show when={props.isOpen}>
                 <Portal>
-                    <div class={`${CssNAV.ModalOverlay} ${isVisible() ? CssNAV.Show : ''}`}
-                        onClick={(e) => {
-                            if (e.target === e.currentTarget) props.onClose();
-                        }}
-                    >
-                        <div
-                            ref={modalRef}
+                    <div class={`${CssNAV.ModalOverlay} ${isVisible() ? CssNAV.Show : ''}`}>
+                        <div ref={modalRef}
                             class={`
                             ${CssNAV.ModalContent}
                             ${isVisible() ? CssNAV.Show : ''}
@@ -498,14 +489,10 @@ export function Modal(props: ModalProps) {
                             `}
                             style={position()}
                         >
-                            <button
-                                class={CssNAV.ModalClose}
-                                onClick={props.onClose}
-                                aria-label="Close modal"
-                            >
-                                ×
-                            </button>
-                            {props.title && <h2>{props.title}</h2>}
+                            <div class="flex flex-row space-between items-center mb2">
+                                {props.title && <h5>{props.title}</h5>}
+                                <button onClick={props.onClose} aria-label="Close modal">×</button>
+                            </div>
                             {props.children}
                         </div>
                     </div>

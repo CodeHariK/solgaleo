@@ -11,24 +11,27 @@ import { CssNAV } from "./gen";
 .BreadcrumbLinks {
     list-style-type: none;
     display: flex;
-    gap: 1rem;
     align-items: center;
     margin: 0;
     padding: 0;
+
+    li {
+        display: flex;
+    }
 }
 
 .BreadcrumbLink {
-    color: #9ca3af;
+    color: var(--primary);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .BreadcrumbLink:hover {
-    color: #e05050;
+    color: var(--secondary);
 }
 
 .BreadcrumbSeparator {
-    color: #d1d5db;
+    color: var(--primary);
     margin: 0 0.5rem;
 }
 */

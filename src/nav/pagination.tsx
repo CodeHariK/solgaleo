@@ -25,23 +25,23 @@ import { IconChevronLeft, IconChevronRight } from "../gen";
     justify-content: center;
     height: 2rem;
     padding: 0 0.75rem;
-    border: 1px solid var(--border-color, #e5e7eb);
+    border: 1px solid var(--primary-container);
     background: var(--bg-color, white);
-    color: var(--text-color, #6b7280);
+    color: var(--primary);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
-.PaginationButton:hover:not(:disabled):not(.PaginationActive) {
-    background: var(--hover-bg, #f3f4f6);
-    color: var(--hover-text, #374151);
-    border-color: var(--hover-border, #d1d5db);
-}
+// .PaginationButton:hover:not(:disabled):not(.PaginationActive) {
+//     background: var(#ff00f6);
+//     color: var(--hover-text, #374151);
+//     border-color: var(--hover-border, #d1d5db);
+// }
 
 .PaginationActive {
-    background: var(--active-bg, #4f46e5) !important;
-    color: white !important;
-    border-color: var(--active-bg, #4f46e5) !important;
+    background: var(--primary);
+    color: var(--primary-container);
+    border-color: var(--primary);
 }
 
 .PaginationItem {

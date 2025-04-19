@@ -6,33 +6,35 @@ base.tsx
 .light {
     --surface: #6750A415;
     --primary-container: #EADDFF;
+    --body-bg: white;
+    --body-col: black;
+    --spacing: .9rem;
     --primary: #6750A4;
     --a-hover-col: #ffac90;
     --a-active-col: #cf90ff;
-    --spacing: 1rem;
     --secondary: #ff69b4;
     --secondary-container: #ffe3f1;
     --error: #B3261E;
     --error-container: #F9DEDC;
-    --disabled: #6B7280;
-    --body-bg: white;
-    --body-col: black;
+    --disabled: #bdbdbd;
+    --disabled-container: #e7e7e7;
 }
 
 .night {
     --surface: #64626b87;
     --primary-container: #4F378B;
+    --body-bg: black;
+    --body-col: white;
+    --spacing: .9rem;
     --primary: #d8c8fa;
     --a-hover-col: #ffac90;
     --a-active-col: #cf90ff;
-    --spacing: 1rem;
     --secondary: #ff69b4;
     --secondary-container: #454245;
     --error: #ff7262;
     --error-container: #8C1D18;
-    --disabled: #9CA3AF ;
-    --body-bg: black ;
-    --body-col: white;
+    --disabled: #bcbcbc ;
+    --disabled-container: #7d7d7d ;
 }
 
 @keyframes fadeSlideIn {
@@ -105,10 +107,6 @@ h6 {
     overflow-wrap: break-word;
 }
 
-p {
-    text-wrap: pretty;
-}
-
 h1,
 h2,
 h3,
@@ -124,50 +122,60 @@ h6 {
 }
 
 h1 {
-    font-size: 1.9rem;
-    line-height: 2rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+    font-size: calc(var(--spacing) * 2);
+    font-weight: 700;
+    line-height: calc(var(--spacing) * 2);
+    letter-spacing: -0.04rem;
+    word-spacing: -0.4rem;
 }
 
 h2 {
-    font-size: 1.7rem;
-    line-height: 1.8rem;
+    font-size: calc(var(--spacing) * 1.75);
     font-weight: 600;
-    letter-spacing: -0.025em;
+    line-height: calc(var(--spacing) * 1.75);
+    letter-spacing: -0.035rem;
+    word-spacing: -0.3rem;
 }
 
 h3 {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
+    font-size: calc(var(--spacing) * 1.5);
     font-weight: 500;
-    letter-spacing: -0.025em;
+    line-height: calc(var(--spacing) * 1.6);
+    letter-spacing: -0.03rem;
+    word-spacing: -0.25rem;
 }
 
 h4 {
-    font-size: 1.3rem;
-    line-height: 1.7rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+    font-size: calc(var(--spacing) * 1.4);
+    font-weight: 400;
+    line-height: calc(var(--spacing) * 1.5);
+    letter-spacing: -0.025rem;
+    word-spacing: -0.15rem;
 }
 
 h5 {
-    font-size: 1.1rem;
-    line-height: 1.6rem;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+    font-size: calc(var(--spacing) * 1.25);
+    font-weight: 300;
+    line-height: calc(var(--spacing) * 1.25);
+    letter-spacing: -0.015rem;
+    word-spacing: -0.25rem;
 }
 
 h6 {
-    font-size: 1rem;
-    line-height: 1.4rem;
-    font-weight: 400;
+    font-size: calc(var(--spacing) * 1.1);
+    font-weight: 300;
+    line-height: calc(var(--spacing) * 1.25);
+    letter-spacing: -0.01rem;
+    word-spacing: -0.05rem;
 }
 
 p,
 li {
-    font-size: 0.85rem;
-    line-height: 1.25rem;
+    text-wrap: pretty;
+    font-size: var(--spacing);
+    line-height: calc(var(--spacing) * 1.25);
+    letter-spacing: -0.01rem;
+    word-spacing: -0.05rem;
 }
 
 a {
@@ -181,6 +189,17 @@ a:hover {
 a:active,
 a.active {
     color: var(--a-active-col);
+}
+
+pre {
+    overflow: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+
+hr {
+    border: 1px solid var(--secondary);
+    margin: .3rem 0rem;
 }
 
 .flex {
@@ -232,15 +251,15 @@ a.active {
     justify-content: center;
 }
 
-.justify-between {
+.space-between {
     justify-content: space-between;
 }
 
-.justify-around {
+.space-around {
     justify-content: space-around;
 }
 
-.justify-evenly {
+.space-evenly {
     justify-content: space-evenly;
 }
 

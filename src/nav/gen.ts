@@ -28,13 +28,15 @@ export const CssNAV = {
     ModalOverlay: "ModalOverlay",
     ModalContent: "ModalContent",
     ModalPositioned: "ModalPositioned",
-    ModalClose: "ModalClose",
     ModalFade: "ModalFade",
     ModalSlide: "ModalSlide",
     ModalScale: "ModalScale",
     Show: "Show",
 
-    varModalContentBg: "--ModalContent-bg"
+    varPrimaryContainer: "--primary-container",
+    varPrimary: "--primary",
+    varSecondary: "--secondary",
+    varSurface: "--surface"
 } as const;
 
 export type CssNAVType = keyof typeof CssNAV;

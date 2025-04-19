@@ -505,7 +505,7 @@ export function Input(props: InputProps) {
     const { state, handleChange } = useSpaceContext();
     const [showPassword, setShowPassword] = createSignal(false);
 
-    const [rangeLeft, setRangeLeft] = createSignal("0%");
+    const [rangeLeft, setRangeLeft] = createSignal((state().values[props.name] ?? 0) + "%");
 
     const updateRangeValue = (input: HTMLInputElement) => {
         const value = parseFloat(input.value);

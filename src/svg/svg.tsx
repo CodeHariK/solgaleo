@@ -143,22 +143,20 @@ export function IconCross({ className, style, strokeWidth, fill }: IconProps) {
 }
 
 export function IconUnlock({ className, style, strokeWidth, fill }: IconProps) {
-    return (
-        <svg
-            viewBox="-1 -1 26 26"
-            style={style}
-            class={className}
-            fill={fill ? "currentColor" : "none"}
-            stroke={fill ? "none" : "currentColor"}
-            stroke-width={strokeWidth ?? 2}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M2 16c0-2.828 0-4.243.879-5.121C3.757 10 5.172 10 8 10h8c2.828 0 4.243 0 5.121.879C22 11.757 22 13.172 22 16c0 2.828 0 4.243-.879 5.121C20.243 22 18.828 22 16 22H8c-2.828 0-4.243 0-5.121-.879C2 20.243 2 18.828 2 16Z" />
-            <circle cx="12" cy="16" r="2" />
-            <path d="M6 10V8a6 6 0 0 1 11.811-1.5" />
-        </svg>
-    );
+    return <svg
+        viewBox="-1 -1 26 26"
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M2 16c0-2.828 0-4.243.879-5.121C3.757 10 5.172 10 8 10h8c2.828 0 4.243 0 5.121.879C22 11.757 22 13.172 22 16c0 2.828 0 4.243-.879 5.121C20.243 22 18.828 22 16 22H8c-2.828 0-4.243 0-5.121-.879C2 20.243 2 18.828 2 16Z" />
+        <circle cx="12" cy="16" r="2" />
+        <path d="M6 10V8a6 6 0 0 1 11.811-1.5" />
+    </svg>
 }
 
 export function IconLock({ className, style, strokeWidth, fill }: IconProps) {
@@ -196,8 +194,8 @@ export function IconStar({ className, style, strokeWidth, fill }: IconProps) {
         viewBox="0 0 24 24"
         style={style}
         class={className}
-        fill={fill ? "currentColor" : "none"}
-        stroke={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        fill={fill ? "none" : "currentColor"}
         stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -208,90 +206,80 @@ export function IconStar({ className, style, strokeWidth, fill }: IconProps) {
 }
 
 export function IconHeart({ className, style, strokeWidth, fill }: IconProps) {
-    return (
-        <svg
-            viewBox="0 0 24 24"
-            style={style}
-            class={className}
-            fill={fill ? "currentColor" : "none"}
-            stroke={fill ? "none" : "currentColor"}
-            stroke-width={strokeWidth ?? 2}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
-        </svg>
-    );
+    return <svg
+        viewBox="0 0 24 24"
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+    </svg>
 }
 
 export function IconCart({ className, style, strokeWidth, fill }: IconProps) {
-    return (
-        <svg
-            viewBox="0 0 24 24"
-            style={style}
-            class={className}
-            fill={fill ? "currentColor" : "none"}
-            stroke={fill ? "none" : "currentColor"}
-            stroke-width={strokeWidth ?? 2}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-        </svg>
-    );
+    return <svg
+        viewBox="0 0 24 24"
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+    </svg>
 }
 
 export function IconDown({ className, style, strokeWidth, fill }: IconProps) {
-    return (
-        <svg
-            viewBox="0 0 24 24"
-            style={style}
-            class={className}
-            fill={fill ? "currentColor" : "none"}
-            stroke={fill ? "none" : "currentColor"}
-            stroke-width={strokeWidth ?? 2}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="m19 9-7 7-7-7" />
-        </svg>
-    );
+    return <svg
+        viewBox="0 0 24 24"
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="m19 9-7 7-7-7" />
+    </svg>
 }
 
 export function IconChevronLeft({ className, style, strokeWidth, fill }: IconProps) {
 
-    return (
-        <svg
-            viewBox="180 -800 640 640"
-            style={style}
-            class={className}
-            fill={fill ? "none" : "currentColor"}
-            stroke={fill ? "currentColor" : "none"}
-            stroke-width={strokeWidth ?? 2}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="m432-480 156 156q11 11 11 28t-11 28q-11 11-28 11t-28-11L348-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 28-11t28 11q11 11 11 28t-11 28L432-480Z" />
-        </svg>
-    );
+    return <svg
+        viewBox="180 -800 640 640"
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="m432-480 156 156q11 11 11 28t-11 28q-11 11-28 11t-28-11L348-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 28-11t28 11q11 11 11 28t-11 28L432-480Z" />
+    </svg>
 }
 
 export function IconChevronRight({ className, style, strokeWidth, fill }: IconProps) {
 
-    return (
-        <svg
-            viewBox="100 -800 640 640"
-            style={style}
-            class={className}
-            fill={fill ? "none" : "currentColor"}
-            stroke={fill ? "currentColor" : "none"}
-            stroke-width={strokeWidth ?? 2}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M504-480 348-636q-11-11-11-28t11-28q11-11 28-11t28 11l184 184q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L404-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l156-156Z" />
-        </svg>
-    );
+    return <svg
+        viewBox="100 -800 640 640"
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M504-480 348-636q-11-11-11-28t11-28q11-11 28-11t28 11l184 184q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L404-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l156-156Z" />
+    </svg>
 }
 
 export function IconSearch({ className, style, strokeWidth, fill }: IconProps) {
@@ -386,7 +374,8 @@ export function IconRocket({ className, style, strokeWidth, fill }: IconProps) {
 }
 
 export function IconCopy({ className, style, strokeWidth, fill }: IconProps) {
-    return <svg viewBox="0 0 24 24"
+    return <svg
+        viewBox="0 0 24 24"
         style={style}
         class={className}
         fill={fill ? "currentColor" : "none"}
@@ -400,7 +389,8 @@ export function IconCopy({ className, style, strokeWidth, fill }: IconProps) {
 }
 
 export function IconHome({ className, style, strokeWidth, fill }: IconProps) {
-    return <svg viewBox="0 0 20 20"
+    return <svg
+        viewBox="0 0 20 20"
         style={style}
         class={className}
         fill={fill ? "currentColor" : "none"}
@@ -410,5 +400,33 @@ export function IconHome({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linejoin="round"
     >
         <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
+    </svg>
+}
+
+export function IconMoon({ className, style, strokeWidth, fill }: IconProps) {
+    return <svg
+        viewBox="0 0 20 20"
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+    >
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+    </svg>
+}
+
+export function IconSun({ className, style, strokeWidth, fill }: IconProps) {
+    return <svg
+        viewBox="0 0 20 20"
+        style={style}
+        class={className}
+        stroke={fill ? "currentColor" : "none"}
+        fill={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+    ><path
+        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+        fill-rule="evenodd"
+        clip-rule="evenodd"></path>
     </svg>
 }

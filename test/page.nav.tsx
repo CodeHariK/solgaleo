@@ -2,6 +2,7 @@ import { createMemo, createSignal, For } from "solid-js";
 import { CssUI, DragBox, GridLayout, IconHome, ThemeToggle } from "../src/gen";
 import * as N from "../src/nav/gen";
 import { TestHeader } from "./common";
+import { Portal } from "solid-js/web";
 
 export function NavTest() {
 
@@ -10,7 +11,7 @@ export function NavTest() {
     return <GridLayout
         header={<TestHeader />}
     >
-        <N.Breadcrumbs items={[
+        {/* <N.Breadcrumbs items={[
             {
                 element: <IconHome />,
                 link: "/",
@@ -23,29 +24,20 @@ export function NavTest() {
             {
                 element: <span>Category</span>
             }
-        ]} />
-
-        <N.Header
-            title={<p><img src="https://cdn.pixabay.com/photo/2022/08/22/02/05/logo-7402513_640.png" />Solgaleo</p>}
-            links={[
-                <a href="/products" title="Products" />,
-                <a href="/account" title="Accounts" />,
-                <a href="/docs" title="Docs" />
-            ]}
-            right={<ThemeToggle />}
-        />
-
-        {/* <N.Modal child={">>> Show Modal <<<"} modal={() => "Hi"} /> */}
+        ]} /> */}
 
         <button
             class={CssUI.MaterialButton}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+                setIsModalOpen(!isModalOpen())
+                console.log(isModalOpen())
+            }}
         >
-            Open Modal
+            Open Modal {isModalOpen() ? "+" : "-"}
         </button>
 
 
-        <N.Modal
+        {/* <N.Modal
             isOpen={isModalOpen()}
             onClose={() => setIsModalOpen(false)}
             anchor={{
@@ -57,11 +49,10 @@ export function NavTest() {
             }}
         >
             <div>button</div>
-        </N.Modal>
+        </N.Modal> */}
 
-
-        {/* {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
-        {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
+        {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
+        {/* {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
         {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
         {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')} */}
 
@@ -76,33 +67,33 @@ export function NavTest() {
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'left')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'left')}
-        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'left')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'left')} */}
 
-        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
+        {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'right')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'right')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'right')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'right')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'right')}
-        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'right')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'right')} */}
 
-        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
+        {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'top')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'top')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'top')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'top')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'top')}
-        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'top')}
+        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'top')} */}
 
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')}
-        {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'bottom')}
+        {/* {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'bottom')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'bottom')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'bottom')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'bottom')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'bottom')}
         {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'bottom')} */}
 
-        <PaginationTest />
+        {/* <PaginationTest /> */}
 
     </GridLayout>
 }
@@ -110,17 +101,28 @@ export function NavTest() {
 function DummyModal(isModalOpen, setIsModalOpen,
     x: number | string, y: number | string,
     corner: 'topleft' | 'topright' | 'bottomleft' | 'bottomright') {
+
     return <N.Modal
         isOpen={isModalOpen()}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+            setIsModalOpen(false)
+            console.log(isModalOpen())
+        }}
         animation="slide"
         fixed={{
             x: x,
             y: y,
             corner: corner
         }}
+        title="Hello"
     >
-        <div>{x}, {y}, {corner}</div>
+        <div class="flex flex-col">
+            <p>how are you?</p>
+            <div class="flex mt4 gap4">
+                <button>ok</button>
+                <button>close</button>
+            </div>
+        </div>
     </N.Modal>;
 }
 

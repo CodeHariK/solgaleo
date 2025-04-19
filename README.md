@@ -7,7 +7,6 @@
 
 Solidjs ui library
 
-
 ## https://codeharik.github.io/solgaleo
 
 ## Installation
@@ -32,6 +31,18 @@ npm install solgaleo
 
 ```
 
+### Example
+
+```
+--- simple example in /example directory
+cd example
+bun run dev
+
+--- advance example /test
+bun run test
+bun run test:build
+```
+
 ## Import Components
 ```ts
 --- Add components
@@ -52,10 +63,24 @@ import * as SVG from "solgaleo/svg"
 ```ts
 import "./custom.css"
 import * as UI from "solgaleo/ui"
-UI.AddTheme({
-    name: "custom",
-    type: "light",
-})
+
+render(() => 
+    <SolProvider
+      initialData={{
+          baseroute: '/solgaleo',
+          customThemes: [{ name: "custom", type: "light" }],
+      }}>
+      
+      <Router base="/solgaleo">
+        <Route path="/" component={
+          () => <GridLayout
+            header={<TestHeader />}
+          />
+        } />
+        <Route path="*" component={NotFound} />
+      </Router>
+      </SolProvider>, 
+  document.body!)
 
 ** custom.css **
 
@@ -72,16 +97,4 @@ UI.AddTheme({
   --disabled: #9CA3AF;
 }
 
-```
-
-### Example
-
-```
---- simple example in /example directory
-cd example
-bun run dev
-
---- advance example /test
-bun run test
-bun run test:buile
 ```

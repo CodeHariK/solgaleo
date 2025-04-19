@@ -63,6 +63,8 @@ export function SvgTest() {
         { component: svg.IconLoading, name: 'Loading' },
         { component: svg.IconRocket, name: 'Rocket' },
         { component: svg.IconCopy, name: 'Copy' },
+        { component: svg.IconSun, name: 'Sun' },
+        { component: svg.IconMoon, name: 'Moon' },
     ];
 
     return <GridLayout

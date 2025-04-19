@@ -53,7 +53,6 @@ export function UiTest() {
             { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
         ]} />
 
-
         <PositionBox
             name={<>{<IconCart />}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{<IconDown />}</>}>
 
@@ -153,7 +152,8 @@ export function UiTest() {
                     "first_name": "Hello",
                     "hello": ["checkbox-3"],
                     "country": "fr",
-                    "countries": "USA"
+                    "countries": "USA",
+                    "range": 20,
                 },
                 status: {},
                 errors: {},
@@ -218,15 +218,19 @@ export function UiTest() {
 
         </SpaceForm>
 
-        <h1>h1: The electron is a subatomic particle with a negative one elementary electric charge.</h1>
-        <h2>h2: The electron is a subatomic particle with a negative one elementary electric charge.</h2>
-        <h3>h3: The electron is a subatomic particle with a negative one elementary electric charge.</h3>
-        <h4>h4: The electron is a subatomic particle with a negative one elementary electric charge.</h4>
-        <h5>h5: The electron is a subatomic particle with a negative one elementary electric charge.</h5>
-        <h6>h6: The electron is a subatomic particle with a negative one elementary electric charge.</h6>
-        <p>p: The electron is a subatomic particle with a negative one elementary electric charge.</p>
+        <h1>{para(1)}</h1>
+        <h2>{para(1)}</h2>
+        <h3>{para(1)}</h3>
+        <h4>{para(1)}</h4>
+        <h5>{para(1)}</h5>
+        <h6>{para(1)}</h6>
+        <p>{para(3)}</p>
 
     </GridLayout>
+}
+
+function para(repeat: number) {
+    return <div class='p1 border-basic'>{Array(repeat).fill("The electron is a subatomic particle with a negative one elementary electric charge.")}</div>
 }
 
 export const validationSchema = yup.object().shape({
