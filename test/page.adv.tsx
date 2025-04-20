@@ -1,7 +1,7 @@
-import { BlogList, Carousel, Carousel2, MiniMarkdown, SuperTable, Treeview } from "../src/adv/gen";
+import { BlogList, Carousel, MiniMarkdown, Slides, SuperTable, Treeview } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
-import { List, TestHeader } from "./common";
+import { TestHeader } from "./common";
 
 /*CSS:-
 
@@ -38,18 +38,16 @@ export function AdvTest() {
         mode="flow"
         header={<TestHeader />}
         footer={<TestHeader />}
-        left={<List children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
+    // left={<List children={[
+    //     "one",
+    //     "two",
+    //     "three",
+    //     "four",
+    //     "five",
+    // ]} />}
     >
 
         <Carousel />
-
-        <Carousel2 />
 
         <BlogList
             id="sol"
@@ -77,6 +75,8 @@ export function AdvTest() {
         <TreeViewTest />
 
         <MarkdownTest />
+
+        <Slides />
 
     </GridLayout>
 }

@@ -20,8 +20,8 @@ import { For, JSX } from "solid-js";
     max-height: 300px;
 
     position: sticky;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 25%;
+    // transform: translateY(-50%);
 
     display: flex;
     flex-direction: column;

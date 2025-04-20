@@ -65,6 +65,11 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
 
+
+  // block-size: 100%;
+  // display: grid;
+  // place-content: start center;
+
   place-content: center;
 }
 

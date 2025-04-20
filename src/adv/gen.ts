@@ -1,6 +1,7 @@
 import '../gen.css'
 import "./gen.css"
 export * from "./md.tsx";
+export * from "./slides.tsx";
 export * from "./treeview.tsx";
 export * from "./blog.tsx";
 export * from "./table.tsx";
