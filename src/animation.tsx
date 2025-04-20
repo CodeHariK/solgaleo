@@ -1,4 +1,4 @@
-/*CSS:
+/*CSS:-
 
 @keyframes fadeSlideIn {
   0% {

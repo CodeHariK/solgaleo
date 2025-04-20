@@ -116,7 +116,7 @@ export function PositionBox({ name, align, children, visible }: {
         });
     });
 
-    /*CSS:
+    /*CSS:-
 
     .PositionBox {
         display: inline-flex;
@@ -274,7 +274,7 @@ export function DragBox({ anchorRef, setAnchorRef }: {
         });
     });
 
-    /*CSS:
+    /*CSS:-
 
     .DragBox {
         position: fixed; 

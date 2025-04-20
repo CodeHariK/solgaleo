@@ -2,7 +2,7 @@ import { CssADV } from './gen';
 import { createSignal, type JSX, Show } from "solid-js";
 import { For } from "solid-js";
 
-/*CSS:
+/*CSS:-
 
 .SuperTable {
     display: flex; 

@@ -1,7 +1,7 @@
 import { onCleanup, onMount } from "solid-js";
 import { CssUI } from "../gen";
 
-/*CSS:
+/*CSS:-
 .card {
     width: 100%;
     max-width: 400px;

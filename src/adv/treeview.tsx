@@ -1,6 +1,6 @@
 import { For, Show, createSignal } from 'solid-js';
 
-/* CSS:
+/*CSS:-
 .tree-view {
     display: inline-flex;
     padding: 0.5rem;

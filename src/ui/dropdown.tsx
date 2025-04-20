@@ -5,7 +5,7 @@ import { IconChevronRight } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 import { RandomColor } from '../utils/color.ts';
 
-/*CSS:
+/*CSS:-
 
 .Dropdown {
     display: flex;

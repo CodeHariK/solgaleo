@@ -1,9 +1,9 @@
-import { BlogList, MiniMarkdown, SuperTable, Treeview } from "../src/adv/gen";
+import { BlogList, Carousel, Carousel2, MiniMarkdown, SuperTable, Treeview } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { List, TestHeader } from "./common";
 
-/*CSS:
+/*CSS:-
 
 .blog-title {
     font-size: 1.875rem;
@@ -46,6 +46,10 @@ export function AdvTest() {
             "five",
         ]} />}
     >
+
+        <Carousel />
+
+        <Carousel2 />
 
         <BlogList
             id="sol"

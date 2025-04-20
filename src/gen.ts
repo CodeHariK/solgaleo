@@ -133,8 +133,6 @@ export const CssSRC = {
     BorderPrimary: "border-primary",
     BorderSecondary: "border-secondary",
 
-    varSurface: "--surface",
-    varPrimaryContainer: "--primary-container",
     varBodyBg: "--body-bg",
     varBodyCol: "--body-col",
     varSpacing: "--spacing",
@@ -142,7 +140,9 @@ export const CssSRC = {
     varAHoverCol: "--a-hover-col",
     varAActiveCol: "--a-active-col",
     varSecondary: "--secondary",
+    varPrimaryContainer: "--primary-container",
     varSecondaryContainer: "--secondary-container",
+    varSurface: "--surface",
     varError: "--error",
     varErrorContainer: "--error-container",
     varDisabled: "--disabled",

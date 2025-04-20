@@ -3,7 +3,8 @@ import fs from "fs";
 import path from "path";
 import { Plugin } from "vite";
 
-const CSS_COMMENT_REGEX = /\/\*\s*CSS:\s*([\s\S]*?)\*\//gm;
+const CSS_COMMENT_REGEX = /\/\*\s*CSS:\-\s*([\s\S]*?)\*\//gm;
+const CSS_COMMENT_STRING_REGEX = /\/\*\s*CSS:\*\s*([\s\S]*?)\*\//gm;
 
 const EXPORT_REGEX = /export\s+(?:const|let|var|function|class|type|interface|enum)/;
 
@@ -335,6 +336,12 @@ export default function ExtractCssComments(dir: string): Plugin {
                     const input = match[1].trim();
                     hasStyles = true;
                     ConvertCSS(input);
+                }
+
+                while ((match = CSS_COMMENT_STRING_REGEX.exec(content)) !== null) {
+                    const input = match[1].trim();
+                    hasStyles = true;
+                    FINAL_CSS.push(input)
                 }
 
                 if (hasStyles || hasExports) {

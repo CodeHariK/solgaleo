@@ -2,7 +2,7 @@ import { For, createSignal, JSX, createEffect, onMount, onCleanup } from 'solid-
 import { CssNAV } from './gen';
 import { CssUI } from '../gen';
 
-/* CSS:
+/*CSS:-
 .TabsContainer {
     display: flex;
     flex-direction: column;

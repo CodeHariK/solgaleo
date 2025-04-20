@@ -1,6 +1,6 @@
 import { For, JSX } from "solid-js";
 
-/*CSS:
+/*CSS:-
 
 .BlogContainer {
     display: flex;

@@ -4,7 +4,7 @@ import { createSignal, type JSX } from "solid-js";
 import { IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 
-/*CSS:
+/*CSS:-
 
 fieldset {
     border: none;
@@ -242,7 +242,7 @@ export function Select(props: SelectProps) {
     );
 }
 
-/*CSS:
+/*CSS:-
 .ToggleSwitch {
     width: 60px;
     height: 30px;
@@ -302,7 +302,7 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
     );
 }
 
-/*CSS:
+/*CSS:-
 
 .Input {
     position: relative;
@@ -609,7 +609,7 @@ export function Input(props: InputProps) {
     );
 }
 
-/* CSS:
+/*CSS:-
 .UploadContainer {
     // display: inline-block;
     border: 2px dashed var(--primary);

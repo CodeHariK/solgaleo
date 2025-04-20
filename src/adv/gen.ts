@@ -4,6 +4,7 @@ export * from "./md.tsx";
 export * from "./treeview.tsx";
 export * from "./blog.tsx";
 export * from "./table.tsx";
+export * from "./carousel.tsx";
 
 
 export const CssADV = {

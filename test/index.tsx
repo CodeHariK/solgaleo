@@ -41,4 +41,3 @@ render(() => <SolProvider
     </Router>
 </SolProvider>,
     document.body!)
-

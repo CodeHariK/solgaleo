@@ -1,7 +1,7 @@
 import { type JSX } from 'solid-js';
 import { CssFANCY } from './gen';
 
-/*CSS:
+/*CSS:-
 .Rainbow {
     background: linear-gradient(to right,
             blueviolet,

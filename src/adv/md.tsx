@@ -1,7 +1,7 @@
 import { Component, JSX } from "solid-js";
 import { CssADV } from "./gen";
 
-/*CSS:
+/*CSS:-
 .Markdown {
     background: var(--surface);
 }

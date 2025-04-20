@@ -1,7 +1,7 @@
 import { JSX } from "solid-js";
 import { CssFANCY } from "./gen";
 
-/*CSS:
+/*CSS:-
 .FlickerText {
     --flicker-shadow: var : #36e2f8;
 

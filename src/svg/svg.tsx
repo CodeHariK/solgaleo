@@ -7,7 +7,7 @@ type IconProps = {
     fill?: boolean;
 };
 
-/* CSS:
+/*CSS:-
 @keyframes spin {
     to {
         transform: rotate(360deg);

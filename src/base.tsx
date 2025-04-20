@@ -1,4 +1,4 @@
-/*CSS:
+/*CSS:-
 
 --spacing: .9rem;
 
@@ -23,23 +23,23 @@
 --a-active-col: var : #cf90ff : #cf90ff; 
 
 
-*::-webkit-scrollbar {
-  width: 8px;
-}
+// ::-webkit-scrollbar {
+//   height: 8px;
+//   width: 8px;
+// }
+// ::-webkit-scrollbar-track {
+// }
+// ::-webkit-scrollbar-track:hover {
+//   background: var(--surface);
+// }
 
-*::-webkit-scrollbar-track {
-}
-*::-webkit-scrollbar-track:hover {
-  background: var(--surface);
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--primary-container);
-}
-*::-webkit-scrollbar-thumb:hover {
-  border-radius: 20px;
-  background: var(--primary-container);
-}
+// ::-webkit-scrollbar-thumb {
+//   background: var(--primary-container);
+// }
+// ::-webkit-scrollbar-thumb:hover {
+//   border-radius: 20px;
+//   background: var(--primary-container);
+// }
 
 * {
   scroll-behavior: smooth;
@@ -64,6 +64,8 @@ body {
   font-family: monospace, Inter, ui-sans-serif, system-ui;
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
+
+  place-content: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
