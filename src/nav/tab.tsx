@@ -102,6 +102,7 @@ type Tab = {
 
 type TreeItemProps = {
     node: Tab;
+    activePath?: string;
     direction?: 'horizontal' | 'vertical';
     onClick?: (node: Tab) => void;
 };
@@ -119,14 +120,18 @@ const TreeItem = (props: TreeItemProps) => {
     return (
         <div class={`${CssNAV.TreeItem} ${direction}`} onClick={handleClick}>
             <div
-                class={CssNAV.TreeItemHeader}
+                class={`${CssNAV.TreeItemHeader}`}
+                style={{
+                    background: props.activePath?.startsWith(props.node.id) ? "yellow" : ""
+                }}
             >
                 <Show when={hasChildren}>
                     <div class={`${CssNAV.TreeToggle} ${isExpanded ? 'open' : ''} ${direction}`}>
                         {isExpanded ? '+' : '-'}
                     </div>
                 </Show>
-                <span>{props.node.label}</span>
+                {/* <span>{props.node.label}</span> */}
+                <span>{props.node.id}</span>
             </div>
             <Show when={isExpanded && hasChildren}>
                 <div class={`${CssNAV.TreeChildren} ${direction}`}>
@@ -147,6 +152,7 @@ const TreeItem = (props: TreeItemProps) => {
 type TreeviewProps = {
     direction?: 'horizontal' | 'vertical';
     tabs: Tab[];
+    activePath?: string;
     onClick?: (node: Tab) => void;
 };
 
@@ -169,6 +175,7 @@ export function Treeview(props: TreeviewProps) {
                         node={node}
                         direction={direction}
                         onClick={handleToggle}
+                        activePath={props.activePath}
                     />
                 )}
             </For>
@@ -176,9 +183,44 @@ export function Treeview(props: TreeviewProps) {
     );
 }
 
+
+function LevelTabs(props: {
+    tabs: Tab[][],
+    activePath?: string,
+    handleTabClick: (tab: Tab) => void,
+    tabLevelsStyle?: JSX.CSSProperties,
+    tabLevelStyle?: JSX.CSSProperties,
+    buttonStyle?: JSX.CSSProperties,
+}
+) {
+    return <div class={CssNAV.TabsLevels} style={props.tabLevelsStyle}>
+        <For each={props.tabs}>
+            {(levelTabs) => (
+                <div class={CssNAV.TabLevel}
+                    style={{
+                        ...props.tabLevelStyle,
+                        // "padding-left": `${level() * 1}rem`
+                    }}>
+                    <For each={levelTabs}>
+                        {(tab) => (
+                            <button
+                                class={`${props.activePath?.startsWith(tab.id) ? CssUI.MaterialButton : CssUI.OutlinedButton}`}
+                                style={props.buttonStyle}
+                                onClick={() => props.handleTabClick(tab)}
+                            >
+                                {tab.label}
+                            </button>
+                        )}
+                    </For>
+                </div>
+            )}
+        </For>
+    </div>;
+}
+
 type TabsProps = {
     id: string;
-    tabs: Tab[];
+    tabsData: Tab[];
 
     onTabChange?: (tabId: string) => void;
 
@@ -197,15 +239,13 @@ type TabsProps = {
 
 export function NestedTabs(props: TabsProps) {
 
-    const [tabs, setTabs] = createSignal(convertTree(props.tabs));
-
     const getCurrentPath = () => {
         const states = ParseUrlParams();
-        return (states[props.id] || tabs()[0]?.id).split(".")
+        return (states[props.id] || tabsData()[0]?.id).split(".")
     };
 
-    const [visibleTabs, setVisibleTabs] = createSignal<Tab[][]>([tabs()]);
-    const [tabContent, setTabContent] = createSignal<JSX.Element | undefined>();
+    const [tabsData, setTabsData] = createSignal(convertTree(props.tabsData));
+    const [visibleTabs, setVisibleTabs] = createSignal<{ visibleTabs: Tab[][], activeTab: Tab }>();
 
     onMount(() => {
         updateContent()
@@ -219,32 +259,40 @@ export function NestedTabs(props: TabsProps) {
 
     function updateContent() {
 
-        let path = getCurrentPath()
+        const result: Tab[][] = [tabsData()];
+        let currentChildren = tabsData();
+        let currentPathId = '';
 
-        let content: JSX.Element | undefined;
-        let allTabs = tabs();
+        let currentTab: Tab | undefined
 
-        let leaf = ""
+        for (const originalId of getCurrentPath()) {
+            currentPathId = currentPathId ? `${currentPathId}.${originalId}` : originalId;
 
-        for (const pathId of path) {
-            const tab = allTabs.find(t => t.id === pathId);
-            if (tab?.content) {
-                content = tab.content
-                leaf = ""
-            } else if (tab?.children && tab?.children[0]?.content) {
-                content = tab?.children[0]?.content
-                leaf = tab?.children[0]?.id
+            currentTab = currentChildren.find(t => t.id.startsWith(currentPathId));
+
+            if (currentTab) {
+                result.push(currentTab.children || []); // Push children if they exist
+                currentChildren = currentTab.children || []; // Update current to the children or empty array
+            } else {
+                break; // If the tab is not found, exit the loop
             }
-            if (tab?.children) allTabs = tab.children;
         }
 
-        if (leaf) path.push(leaf)
-
-        setTabContent(content);
-        setVisibleTabs(findTabsByPath(tabs(), path));
+        setVisibleTabs()
+        setVisibleTabs({
+            visibleTabs: result,
+            activeTab: currentTab,
+        });
     }
 
-    const handleTabClick = (tab: Tab, level: number) => {
+    const handleTabClick = (tab: Tab) => {
+
+        if (!tab.content && tab.children) {
+            let newTab = findContentInTab(tab.children)
+            if (newTab) {
+                tab = newTab
+            }
+        }
         UpdateQueryParam(props.id, tab.id);
 
         updateContent();
@@ -254,43 +302,31 @@ export function NestedTabs(props: TabsProps) {
 
     return (
         <div class={CssNAV.TabsContainer} style={props.styles?.tabContainer}>
+
             <Show when={props.showTreeView}>
                 <Treeview
                     direction="vertical"
-                    tabs={tabs()}
+                    activePath={getCurrentPath().join(".")}
+                    tabs={tabsData()}
                     onClick={(node) => {
-                        console.log("Leaf clicked:", node);
+                        console.log("clicked:", node);
                     }} />
             </Show>
+
             <Show when={props.showPathTabs}>
-                <div class={CssNAV.TabsLevels} style={props.styles?.tabLevels}>
-                    <For each={visibleTabs()}>
-                        {(levelTabs, level) => (
-                            <div class={CssNAV.TabLevel}
-                                style={{
-                                    ...props.styles?.tabLevel,
-                                    // "padding-left": `${level() * 1}rem`
-                                }}>
-                                <For each={levelTabs}>
-                                    {(tab) => (
-                                        <button
-                                            class={`${getCurrentPath()[level()] === tab.id ? CssUI.MaterialButton : CssUI.OutlinedButton}`}
-                                            style={props.styles?.button}
-                                            onClick={() => handleTabClick(tab, level())}
-                                        >
-                                            {tab.label}
-                                        </button>
-                                    )}
-                                </For>
-                            </div>
-                        )}
-                    </For>
-                </div>
+                <LevelTabs
+                    tabs={visibleTabs()?.visibleTabs}
+                    activePath={getCurrentPath().join(".")}
+                    handleTabClick={handleTabClick}
+                    buttonStyle={props.styles.button}
+                    tabLevelStyle={props.styles.tabLevel}
+                    tabLevelsStyle={props.styles.tabLevels}
+                />
             </Show>
 
             <Show when={props.showContent}>
                 <div class={CssNAV.TabContent} style={props.styles?.content}>
-                    {tabContent()}
+                    {visibleTabs()?.activeTab.content}
                 </div>
             </Show>
         </div>
@@ -351,18 +387,22 @@ function toggleNodeOpenById(tree: Tab[], dottedId: string): Tab[] {
     });
 }
 
-export function findTabsByPath(tabs: Tab[], path: string[]): Tab[][] {
-    const result: Tab[][] = [tabs];
-    let current = tabs;
-    let currentTab: Tab | undefined;
+function findContentInTab(tabs: Tab[]): Tab | null {
+    const queue: Tab[] = [...tabs]; // Initialize the queue with the initial tabs
 
-    for (const pathId of path) {
-        currentTab = current.find(t => t.id === pathId);
+    while (queue.length > 0) {
+        const currentTab = queue.shift(); // Dequeue the first tab
+
+        // Check if the current tab has content
+        if (currentTab?.content) {
+            return currentTab; // Return the tab if it has content
+        }
+
+        // If no content, enqueue the children
         if (currentTab?.children) {
-            result.push(currentTab.children);
-            current = currentTab.children;
+            queue.push(...currentTab.children); // Add children to the queue
         }
     }
 
-    return result;
+    return null; // Return null if no content is found
 }

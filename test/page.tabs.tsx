@@ -19,7 +19,7 @@ export function TabTest() {
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
                     <NestedTabs
-                        tabs={sampleTabData()}
+                        tabsData={sampleTabData()}
                         id="two.light"
                         showContent
                         showPathTabs
@@ -87,7 +87,6 @@ export const sampleTabData = () => [
             {
                 id: 'Documents',
                 label: 'Documents',
-                content: <div>Documents</div>,
                 children: [
                     { id: 'Report', label: 'Report.pdf', content: <div>Report.pdf</div>, },
                     { id: 'Notes', label: 'Notes.txt', content: <div>Notes.txt</div>, }

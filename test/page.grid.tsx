@@ -8,7 +8,7 @@ export function GridTest() {
         <NestedTabs
             id='grid'
             showContent
-            tabs={[
+            tabsData={[
                 {
                     id: "fixed-all-3",
                     label: "fixed-all-3",
