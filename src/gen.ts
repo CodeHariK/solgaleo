@@ -133,20 +133,23 @@ export const CssSRC = {
     BorderPrimary: "border-primary",
     BorderSecondary: "border-secondary",
 
+    varPrimary: "--primary",
     varBodyBg: "--body-bg",
     varBodyCol: "--body-col",
     varSpacing: "--spacing",
-    varPrimary: "--primary",
     varAHoverCol: "--a-hover-col",
     varAActiveCol: "--a-active-col",
+    varDisabled: "--disabled",
     varSecondary: "--secondary",
     varPrimaryContainer: "--primary-container",
+    varPrimaryBorder: "--primary-border",
     varSecondaryContainer: "--secondary-container",
     varSurface: "--surface",
     varError: "--error",
     varErrorContainer: "--error-container",
-    varDisabled: "--disabled",
-    varDisabledContainer: "--disabled-container"
+    varDisabledContainer: "--disabled-container",
+    varModalBg: "--modal-bg",
+    varModalCol: "--modal-col"
 } as const;
 
 export type CssSRCType = keyof typeof CssSRC;

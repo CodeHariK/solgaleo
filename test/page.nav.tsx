@@ -1,4 +1,4 @@
-import { createMemo, createSignal, For, JSX, Show } from "solid-js";
+import { createMemo, createSignal, For, JSX, Show, Signal } from "solid-js";
 import { DragBox, GridLayout, IconHome } from "../src/gen";
 import * as N from "../src/nav/gen";
 import { List, TestHeader } from "./common";
@@ -6,18 +6,18 @@ import { List, TestHeader } from "./common";
 export function NavTest() {
 
     const [experiment, setExperiment] = createSignal(0);
-    const [isModalOpen, setIsModalOpen] = createSignal(true);
+    const modalVisibility = createSignal(true);
 
     return <GridLayout
         header={<TestHeader />}
         left={<List children={[
-            <p onclick={() => { setExperiment(0), setIsModalOpen(true); }}>Modal</p>,
-            <p onclick={() => { setExperiment(1), setIsModalOpen(true); }}>ModalScroll</p>,
-            <p onclick={() => { setExperiment(2), setIsModalOpen(true); }}>ModalAnchorLeft</p>,
-            <p onclick={() => { setExperiment(3), setIsModalOpen(true); }}>ModalAnchorRight</p>,
-            <p onclick={() => { setExperiment(4), setIsModalOpen(true); }}>ModalAnchorTop</p>,
-            <p onclick={() => { setExperiment(5), setIsModalOpen(true); }}>ModalAnchorBottom</p>,
-            <p onclick={() => { setExperiment(6), setIsModalOpen(true); }}>ModalAnchorDrag</p>,
+            <p onclick={() => { setExperiment(0), modalVisibility[1](true); }}>Modal</p>,
+            <p onclick={() => { setExperiment(1), modalVisibility[1](true); }}>ModalScroll</p>,
+            <p onclick={() => { setExperiment(2), modalVisibility[1](true); }}>ModalAnchorLeft</p>,
+            <p onclick={() => { setExperiment(3), modalVisibility[1](true); }}>ModalAnchorRight</p>,
+            <p onclick={() => { setExperiment(4), modalVisibility[1](true); }}>ModalAnchorTop</p>,
+            <p onclick={() => { setExperiment(5), modalVisibility[1](true); }}>ModalAnchorBottom</p>,
+            <p onclick={() => { setExperiment(6), modalVisibility[1](true); }}>ModalAnchorDrag</p>,
         ]} />}
     >
         <N.Breadcrumbs items={[
@@ -38,139 +38,130 @@ export function NavTest() {
         <PaginationTest />
 
         <Show when={experiment() == 0}>
-            {DummyModal(isModalOpen, setIsModalOpen, '5%', '35%', null)}
-            {DummyModal(isModalOpen, setIsModalOpen, -100, 10, 'bottomleft')}
-            {DummyModal(isModalOpen, setIsModalOpen, '5%', 0, 'topright')}
-            {DummyModal(isModalOpen, setIsModalOpen, 50, '-20%', 'bottomright')}
+            {DummyModal(modalVisibility, '5%', '35%', null)}
+            {DummyModal(modalVisibility, -100, 10, 'bottomleft')}
+            {DummyModal(modalVisibility, '5%', 0, 'topright')}
+            {DummyModal(modalVisibility, 50, '-20%', 'bottomright')}
         </Show>
 
         <Show when={experiment() == 1}>
             <div class="flex justify-center space-around items-center" style={{ padding: "200px 120px", margin: "20px", background: "#ff222222" }}>
-                {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
-                {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
-                {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')}
-                {DummyModalAnchor(false, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
+                {DummyModalAnchor(false, modalVisibility, "20px", "50%", 10, 'left')}
+                {DummyModalAnchor(false, modalVisibility, "20px", "50%", 10, 'top')}
+                {DummyModalAnchor(false, modalVisibility, "20px", "50%", 10, 'bottom')}
+                {DummyModalAnchor(false, modalVisibility, "20px", "50%", 10, 'right')}
             </div>
         </Show>
 
         <Show when={experiment() == 2}>
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'left')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'left')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'left')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'left')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'left')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'left')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "20px", "50%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "50%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "30%", "70%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "70%", "98%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "98%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "0%", 10, 'left')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "0%", 10, 'left')}
 
         </Show>
 
         <Show when={experiment() == 3}>
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'right')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'right')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'right')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'right')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'right')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'right')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "20px", "50%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "50%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "30%", "70%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "70%", "98%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "98%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "0%", 10, 'right')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "0%", 10, 'right')}
         </Show>
 
         <Show when={experiment() == 4}>
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'top')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "50%", 10, 'top')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'top')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'top')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'top')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'top')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "20px", "50%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "50%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "30%", "70%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "70%", "98%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "98%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "0%", 10, 'top')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "0%", 10, 'top')}
         </Show>
 
         <Show when={experiment() == 5}>
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "20px", "50%", 10, 'bottom')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "95%", "50%", 10, 'bottom')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "30%", "70%", 10, 'bottom')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "70%", "98%", 10, 'bottom')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "98%", 10, 'bottom')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "0%", "0%", 10, 'bottom')}
-            {DummyModalAnchor(true, isModalOpen, setIsModalOpen, "90%", "0%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "20px", "50%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "95%", "50%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "30%", "70%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "70%", "98%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "98%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "0%", "0%", 10, 'bottom')}
+            {DummyModalAnchor(true, modalVisibility, "90%", "0%", 10, 'bottom')}
         </Show>
 
         <Show when={experiment() == 6}>
             <N.Modal
-                isOpen={isModalOpen()}
-                onClose={() => setIsModalOpen(false)}
+                visibilitySignal={modalVisibility}
                 anchor={{
                     align: "right",
                     offset: 10,
-                    element: (ref, setRef) => {
+                    element: ([ref, setRef]) => {
                         return <DragBox anchorRef={ref} setAnchorRef={setRef} />;
                     }
                 }}
-            >
-                <TestDialog info="" />
-            </N.Modal>
+                child={() => <TestDialog info="" modalVisibilty={modalVisibility} />}
+            />
         </Show>
 
     </GridLayout>
 }
 
-function TestDialog({ info }: { info: JSX.Element }) {
+function TestDialog({ info, modalVisibilty }: { info: JSX.Element, modalVisibilty: Signal<boolean> }) {
     return <div class="flex flex-col">
         <p>how are you?</p>
         <div class="flex mt4 gap4">
             <button>ok</button>
-            <button>close</button>
+            <button onclick={() => { modalVisibilty[1](false) }}>close</button>
         </div>
         <p class="p2 border-basic">{info}</p>
     </div>
-
 }
 
-function DummyModal(isModalOpen, setIsModalOpen,
+function DummyModal(modalVisibility: Signal<boolean>,
     x: number | string, y: number | string,
     corner: 'topleft' | 'topright' | 'bottomleft' | 'bottomright') {
 
     return <N.Modal
         title="Hello"
-        isOpen={isModalOpen()}
-        onClose={() => {
-            setIsModalOpen(false)
-        }}
+        visibilitySignal={modalVisibility}
         fixed={{
             x: x,
             y: y,
             corner: corner
         }}
-    >
-        <TestDialog info={`${x} ${y} ${corner}`} />
-    </N.Modal >;
+        child={() => <TestDialog info={`${x} ${y} ${corner}`} modalVisibilty={modalVisibility} />}
+    />;
 }
 
-function DummyModalAnchor(fixed: boolean, isModalOpen, setIsModalOpen, left, top, offset, align) {
+function DummyModalAnchor(fixed: boolean, modalVisibilty: Signal<boolean>, left, top, offset, align) {
     return <N.Modal
         title="Hello"
-        isOpen={isModalOpen()}
-        onClose={() => setIsModalOpen(false)}
+        visibilitySignal={modalVisibilty}
         anchor={{
             align: align,
             offset: offset,
-            element: (_, setRef) => {
+            element: ([, setRef], [, setVisibility]) => {
                 return <button
                     ref={setRef}
-                    onclick={setIsModalOpen(true)}
+                    // onmousemove={() => { setVisibility(true) }}
+                    onclick={() => { setVisibility(true) }}
                     style={fixed ? {
-                        background: "red",
                         position: "fixed",
                         left: left,
                         top: top
-                    } : { background: "green", }}
+                    } : {}}
                 >
                     Click me
                 </button>;
             }
         }}
-    >
-        <TestDialog info={`${left} ${top} ${align}`} />
-    </N.Modal>;
+        child={() => <TestDialog info={`${left} ${top} ${align}`} modalVisibilty={modalVisibilty} />}
+    />
 }
 
 function PaginationTest() {

@@ -1,6 +1,5 @@
 
 import { For, Show, createSignal, type JSX } from 'solid-js';
-import { PositionBox } from "./position.tsx";
 import { IconChevronRight } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 import { RandomColor } from '../utils/color.ts';
@@ -10,13 +9,8 @@ import { RandomColor } from '../utils/color.ts';
 .Dropdown {
     display: flex;
     flex-direction: row;
-    gap: 0.2rem;
+    gap: .5rem;
     
-    background: var : #e0e0e0 : #575757;
-    border-radius: .3rem;
-    padding: .3rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-
     ul {
         list-style-type: none;
         padding-left: 0rem;
@@ -80,10 +74,16 @@ export type DropdownSubItem<T> = {
     children?: DropdownSubItem<T>[];
 };
 
-function DropdownList<T>({ items, level = 0, onSelect }: {
+function DropdownList<T>({
+    items,
+    level = 0,
+    onSelect,
+    dropdownItemStyle
+}: {
     items: DropdownSubItem<T>[];  // Changed from DropdownItem to DropdownSubItem
     level?: number;
     onSelect: (data: T) => void;
+    dropdownItemStyle?: JSX.CSSProperties;
 }) {
     return (
         <ul class={level > 0 ? CssUI.DropdownNested : ''}>
@@ -96,7 +96,7 @@ function DropdownList<T>({ items, level = 0, onSelect }: {
                         <li>
                             <div
                                 class={CssUI.DropdownItem}
-                                style={{ background: RandomColor() }}
+                                style={dropdownItemStyle}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     if (hasChildren) {
@@ -118,6 +118,7 @@ function DropdownList<T>({ items, level = 0, onSelect }: {
                                     items={item.children}
                                     level={level + 1}
                                     onSelect={onSelect}
+                                    dropdownItemStyle={dropdownItemStyle}
                                 />
                             </Show>
                         </li>
@@ -130,50 +131,41 @@ function DropdownList<T>({ items, level = 0, onSelect }: {
 
 export function Dropdown<T>({
     id,
-    button,
     items,
-    visible = false,
-    fn
+    handleItemClick,
+    dropdownStyle,
+    dropdownItemStyle,
 }: {
     id?: string;
-    button: JSX.Element;
-    visible?: boolean;
-    fn?: (data: T) => void;
+    handleItemClick?: (data: T) => void;
     items: DropdownItem<T>[];
+    dropdownStyle?: JSX.CSSProperties,
+    dropdownItemStyle?: JSX.CSSProperties;
 }) {
-
-    const handleItemClick = (data: T) => {
-        fn?.(data);
-    };
-
     return (
-        <PositionBox
-            align={{ x: 0, y: 1 }}
-            visible={visible}
-            name={button}
+        <div
+            id={id}
+            class={CssUI.Dropdown}
+            style={dropdownStyle}
+            role="menu"
+            aria-orientation="vertical"
         >
-            <div
-                id={id}
-                class={CssUI.Dropdown}
-                role="menu"
-                aria-orientation="vertical"
-            >
-                <For each={items}>
-                    {(item) => (
-                        <div>
-                            <Show when={item.subitems?.length > 0}>
-                                <Show when={item.header}>
-                                    <h6 class={CssUI.DropdownHeader}>{item.header}</h6>
-                                </Show>
-                                <DropdownList
-                                    items={item.subitems}
-                                    onSelect={handleItemClick}
-                                />
+            <For each={items}>
+                {(item) => (
+                    <div>
+                        <Show when={item.subitems?.length > 0}>
+                            <Show when={item.header}>
+                                <h6 class={CssUI.DropdownHeader}>{item.header}</h6>
                             </Show>
-                        </div>
-                    )}
-                </For>
-            </div>
-        </PositionBox>
+                            <DropdownList
+                                items={item.subitems}
+                                onSelect={handleItemClick}
+                                dropdownItemStyle={dropdownItemStyle}
+                            />
+                        </Show>
+                    </div>
+                )}
+            </For>
+        </div>
     );
 }

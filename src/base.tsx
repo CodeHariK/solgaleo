@@ -7,6 +7,7 @@
 
 --primary : var : #6750A4 : #d8c8fa;
 --primary-container : var : #EADDFF : #4F378B;
+--primary-border : oklch(from var(--primary) calc(l + 0.1) c h);
 
 --secondary : var : #ff69b4 : #ff69b4;
 --secondary-container : var : #ffe3f1 : #454245;
@@ -22,6 +23,8 @@
 --a-hover-col: var : #ffac90 : #ffac90;
 --a-active-col: var : #cf90ff : #cf90ff; 
 
+--modal-bg: var : oklch(from var(--primary) calc(l + .1) c h) : #383838 ; 
+--modal-col: var : #ffffff : #eeeeee ; 
 
 // ::-webkit-scrollbar {
 //   height: 8px;
@@ -168,6 +171,22 @@ a {
   :active, .active {
     color: var(--a-active-col);
   }
+}
+
+label {
+  color: color-mix(in srgb, currentColor 75%, transparent);
+  background: transparent;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  user-select: none;
+  padding: 0.25rem;
+}
+
+label[aria-disabled="true"] {
+  color: var(--disabled);
+  cursor: not-allowed;
+  opacity: 0.75;
 }
 
 pre {

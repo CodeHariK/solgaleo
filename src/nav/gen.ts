@@ -32,7 +32,10 @@ export const CssNAV = {
     varPrimaryContainer: "--primary-container",
     varPrimary: "--primary",
     varSecondary: "--secondary",
-    varSurface: "--surface"
+    varModalBg: "--modal-bg",
+    varModalCol: "--modal-col",
+    varSurface: "--surface",
+    varModalFullScreen: "--ModalFullScreen"
 } as const;
 
 export type CssNAVType = keyof typeof CssNAV;

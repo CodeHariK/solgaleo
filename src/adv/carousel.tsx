@@ -77,14 +77,19 @@
     }
 
     &::scroll-marker-group {
-        grid-area: markers;
+        // grid-area: markers;
 
-        display: grid;
-        place-content: safe center;
-        grid: 30px / auto-flow 30px;
-        gap: 15px;
+        // display: grid;
+        // place-content: safe center;
+        // grid: 30px / auto-flow 30px;
+        // gap: 45px;
         padding: 15px;
-        scroll-padding: 15px;
+        // scroll-padding: 15px;
+
+        display: flex;
+        gap: 0.4em;
+        align-items: center;
+        place-content: center;
 
         overflow: auto;
         overscroll-behavior-x: contain;
@@ -93,8 +98,17 @@
     }
 
     & > li {
+
+        counter-increment: markers;
+
         &::scroll-marker {
             content: " "; 
+            // content: counter(markers);
+
+            // width: fit-content;
+            // height: 1em;
+            padding: 15px;
+            text-decoration: none;
 
             border: 1px solid var(--primary-container);
             border-radius: 20%;
@@ -109,6 +123,13 @@
         &::scroll-marker:target-current {
             background: var(--primary);
         }
+        // &:first-child::scroll-marker {
+        //     content: "First";
+        // }
+        // &:last-child::scroll-marker {
+        //     content: "Last";
+        // }
+
     }
 
     & > li {

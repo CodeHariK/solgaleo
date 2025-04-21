@@ -373,10 +373,13 @@ export default function ExtractCssComments(dir: string): Plugin {
             const buildVars = (theme: string, vars: Record<string, string>) => `.${theme} {\n` +
                 Object.entries(vars)
                     .filter(([k, _]) => folderPath == "src" ? true : !(
+                        k.startsWith("--body") ||
                         k.startsWith("--primary") ||
                         k.startsWith("--secondary") ||
                         k.startsWith("--surface") ||
                         k.startsWith("--disabled") ||
+                        k.startsWith("--modal-") ||
+                        k.startsWith("--a-") ||
                         k.startsWith("--error")
                     ))
                     .map(([k, v]) => (v != "" && v != ";")

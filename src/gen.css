@@ -5,37 +5,43 @@ anim.tsx
 */
 
 .light {
+    --primary: #6750A4;
     --body-bg: white;
     --body-col: black;
     --spacing: .9rem;
-    --primary: #6750A4;
     --a-hover-col: #ffac90;
     --a-active-col: #cf90ff;
+    --disabled: #bdbdbd;
     --secondary: #ff69b4;
     --primary-container: #EADDFF;
+    --primary-border: oklch(from var(--primary) calc(l + 0.1) c h);
     --secondary-container: #ffe3f1;
     --surface: #6750A415;
     --error: #B3261E;
     --error-container: #F9DEDC;
-    --disabled: #bdbdbd;
     --disabled-container: #e7e7e7;
+    --modal-bg: oklch(from var(--primary) calc(l + .1) c h);
+    --modal-col: #ffffff;
 }
 
 .night {
+    --primary: #d8c8fa;
     --body-bg: black;
     --body-col: white;
     --spacing: .9rem;
-    --primary: #d8c8fa;
     --a-hover-col: #ffac90;
     --a-active-col: #cf90ff;
+    --disabled: #bcbcbc ;
     --secondary: #ff69b4;
     --primary-container: #4F378B;
+    --primary-border: oklch(from var(--primary) calc(l + 0.1) c h);
     --secondary-container: #454245;
     --surface: #64626b87;
     --error: #ff7262;
     --error-container: #8C1D18;
-    --disabled: #bcbcbc ;
     --disabled-container: #7d7d7d ;
+    --modal-bg: #383838 ;
+    --modal-col: #eeeeee ;
 }
 
 @keyframes fadeSlideIn {
@@ -174,6 +180,22 @@ a:hover {
 a:active,
 a.active {
     color: var(--a-active-col);
+}
+
+label {
+    color: color-mix(in srgb, currentColor 75%, transparent);
+    background: transparent;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    user-select: none;
+    padding: 0.25rem;
+}
+
+label[aria-disabled="true"] {
+    color: var(--disabled);
+    cursor: not-allowed;
+    opacity: 0.75;
 }
 
 pre {

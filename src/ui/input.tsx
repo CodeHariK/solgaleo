@@ -59,29 +59,6 @@ select {
     color: var(--primary);
 }
 
-label {
-    color: var(--primary);
-    background: transparent;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    user-select: none;
-    padding: 0.25rem;
-}
-
-label[aria-disabled="true"] {
-    color: var(--disabled);
-    cursor: not-allowed;
-    opacity: 0.75;
-}
-
-label p {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 400;
-    color: color-mix(in srgb, currentColor 75%, transparent);
-}
-
 */
 
 type CheckboxOption = {

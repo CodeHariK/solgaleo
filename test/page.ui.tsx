@@ -1,9 +1,10 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, PositionBox, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
-import { IconCart, IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
+import { CheckboxGroup, Dropdown, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
+import { IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 import { createSignal } from 'solid-js';
+import { Modal } from '../src/nav/gen.ts';
 
 export function UiTest() {
 
@@ -53,97 +54,100 @@ export function UiTest() {
             { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
         ]} />
 
-        <PositionBox
-            name={<>{<IconCart />}{<span style={{ "white-space": "nowrap" }}>My Cart</span>}{<IconDown />}</>}>
+        <Modal
+            // fullScreen={true}
+            anchor={{
+                element: ([, setRef], [isVisible, setVisibiliy]) => {
+                    return <button ref={setRef} class={CssUI.OutlinedButton}
+                        onmousedown={() => { setVisibiliy(!isVisible()) }}
+                    >
+                        <IconFilter />
+                        <span>Filter</span>
+                        <IconDown />
+                    </button>
+                }
+            }}
+            child={() => {
+                return (
+                    <Dropdown<string>
+                        handleItemClick={(data) => { console.log(data) }}
+                        items={[
+                            {
+                                header: "Settings",
+                                subitems: [
+                                    {
+                                        element: <span>Profile</span>,
+                                        data: "profile",
+                                        children: [
+                                            {
+                                                element: <span>Edit Info</span>,
+                                                data: "profile.edit",
+                                                children: [
+                                                    {
+                                                        element: <span>Profile</span>,
+                                                        data: "profile",
+                                                        children: [
+                                                            {
+                                                                element: <span>Edit Info</span>,
+                                                                data: "profile.edit"
+                                                            },
+                                                            {
+                                                                element: <span>Privacy</span>,
+                                                                data: "profile.privacy"
+                                                            }
+                                                        ]
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                element: <span>Privacy</span>,
+                                                data: "profile.privacy"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        element: <span>Account</span>,
+                                        data: "account",
+                                        children: [
+                                            {
+                                                element: <span>Security</span>,
+                                                data: "account.security"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                header: "Names",
+                                subitems: [
+                                    {
+                                        element: "The most popular",
+                                        data: "Hello",
+                                    },
+                                    { element: <p> Increasing price </p>, },
+                                ]
+                            },
+                            {
+                                header: "Names",
+                                subitems: [
+                                    { element: <p> Newest </p>, },
+                                    { element: <p> Decreasing price </p>, },
+                                ]
+                            },
+                            {
+                                subitems: [
+                                    { element: <p> No. reviews </p>, },
+                                    { element: <p> Discount % </p>, },
+                                ]
+                            },
+                            { subitems: [] }
+                        ]} />
 
-            <div class="min-w-[300px] z-10 mx-auto space-y-4 overflow-hidden rounded-lg p-4 antialiased shadow-lg">
+                )
+            }}
+        />
 
-                <div>Cart is empty</div>
 
-            </div>
-
-        </PositionBox>
-
-        <Dropdown<string>
-            fn={(data) => { console.log(data) }}
-            button={
-                <button class={CssUI.OutlinedButton} >
-                    <IconFilter />
-                    <span>Filter</span>
-                    <IconDown />
-                </button>
-            }
-            items={[
-                {
-                    header: "Settings",
-                    subitems: [
-                        {
-                            element: <span>Profile</span>,
-                            data: "profile",
-                            children: [
-                                {
-                                    element: <span>Edit Info</span>,
-                                    data: "profile.edit",
-                                    children: [
-                                        {
-                                            element: <span>Profile</span>,
-                                            data: "profile",
-                                            children: [
-                                                {
-                                                    element: <span>Edit Info</span>,
-                                                    data: "profile.edit"
-                                                },
-                                                {
-                                                    element: <span>Privacy</span>,
-                                                    data: "profile.privacy"
-                                                }
-                                            ]
-                                        },
-                                    ]
-                                },
-                                {
-                                    element: <span>Privacy</span>,
-                                    data: "profile.privacy"
-                                }
-                            ]
-                        },
-                        {
-                            element: <span>Account</span>,
-                            data: "account",
-                            children: [
-                                {
-                                    element: <span>Security</span>,
-                                    data: "account.security"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    header: "Names",
-                    subitems: [
-                        {
-                            element: "The most popular",
-                            data: "Hello",
-                        },
-                        { element: <p> Increasing price </p>, },
-                    ]
-                },
-                {
-                    header: "Names",
-                    subitems: [
-                        { element: <p> Newest </p>, },
-                        { element: <p> Decreasing price </p>, },
-                    ]
-                },
-                {
-                    subitems: [
-                        { element: <p> No. reviews </p>, },
-                        { element: <p> Discount % </p>, },
-                    ]
-                },
-                { subitems: [] }
-            ]} />
 
         <SpaceForm
             id="Form"

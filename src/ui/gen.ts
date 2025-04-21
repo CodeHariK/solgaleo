@@ -13,7 +13,6 @@ export * from "./spaceform.tsx";
 
 
 export const CssUI = {
-    PositionBox: "PositionBox",
     DragBox: "DragBox",
     GridLayout: "GridLayout",
     GridLayoutFixed: "GridLayoutFixed",
@@ -60,10 +59,7 @@ export const CssUI = {
     InvalidMessage: "InvalidMessage",
     HiddenInput: "HiddenInput",
 
-    varPositionBoxButtonColHover: "--PositionBox--button-col-hover",
-    varPositionBoxButtonBackgroundColorHover: "--PositionBox--button-background-color-hover",
     varSurface: "--surface",
-    varDropdownBg: "--Dropdown-bg",
     varDropdownHeaderCol: "--DropdownHeader-col",
     varDropdownHeaderBg: "--DropdownHeader-bg",
     varDropdownHeaderBorder: "--DropdownHeader-border",
@@ -85,6 +81,7 @@ export const CssUI = {
     varMatBorder: "--mat-border",
     varMatHoverColor: "--mat-hover-color",
     varMatHoverBg: "--mat-hover-bg",
+    varPrimaryBorder: "--primary-border",
     varOutColor: "--out-color",
     varOutBg: "--out-bg",
     varOutBorder: "--out-border",

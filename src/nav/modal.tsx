@@ -1,7 +1,7 @@
 // import { createSignal, Setter } from "solid-js";
 // import { IconCross } from "../svg/svg";
 
-import { Accessor, Setter, Show, createEffect, createSignal, onCleanup } from "solid-js";
+import { Signal, createEffect, createSignal, onCleanup } from "solid-js";
 import { Portal } from "solid-js/web";
 import { CssNAV } from "./gen";
 
@@ -25,25 +25,30 @@ import { CssUI } from "../gen";
 }
 
 .ModalContent {
-    background: var(--surface);
+    background: var(--modal-bg);
+    color: var(--modal-col);
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px var(--surface);
-    max-width: 90%;
-    max-height: 90vh;
     overflow-y: auto;
-    pointer-events: auto;
-
+    pointer-events: none;
+    
     position: fixed;
+    inset: var(--ModalFullScreen);
+    max-width: 100%;
+    max-height: 100%;
+
     transform-origin: center;
 
     transform: scale(1) translateY(50px);
     opacity: 0;
 }
 .ModalContentShow {
+    pointer-events: auto;
+    
     transform: scale(1) translateY(0px);
     opacity: 1;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 */
@@ -53,12 +58,12 @@ type AnchorAlign = 'top' | 'bottom' | 'left' | 'right';
 type CornerPosition = 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
 
 type ModalProps = {
-    isOpen: boolean;
-    onClose: () => void;
-    children: JSX.Element;
+    visibilitySignal?: Signal<boolean>;
+    child: (visible: Signal<boolean>) => JSX.Element;
     title?: string;
     parentScrollContainerQuery?: string,
     overlayMargin?: number;
+    fullScreen?: boolean;
 
     fixed?: {
         x: number | string;
@@ -66,14 +71,14 @@ type ModalProps = {
         corner?: CornerPosition;
     },
     anchor?: {
-        element: (anchorRef: Accessor<HTMLButtonElement>, setAnchorRef: Setter<HTMLButtonElement>) => JSX.Element,
+        element: (anchorRef: Signal<HTMLButtonElement>, visibilitySignal: Signal<boolean>) => JSX.Element,
         align?: AnchorAlign;
         offset?: number;
     };
 };
 
 export function Modal(props: ModalProps) {
-    const [isVisible, setIsVisible] = createSignal(false);
+    const [isVisible, setIsVisible] = props.visibilitySignal ?? createSignal(false);
 
     let modalRef!: HTMLDivElement;
 
@@ -83,7 +88,7 @@ export function Modal(props: ModalProps) {
 
     // Handle escape key
     const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === "Escape") props.onClose();
+        if (e.key === "Escape") setIsVisible(false);
     };
 
     const handleViewportChange = () => {
@@ -105,7 +110,7 @@ export function Modal(props: ModalProps) {
             }
         }
 
-        if (props.isOpen) {
+        if (isVisible()) {
             handleViewportChange()
             document.addEventListener("keydown", handleEscape);
             window.addEventListener("resize", handleViewportChange);
@@ -125,7 +130,7 @@ export function Modal(props: ModalProps) {
         }
 
         const anchor = anchorRef();
-        if (!anchor || !props.isOpen) return;
+        if (!anchor || !isVisible()) return;
 
         // Watch for position/attribute changes
         const mutationObserver = new MutationObserver((mutations) => {
@@ -153,7 +158,7 @@ export function Modal(props: ModalProps) {
 
     function windowClickCloser(e) {
         if (isVisible() && !(anchorRef()?.contains(e.target) || modalRef.contains(e.target))) {
-            props.onClose()
+            setIsVisible(false)
         }
     }
 
@@ -241,7 +246,7 @@ export function Modal(props: ModalProps) {
         const modalRect = modalRef.getBoundingClientRect();
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const margin = props.overlayMargin ?? 10;
+        const margin = props.overlayMargin ?? 0;
 
         let adjustedStyles: JSX.CSSProperties = { ...styles };
 
@@ -329,24 +334,21 @@ export function Modal(props: ModalProps) {
 
     return (
         <>
-            {props?.anchor && props.anchor.element(anchorRef, setAnchorRef)}
+            {props?.anchor && props.anchor.element([anchorRef, setAnchorRef], [isVisible, setIsVisible])}
 
-            <Show when={props.isOpen}>
-                <Portal>
-                    <div class={`${CssNAV.ModalOverlay}`}>
-                        <div ref={modalRef}
-                            class={`${CssNAV.ModalContent} ${isVisible() ? CssNAV.ModalContentShow : ''}`}
-                            style={position()}
-                        >
-                            <div class="flex flex-row space-between items-center mb2">
-                                {props.title && <h5>{props.title}</h5>}
-                                <button onClick={props.onClose} aria-label="Close modal">*</button>
-                            </div>
-                            {props.children}
-                        </div>
+            <Portal>
+                <div class={`${CssNAV.ModalOverlay}`}>
+                    <div ref={modalRef}
+                        class={`${CssNAV.ModalContent} ${isVisible() ? CssNAV.ModalContentShow : ''}`}
+                        style={{
+                            ...position(),
+                            "--ModalFullScreen": props.fullScreen ? "0px" : ""
+                        }}
+                    >
+                        {props.child([isVisible, setIsVisible])}
                     </div>
-                </Portal>
-            </Show>
+                </div>
+            </Portal>
         </>
     );
 }

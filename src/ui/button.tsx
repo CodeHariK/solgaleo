@@ -64,7 +64,7 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 .OutlinedButton, .OutlinedRoundButton {
     --out-bg: transparent;
     --out-color: var(--primary);
-    --out-border: 1px solid var(--primary);
+    --out-border: 1px solid var(--primary-border);
     --out-hover-bg: var(--primary-container);
     --out-hover-color: var(--primary);
 
