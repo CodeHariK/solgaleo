@@ -6,7 +6,7 @@ import { List, TestHeader } from "./common";
 export function NavTest() {
 
     const [experiment, setExperiment] = createSignal(0);
-    const modalVisibility = createSignal(true);
+    const modalVisibility = createSignal(false);
 
     return <GridLayout
         header={<TestHeader />}

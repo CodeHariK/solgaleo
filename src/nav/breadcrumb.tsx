@@ -3,8 +3,6 @@ import { CssNAV } from "./gen";
 
 /*CSS:-
 .Breadcrumb {
-    box-shadow: 0 8px 14px -2px rgba(0, 0, 0, 0.1),
-        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     padding: 0.75rem 1.25rem;
 }
 

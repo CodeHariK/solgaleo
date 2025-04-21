@@ -2,7 +2,6 @@ import '../gen.css'
 import "./gen.css"
 export * from "./md.tsx";
 export * from "./slides.tsx";
-export * from "./treeview.tsx";
 export * from "./blog.tsx";
 export * from "./table.tsx";
 export * from "./carousel.tsx";
@@ -11,11 +10,6 @@ export * from "./carousel.tsx";
 export const CssADV = {
     Markdown: "Markdown",
     MarkdownCode: "MarkdownCode",
-    TreeView: "tree-view",
-    TreeItem: "tree-item",
-    TreeItemContent: "tree-item-content",
-    TreeToggle: "tree-toggle",
-    TreeChildren: "tree-children",
     BlogContainer: "BlogContainer",
     BlogSection: "BlogSection",
     BlogAside: "BlogAside",

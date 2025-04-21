@@ -9,14 +9,9 @@ src/input.tsx
 */
 
 .light {
-    --DropdownHeader-col: #9c40ca;
-    --DropdownHeader-bg: #cfcfcf;
-    --DropdownHeader-border: none;
-    --DropdownItem-col: #343434;
-    --DropdownItem-bg: #ebebeb;
-    --DropdownItem-border: none;
-    --DropdownItem-col-hover: #d4d4d4;
-    --DropdownItem-bg-hover: #6b6b6b;
+    --DropdownHeader-border-bottom: 1px solid var(--body-bg);
+    --DropdownItem-col-hover: none;
+    --DropdownItem-bg-hover: var(--secondary);
     --icon-bg: var(--surface);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
@@ -42,14 +37,9 @@ src/input.tsx
 }
 
 .night {
-    --DropdownHeader-col: #8a87e3;
-    --DropdownHeader-bg: #454545;
-    --DropdownHeader-border: none;
-    --DropdownItem-col: #f8f8f8;
-    --DropdownItem-bg: #4f4f4f;
-    --DropdownItem-border: none;
-    --DropdownItem-col-hover: #4b4b4b;
-    --DropdownItem-bg-hover: #d7d7d7;
+    --DropdownHeader-border-bottom: 1px solid var(--body-bg);
+    --DropdownItem-col-hover: none;
+    --DropdownItem-bg-hover: var(--secondary);
     --icon-bg: var(--surface);
     --icon-border-radius: 100rem;
     --icon-hover-bg: var(--primary-container);
@@ -275,17 +265,12 @@ src/input.tsx
 }
 
 .DropdownHeader {
-    color: var(--DropdownHeader-col);
-    background: var(--DropdownHeader-bg);
-    border: var(--DropdownHeader-border);
+    border-bottom: var(--DropdownHeader-border-bottom);
     padding: 0.3rem;
 }
 
 .DropdownItem {
-    color: var(--DropdownItem-col);
-    background: var(--DropdownItem-bg);
-    border: var(--DropdownItem-border);
-    display: flex;
+    display: inline-flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;

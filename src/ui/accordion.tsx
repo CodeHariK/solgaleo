@@ -24,7 +24,7 @@ import { CssUI } from "./gen";
 
 */
 
-function AccordionItem(props: { title: string, children: JSX.Element }) {
+function AccordionItem(props: { title: JSX.Element, children: JSX.Element }) {
     const [isOpen, setIsOpen] = createSignal(false);
 
     const toggle = () => {
@@ -50,7 +50,7 @@ function AccordionItem(props: { title: string, children: JSX.Element }) {
     );
 }
 
-export function Accordion(props: { items: { title: string, content: JSX.Element }[] }) {
+export function Accordion(props: { items: { title: JSX.Element, content: JSX.Element }[] }) {
     return (
         <>
             {props.items.map((item) => (

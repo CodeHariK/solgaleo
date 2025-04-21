@@ -1,12 +1,13 @@
-import { GridLayout, Tabs } from '../src/gen';
+import { GridLayout, NestedTabs } from '../src/gen';
 import { List, TestHeader } from './common';
 
 export function GridTest() {
     return <GridLayout
         header={<TestHeader />}
     >
-        <Tabs
+        <NestedTabs
             id='grid'
+            showContent
             tabs={[
                 {
                     id: "fixed-all-3",

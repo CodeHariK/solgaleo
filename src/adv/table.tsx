@@ -1,6 +1,7 @@
 import { CssADV } from './gen';
 import { createSignal, type JSX, Show } from "solid-js";
 import { For } from "solid-js";
+import { debounce } from '../utils/debounce';
 
 /*CSS:-
 
@@ -105,6 +106,10 @@ export function Table({ tableStyle, tableArray }: {
 }) {
     const [expandedRow, setExpandedRow] = createSignal<number | null>(null);
 
+    const debouncedSetExpandedRow = debounce((rowIndex: number | null) => {
+        setExpandedRow(rowIndex);
+    }, 100);
+
     return (
         <div style={tableStyle}>
             <For each={tableArray}>
@@ -141,8 +146,8 @@ export function Table({ tableStyle, tableArray }: {
                                                 style={{
                                                     display: "contents"
                                                 }}
-                                                onMouseEnter={() => setExpandedRow(rowIndex())}
-                                                onMouseLeave={() => setExpandedRow(null)}
+                                                onMouseEnter={() => debouncedSetExpandedRow(rowIndex())}
+                                                onMouseLeave={() => debouncedSetExpandedRow(null)}
                                             >
                                                 <Show when={item.info}>
                                                     <div

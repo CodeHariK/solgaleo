@@ -1,4 +1,4 @@
-import { Tabs } from "../src/gen";
+import { NestedTabs, Treeview } from "../src/gen";
 import { GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
@@ -18,29 +18,32 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <Tabs
-                        tabs={tabs()}
-                        defaultTab="home"
+                    <NestedTabs
+                        tabs={sampleTabData()}
                         id="two.light"
+                        showContent
+                        showPathTabs
+                        showTreeView
                         styles={{
-                            container: { "flex-direction": "row" },
+                            tabContainer: { "flex-direction": "row" },
                             content: { margin: "1rem", padding: "1rem", border: "1px solid red", "border-radius": "20px" }
                         }}
                     />
                 </div>
 
-                <div style={{ border: "1px solid red", width: "100%" }}>
-                    <Tabs
-                        tabs={tabs()}
+                {/* <div style={{ border: "1px solid red", width: "100%" }}>
+                    <NestedTabs
+                        tabs={sampleTabData()}
                         defaultTab="home"
                         id="two.night"
+                        showContent
+                        showPathTabs
                         styles={{
-                            level: { "flex-direction": "column" },
-                            container: { "flex-direction": "row" },
+                            tabContainer: { "flex-direction": "row" },
                             content: { margin: "1rem", padding: "1rem", border: "1px solid red", "border-radius": "20px" }
                         }}
                     />
-                </div>
+                </div> */}
 
             </div>
 
@@ -51,26 +54,22 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <Tabs
-                        tabs={tabs()}
-                        defaultTab="home"
-                        id="one.light"
-                        styles={{
-                            level: { "flex-direction": "column" },
-                            content: { margin: "1rem", padding: "1rem", border: "1px solid red", "border-radius": "20px" }
-                        }}
-                    />
+                    <Treeview
+                        direction="vertical"
+                        tabs={sampleTabData()}
+                        onClick={(node) => {
+                            console.log("Leaf clicked:", node);
+                        }} />
                 </div>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <Tabs
-                        tabs={tabs()}
-                        defaultTab="home"
-                        id="one.night"
-                        styles={{
-                            content: { margin: "1rem", padding: "1rem", border: "1px solid red", "border-radius": "20px" }
-                        }}
-                    />
+                    <Treeview
+                        direction="horizontal"
+                        tabs={sampleTabData()}
+                        onClick={(node) => {
+                            console.log("Leaf clicked:", node);
+                        }} />
+
                 </div>
             </div>
 
@@ -79,37 +78,42 @@ export function TabTest() {
     </GridLayout>
 }
 
-const tabs = () => [
+export const sampleTabData = () => [
     {
-        id: 'home',
-        label: 'Home',
-        content: <div>Home Content</div>
-    },
-    {
-        id: 'settings',
-        label: 'Settings',
+        id: 'Root',
+        label: 'Root',
+        content: <div>Root</div>,
         children: [
             {
-                id: 'profile',
-                label: 'Profile',
-                content: <div>Profile Settings</div>
+                id: 'Documents',
+                label: 'Documents',
+                content: <div>Documents</div>,
+                children: [
+                    { id: 'Report', label: 'Report.pdf', content: <div>Report.pdf</div>, },
+                    { id: 'Notes', label: 'Notes.txt', content: <div>Notes.txt</div>, }
+                ]
             },
             {
-                id: 'account',
-                label: 'Account',
+                id: 'Pictures',
+                label: 'Pictures',
+                content: <div>Pictures</div>,
                 children: [
-                    {
-                        id: 'security',
-                        label: 'Security',
-                        content: <div>Security Settings</div>
-                    },
-                    {
-                        id: 'notifications',
-                        label: 'Notifications',
-                        content: <div>Notification Preferences</div>
-                    }
+                    { id: 'Vacation', label: 'Vacation.jpg', content: <div>Vacation.jpg</div>, open: true },
+                    { id: 'Family', label: 'Family.png', content: <div>Family.png</div>, }
                 ]
             }
+        ]
+    },
+    {
+        id: 'Pictures',
+        label: 'Pictures',
+        content: <div>Pictures</div>,
+        children: [
+            {
+                id: 'Vacation',
+                label: 'Vacation',
+                content: <div>Vacation pictures</div>,
+            },
         ]
     }
 ];

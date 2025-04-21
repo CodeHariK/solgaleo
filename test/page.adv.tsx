@@ -1,4 +1,4 @@
-import { BlogList, Carousel, MiniMarkdown, Slides, SuperTable, Treeview } from "../src/adv/gen";
+import { BlogList, Carousel, MiniMarkdown, Slides, SuperTable } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -38,13 +38,6 @@ export function AdvTest() {
         mode="flow"
         header={<TestHeader />}
         footer={<TestHeader />}
-    // left={<List children={[
-    //     "one",
-    //     "two",
-    //     "three",
-    //     "four",
-    //     "five",
-    // ]} />}
     >
 
         <Carousel />
@@ -72,59 +65,11 @@ export function AdvTest() {
 
         <SuperTableTest />
 
-        <TreeViewTest />
-
         <MarkdownTest />
 
         <Slides />
 
     </GridLayout>
-}
-
-let sampleTreeData = [
-    {
-        id: '1',
-        label: 'Root',
-        children: [
-            {
-                id: '2',
-                label: 'Documents',
-                children: [
-                    { id: '3', label: 'Report.pdf' },
-                    { id: '4', label: 'Meeting Notes.txt' }
-                ]
-            },
-            {
-                id: '5',
-                label: 'Pictures',
-                children: [
-                    { id: '6', label: 'Vacation.jpg' },
-                    { id: '7', label: 'Family.png' }
-                ]
-            }
-        ]
-    }
-]
-
-function TreeViewTest() {
-    return <>
-        <Treeview
-            direction="vertical"
-            defaultExpanded={true}
-            data={sampleTreeData}
-            onLeafClick={(node) => {
-                console.log("Leaf clicked:", node);
-            }} />
-
-        <Treeview
-            direction="horizontal"
-            defaultExpanded={true}
-            data={sampleTreeData}
-            onLeafClick={(node) => {
-                console.log("Leaf clicked:", node);
-            }} />
-
-    </>;
 }
 
 function SuperTableTest() {

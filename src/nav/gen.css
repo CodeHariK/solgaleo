@@ -80,9 +80,75 @@ src/modal.tsx
     overflow: auto;
 }
 
+.TreeView {
+    display: inline-flex;
+    padding: 0.5rem;
+    user-select: none;
+    background: #565656;
+    flex-direction: column;
+}
+
+.TreeView.horizontal {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.TreeItem {
+    display: flex;
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.TreeItem.vertical {
+    flex-direction: column;
+    background: #ff6767;
+}
+
+.TreeItem.horizontal {
+    flex-direction: row;
+    align-items: center;
+    background: #9fdf4a;
+}
+
+.TreeItem:hover {
+    background: white;
+}
+
+.TreeItemHeader {
+    display: flex;
+    align-items: center;
+    background: #7878e7;
+}
+
+.TreeItemHeader span {
+    background: #6d44ae;
+    padding: 0.25rem;
+}
+
+.TreeToggle {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+}
+
+.TreeToggle.open {
+    transform: rotate(90deg);
+}
+
+.TreeChildren.vertical {
+    padding-left: 1rem;
+    border: 1px solid black;
+}
+
+.TreeChildren.horizontal {
+    border: 1px solid black;
+}
+
 .Breadcrumb {
-    box-shadow: 0 8px 14px -2px rgba(0, 0, 0, 0.1),
-        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     padding: 0.75rem 1.25rem;
 }
 

@@ -3,13 +3,13 @@ import "./gen.css"
 export * from "./position.tsx";
 export * from "./gridlayout.tsx";
 export * from "./accordion.tsx";
-export * from "./router.tsx";
 export * from "./dropdown.tsx";
 export * from "./bar.tsx";
 export * from "./button.tsx";
 export * from "./theme_toggle.tsx";
 export * from "./input.tsx";
 export * from "./spaceform.tsx";
+export * from "./provider.tsx";
 
 
 export const CssUI = {
@@ -60,16 +60,12 @@ export const CssUI = {
     HiddenInput: "HiddenInput",
 
     varSurface: "--surface",
-    varDropdownHeaderCol: "--DropdownHeader-col",
-    varDropdownHeaderBg: "--DropdownHeader-bg",
-    varDropdownHeaderBorder: "--DropdownHeader-border",
-    varDropdownItemCol: "--DropdownItem-col",
-    varDropdownItemBg: "--DropdownItem-bg",
-    varDropdownItemBorder: "--DropdownItem-border",
+    varBodyBg: "--body-bg",
+    varSecondary: "--secondary",
+    varDropdownHeaderBorderBottom: "--DropdownHeader-border-bottom",
     varDropdownItemColHover: "--DropdownItem-col-hover",
     varDropdownItemBgHover: "--DropdownItem-bg-hover",
     varPrimary: "--primary",
-    varSecondary: "--secondary",
     varDisabled: "--disabled",
     varDisabledContainer: "--disabled-container",
     varPrimaryContainer: "--primary-container",

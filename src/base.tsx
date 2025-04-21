@@ -23,8 +23,8 @@
 --a-hover-col: var : #ffac90 : #ffac90;
 --a-active-col: var : #cf90ff : #cf90ff; 
 
---modal-bg: var : oklch(from var(--primary) calc(l + .1) c h) : #383838 ; 
---modal-col: var : #ffffff : #eeeeee ; 
+--modal-bg: var : oklch(from var(--body-bg) calc(l + 1) c h) ; 
+--modal-col: var : var(--body-col) ; 
 
 // ::-webkit-scrollbar {
 //   height: 8px;

@@ -2,7 +2,6 @@
 import { For, Show, createSignal, type JSX } from 'solid-js';
 import { IconChevronRight } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
-import { RandomColor } from '../utils/color.ts';
 
 /*CSS:-
 
@@ -19,20 +18,12 @@ import { RandomColor } from '../utils/color.ts';
 }
 
 .DropdownHeader {
-    color: var : #9c40ca : #8a87e3;
-    background: var : #cfcfcf : #454545;
-    border: var : none : none;
+    border-bottom: var : 1px solid var(--body-bg);
     padding: 0.3rem;
 }
 
 .DropdownItem {
-    color: var : #343434 : #f8f8f8;
-    background: var : #ebebeb : #4f4f4f;
-    border: var : none : none;
-
-    // display: inline-flex;
-
-    display: flex;
+    display: inline-flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -41,8 +32,8 @@ import { RandomColor } from '../utils/color.ts';
 }
 
 .DropdownItem:hover {
-    color: var : #d4d4d4 : #4b4b4b;
-    background: var : #6b6b6b : #d7d7d7;
+    color: var : none;
+    background: var : var(--secondary);
 }
 
 ul.DropdownNested {
