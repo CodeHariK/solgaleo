@@ -55,8 +55,7 @@ export function TabTest() {
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
                     <Treeview
-                        direction="vertical"
-                        tabs={sampleTabData()}
+                        tabsData={sampleTabData()}
                         onClick={(node) => {
                             console.log("Leaf clicked:", node);
                         }} />
@@ -64,8 +63,7 @@ export function TabTest() {
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
                     <Treeview
-                        direction="horizontal"
-                        tabs={sampleTabData()}
+                        tabsData={sampleTabData()}
                         onClick={(node) => {
                             console.log("Leaf clicked:", node);
                         }} />

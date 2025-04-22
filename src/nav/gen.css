@@ -87,62 +87,43 @@ src/modal.tsx
     flex-direction: column;
 }
 
-.TreeView.horizontal {
-    align-items: flex-start;
-    flex-direction: row;
-    gap: 1rem;
-}
-
 .TreeItem {
     display: flex;
-    padding: 0.25rem;
+    flex-direction: column;
     cursor: pointer;
 }
 
-.TreeItem.vertical {
-    flex-direction: column;
-}
-
-.TreeItem.horizontal {
-    flex-direction: row;
-    align-items: center;
-}
-
-.TreeItem:hover {
-    background: white;
-}
-
-.TreeItemHeader {
+.TreeHeader {
+    width: 8rem;
+    overflow-x: clip;
     display: flex;
     align-items: center;
-    background: #7878e766;
+    background: var(--surface);
+    color: var(--primary);
+    padding: 0.25rem;
+    border: 1px solid;
 }
 
-.TreeItemHeader span {
-    background: #6d44ae66;
-    padding: 0.25rem;
+.TreeHeader:hover {
+    color: var(--secondary);
+    background: var(--secondary-container);
+}
+
+.TreeActive {
+    background: var(--primary);
+    color: var(--primary-container);
 }
 
 .TreeToggle {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 1s ease;
+    transition: all 1s ease;
 }
 
-.TreeToggle.open {
+.TreeToggleOpen {
     transform: rotate(180deg);
 }
 
-.TreeChildren.vertical {
+.TreeChildren {
     padding-left: 1rem;
-    border: 1px solid black;
-}
-
-.TreeChildren.horizontal {
-    border: 1px solid black;
 }
 
 .Breadcrumb {

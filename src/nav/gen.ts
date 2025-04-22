@@ -19,8 +19,10 @@ export const CssNAV = {
     TabContent: "TabContent",
     TreeView: "TreeView",
     TreeItem: "TreeItem",
-    TreeItemHeader: "TreeItemHeader",
+    TreeHeader: "TreeHeader",
+    TreeActive: "TreeActive",
     TreeToggle: "TreeToggle",
+    TreeToggleOpen: "TreeToggleOpen",
     TreeChildren: "TreeChildren",
     Breadcrumb: "Breadcrumb",
     BreadcrumbLinks: "BreadcrumbLinks",
@@ -36,10 +38,11 @@ export const CssNAV = {
 
     varPrimaryContainer: "--primary-container",
     varPrimary: "--primary",
+    varSurface: "--surface",
     varSecondary: "--secondary",
+    varSecondaryContainer: "--secondary-container",
     varModalBg: "--modal-bg",
     varModalCol: "--modal-col",
-    varSurface: "--surface",
     varModalFullScreen: "--ModalFullScreen"
 } as const;
 

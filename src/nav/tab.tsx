@@ -1,4 +1,4 @@
-import { For, createSignal, JSX, onMount, onCleanup, Show, createEffect } from 'solid-js';
+import { For, createSignal, JSX, onMount, onCleanup, Show } from 'solid-js';
 import { CssNAV, ParseUrlParams, UpdateQueryParam } from './gen';
 import { CssUI } from '../gen';
 import { createStore } from 'solid-js/store';
@@ -36,57 +36,42 @@ import { createStore } from 'solid-js/store';
     user-select: none;
     flex-direction: column;
 }
-.TreeView.horizontal {
-    align-items: flex-start;
-    flex-direction: row;
-    gap: 1rem;
-}
-
 .TreeItem {
     display: flex;
-    padding: 0.25rem;
+    flex-direction: column;
     cursor: pointer;
 }
-.TreeItem.vertical {
-    flex-direction: column;
-}
-.TreeItem.horizontal {
-    flex-direction: row;
-    align-items: center;
-}
-.TreeItem:hover {
-    background: white;
-}
 
-.TreeItemHeader {
+.TreeHeader {
+    width: 8rem;
+    overflow-x: clip;
     display: flex;
     align-items: center;
     // gap: 0.5rem;
-    background: #7878e766;
+    background: var(--surface);
+    color: var(--primary);
+    padding: 0.25rem;
+    border: 1px solid;
 
-    span {
-        background: #6d44ae66;
-        padding: 0.25rem;
+    :hover {
+        color: var(--secondary);
+        background: var(--secondary-container);
     }
 }
-.TreeToggle {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 1s ease;
+.TreeActive {
+    background: var(--primary);
+    color: var(--primary-container);
 }
-.TreeToggle.open {
+
+.TreeToggle {
+    transition: all 1s ease;
+}
+.TreeToggleOpen {
     transform: rotate(180deg);
 }
 
-.TreeChildren.vertical {
+.TreeChildren {
     padding-left: 1rem;
-    border: 1px solid black;
-}
-.TreeChildren.horizontal {
-    border: 1px solid black;
 }
 */
 
@@ -101,13 +86,11 @@ type Tab = {
 type TreeItemProps = {
     tab: Tab;
     activePath?: string;
-    direction?: 'horizontal' | 'vertical';
     onClick?: (tab: Tab) => void;
 };
 
 const TreeItem = (props: TreeItemProps) => {
     const hasChildren = props.tab.children && props.tab.children.length > 0;
-    const direction = props.direction || 'vertical';
     const isExpanded = props.tab.open;
 
     const handleClick = (e: MouseEvent) => {
@@ -116,27 +99,23 @@ const TreeItem = (props: TreeItemProps) => {
     };
 
     return (
-        <div class={`${CssNAV.TreeItem} ${direction}`} onClick={handleClick}>
+        <div class={`${CssNAV.TreeItem}`} onClick={handleClick}>
             <div
-                class={`${CssNAV.TreeItemHeader}`}
-                style={{
-                    background: props.activePath?.startsWith(props.tab.id) ? "yellow" : ""
+                classList={{
+                    [CssNAV.TreeHeader]: true,
+                    [CssNAV.TreeActive]: props.activePath?.startsWith(props.tab.id)
                 }}
             >
-                <div class={`${CssNAV.TreeToggle} ${isExpanded ? 'open' : ''} ${direction}`}>
+                <div class={`${CssNAV.TreeToggle} ${isExpanded ? CssNAV.TreeToggleOpen : ''}`}>
                     {hasChildren ? (isExpanded ? '-' : '+') : ""}
                 </div>
                 <span>{props.tab.label}</span>
             </div>
+
             <Show when={isExpanded && hasChildren}>
-                <div class={`${CssNAV.TreeChildren} ${direction}`}>
+                <div class={`${CssNAV.TreeChildren}`}>
                     <For each={props.tab.children}>
-                        {(child) => (
-                            <TreeItem
-                                {...props}
-                                tab={child}
-                            />
-                        )}
+                        {(child) => (<TreeItem {...props} tab={child} />)}
                     </For>
                 </div>
             </Show>
@@ -145,34 +124,30 @@ const TreeItem = (props: TreeItemProps) => {
 };
 
 type TreeviewProps = {
-    direction?: 'horizontal' | 'vertical';
-    tabs: Tab[];
+    tabsData: Tab[];
     activePath?: string;
+    nested?: boolean;
     onClick?: (tab: Tab) => void;
 };
 
 export function Treeview(props: TreeviewProps) {
-    const direction = props.direction || 'vertical';
 
-    const [tabs, setTabs] = createSignal(props.tabs);
+    const [tabs, setTabs] = createSignal(props.nested ? props.tabsData : convertTree(props.tabsData));
 
     const handleToggle = (tab: Tab) => {
-        let newData = toggleTabOpenById(tabs(), tab.id)
-        setTabs(newData)
+        if (!props.nested) {
+            let newData = activatePath(tabs(), tab.id)
+            setTabs(newData)
+        }
         props.onClick(tab)
     };
 
-    createEffect(() => {
-        setTabs(props.tabs)
-    })
-
     return (
-        <div class={`${CssNAV.TreeView} ${direction}`}>
-            <For each={tabs()}>
+        <div class={`${CssNAV.TreeView}`}>
+            <For each={props.nested ? props.tabsData : tabs()}>
                 {(tab) => (
                     <TreeItem
                         tab={tab}
-                        direction={direction}
                         onClick={handleToggle}
                         activePath={props.activePath}
                     />
@@ -284,8 +259,6 @@ export function NestedTabs(props: TabsProps) {
 
         let updatedPath = activatePath(tabsData, activePath)
 
-        console.log(activePath, updatedPath)
-
         setTabStore({
             tabsData: updatedPath,
             visibleTabs: result,
@@ -312,10 +285,9 @@ export function NestedTabs(props: TabsProps) {
     return (
         <div class={CssNAV.TabsContainer} style={props.styles?.tabContainer}>
             <Show when={props.showTreeView}>
-                <Treeview
-                    direction="vertical"
+                <Treeview nested
                     activePath={tabStore.activePath}
-                    tabs={tabStore.tabsData}
+                    tabsData={tabStore.tabsData}
                     onClick={handleTabClick} />
             </Show>
 
@@ -324,9 +296,9 @@ export function NestedTabs(props: TabsProps) {
                     tabs={tabStore.visibleTabs}
                     activePath={tabStore.activePath}
                     handleTabClick={handleTabClick}
-                    buttonStyle={props.styles.button}
-                    tabLevelStyle={props.styles.tabLevel}
-                    tabLevelsStyle={props.styles.tabLevels}
+                    buttonStyle={props.styles?.button}
+                    tabLevelStyle={props.styles?.tabLevel}
+                    tabLevelsStyle={props.styles?.tabLevels}
                 />
             </Show>
 
@@ -356,40 +328,6 @@ function convertTree(tree: Tab[], parentId: string = ''): Tab[] {
         }
 
         return newTab;
-    });
-}
-
-function findTabById(tree: Tab[], id: string): Tab | null {
-    for (const tab of tree) {
-        // Check if the current node's ID matches the dotted ID
-        if (tab.id === id) {
-            return tab; // Return the found node
-        }
-
-        // If the node has children, search recursively
-        if (tab.children) {
-            const foundTab = findTabById(tab.children, id);
-            if (foundTab) {
-                return foundTab; // Return the found node from children
-            }
-        }
-    }
-    return null; // Return null if the node was not found
-}
-
-function toggleTabOpenById(tree: Tab[], id: string): Tab[] {
-    return tree.map(tab => {
-        const newTab = { ...tab }; // Create a new node to avoid mutation
-
-        if (newTab.id === id) {
-            newTab.open = !newTab.open; // Toggle the open property
-        }
-
-        if (newTab.children) {
-            newTab.children = toggleTabOpenById(newTab.children, id); // Recursively toggle children
-        }
-
-        return newTab; // Return the new node
     });
 }
 

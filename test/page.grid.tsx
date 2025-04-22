@@ -8,6 +8,7 @@ export function GridTest() {
         <NestedTabs
             id='grid'
             showContent
+            showPathTabs
             tabsData={[
                 {
                     id: "fixed-all-3",
@@ -46,7 +47,7 @@ export function GridTest() {
 
 function FixedLeftRight() {
     return <GridLayout
-        // header={<TestHeader />}
+        header={<TestHeader />}
         left={<List children={[
             "one",
             "two",
@@ -81,7 +82,7 @@ function FixedRight() {
 
 function FixedLeft() {
     return <GridLayout
-        // header={<TestHeader />}
+        header={<TestHeader />}
         left={<List children={[
             "one",
             "two",
@@ -102,7 +103,7 @@ function FixedEmpty() {
 
 function FixedMiddle() {
     return <GridLayout
-    // header={<TestHeader />}
+        header={<TestHeader />}
     >
         <List children={[
             "one",
@@ -116,7 +117,7 @@ function FixedMiddle() {
 
 function FixedAll3() {
     return <GridLayout
-        // header={<TestHeader />}
+        header={<TestHeader />}
         left={<List children={[
             "one",
             "two",
