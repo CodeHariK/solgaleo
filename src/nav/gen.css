@@ -84,7 +84,6 @@ src/modal.tsx
     display: inline-flex;
     padding: 0.5rem;
     user-select: none;
-    background: #565656;
     flex-direction: column;
 }
 
@@ -102,13 +101,11 @@ src/modal.tsx
 
 .TreeItem.vertical {
     flex-direction: column;
-    background: #ff6767;
 }
 
 .TreeItem.horizontal {
     flex-direction: row;
     align-items: center;
-    background: #9fdf4a;
 }
 
 .TreeItem:hover {
@@ -118,11 +115,11 @@ src/modal.tsx
 .TreeItemHeader {
     display: flex;
     align-items: center;
-    background: #7878e7;
+    background: #7878e766;
 }
 
 .TreeItemHeader span {
-    background: #6d44ae;
+    background: #6d44ae66;
     padding: 0.25rem;
 }
 
@@ -132,11 +129,11 @@ src/modal.tsx
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.15s ease;
+    transition: transform 1s ease;
 }
 
 .TreeToggle.open {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
 }
 
 .TreeChildren.vertical {

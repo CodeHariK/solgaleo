@@ -83,6 +83,7 @@ export const sampleTabData = () => [
         id: 'Root',
         label: 'Root',
         content: <div>Root</div>,
+        open: true,
         children: [
             {
                 id: 'Documents',
@@ -96,6 +97,7 @@ export const sampleTabData = () => [
                 id: 'Pictures',
                 label: 'Pictures',
                 content: <div>Pictures</div>,
+                open: true,
                 children: [
                     { id: 'Vacation', label: 'Vacation.jpg', content: <div>Vacation.jpg</div>, open: true },
                     { id: 'Family', label: 'Family.png', content: <div>Family.png</div>, }
