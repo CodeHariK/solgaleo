@@ -115,7 +115,8 @@ src/modal.tsx
 }
 
 .TreeToggle {
-    transition: all 1s ease;
+    padding: 0rem .3rem;
+    transition: all .3s ease;
 }
 
 .TreeToggleOpen {

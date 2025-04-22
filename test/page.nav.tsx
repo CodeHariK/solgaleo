@@ -1,7 +1,7 @@
 import { createMemo, createSignal, For, JSX, Show, Signal } from "solid-js";
-import { DragBox, GridLayout, IconHome } from "../src/gen";
+import { DragBox, GridLayout, IconHome, VCarousel } from "../src/gen";
 import * as N from "../src/nav/gen";
-import { List, TestHeader } from "./common";
+import { TestHeader } from "./common";
 
 export function NavTest() {
 
@@ -10,7 +10,7 @@ export function NavTest() {
 
     return <GridLayout
         header={<TestHeader />}
-        left={<List children={[
+        left={<VCarousel children={[
             <p onclick={() => { setExperiment(0), modalVisibility[1](true); }}>Modal</p>,
             <p onclick={() => { setExperiment(1), modalVisibility[1](true); }}>ModalScroll</p>,
             <p onclick={() => { setExperiment(2), modalVisibility[1](true); }}>ModalAnchorLeft</p>,

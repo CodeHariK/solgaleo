@@ -1,4 +1,4 @@
-import { For, createSignal, JSX, onMount, onCleanup, Show } from 'solid-js';
+import { For, createSignal, JSX, onMount, onCleanup, Show, createEffect } from 'solid-js';
 import { CssNAV, ParseUrlParams, UpdateQueryParam } from './gen';
 import { CssUI } from '../gen';
 import { createStore } from 'solid-js/store';
@@ -64,7 +64,8 @@ import { createStore } from 'solid-js/store';
 }
 
 .TreeToggle {
-    transition: all 1s ease;
+    padding: 0rem .3rem;
+    transition: all .3s ease;
 }
 .TreeToggleOpen {
     transform: rotate(180deg);
@@ -89,9 +90,26 @@ type TreeItemProps = {
     onClick?: (tab: Tab) => void;
 };
 
+export function useDelayedTruth(delay: number) {
+    const [delayedState, setDelayedState] = createSignal(false);
+
+    createEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDelayedState(true);
+        }, delay);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    });
+
+    return [delayedState] as const;
+}
+
 const TreeItem = (props: TreeItemProps) => {
     const hasChildren = props.tab.children && props.tab.children.length > 0;
-    const isExpanded = props.tab.open;
+    const isExpanded = props.tab.open
+    const [delayed] = useDelayedTruth(50);
 
     const handleClick = (e: MouseEvent) => {
         e.stopPropagation();
@@ -106,7 +124,7 @@ const TreeItem = (props: TreeItemProps) => {
                     [CssNAV.TreeActive]: props.activePath?.startsWith(props.tab.id)
                 }}
             >
-                <div class={`${CssNAV.TreeToggle} ${isExpanded ? CssNAV.TreeToggleOpen : ''}`}>
+                <div class={`${CssNAV.TreeToggle} ${(isExpanded && delayed()) ? CssNAV.TreeToggleOpen : ''}`}>
                     {hasChildren ? (isExpanded ? '-' : '+') : ""}
                 </div>
                 <span>{props.tab.label}</span>

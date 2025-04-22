@@ -1,5 +1,5 @@
-import { GridLayout, NestedTabs } from '../src/gen';
-import { List, TestHeader } from './common';
+import { GridLayout, NestedTabs, VCarousel } from '../src/gen';
+import { TestHeader } from './common';
 
 export function GridTest() {
     return <GridLayout
@@ -48,14 +48,14 @@ export function GridTest() {
 function FixedLeftRight() {
     return <GridLayout
         header={<TestHeader />}
-        left={<List children={[
+        left={<VCarousel children={[
             "one",
             "two",
             "three",
             "four",
             "five",
         ]} />}
-        right={<List children={[
+        right={<VCarousel children={[
             "one",
             "two",
             "three",
@@ -69,7 +69,7 @@ function FixedLeftRight() {
 function FixedRight() {
     return <GridLayout
         // header={<TestHeader />}
-        right={<List children={[
+        right={<VCarousel children={[
             "one",
             "two",
             "three",
@@ -83,7 +83,7 @@ function FixedRight() {
 function FixedLeft() {
     return <GridLayout
         header={<TestHeader />}
-        left={<List children={[
+        left={<VCarousel children={[
             "one",
             "two",
             "three",
@@ -105,7 +105,7 @@ function FixedMiddle() {
     return <GridLayout
         header={<TestHeader />}
     >
-        <List children={[
+        <VCarousel children={[
             "one",
             "two",
             "three",
@@ -118,14 +118,14 @@ function FixedMiddle() {
 function FixedAll3() {
     return <GridLayout
         header={<TestHeader />}
-        left={<List children={[
+        left={<VCarousel children={[
             "one",
             "two",
             "three",
             "four",
             "five",
         ]} />}
-        right={<List children={[
+        right={<VCarousel children={[
             "one",
             "two",
             "three",
@@ -133,7 +133,7 @@ function FixedAll3() {
             "five",
         ]} />}
     >
-        <List children={[
+        <VCarousel children={[
             "one",
             "two",
             "three",

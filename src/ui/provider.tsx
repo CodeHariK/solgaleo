@@ -1,10 +1,11 @@
 import { createContext, JSX, onMount, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
-import { AddTheme, Theme } from "./theme_toggle";
+import { Theme } from "./theme_toggle";
 
 interface SolData {
     baseroute: string,
-    customThemes: Theme[],
+    themes: Theme[],
+    themeIndex?: number
 }
 
 interface SolContextType {
@@ -16,14 +17,23 @@ interface SolContextType {
 const SolContext = createContext<SolContextType>();
 
 export const SolProvider = (props: { initialData: SolData; children: JSX.Element | JSX.Element[] }) => {
-    const [data, setData] = createStore<SolData>(props.initialData);
+    const [data, setData] = createStore<SolData>({
+        ...props.initialData,
+        themes: [
+            {
+                name: "light",
+                type: "light",
+            },
+            {
+                name: "night",
+                type: "night",
+            },
+            ...props.initialData.themes.filter((theme) => theme.name != "light" && theme.name != "night")
+        ]
+    });
 
     onMount(() => {
         console.log("SolStart", props.initialData)
-
-        props.initialData.customThemes.forEach((theme) => {
-            AddTheme(theme)
-        })
     })
 
     return (

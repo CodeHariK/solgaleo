@@ -3,6 +3,7 @@ import "./gen.css"
 export * from "./page.fancy.tsx";
 export * from "./page.nav.tsx";
 export * from "./page.adv.tsx";
+export * from "./page.root.tsx";
 export * from "./page.grid.tsx";
 export * from "./page.tabs.tsx";
 export * from "./page.svg.tsx";
@@ -15,12 +16,10 @@ export const CssTEST = {
     BlogTitle: "blog-title",
     BlogItem: "blog-item",
     BlogMeta: "blog-meta",
+    CodeCard: "CodeCard",
     IconGrid: "IconGrid",
     IconItem: "IconItem",
     IconLabel: "IconLabel",
-    ListContainer: "ListContainer",
-    List: "List",
-    ListItem: "ListItem",
     Dom: "dom",
     Box: "box",
     S2g: "s2g",

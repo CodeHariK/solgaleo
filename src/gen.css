@@ -20,7 +20,7 @@ anim.tsx
     --error: #B3261E;
     --error-container: #F9DEDC;
     --disabled-container: #e7e7e7;
-    --modal-bg: oklch(from var(--body-bg) calc(l + 1) c h) ;
+    --modal-bg: oklch(from var(--body-bg) calc(l + .3) c h) ;
     --modal-col: var(--body-col) ;
 }
 
@@ -40,7 +40,7 @@ anim.tsx
     --error: #ff7262;
     --error-container: #8C1D18;
     --disabled-container: #7d7d7d ;
-    --modal-bg: oklch(from var(--body-bg) calc(l + 1) c h) ;
+    --modal-bg: oklch(from var(--body-bg) calc(l + .3) c h) ;
     --modal-col: var(--body-col) ;
 }
 

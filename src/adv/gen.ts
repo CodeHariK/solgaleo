@@ -23,6 +23,7 @@ export const CssADV = {
     CellItem: "CellItem",
     TableRowDetails: "TableRowDetails",
     TableRowDetailsShow: "TableRowDetailsShow",
+    Vcarousel: "vcarousel",
 
     varSurface: "--surface",
     varPrimaryContainer: "--primary-container",

@@ -1,42 +1,10 @@
-import { createSignal, onMount } from "solid-js";
-import { CssUI } from "./gen";
+import { onMount } from "solid-js";
+import { CssUI, useSolContext } from "./gen";
 import { IconMoon, IconSun } from "../gen";
 
 export type Theme = {
     name: string;
     type: 'light' | 'night';
-}
-
-let THEMECOUNT = 0
-let THEME: Theme[] = [
-    {
-        name: "light",
-        type: "light",
-    },
-    {
-        name: "night",
-        type: "night",
-    }];
-
-export function AddTheme(theme: Theme) {
-    if (theme.name != "light" && theme.name != "night") {
-        THEME.push(theme)
-    }
-}
-
-export function AllTheme() {
-    return THEME
-}
-
-export function CurrentTheme() {
-    const savedTheme = localStorage.getItem("theme");
-
-    if (THEME.filter((e) => e.name == savedTheme)) {
-        return savedTheme
-    } else {
-        const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        return prefersNight ? "night" : "light";
-    }
 }
 
 function changeTheme(newTheme: Theme) {
@@ -50,24 +18,39 @@ function changeTheme(newTheme: Theme) {
 
 export function ThemeToggle() {
     // Signal to store the current theme ("light" or "dark")
-    const [theme, setTheme] = createSignal<Theme>({ name: "light", type: "light" });
+    const { data, setData } = useSolContext();
 
     // Function to manually toggle between light and dark themes
     const toggleTheme = () => {
-        THEMECOUNT = (THEMECOUNT + 1) % THEME.length
-        const newTheme = THEME[THEMECOUNT]
-        setTheme(newTheme);
+        let themeIndex = (data.themeIndex + 1) % data.themes.length
+
+
+        setData("themeIndex", themeIndex);
+
+        const newTheme = data.themes[themeIndex]
+
         changeTheme(newTheme);
+
         localStorage.setItem("theme", newTheme.name);
     };
 
     // Detect system theme preference and apply it on mount
     onMount(() => {
-        const savedTheme = CurrentTheme();
-        THEMECOUNT = THEME.findIndex((e) => e.name == savedTheme)
-        let theme = THEME[THEMECOUNT]
+        let savedTheme = localStorage.getItem("theme");
+
+        if (!data.themes.filter((e) => e.name == savedTheme)) {
+            const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            savedTheme = prefersNight ? "night" : "light";
+        }
+
+        let themeIndex = data.themes.findIndex((e) => e.name == savedTheme)
+        if (themeIndex < 0) themeIndex = 0
+
+        const theme = data.themes[themeIndex]
+
         changeTheme(theme);
-        setTheme(theme);
+
+        setData("themeIndex", themeIndex);
     });
 
     return (
@@ -75,7 +58,7 @@ export function ThemeToggle() {
             class={CssUI.IconButton}
             type="button"
             onClick={toggleTheme}
-        > {theme()?.name} {theme()?.type === "night" ? <IconMoon /> : <IconSun />}
+        > {data.themes[data?.themeIndex]?.name} {data.themes[data?.themeIndex]?.type === "night" ? <IconMoon /> : <IconSun />}
         </button>
     );
 }

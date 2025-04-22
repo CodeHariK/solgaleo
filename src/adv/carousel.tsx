@@ -190,6 +190,9 @@
 
 */
 
+import { For, JSX } from "solid-js";
+import { CssADV } from "./gen";
+
 export function Carousel() {
     return (
         <div class="scroll-layout">
@@ -223,3 +226,42 @@ let imgs = [
     "https://assets.codepen.io/2585/Waiting.svg",
     "https://assets.codepen.io/2585/New+Beginnings.svg",
 ]
+
+/*CSS:-
+.vcarousel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.vcarousel li {
+    scroll-snap-align: center;
+}
+
+*/
+
+export function VCarousel({ children, listStyle, itemStyle }: {
+    children: JSX.Element[],
+    listStyle?: JSX.CSSProperties,
+    itemStyle?: JSX.CSSProperties,
+}) {
+    return (
+        <ul class={CssADV.Vcarousel} style={listStyle}>
+            <For each={children}>
+                {(child) => (
+                    <li style={itemStyle}>
+                        {child}
+                    </li>
+                )}
+            </For>
+        </ul>
+    );
+}
