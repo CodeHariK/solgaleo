@@ -315,12 +315,23 @@ export default function ExtractCssComments(dir: string): Plugin {
     async function runExtract() {
         await processDirectory(dir);
 
-        LIGHT_VARS = FINAL_LIGHT_VARS
-        NIGHT_VARS = FINAL_NIGHT_VARS
-        FILE_CSS = FINAL_FILE_CSS
-        UNIQUE_CLASS_SELECTORS = FINAL_UNIQUE_CLASS_SELECTORS
+        if (dir == 'src') {
+            LIGHT_VARS = FINAL_LIGHT_VARS
+            NIGHT_VARS = FINAL_NIGHT_VARS
+            FILE_CSS = FINAL_FILE_CSS
+            UNIQUE_CLASS_SELECTORS = FINAL_UNIQUE_CLASS_SELECTORS
 
-        await writeCssTs('src', true);
+            await writeCssTs(dir, true);
+        }
+
+        LIGHT_VARS = {};
+        NIGHT_VARS = {};
+        FILE_CSS = [];
+        UNIQUE_CLASS_SELECTORS.clear()
+        FINAL_LIGHT_VARS = {};
+        FINAL_NIGHT_VARS = {};
+        FINAL_FILE_CSS = [];
+        FINAL_UNIQUE_CLASS_SELECTORS.clear()
     }
 
     return {
@@ -408,7 +419,6 @@ export default function ExtractCssComments(dir: string): Plugin {
             for (const [path, file] of filesInDir) {
                 processedFiles.set(path, file);
             }
-
 
             await writeCssTs(dirPath, true);
         }
