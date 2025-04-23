@@ -239,7 +239,7 @@ let imgs = [
     list-style-type: none;
     padding: 0;
     margin: 0;
-    height: 100%;
+    // height: 100%;
 }
 
 .vcarousel li {

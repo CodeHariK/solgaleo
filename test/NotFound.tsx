@@ -3,6 +3,9 @@ import { GhostComponent } from '../src/fancy/ghost';
 import { GridLayout } from '../src/gen';
 import { TestHeader } from './common';
 
+//FN:START
+//Ghost
+//FN:DOC
 export function NotFound() {
    return (
       <GridLayout
@@ -16,12 +19,13 @@ export function NotFound() {
             </a>
 
             <GhostComponent
-               ghostColor="#bb42e34d"
+               ghostColor="#3a3a3a4d"
                waveColor="#8c2ec26c"
-               eyeColor='#f8e14788'
+               eyeColor='#f8474787'
             />
 
          </div>
       </GridLayout>
    );
 }
+//FN:END

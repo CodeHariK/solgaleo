@@ -11,21 +11,7 @@ export function FancyTest() {
         header={<TestHeader />}
     >
 
-        <Banner title="Tip"
-            info="Although most developers will stick to just one UI framework, Rocket supports multiple frameworks in the same project. This allows you to:"
-        >
-            <ol>
-                <li>Choose the framework that is best for each component.
-                    <ol>
-                        <li>Nested item 1</li>
-                        <li>Nested item 2</li>
-                    </ol>
-                </li>
-                <li>Learn a new framework without needing to start a new project.</li>
-                <li>Collaborate with others even when working in different frameworks.</li>
-                <li>Incrementally convert an existing site to another framework with no downtime.</li>
-            </ol>
-        </Banner>
+        {BannerTest()}
 
         <FlickerText style={{ "font-size": "50px" }}>Flicker text</FlickerText>
 
@@ -72,3 +58,25 @@ export function FancyTest() {
 
     </GridLayout>
 }
+
+//FN:START
+//Banner
+//FN:DOC
+export function BannerTest() {
+    return <Banner title="Tip"
+        info="Although most developers will stick to just one UI framework, Rocket supports multiple frameworks in the same project. This allows you to:"
+    >
+        <ol>
+            <li>Choose the framework that is best for each component.
+                <ol>
+                    <li>Nested item 1</li>
+                    <li>Nested item 2</li>
+                </ol>
+                ii    </li>
+            <li>Learn a new framework without needing to start a new project.</li>
+            <li>Collaborate with others even when working in different frameworks.</li>
+            <li>Incrementally convert an existing site to another framework with no downtime.</li>
+        </ol>
+    </Banner>;
+}
+//FN:END

@@ -1,6 +1,9 @@
 import { AA, Header, IMG } from "../src/nav/header";
 import { ThemeToggle } from "../src/gen";
 
+//FN:START
+//Header
+//FN:DOC
 export function TestHeader() {
     return <Header
         title={<a href="/">
@@ -22,4 +25,4 @@ export function TestHeader() {
         ]}
     />;
 }
-
+//FN:END

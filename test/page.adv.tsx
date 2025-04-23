@@ -91,7 +91,7 @@ export function SuperTableTest() {
             "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
         }}
 
-        tableArray={["#a550d3", "#d75d3c", "#41a358",].map((tableHeaderColor) => {
+        tableArray={["#eedbf7", "#ffd5ca", "#d3fcdd",].map((tableHeaderColor) => {
             return {
                 headerItems: [
                     <><p>User Agent </p><IconTableHeading /></>,

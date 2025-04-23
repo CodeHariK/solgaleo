@@ -4,11 +4,7 @@ import { CssUI } from "./gen";
 /*CSS:-
 
 .AccordionLabel {
-    display: flex;
-    background: var(--surface);
     cursor: pointer;
-    justify-content: space-between;
-    padding: .5rem;
     
     :hover {
         background: var(--surface); 
@@ -18,7 +14,7 @@ import { CssUI } from "./gen";
 .AccordionContent {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease-out, opacity 0.35s ease-out;
+    transition: all 0.2s ease-out;
     opacity: 0;
 }
 
@@ -27,7 +23,7 @@ import { CssUI } from "./gen";
 export function Accordion(props: {
     title: JSX.Element,
     children: JSX.Element,
-    openStyle?: JSX.CSSProperties
+    contentStyle?: JSX.CSSProperties
 }) {
     const [isOpen, setIsOpen] = createSignal(false);
 
@@ -43,8 +39,9 @@ export function Accordion(props: {
             <div
                 class={CssUI.AccordionContent}
                 style={isOpen() ? {
-                    ...props.openStyle,
-                    "max-height": "100%",
+                    ...props.contentStyle,
+                    "max-height": "40vh",
+                    "overflow-y": "scroll",
                     opacity: 1,
                 } : {}}
             >

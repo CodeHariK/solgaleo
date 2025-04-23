@@ -62,7 +62,7 @@ body {
   color: var(--body-col);
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   min-height: 100vh;
   padding: 0px;
   margin: 0px;

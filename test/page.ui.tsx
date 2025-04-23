@@ -20,31 +20,7 @@ export function UiTest() {
         header={<TestHeader />}
     >
 
-        <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
-
-            <button>BaseButton</button >
-            <button class={CssUI.MaterialButton}>MaterialButton</button>
-            <button class={CssUI.OutlinedButton}>OutlinedButton</button>
-            <button class={CssUI.IconButton} onClick={() => {
-                setProgress(80)
-            }}><IconHome /></button>
-
-            <AsyncButton onClick={async (): Promise<void> => {
-                // Simulate an async operation (e.g., API call)
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        const shouldFail = Math.random() < 0.5; // 50% chance to fail
-                        if (shouldFail) {
-                            reject(new Error("Something went wrong!"));
-                        } else {
-                            resolve(); // Resolve without returning a value
-                        }
-                    }, 2000);
-                });
-            }}>
-                Click Me
-            </AsyncButton>
-        </div>
+        {ButtonTest(setProgress)}
 
         <ProgressBar progress={progress} />
 
@@ -277,3 +253,37 @@ const selectOptions = [
     { value: "de", label: "Germany" }
 ];
 
+//FN:START
+//Buttons
+//FN:DOC
+export function ButtonTest(setProgress?: (progress: number) => void) {
+    return <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
+
+        <button>BaseButton</button>
+
+        <button class={CssUI.MaterialButton}>MaterialButton</button>
+
+        <button class={CssUI.OutlinedButton}>OutlinedButton</button>
+
+        <button class={CssUI.IconButton} onClick={() => {
+            setProgress?.(80);
+        }}><IconHome /></button>
+
+        <AsyncButton onClick={async (): Promise<void> => {
+            // Simulate an async operation (e.g., API call)
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const shouldFail = Math.random() < 0.5; // 50% chance to fail
+                    if (shouldFail) {
+                        reject(new Error("Something went wrong!"));
+                    } else {
+                        resolve(); // Resolve without returning a value
+                    }
+                }, 2000);
+            });
+        }}>
+            Click Me
+        </AsyncButton>
+    </div>;
+}
+//FN:END

@@ -6,7 +6,7 @@ import { MetaProvider, Title } from "@solidjs/meta";
 /*CSS:-
 .GridLayout {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: grid;
     gap: .1rem;
 }

@@ -38,35 +38,35 @@ import { CssTEST, TestHeader } from './gen.ts'
 }
 */
 
-export function SvgTest() {
-    const icons = [
-        { component: svg.IconPhone, name: 'Phone' },
-        { component: svg.IconKey, name: 'Key' },
-        { component: svg.IconAddUser, name: 'Add User' },
-        { component: svg.IconTableHeading, name: 'Table Heading' },
-        { component: svg.IconPen, name: 'Pen' },
-        { component: svg.IconTick, name: 'Tick' },
-        { component: svg.IconCross, name: 'Cross' },
-        { component: svg.IconUnlock, name: 'Unlock' },
-        { component: svg.IconLock, name: 'Lock' },
-        { component: svg.IconEmail, name: 'Email' },
-        { component: svg.IconStar, name: 'Star' },
-        { component: svg.IconHeart, name: 'Heart' },
-        { component: svg.IconCart, name: 'Cart' },
-        { component: svg.IconDown, name: 'Down' },
-        { component: svg.IconChevronLeft, name: 'Chevron Left' },
-        { component: svg.IconChevronRight, name: 'Chevron Right' },
-        { component: svg.IconSearch, name: 'Search' },
-        { component: svg.IconFilter, name: 'Filter' },
-        { component: svg.IconUser, name: 'User' },
-        { component: svg.IconDelete, name: 'Delete' },
-        { component: svg.IconLoading, name: 'Loading' },
-        { component: svg.IconRocket, name: 'Rocket' },
-        { component: svg.IconCopy, name: 'Copy' },
-        { component: svg.IconSun, name: 'Sun' },
-        { component: svg.IconMoon, name: 'Moon' },
-    ];
+const icons = [
+    { component: svg.IconPhone, name: 'Phone' },
+    { component: svg.IconKey, name: 'Key' },
+    { component: svg.IconAddUser, name: 'Add User' },
+    { component: svg.IconTableHeading, name: 'Table Heading' },
+    { component: svg.IconPen, name: 'Pen' },
+    { component: svg.IconTick, name: 'Tick' },
+    { component: svg.IconCross, name: 'Cross' },
+    { component: svg.IconUnlock, name: 'Unlock' },
+    { component: svg.IconLock, name: 'Lock' },
+    { component: svg.IconEmail, name: 'Email' },
+    { component: svg.IconStar, name: 'Star' },
+    { component: svg.IconHeart, name: 'Heart' },
+    { component: svg.IconCart, name: 'Cart' },
+    { component: svg.IconDown, name: 'Down' },
+    { component: svg.IconChevronLeft, name: 'Chevron Left' },
+    { component: svg.IconChevronRight, name: 'Chevron Right' },
+    { component: svg.IconSearch, name: 'Search' },
+    { component: svg.IconFilter, name: 'Filter' },
+    { component: svg.IconUser, name: 'User' },
+    { component: svg.IconDelete, name: 'Delete' },
+    { component: svg.IconLoading, name: 'Loading' },
+    { component: svg.IconRocket, name: 'Rocket' },
+    { component: svg.IconCopy, name: 'Copy' },
+    { component: svg.IconSun, name: 'Sun' },
+    { component: svg.IconMoon, name: 'Moon' },
+];
 
+export function SvgTest() {
     return <GridLayout
         header={<TestHeader />}
     >
@@ -80,3 +80,19 @@ export function SvgTest() {
         </div>
     </GridLayout>
 }
+
+//FN:START
+//Svg
+//FN:DOC
+export function tSvg() {
+    return <div class={CssTEST.IconGrid}>
+        {icons.map(({ component: Icon, name }) => (
+            <div class={CssTEST.IconItem}>
+                <Icon style={{ width: "4rem", height: "4rem" }} />
+                <span class={CssTEST.IconLabel}>{name}</span>
+            </div>
+        ))}
+    </div>
+
+}
+//FN:END

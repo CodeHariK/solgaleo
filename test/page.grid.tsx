@@ -48,97 +48,80 @@ export function GridTest() {
 function FixedLeftRight() {
     return <GridLayout
         header={<TestHeader />}
-        left={<VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
-        right={<VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
+        left={<TestVCarousel />}
+        right={<TestVCarousel />}
     >
-    </GridLayout>;
+    </GridLayout>
 }
 
 function FixedRight() {
     return <GridLayout
         // header={<TestHeader />}
-        right={<VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
+        right={<TestVCarousel />}
     >
-    </GridLayout>;
+    </GridLayout>
 }
 
 function FixedLeft() {
     return <GridLayout
         header={<TestHeader />}
-        left={<VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
+        left={<TestVCarousel />}
     >
-    </GridLayout>;
+    </GridLayout>
 }
 
 function FixedEmpty() {
     return <GridLayout
     // header={<TestHeader />}
     >
-    </GridLayout>;
+    </GridLayout>
 }
 
 function FixedMiddle() {
     return <GridLayout
         header={<TestHeader />}
     >
-        <VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />
-    </GridLayout>;
+        <TestVCarousel />
+    </GridLayout>
 }
 
-function FixedAll3() {
+//FN:START
+//GridLayout : Standard layouts
+//FN:DOC
+export function FixedAll3() {
     return <GridLayout
         header={<TestHeader />}
-        left={<VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
-        right={<VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />}
+        left={<TestVCarousel />}
+        right={<TestVCarousel />}
     >
-        <VCarousel children={[
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-        ]} />
-    </GridLayout>;
+        <TestVCarousel />
+    </GridLayout>
 }
+//FN:END
+
+//FN:START
+//VCarousel : Vertical carousel list
+//FN:DOC
+export function TestVCarousel() {
+    return <VCarousel children={[
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "nine",
+        "ten",
+    ]}
+        itemStyle={{
+            background: "var(--primary-container)",
+            padding: "10px",
+            "border-radius": "1rem",
+            height: "400px",
+            "text-align": 'center',
+            "align-content": 'center'
+        }}
+        listStyle={{ padding: "10px" }} />
+}
+//FN:END

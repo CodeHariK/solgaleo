@@ -86,7 +86,7 @@ src/input.tsx
 
 .GridLayout {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: grid;
     gap: .1rem;
 }
@@ -230,11 +230,7 @@ src/input.tsx
 }
 
 .AccordionLabel {
-    display: flex;
-    background: var(--surface);
     cursor: pointer;
-    justify-content: space-between;
-    padding: .5rem;
 }
 
 .AccordionLabel:hover {
@@ -244,7 +240,7 @@ src/input.tsx
 .AccordionContent {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease-out, opacity 0.35s ease-out;
+    transition: all 0.2s ease-out;
     opacity: 0;
 }
 

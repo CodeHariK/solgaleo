@@ -20,20 +20,7 @@ export function NavTest() {
             <p onclick={() => { setExperiment(6), modalVisibility[1](true); }}>ModalAnchorDrag</p>,
         ]} />}
     >
-        <N.Breadcrumbs items={[
-            {
-                element: <IconHome />,
-                link: "/",
-                fn: () => console.log("Hello")
-            },
-            {
-                element: <span>Products</span>,
-                link: "/products"
-            },
-            {
-                element: <span>Category</span>
-            }
-        ]} />
+        {BreadcrumbTest()}
 
         <PaginationTest />
 
@@ -110,6 +97,27 @@ export function NavTest() {
 
     </GridLayout>
 }
+
+//FN:START
+//Breadcrumb
+//FN:DOC
+export function BreadcrumbTest() {
+    return <N.Breadcrumbs items={[
+        {
+            element: <IconHome />,
+            link: "/",
+            fn: () => console.log("Hello")
+        },
+        {
+            element: <span>Products</span>,
+            link: "/products"
+        },
+        {
+            element: <span>Category</span>
+        }
+    ]} />;
+}
+//FN:END
 
 function TestDialog({ info, modalVisibilty }: { info: JSX.Element, modalVisibilty: Signal<boolean> }) {
     return <div class="flex flex-col">

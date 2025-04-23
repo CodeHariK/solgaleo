@@ -54,11 +54,7 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <Treeview
-                        tabsData={sampleTabData()}
-                        onClick={(node) => {
-                            console.log("Leaf clicked:", node);
-                        }} />
+                    {TestTreeView()}
                 </div>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
@@ -116,3 +112,15 @@ export const sampleTabData = () => [
         ]
     }
 ];
+
+//FN:START
+//TreeView
+//FN:DOC
+export function TestTreeView() {
+    return <Treeview
+        tabsData={sampleTabData()}
+        onClick={(node) => {
+            console.log("Leaf clicked:", node);
+        }} />;
+}
+//FN:END

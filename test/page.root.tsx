@@ -7,8 +7,6 @@ import { CssTEST } from "./gen";
 
 /*CSS:-
 .CodeCard {
-    width: 100%;
-    border-radius: 10px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     transition: transform 0.2s ease-in-out;
 
@@ -17,6 +15,16 @@ import { CssTEST } from "./gen";
     }
 }
 */
+
+//FN:START
+//Hello
+//FN:DOC
+export function Hello() {
+    return <div>
+        Hello
+    </div>
+}
+//FN:END
 
 export function RootPage() {
 
@@ -39,8 +47,9 @@ export function RootPage() {
                 return <div
                     class={CssTEST.CodeCard}
                     style={{
-                        // background: RandomColor({ lightness: light() ? 96 : 30 }),
-                        // color: light() ? "black" : "white",
+                        "border": `2px solid ${RandomColor({ lightness: light() ? 50 : 30 })}`,
+                        "border-radius": "1rem",
+                        overflow: "clip"
                     }}
                     onClick={() => {
                         console.log(i)
@@ -48,7 +57,17 @@ export function RootPage() {
                     }}
                 >
                     <Accordion
-                        title={c.doc}
+                        title={<div style={{
+                            background: i == codeIndex() ? "var(--primary-container)" : "",
+                            padding: "1rem",
+                        }}>
+                            {c.doc}
+                        </div>}
+
+                        contentStyle={{
+                            padding: "1rem",
+                        }}
+
                         children={<pre>
                             {c.data}
                         </pre>} />
