@@ -1,12 +1,12 @@
 import '../gen.css'
 import "./gen.css"
-export * from "./banner.tsx";
-export * from "./ghost.tsx";
-export * from "./terminal.tsx";
-export * from "./marquee.tsx";
-export * from "./flicker.tsx";
-export * from "./glittercard.tsx";
-export * from "./rainbow.tsx";
+export * from "./banner.tsx"; 
+export * from "./ghost.tsx"; 
+export * from "./terminal.tsx"; 
+export * from "./marquee.tsx"; 
+export * from "./flicker.tsx"; 
+export * from "./glittercard.tsx"; 
+export * from "./rainbow.tsx"; 
 export * from "./transition.tsx";
 
 
@@ -52,7 +52,9 @@ export const CssFANCY = {
     varFlickerTextCol: "--FlickerText-col",
     varSecondaryContainer: "--secondary-container",
     varRainsrc: "--rainsrc",
-    varRainsize: "--rainsize"
+    varRainsize: "--rainsize",
+
+    
 } as const;
 
 export type CssFANCYType = keyof typeof CssFANCY;

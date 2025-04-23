@@ -151,13 +151,11 @@ src/input.tsx
 .GridLeft {
     grid-area: left;
     overflow-y: auto;
-    border-right: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridRight {
     grid-area: right;
     overflow-y: auto;
-    border-left: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridMiddle {
@@ -207,13 +205,11 @@ src/input.tsx
     height: auto;
     padding-top: 1rem;
     border: none;
-    border-right: 1px solid var(--border-color, #e5e7eb);
     overflow: visible;
 }
 
 .GridLayoutFlow .GridRight {
     border-right: none;
-    border-left: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridLayoutFlow .GridMiddle {
@@ -248,7 +244,7 @@ src/input.tsx
 .AccordionContent {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease-out, opacity 0.35s ease-out;
+    transition: max-height 0.2s ease-out, opacity 0.35s ease-out;
     opacity: 0;
 }
 

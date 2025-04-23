@@ -48,11 +48,10 @@ export function UiTest() {
 
         <ProgressBar progress={progress} />
 
-        <Accordion items={[
-            { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
-            { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
-            { title: "Section 1", content: <div class="p8">"Content for section 1."</div> },
-        ]} />
+        <Accordion
+            title="Section 1"
+            children={<div class="p8">"Content for section 1."</div>}
+        />
 
         <Modal
             // fullScreen={true}

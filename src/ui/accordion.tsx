@@ -18,13 +18,17 @@ import { CssUI } from "./gen";
 .AccordionContent {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease-out, opacity 0.35s ease-out;
+    transition: max-height 0.2s ease-out, opacity 0.35s ease-out;
     opacity: 0;
 }
 
 */
 
-function AccordionItem(props: { title: JSX.Element, children: JSX.Element }) {
+export function Accordion(props: {
+    title: JSX.Element,
+    children: JSX.Element,
+    openStyle?: JSX.CSSProperties
+}) {
     const [isOpen, setIsOpen] = createSignal(false);
 
     const toggle = () => {
@@ -39,25 +43,13 @@ function AccordionItem(props: { title: JSX.Element, children: JSX.Element }) {
             <div
                 class={CssUI.AccordionContent}
                 style={isOpen() ? {
-                    "max-height": "20rem",
+                    ...props.openStyle,
+                    "max-height": "100%",
                     opacity: 1,
-                    "overflow-y": "scroll",
                 } : {}}
             >
                 {props.children}
             </div>
-        </>
-    );
-}
-
-export function Accordion(props: { items: { title: JSX.Element, content: JSX.Element }[] }) {
-    return (
-        <>
-            {props.items.map((item) => (
-                <AccordionItem title={item.title}>
-                    {item.content}
-                </AccordionItem>
-            ))}
         </>
     );
 }

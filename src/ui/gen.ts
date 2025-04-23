@@ -1,14 +1,14 @@
 import '../gen.css'
 import "./gen.css"
-export * from "./position.tsx";
-export * from "./gridlayout.tsx";
-export * from "./accordion.tsx";
-export * from "./dropdown.tsx";
-export * from "./bar.tsx";
-export * from "./button.tsx";
-export * from "./theme_toggle.tsx";
-export * from "./input.tsx";
-export * from "./spaceform.tsx";
+export * from "./position.tsx"; 
+export * from "./gridlayout.tsx"; 
+export * from "./accordion.tsx"; 
+export * from "./dropdown.tsx"; 
+export * from "./bar.tsx"; 
+export * from "./button.tsx"; 
+export * from "./theme_toggle.tsx"; 
+export * from "./input.tsx"; 
+export * from "./spaceform.tsx"; 
 export * from "./provider.tsx";
 
 
@@ -94,7 +94,9 @@ export const CssUI = {
     varInputLabelFocusColor: "--input-label-focus-color",
     varInputLabelFocusBg: "--input-label-focus-bg",
     varInputBg: "--input-bg",
-    varInputLabelBorder: "--Input-label-border"
+    varInputLabelBorder: "--Input-label-border",
+
+    
 } as const;
 
 export type CssUIType = keyof typeof CssUI;

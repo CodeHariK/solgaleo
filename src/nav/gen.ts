@@ -1,9 +1,9 @@
 import '../gen.css'
 import "./gen.css"
-export * from "./pagination.tsx";
-export * from "./tab.tsx";
-export * from "./breadcrumb.tsx";
-export * from "./header.tsx";
+export * from "./pagination.tsx"; 
+export * from "./tab.tsx"; 
+export * from "./breadcrumb.tsx"; 
+export * from "./header.tsx"; 
 export * from "./modal.tsx";
 
 
@@ -43,7 +43,9 @@ export const CssNAV = {
     varSecondaryContainer: "--secondary-container",
     varModalBg: "--modal-bg",
     varModalCol: "--modal-col",
-    varModalFullScreen: "--ModalFullScreen"
+    varModalFullScreen: "--ModalFullScreen",
+
+    
 } as const;
 
 export type CssNAVType = keyof typeof CssNAV;

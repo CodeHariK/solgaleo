@@ -2,9 +2,12 @@
 import fs from "fs";
 import path from "path";
 import { Plugin } from "vite";
+import { SafeString } from "./src/utils/regex";
 
 const CSS_COMMENT_REGEX = /\/\*\s*CSS:\-\s*([\s\S]*?)\*\//gm;
 const CSS_COMMENT_STRING_REGEX = /\/\*\s*CSS:\*\s*([\s\S]*?)\*\//gm;
+
+const FUNCTION_DOC_REGEX = /\/\/FN:START\s*([\s\S]*?)\/\/FN:(DOC|END)\s*([\s\S]*?)\/\/FN:END/g;
 
 const EXPORT_REGEX = /export\s+(?:const|let|var|function|class|type|interface|enum)/;
 
@@ -25,6 +28,8 @@ let NIGHT_VARS: Record<string, string> = {};
 let FINAL_CSS: string[] = [];
 let MEDIA_KEYFRAME_CSS: string[] = [];
 let UNIQUE_SELECTORS: Set<string> = new Set();
+
+let FUNCTION_DOCS: { element: string, doc: string, data: string }[] = [];
 
 function FlattenSelector(path: string[]): string {
     if (path.length === 0) return "";
@@ -107,7 +112,7 @@ function BuildSelectorPath(path: string[]): string {
         .replace(/\s*([-+>~])\s*/g, '$1'); // Remove spaces around combinators
 }
 
-function ProcessNode(node: Node, path: string[] = []) {
+function ProcessNode(node: Node, path: string[], fullCopy: boolean) {
     let fullSelector = BuildSelectorPath([...path, node.selector]);
     const classSelector = BuildClassSelector([...path, node.selector]);
 
@@ -148,15 +153,17 @@ function ProcessNode(node: Node, path: string[] = []) {
 
     if (lines.length) {
         UNIQUE_SELECTORS.add(classSelector.trim());
-        FINAL_CSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
+        if (!fullCopy) {
+            FINAL_CSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
+        }
     }
 
     for (const child of node.children) {
-        ProcessNode(child, [...path, node.selector]);
+        ProcessNode(child, [...path, node.selector], fullCopy);
     }
 }
 
-function ConvertCSS(input: string) {
+function ConvertCSS(input: string, fullCopy: boolean) {
 
     const lines = input.split(/(?<=[;{}]|\/\/.*)\s*\n/)
 
@@ -178,61 +185,67 @@ function ConvertCSS(input: string) {
 
         ExtractInlineVars(line);
 
-        if (trimLine(line).startsWith("@keyframes")
-            || trimLine(line).startsWith("@media")) {
-            const header = trimLine(line); // e.g., "@keyframes marquee"
-            const name = header.split(" ")[1]?.trim();
-            const buffer: string[] = [header];
-            i++;
+        if (!fullCopy) {
+            if (trimLine(line).startsWith("@keyframes")
+                || trimLine(line).startsWith("@media")) {
+                const header = trimLine(line); // e.g., "@keyframes marquee"
+                const name = header.split(" ")[1]?.trim();
+                const buffer: string[] = [header];
+                i++;
 
-            let depth = 0;
-            let currentStep = "0";
+                let depth = 0;
+                let currentStep = "0";
 
-            if (!(header.includes("{") &&
-                header.indexOf("{") < header.lastIndexOf("}"))) {
-                while (i < lines.length) {
-                    let keyframeLine = lines[i];
-                    const trimmed = trimLine(keyframeLine);
+                if (!(header.includes("{") &&
+                    header.indexOf("{") < header.lastIndexOf("}"))) {
+                    while (i < lines.length) {
+                        let keyframeLine = lines[i];
+                        const trimmed = trimLine(keyframeLine);
 
-                    ExtractInlineVars(keyframeLine);
+                        ExtractInlineVars(keyframeLine);
 
-                    // Update current keyframe step if matched
-                    const stepMatch = trimmed.match(/^(\d+)%\s*{?$/);
-                    if (stepMatch) {
-                        currentStep = stepMatch[1];
-                    }
-
-                    if (trimmed.endsWith("{")) depth++;
-                    if (trimmed === "}") depth--;
-
-                    if (trimmed.includes(":")) {
-                        const [rawProp, ...rest] = trimmed.split(":");
-                        const prop = rawProp.trim();
-                        const value = rest.join(":").trim().replace(/;$/, "");
-
-                        const key = `--keyframes-${name}-${currentStep}-${PROP_MAP[prop] ?? prop}`;
-                        if (ExtractVarValue(value, key)) {
-                            keyframeLine = `        ${prop}: var(${key});`;
+                        // Update current keyframe step if matched
+                        const stepMatch = trimmed.match(/^(\d+)%\s*{?$/);
+                        if (stepMatch) {
+                            currentStep = stepMatch[1];
                         }
+
+                        if (trimmed.endsWith("{")) depth++;
+                        if (trimmed === "}") depth--;
+
+                        if (trimmed.includes(":")) {
+                            const [rawProp, ...rest] = trimmed.split(":");
+                            const prop = rawProp.trim();
+                            const value = rest.join(":").trim().replace(/;$/, "");
+
+                            const key = `--keyframes-${name}-${currentStep}-${PROP_MAP[prop] ?? prop}`;
+                            if (ExtractVarValue(value, key)) {
+                                keyframeLine = `        ${prop}: var(${key});`;
+                            }
+                        }
+
+                        buffer.push(keyframeLine);
+                        i++;
+
+                        if (depth < 0) break;
                     }
-
-                    buffer.push(keyframeLine);
-                    i++;
-
-                    if (depth < 0) break;
+                } else {
+                    ExtractInlineVars(header);
                 }
-            } else {
-                ExtractInlineVars(header);
-            }
 
-            MEDIA_KEYFRAME_CSS.push(buffer.join("\n") + "\n");
-            continue;
+                MEDIA_KEYFRAME_CSS.push(buffer.join("\n") + "\n");
+                continue;
+            }
         }
 
         const trimmed = trimLine(line);
         if (!trimmed) {
             i++;
             continue;
+        }
+
+        if (fullCopy) {
+            FINAL_CSS.push(line)
         }
 
         if (trimmed.includes("{") &&
@@ -275,9 +288,11 @@ function ConvertCSS(input: string) {
         i++;
     }
 
-    ProcessNode(root);
+    ProcessNode(root, [], fullCopy);
 
-    FINAL_CSS.push(...MEDIA_KEYFRAME_CSS)
+    if (!fullCopy) {
+        FINAL_CSS.push(...MEDIA_KEYFRAME_CSS)
+    }
     MEDIA_KEYFRAME_CSS = []
 }
 
@@ -335,13 +350,26 @@ export default function ExtractCssComments(dir: string): Plugin {
                 while ((match = CSS_COMMENT_REGEX.exec(content)) !== null) {
                     const input = match[1].trim();
                     hasStyles = true;
-                    ConvertCSS(input);
+                    ConvertCSS(input, false);
                 }
 
                 while ((match = CSS_COMMENT_STRING_REGEX.exec(content)) !== null) {
                     const input = match[1].trim();
                     hasStyles = true;
-                    FINAL_CSS.push(input)
+                    ConvertCSS(input, true);
+                }
+
+                while ((match = FUNCTION_DOC_REGEX.exec(content)) !== null) {
+                    const doc = match[1].trim().replace(/^\/\//, '');
+                    const data = match[3].trim(); // Extract the function part
+
+                    const functionNameMatch = data.match(/function\s+(\w+)\s*\(/);
+                    const functionName = functionNameMatch ? functionNameMatch[1] : null;
+
+                    const element = SafeString(fullPath) + "." + functionName;
+
+                    FUNCTION_DOCS.push({ element, doc, data });
+
                 }
 
                 if (hasStyles || hasExports) {
@@ -380,6 +408,8 @@ export default function ExtractCssComments(dir: string): Plugin {
                         k.startsWith("--disabled") ||
                         k.startsWith("--modal-") ||
                         k.startsWith("--a-") ||
+                        k.startsWith("--animation") ||
+                        k.startsWith("--ease") ||
                         k.startsWith("--error")
                     ))
                     .map(([k, v]) => (v != "" && v != ";")
@@ -399,7 +429,7 @@ export default function ExtractCssComments(dir: string): Plugin {
                 // Generate exports string
                 const exportFiles = Array.from(processedFiles.values())
                     .filter(file => file.hasExports)
-                    .map(file => `export * from "${file.path.replace(folderPath, ".")}";`)
+                    .map(file => `export * from "${file.path.replace(folderPath, ".")}"; ${FUNCTION_DOCS.length > 0 ? `import * as ${SafeString(file.path)} from "${file.path.replace(folderPath, ".")}";` : ""}`)
                     .join("\n");
 
                 // Generate styles string
@@ -421,6 +451,7 @@ export default function ExtractCssComments(dir: string): Plugin {
                 NIGHT_VARS = {};
                 processedFiles.clear();
                 FINAL_CSS.length = 0;
+                FUNCTION_DOCS = []
             }
         }
     }
@@ -490,7 +521,17 @@ export const Css${fileName} = {
             ? selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ') + ','
             : ""}
 
-    ${cssVarMappings.map(({ name, value }) => `${name}: "${value}"`).join(',\n    ')}
+    ${cssVarMappings.map(({ name, value }) => `${name}: "${value}"`).join(',\n    ')},
+
+    ${FUNCTION_DOCS.length > 0 ? `Docs: [${FUNCTION_DOCS.map((f) => {
+                return `
+        {
+            element: ${f.element}, 
+            doc: "${f.doc}", 
+            data: ${JSON.stringify(f.data)}
+        }`
+            })}
+    ]` : ""}
 } as const;
 
 export type Css${fileName}Type = keyof typeof Css${fileName};

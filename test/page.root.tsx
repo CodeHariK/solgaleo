@@ -1,5 +1,6 @@
+import { createSignal } from "solid-js";
 import { VCarousel } from "../src/adv/gen";
-import { GridLayout, useSolContext } from "../src/ui/gen";
+import { Accordion, GridLayout, useSolContext } from "../src/ui/gen";
 import { RandomColor } from "../src/utils/color";
 import { TestHeader } from "./common";
 import { CssTEST } from "./gen";
@@ -7,9 +8,7 @@ import { CssTEST } from "./gen";
 /*CSS:-
 .CodeCard {
     width: 100%;
-    min-height: 200px;
     border-radius: 10px;
-    padding: 10px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     transition: transform 0.2s ease-in-out;
 
@@ -19,27 +18,40 @@ import { CssTEST } from "./gen";
 }
 */
 
-let code = ["one", "two", "three", "four", "five"]
-
 export function RootPage() {
 
-    const { data } = useSolContext()
+    const { getTheme } = useSolContext()
 
-    const light = () => data.themes[data.themeIndex]?.name == "light"
+    const light = () => getTheme()?.type == "light"
+
+    const [codeIndex, setCodeIndex] = createSignal(0);
 
     return <GridLayout
+
+        childrenStyle={{
+            "align-content": "center",
+        }}
 
         header={<TestHeader />}
 
         left={<VCarousel
-            children={code.map((c) => {
-                return <div class={CssTEST.CodeCard} style={{
-                    background: RandomColor({ lightness: light() ? 80 : 30 }),
-                    color: light() ? "black" : "white",
-                }}>
-                    <pre>
-                        {c}
-                    </pre>
+            children={CssTEST.Docs.map((c, i) => {
+                return <div
+                    class={CssTEST.CodeCard}
+                    style={{
+                        // background: RandomColor({ lightness: light() ? 96 : 30 }),
+                        // color: light() ? "black" : "white",
+                    }}
+                    onClick={() => {
+                        console.log(i)
+                        setCodeIndex(i)
+                    }}
+                >
+                    <Accordion
+                        title={c.doc}
+                        children={<pre>
+                            {c.data}
+                        </pre>} />
                 </div>
             })}
             listStyle={{ padding: "1rem" }}
@@ -49,8 +61,7 @@ export function RootPage() {
         gridStyle={{
             "grid-template-columns": "minmax(200px, 45%) 1fr"
         }}
-
     >
-        Root {data?.themeIndex}
+        <>{CssTEST.Docs[codeIndex()].element()}</>
     </GridLayout>
 }

@@ -84,13 +84,11 @@ import { MetaProvider, Title } from "@solidjs/meta";
 .GridLeft {
     grid-area: left;
     overflow-y: auto;
-    border-right: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridRight {
     grid-area: right;
     overflow-y: auto;
-    border-left: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridMiddle {
@@ -148,13 +146,11 @@ import { MetaProvider, Title } from "@solidjs/meta";
     height: auto;
     padding-top: 1rem;
     border: none;
-    border-right: 1px solid var(--border-color, #e5e7eb);
     overflow: visible;
 }
 
 .GridLayoutFlow .GridRight {
     border-right: none;
-    border-left: 1px solid var(--border-color, #e5e7eb);
 }
 
 .GridLayoutFlow .GridMiddle {

@@ -12,7 +12,8 @@
 --secondary : var : #ff69b4 : #ff69b4;
 --secondary-container : var : #ffe3f1 : #454245;
 
---surface : var : #6750A415 : #64626b87;
+--surface : var : oklch(from var(--body-bg) calc(l - .02) c h) : oklch(from var(--body-bg) calc(l + .3) c h);
+--surface-container : var : oklch(from var(--body-col) calc(l + .9) c h) : oklch(from var(--body-col) calc(l - .6) c h);
 
 --error : var : #B3261E : #ff7262;
 --error-container : var : #F9DEDC : #8C1D18;
@@ -26,23 +27,24 @@
 --modal-bg: var : oklch(from var(--body-bg) calc(l + .3) c h) ; 
 --modal-col: var : var(--body-col) ; 
 
-// ::-webkit-scrollbar {
-//   height: 8px;
-//   width: 8px;
-// }
-// ::-webkit-scrollbar-track {
-// }
-// ::-webkit-scrollbar-track:hover {
-//   background: var(--surface);
-// }
+::-webkit-scrollbar {
+  height: 8px;
+  width: 7px;
+}
 
-// ::-webkit-scrollbar-thumb {
-//   background: var(--primary-container);
-// }
-// ::-webkit-scrollbar-thumb:hover {
-//   border-radius: 20px;
-//   background: var(--primary-container);
-// }
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-track:hover {
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: var(--surface-container);
+}
+
+*:hover::-webkit-scrollbar-thumb {
+}
 
 * {
   scroll-behavior: smooth;
@@ -190,7 +192,6 @@ label[aria-disabled="true"] {
 }
 
 pre {
-  overflow: auto;    
   white-space: pre-wrap;
   font-family: monospace;
 }

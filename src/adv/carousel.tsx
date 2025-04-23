@@ -160,16 +160,16 @@
                 display: grid;
                 gap: .5rem;
                 transition: transform .3s var(--ease-3);
-                background: linear-gradient(to top, #000, 75%, #0000);
+                background: linear-gradient(to top, var(--secondary-container), 75%, transparent);
                 padding-inline: 1.5rem;
                 padding-block: 4rem 1rem;
 
                 & h5 {
-                    color: var(--gray-0);
+                    color: var(--primary);
                 }
 
                 & p {
-                    color: var(--gray-4);
+                    color: var(--secondary);
                 }
             }
         }

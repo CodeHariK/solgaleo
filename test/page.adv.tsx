@@ -72,7 +72,10 @@ export function AdvTest() {
     </GridLayout>
 }
 
-function SuperTableTest() {
+//FN:START
+//SuperTable : Table with sticky header
+//FN:DOC
+export function SuperTableTest() {
     return <SuperTable
 
         tableStyle={{
@@ -84,7 +87,6 @@ function SuperTableTest() {
         style={{
             margin: "10px",
             padding: "15px",
-            background: "var(--surface)",
             width: "90%",
             "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
         }}
@@ -161,8 +163,12 @@ function SuperTableTest() {
         </div>}
     ></SuperTable>;
 }
+//FN:END
 
-function MarkdownTest() {
+//FN:START
+//MiniMarkdown : Simple Markdown renderer
+//FN:DOC
+export function MarkdownTest() {
     return <MiniMarkdown content="
     # Title
         ## Subtitle
@@ -191,3 +197,4 @@ sudo pacman -Sy    # Sync package databases
 ```"
     />
 }
+//FN:END

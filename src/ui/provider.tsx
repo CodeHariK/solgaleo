@@ -11,6 +11,7 @@ interface SolData {
 interface SolContextType {
     data: SolData;
     setData: (key: keyof SolData, value: any) => void;
+    getTheme: () => Theme | undefined;
 }
 
 // Create the context
@@ -33,11 +34,15 @@ export const SolProvider = (props: { initialData: SolData; children: JSX.Element
     });
 
     onMount(() => {
-        console.log("SolStart", props.initialData)
+        console.log("SolStart", data)
     })
 
+    const getTheme = () => {
+        return data.themes[data.themeIndex]
+    }
+
     return (
-        <SolContext.Provider value={{ data, setData }}>
+        <SolContext.Provider value={{ data, setData, getTheme }}>
             {props.children}
         </SolContext.Provider>
     );

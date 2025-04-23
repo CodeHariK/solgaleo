@@ -5,7 +5,7 @@
     --primary-container: #def4b8;
     --secondary: #e7ff5f;
     --secondary-container: rgb(255, 255, 199);
-    --surface: #3db62a1e;
+    --surface: oklch(from var(--body-bg) calc(l - .01) c h);
     --error: #B3261E;
     --error-container: #F9DEDC;
     --disabled: #9CA3AF;

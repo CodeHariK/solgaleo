@@ -10,9 +10,12 @@ import ExtractCssComments from "../vite-plugin-extract-css-comments";
 export default defineConfig({
   root: "test",
   base: '/solgaleo',
+  server: {
+    port: 3000,
+    host: '0.0.0.0',
+  },
   plugins: [
     solid(),
-
 
     devtools({
       autoname: true,
