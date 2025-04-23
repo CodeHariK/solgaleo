@@ -6,6 +6,7 @@ import { SafeString } from "./src/utils/regex";
 
 const CSS_COMMENT_REGEX = /\/\*\s*CSS:\-\s*([\s\S]*?)\*\//gm;
 const CSS_COMMENT_STRING_REGEX = /\/\*\s*CSS:\*\s*([\s\S]*?)\*\//gm;
+const CSS_COMMENT_COPY_REGEX = /\/\*\s*CSS:\+\s*([\s\S]*?)\*\//gm;
 
 const FUNCTION_DOC_REGEX = /\/\/FN:START\s*([\s\S]*?)\/\/FN:(DOC|END)\s*([\s\S]*?)\/\/FN:END/g;
 
@@ -23,11 +24,15 @@ type Node = {
     children: Node[];
 };
 
+let FINAL_LIGHT_VARS: Record<string, string> = {};
+let FINAL_NIGHT_VARS: Record<string, string> = {};
+let FINAL_FILE_CSS: string[] = [];
+let FINAL_UNIQUE_CLASS_SELECTORS: Set<string> = new Set();
+
 let LIGHT_VARS: Record<string, string> = {};
 let NIGHT_VARS: Record<string, string> = {};
-let FINAL_CSS: string[] = [];
-let MEDIA_KEYFRAME_CSS: string[] = [];
-let UNIQUE_SELECTORS: Set<string> = new Set();
+let FILE_CSS: string[] = [];
+let UNIQUE_CLASS_SELECTORS: Set<string> = new Set();
 
 let FUNCTION_DOCS: { element: string, doc: string, data: string }[] = [];
 
@@ -152,9 +157,9 @@ function ProcessNode(node: Node, path: string[], fullCopy: boolean) {
     }
 
     if (lines.length) {
-        UNIQUE_SELECTORS.add(classSelector.trim());
+        UNIQUE_CLASS_SELECTORS.add(classSelector.trim());
         if (!fullCopy) {
-            FINAL_CSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
+            FILE_CSS.push(`${fullSelector} {\n${lines.join("\n")}\n}\n`);
         }
     }
 
@@ -164,6 +169,8 @@ function ProcessNode(node: Node, path: string[], fullCopy: boolean) {
 }
 
 function ConvertCSS(input: string, fullCopy: boolean) {
+
+    let MEDIA_KEYFRAME_CSS: string[] = [];
 
     const lines = input.split(/(?<=[;{}]|\/\/.*)\s*\n/)
 
@@ -245,7 +252,7 @@ function ConvertCSS(input: string, fullCopy: boolean) {
         }
 
         if (fullCopy) {
-            FINAL_CSS.push(line)
+            FILE_CSS.push(line)
         }
 
         if (trimmed.includes("{") &&
@@ -291,7 +298,7 @@ function ConvertCSS(input: string, fullCopy: boolean) {
     ProcessNode(root, [], fullCopy);
 
     if (!fullCopy) {
-        FINAL_CSS.push(...MEDIA_KEYFRAME_CSS)
+        FILE_CSS.push(...MEDIA_KEYFRAME_CSS)
     }
     MEDIA_KEYFRAME_CSS = []
 }
@@ -307,6 +314,13 @@ export default function ExtractCssComments(dir: string): Plugin {
 
     async function runExtract() {
         await processDirectory(dir);
+
+        LIGHT_VARS = FINAL_LIGHT_VARS
+        NIGHT_VARS = FINAL_NIGHT_VARS
+        FILE_CSS = FINAL_FILE_CSS
+        UNIQUE_CLASS_SELECTORS = FINAL_UNIQUE_CLASS_SELECTORS
+
+        await writeCssTs('src', true);
     }
 
     return {
@@ -359,6 +373,12 @@ export default function ExtractCssComments(dir: string): Plugin {
                     ConvertCSS(input, true);
                 }
 
+                while ((match = CSS_COMMENT_COPY_REGEX.exec(content)) !== null) {
+                    const input = match[1].trim();
+                    hasStyles = true;
+                    FILE_CSS.push(input)
+                }
+
                 while ((match = FUNCTION_DOC_REGEX.exec(content)) !== null) {
                     const doc = match[1].trim().replace(/^\/\//, '');
                     const data = match[3].trim(); // Extract the function part
@@ -389,15 +409,17 @@ export default function ExtractCssComments(dir: string): Plugin {
                 processedFiles.set(path, file);
             }
 
-            const currentFolder = path.basename(dirPath);
-            await writeCssTs(dirPath, currentFolder);
+
+            await writeCssTs(dirPath, true);
         }
 
         return allFiles;
     }
 
-    async function writeCssTs(folderPath, folderName) {
-        if (LIGHT_VARS || NIGHT_VARS || FINAL_CSS) {
+    async function writeCssTs(folderPath: string, writeFile: boolean) {
+        const folderName = path.basename(folderPath);
+
+        if (LIGHT_VARS || NIGHT_VARS || FILE_CSS) {
             const buildVars = (theme: string, vars: Record<string, string>) => `.${theme} {\n` +
                 Object.entries(vars)
                     .filter(([k, _]) => folderPath == "src" ? true : !(
@@ -421,7 +443,7 @@ export default function ExtractCssComments(dir: string): Plugin {
             let combinedCSS = [
                 buildVars("light", LIGHT_VARS), "",
                 buildVars("night", NIGHT_VARS), "",
-                ...FINAL_CSS
+                ...FILE_CSS
             ].join("\n");
 
             if (combinedCSS) {
@@ -438,26 +460,41 @@ export default function ExtractCssComments(dir: string): Plugin {
                     .map(file => file.path.replace(folderName + "/", ""))
                     .join("\n");
 
-                await fs.promises.writeFile(`${folderPath}/gen.css`,
-                    `/*\n${styleFiles}\n*/\n\n` +
-                    combinedCSS.trim() + "\n",
-                    "utf-8");
+                if (writeFile) {
+                    await fs.promises.writeFile(`${folderPath}/gen.css`,
+                        `/*\n${styleFiles}\n*/\n\n` +
+                        combinedCSS.trim() + "\n",
+                        "utf-8");
+                }
 
                 console.log(`Extracted CSS to ${folderPath}/gen.css`);
 
-                await WriteSelectorsFile(`${folderPath}/gen.ts`, exportFiles.trim());
+                await WriteSelectorsFile(`${folderPath}/gen.ts`, exportFiles.trim(), writeFile);
+
+                FINAL_LIGHT_VARS = {
+                    ...FINAL_LIGHT_VARS,
+                    ...LIGHT_VARS,
+                };
+                FINAL_NIGHT_VARS = {
+                    ...FINAL_NIGHT_VARS,
+                    ...NIGHT_VARS,
+                };
+                FINAL_FILE_CSS = [
+                    ...FINAL_FILE_CSS,
+                    ...FILE_CSS,
+                ];
 
                 LIGHT_VARS = {};
                 NIGHT_VARS = {};
+                FILE_CSS = [];
                 processedFiles.clear();
-                FINAL_CSS.length = 0;
                 FUNCTION_DOCS = []
             }
         }
     }
 }
 
-async function WriteSelectorsFile(filePath: string, exportFiles: string) {
+async function WriteSelectorsFile(filePath: string, exportFiles: string, writeFile: boolean) {
 
     const cssVarMappings = Object.keys(LIGHT_VARS)
         .filter(key => key.startsWith('--'))
@@ -485,7 +522,7 @@ async function WriteSelectorsFile(filePath: string, exportFiles: string) {
             })
     );
 
-    const selectors = Array.from(UNIQUE_SELECTORS)
+    const classSelectors = Array.from(UNIQUE_CLASS_SELECTORS)
         .filter(s => s.trim())
         .map(selector => {
 
@@ -517,8 +554,8 @@ ${exportFiles}
 ${subFolderExports.filter(Boolean).map(exp => exp?.export).join("\n")}
 
 export const Css${fileName} = {
-    ${selectors.toString().trim()
-            ? selectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ') + ','
+    ${classSelectors.toString().trim()
+            ? classSelectors.map(({ key, value }) => `${key}: "${value}"`).join(',\n    ') + ','
             : ""}
 
     ${cssVarMappings.map(({ name, value }) => `${name}: "${value}"`).join(',\n    ')},
@@ -528,7 +565,7 @@ export const Css${fileName} = {
         {
             element: ${f.element}, 
             doc: "${f.doc}", 
-            data: ${JSON.stringify(f.data)}
+            data: ${JSON.stringify(f.data).replaceAll("    ", "  ")}
         }`
             })}
     ]` : ""}
@@ -537,11 +574,18 @@ export const Css${fileName} = {
 export type Css${fileName}Type = keyof typeof Css${fileName};
 `;
 
-    await fs.promises.writeFile(filePath, content, 'utf-8');
+    if (writeFile) {
+        await fs.promises.writeFile(filePath, content, 'utf-8');
+    }
 
     console.log(`Generated selectors file: ${filePath}`);
 
-    UNIQUE_SELECTORS.clear();
+    FINAL_UNIQUE_CLASS_SELECTORS = new Set([
+        ...FINAL_UNIQUE_CLASS_SELECTORS,
+        ...UNIQUE_CLASS_SELECTORS,
+    ]);
+
+    UNIQUE_CLASS_SELECTORS.clear();
 }
 
 function cssVarToVarName(cssVar: string): string {

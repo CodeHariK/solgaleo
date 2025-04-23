@@ -5,3 +5,8 @@ clean:
 	rm -r dist-test
 	rm -r dist-example
 
+gotest:
+	go run main.go
+
+goexample:
+	go run main.go -dir=dist-example

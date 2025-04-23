@@ -6,10 +6,10 @@ import { ThemeToggle } from "../src/gen";
 //FN:DOC
 export function TestHeader() {
     return <Header
-        title={<a href="/">
+        title={<AA href="/">
             <IMG src="/logo.png" alt="solgaleo" />
             <p>Solgaleo</p>
-        </a>}
+        </AA>}
         links={[
             <AA href={'/nav'} title='Nav'>Nav</AA>,
             <AA href={'/adv'} title='Adv' >Adv</AA>,

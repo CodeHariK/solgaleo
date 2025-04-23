@@ -17,6 +17,26 @@ export const CssTEST = {
     BlogItem: "blog-item",
     BlogMeta: "blog-meta",
     CodeCard: "CodeCard",
+    TabContent: "tab-content",
+    TabLink: "tab-link",
+    LineNumbers: "line-numbers",
+    LineNumbersRows: "line-numbers-rows",
+    CodeToolbar: "code-toolbar",
+    Limit300: "limit-300",
+    Limit500: "limit-500",
+    Limit600: "limit-600",
+    Limit700: "limit-700",
+    Limit800: "limit-800",
+    LanguageCss: "language-css",
+    Token: "token",
+    LanguageHtml: "language-html",
+    LanguageJavascript: "language-javascript",
+    LanguageMarkup: "language-markup",
+    HighlightLine: "highlight-line",
+    HighlightLineIsdir: "highlight-line-isdir",
+    HighlightLineActive: "highlight-line-active",
+    HighlightLineAdd: "highlight-line-add",
+    HighlightLineRemove: "highlight-line-remove",
     IconGrid: "IconGrid",
     IconItem: "IconItem",
     IconLabel: "IconLabel",
@@ -35,6 +55,39 @@ export const CssTEST = {
 
     varBlogTitleColor: "--blog-title-color",
     varPrimary: "--primary",
+    varComment: "--comment",
+    varPurple: "--purple",
+    varSelection: "--selection",
+    varForeground: "--foreground",
+    varGreen: "--green",
+    varBackground: "--background",
+    varPink: "--pink",
+    varYellow: "--yellow",
+    varCyan: "--cyan",
+    varOrange: "--orange",
+    varRed: "--red",
+    varSelection30: "--selection-30",
+    varComment30: "--comment-30",
+    varGreen30: "--green-30",
+    varRed30: "--red-30",
+    varBackground30: "--background-30",
+    varForeground30: "--foreground-30",
+    varCyan30: "--cyan-30",
+    varOrange30: "--orange-30",
+    varPink30: "--pink-30",
+    varPurple30: "--purple-30",
+    varYellow30: "--yellow-30",
+    varBackground40: "--background-40",
+    varComment40: "--comment-40",
+    varForeground40: "--foreground-40",
+    varSelection40: "--selection-40",
+    varCyan40: "--cyan-40",
+    varGreen40: "--green-40",
+    varOrange40: "--orange-40",
+    varPink40: "--pink-40",
+    varPurple40: "--purple-40",
+    varRed40: "--red-40",
+    varYellow40: "--yellow-40",
     varVisibility: "--visibility",
     varSvgRingWidth: "--svg-ring-width",
     varSvgRingColor: "--svg-ring-color",
@@ -64,62 +117,62 @@ export const CssTEST = {
         {
             element: test_page_fancy_tsx.BannerTest, 
             doc: "Banner", 
-            data: "export function BannerTest() {\n    return <Banner title=\"Tip\"\n        info=\"Although most developers will stick to just one UI framework, Rocket supports multiple frameworks in the same project. This allows you to:\"\n    >\n        <ol>\n            <li>Choose the framework that is best for each component.\n                <ol>\n                    <li>Nested item 1</li>\n                    <li>Nested item 2</li>\n                </ol>\n                ii    </li>\n            <li>Learn a new framework without needing to start a new project.</li>\n            <li>Collaborate with others even when working in different frameworks.</li>\n            <li>Incrementally convert an existing site to another framework with no downtime.</li>\n        </ol>\n    </Banner>;\n}"
+            data: "export function BannerTest() {\n  return <Banner title=\"Tip\"\n    info=\"Although most developers will stick to just one UI framework, Rocket supports multiple frameworks in the same project. This allows you to:\"\n  >\n    <ol>\n      <li>Choose the framework that is best for each component.\n        <ol>\n          <li>Nested item 1</li>\n          <li>Nested item 2</li>\n        </ol>\n        ii  </li>\n      <li>Learn a new framework without needing to start a new project.</li>\n      <li>Collaborate with others even when working in different frameworks.</li>\n      <li>Incrementally convert an existing site to another framework with no downtime.</li>\n    </ol>\n  </Banner>;\n}"
         },
         {
             element: test_page_nav_tsx.BreadcrumbTest, 
             doc: "Breadcrumb", 
-            data: "export function BreadcrumbTest() {\n    return <N.Breadcrumbs items={[\n        {\n            element: <IconHome />,\n            link: \"/\",\n            fn: () => console.log(\"Hello\")\n        },\n        {\n            element: <span>Products</span>,\n            link: \"/products\"\n        },\n        {\n            element: <span>Category</span>\n        }\n    ]} />;\n}"
+            data: "export function BreadcrumbTest() {\n  return <N.Breadcrumbs items={[\n    {\n      element: <IconHome />,\n      link: \"/\",\n      fn: () => console.log(\"Hello\")\n    },\n    {\n      element: <span>Products</span>,\n      link: \"/products\"\n    },\n    {\n      element: <span>Category</span>\n    }\n  ]} />;\n}"
         },
         {
             element: test_page_adv_tsx.SuperTableTest, 
             doc: "SuperTable : Table with sticky header", 
-            data: "export function SuperTableTest() {\n    return <SuperTable\n\n        tableStyle={{\n            \"max-height\": \"300px\",\n            \"overflow-y\": \"scroll\",\n            margin: \"10px 0px\",\n        }}\n\n        style={{\n            margin: \"10px\",\n            padding: \"15px\",\n            width: \"90%\",\n            \"box-shadow\": \"rgba(0, 0, 0, 0.1) 0px 0px 6px 2px\",\n        }}\n\n        tableArray={[\"#eedbf7\", \"#ffd5ca\", \"#d3fcdd\",].map((tableHeaderColor) => {\n            return {\n                headerItems: [\n                    <><p>User Agent </p><IconTableHeading /></>,\n                    <><p>Started </p><IconTableHeading /></>,\n                    <><p>Active </p><IconTableHeading /></>,\n                    <><p>Valid </p><IconTableHeading /></>,\n                    <>Revoke</>,\n                ],\n                rowStyle: {\n                    \"grid-template-columns\": `1fr 2fr 1fr 1fr 1fr`\n                },\n                headerStyle: {\n                    \"grid-template-columns\": `1fr 2fr 1fr 1fr 1fr`,\n                },\n                headerCellStyle: () => {\n                    return {\n                        margin: \".1rem\",\n                        padding: \"10px\",\n                        background: tableHeaderColor,\n                    };\n                },\n                rowCellStyle: (row, col) => {\n                    return {\n                        padding: \"10px\",\n                        margin: \".1rem\",\n                        background: (col == 1 || row == 1) ? tableHeaderColor : \"\"\n                    };\n                },\n                data: [\n                    { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n                    { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n                    { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n                    { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n                    { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n                    { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n                ].map((s, _i) => {\n                    return {\n                        // info: <p>`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the `</p>,\n                        hiddenDetails: <div>More info about John Doe...</div>,\n\n                        rowItems: [\n                            <p>{s.agent}</p>,\n\n                            <p>{(() => {\n                                let d = new Date(Number(s.iat) * 1000);\n                                return d.toLocaleDateString() + \" (\" + d.toLocaleTimeString() + \")\";\n                            })()}</p>,\n                            <p>Active</p>,\n                            <p>{s.exp.toString()}</p>,\n                            <button class={CssUI.IconButton}><IconCross /></button>\n                        ]\n                    };\n                }\n                )\n            };\n        })}\n\n        headerstart={<div>\n            <h3>Login sessions</h3>\n        </div>}\n        headerend={<div class=\"flex gap2\">\n            <button class={CssUI.OutlinedButton}>Revoke All</button>\n            <button class={CssUI.MaterialButton}>Logout</button>\n        </div>}\n        footerstart={<p>Page 1 of 10</p>}\n        footerend={<div class=\"flex gap2\">\n            <button class={CssUI.MaterialButton}>Previous</button>\n            <button class={CssUI.MaterialButton}>Next</button>\n        </div>}\n    ></SuperTable>;\n}"
+            data: "export function SuperTableTest() {\n  return <SuperTable\n\n    tableStyle={{\n      \"max-height\": \"300px\",\n      \"overflow-y\": \"scroll\",\n      margin: \"10px 0px\",\n    }}\n\n    style={{\n      margin: \"10px\",\n      padding: \"15px\",\n      width: \"90%\",\n      \"box-shadow\": \"rgba(0, 0, 0, 0.1) 0px 0px 6px 2px\",\n    }}\n\n    tableArray={[\"#eedbf7\", \"#ffd5ca\", \"#d3fcdd\",].map((tableHeaderColor) => {\n      return {\n        headerItems: [\n          <><p>User Agent </p><IconTableHeading /></>,\n          <><p>Started </p><IconTableHeading /></>,\n          <><p>Active </p><IconTableHeading /></>,\n          <><p>Valid </p><IconTableHeading /></>,\n          <>Revoke</>,\n        ],\n        rowStyle: {\n          \"grid-template-columns\": `1fr 2fr 1fr 1fr 1fr`\n        },\n        headerStyle: {\n          \"grid-template-columns\": `1fr 2fr 1fr 1fr 1fr`,\n        },\n        headerCellStyle: () => {\n          return {\n            margin: \".1rem\",\n            padding: \"10px\",\n            background: tableHeaderColor,\n          };\n        },\n        rowCellStyle: (row, col) => {\n          return {\n            padding: \"10px\",\n            margin: \".1rem\",\n            background: (col == 1 || row == 1) ? tableHeaderColor : \"\"\n          };\n        },\n        data: [\n          { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n          { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n          { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n          { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n          { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n          { agent: \"Hello\", iat: 1744696177, exp: 1744696177 },\n        ].map((s, _i) => {\n          return {\n            // info: <p>`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the `</p>,\n            hiddenDetails: <div>More info about John Doe...</div>,\n\n            rowItems: [\n              <p>{s.agent}</p>,\n\n              <p>{(() => {\n                let d = new Date(Number(s.iat) * 1000);\n                return d.toLocaleDateString() + \" (\" + d.toLocaleTimeString() + \")\";\n              })()}</p>,\n              <p>Active</p>,\n              <p>{s.exp.toString()}</p>,\n              <button class={CssUI.IconButton}><IconCross /></button>\n            ]\n          };\n        }\n        )\n      };\n    })}\n\n    headerstart={<div>\n      <h3>Login sessions</h3>\n    </div>}\n    headerend={<div class=\"flex gap2\">\n      <button class={CssUI.OutlinedButton}>Revoke All</button>\n      <button class={CssUI.MaterialButton}>Logout</button>\n    </div>}\n    footerstart={<p>Page 1 of 10</p>}\n    footerend={<div class=\"flex gap2\">\n      <button class={CssUI.MaterialButton}>Previous</button>\n      <button class={CssUI.MaterialButton}>Next</button>\n    </div>}\n  ></SuperTable>;\n}"
         },
         {
             element: test_page_adv_tsx.MarkdownTest, 
             doc: "MiniMarkdown : Simple Markdown renderer", 
-            data: "export function MarkdownTest() {\n    return <MiniMarkdown content=\"\n    # Title\n        ## Subtitle\n### Smaller Title\n    **Hello**, \nthis is _italic_, \n\nand a [link](https://example.com)\n\n### Pacman Update Commands\nsudo pacman -Sy    # Sync package databases\n\n```go\n    ### Pacman Update Commands\n    sudo pacman -Sy    # Sync package databases\n\n    import (\n        'io',\n        'os',\n        'fmt'\n    )\n\n    func main(){\n        fmt.Println('Hello')\n    }\n```\"\n    />\n}"
+            data: "export function MarkdownTest() {\n  return <MiniMarkdown content=\"\n  # Title\n    ## Subtitle\n### Smaller Title\n  **Hello**, \nthis is _italic_, \n\nand a [link](https://example.com)\n\n### Pacman Update Commands\nsudo pacman -Sy  # Sync package databases\n\n```go\n  ### Pacman Update Commands\n  sudo pacman -Sy  # Sync package databases\n\n  import (\n    'io',\n    'os',\n    'fmt'\n  )\n\n  func main(){\n    fmt.Println('Hello')\n  }\n```\"\n  />\n}"
         },
         {
             element: test_page_root_tsx.Hello, 
             doc: "Hello", 
-            data: "export function Hello() {\n    return <div>\n        Hello\n    </div>\n}"
+            data: "export function Hello() {\n  return <div>\n    Hello\n  </div>\n}"
         },
         {
             element: test_page_grid_tsx.FixedAll3, 
             doc: "GridLayout : Standard layouts", 
-            data: "export function FixedAll3() {\n    return <GridLayout\n        header={<TestHeader />}\n        left={<TestVCarousel />}\n        right={<TestVCarousel />}\n    >\n        <TestVCarousel />\n    </GridLayout>\n}"
+            data: "export function FixedAll3() {\n  return <GridLayout\n    header={<TestHeader />}\n    left={<TestVCarousel />}\n    right={<TestVCarousel />}\n  >\n    <TestVCarousel />\n  </GridLayout>\n}"
         },
         {
             element: test_page_grid_tsx.TestVCarousel, 
             doc: "VCarousel : Vertical carousel list", 
-            data: "export function TestVCarousel() {\n    return <VCarousel children={[\n        \"one\",\n        \"two\",\n        \"three\",\n        \"four\",\n        \"five\",\n        \"six\",\n        \"seven\",\n        \"nine\",\n        \"ten\",\n    ]}\n        itemStyle={{\n            background: \"var(--primary-container)\",\n            padding: \"10px\",\n            \"border-radius\": \"1rem\",\n            height: \"400px\",\n            \"text-align\": 'center',\n            \"align-content\": 'center'\n        }}\n        listStyle={{ padding: \"10px\" }} />\n}"
+            data: "export function TestVCarousel() {\n  return <VCarousel children={[\n    \"one\",\n    \"two\",\n    \"three\",\n    \"four\",\n    \"five\",\n    \"six\",\n    \"seven\",\n    \"nine\",\n    \"ten\",\n  ]}\n    itemStyle={{\n      background: \"var(--primary-container)\",\n      padding: \"10px\",\n      \"border-radius\": \"1rem\",\n      height: \"400px\",\n      \"text-align\": 'center',\n      \"align-content\": 'center'\n    }}\n    listStyle={{ padding: \"10px\" }} />\n}"
         },
         {
             element: test_page_tabs_tsx.TestTreeView, 
             doc: "TreeView", 
-            data: "export function TestTreeView() {\n    return <Treeview\n        tabsData={sampleTabData()}\n        onClick={(node) => {\n            console.log(\"Leaf clicked:\", node);\n        }} />;\n}"
+            data: "export function TestTreeView() {\n  return <Treeview\n    tabsData={sampleTabData()}\n    onClick={(node) => {\n      console.log(\"Leaf clicked:\", node);\n    }} />;\n}"
         },
         {
             element: test_page_svg_tsx.tSvg, 
             doc: "Svg", 
-            data: "export function tSvg() {\n    return <div class={CssTEST.IconGrid}>\n        {icons.map(({ component: Icon, name }) => (\n            <div class={CssTEST.IconItem}>\n                <Icon style={{ width: \"4rem\", height: \"4rem\" }} />\n                <span class={CssTEST.IconLabel}>{name}</span>\n            </div>\n        ))}\n    </div>\n\n}"
+            data: "export function tSvg() {\n  return <div class={CssTEST.IconGrid}>\n    {icons.map(({ component: Icon, name }) => (\n      <div class={CssTEST.IconItem}>\n        <Icon style={{ width: \"4rem\", height: \"4rem\" }} />\n        <span class={CssTEST.IconLabel}>{name}</span>\n      </div>\n    ))}\n  </div>\n\n}"
         },
         {
             element: test_common_tsx.TestHeader, 
             doc: "Header", 
-            data: "export function TestHeader() {\n    return <Header\n        title={<a href=\"/\">\n            <IMG src=\"/logo.png\" alt=\"solgaleo\" />\n            <p>Solgaleo</p>\n        </a>}\n        links={[\n            <AA href={'/nav'} title='Nav'>Nav</AA>,\n            <AA href={'/adv'} title='Adv' >Adv</AA>,\n            <AA href={'/svg'} title='Svg' >Svg</AA>,\n            <AA href={'/fancy'} title='Fancy' >Fancy</AA>,\n            <AA href={'/ui'} title='Ui' >Ui</AA>,\n            <AA href={'/grid'} title='Grid'>Grid</AA>,\n            <AA href=\"/tabs\" >Tab</AA>,\n            <AA href=\"/tabs?two.light=Root.Pictures.Vacation\" >Tabs</AA>,\n        ]}\n        right={[\n            <ThemeToggle />\n        ]}\n    />;\n}"
+            data: "export function TestHeader() {\n  return <Header\n    title={<AA href=\"/\">\n      <IMG src=\"/logo.png\" alt=\"solgaleo\" />\n      <p>Solgaleo</p>\n    </AA>}\n    links={[\n      <AA href={'/nav'} title='Nav'>Nav</AA>,\n      <AA href={'/adv'} title='Adv' >Adv</AA>,\n      <AA href={'/svg'} title='Svg' >Svg</AA>,\n      <AA href={'/fancy'} title='Fancy' >Fancy</AA>,\n      <AA href={'/ui'} title='Ui' >Ui</AA>,\n      <AA href={'/grid'} title='Grid'>Grid</AA>,\n      <AA href=\"/tabs\" >Tab</AA>,\n      <AA href=\"/tabs?two.light=Root.Pictures.Vacation\" >Tabs</AA>,\n    ]}\n    right={[\n      <ThemeToggle />\n    ]}\n  />;\n}"
         },
         {
             element: test_NotFound_tsx.NotFound, 
             doc: "Ghost", 
-            data: "export function NotFound() {\n   return (\n      <GridLayout\n         title='Page Not Found'\n         header={<TestHeader />}\n      >\n         <div class=\"flex flex-col justify-center items-center gap8 h-full\">\n            <h1>404 - Page Not Found</h1>\n            <a title=\"Return to Home\" href=\".\">\n               <RainbowText>Return to Home</RainbowText>\n            </a>\n\n            <GhostComponent\n               ghostColor=\"#3a3a3a4d\"\n               waveColor=\"#8c2ec26c\"\n               eyeColor='#f8474787'\n            />\n\n         </div>\n      </GridLayout>\n   );\n}"
+            data: "export function NotFound() {\n   return (\n    <GridLayout\n     title='Page Not Found'\n     header={<TestHeader />}\n    >\n     <div class=\"flex flex-col justify-center items-center gap8 h-full\">\n      <h1>404 - Page Not Found</h1>\n      <a title=\"Return to Home\" href=\".\">\n         <RainbowText>Return to Home</RainbowText>\n      </a>\n\n      <GhostComponent\n         ghostColor=\"#3a3a3a4d\"\n         waveColor=\"#8c2ec26c\"\n         eyeColor='#f8474787'\n      />\n\n     </div>\n    </GridLayout>\n   );\n}"
         },
         {
             element: test_page_ui_tsx.ButtonTest, 
             doc: "Buttons", 
-            data: "export function ButtonTest(setProgress?: (progress: number) => void) {\n    return <div style={{ \"display\": \"flex\", \"align-items\": \"center\", \"flex-wrap\": \"wrap\" }}>\n\n        <button>BaseButton</button>\n\n        <button class={CssUI.MaterialButton}>MaterialButton</button>\n\n        <button class={CssUI.OutlinedButton}>OutlinedButton</button>\n\n        <button class={CssUI.IconButton} onClick={() => {\n            setProgress?.(80);\n        }}><IconHome /></button>\n\n        <AsyncButton onClick={async (): Promise<void> => {\n            // Simulate an async operation (e.g., API call)\n            return new Promise((resolve, reject) => {\n                setTimeout(() => {\n                    const shouldFail = Math.random() < 0.5; // 50% chance to fail\n                    if (shouldFail) {\n                        reject(new Error(\"Something went wrong!\"));\n                    } else {\n                        resolve(); // Resolve without returning a value\n                    }\n                }, 2000);\n            });\n        }}>\n            Click Me\n        </AsyncButton>\n    </div>;\n}"
+            data: "export function ButtonTest(setProgress?: (progress: number) => void) {\n  return <div style={{ \"display\": \"flex\", \"align-items\": \"center\", \"flex-wrap\": \"wrap\" }}>\n\n    <button>BaseButton</button>\n\n    <button class={CssUI.MaterialButton}>MaterialButton</button>\n\n    <button class={CssUI.OutlinedButton}>OutlinedButton</button>\n\n    <button class={CssUI.IconButton} onClick={() => {\n      setProgress?.(80);\n    }}><IconHome /></button>\n\n    <AsyncButton onClick={async (): Promise<void> => {\n      // Simulate an async operation (e.g., API call)\n      return new Promise((resolve, reject) => {\n        setTimeout(() => {\n          const shouldFail = Math.random() < 0.5; // 50% chance to fail\n          if (shouldFail) {\n            reject(new Error(\"Something went wrong!\"));\n          } else {\n            resolve(); // Resolve without returning a value\n          }\n        }, 2000);\n      });\n    }}>\n      Click Me\n    </AsyncButton>\n  </div>;\n}"
         }
     ]
 } as const;
