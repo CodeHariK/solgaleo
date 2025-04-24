@@ -1,5 +1,5 @@
 import { AA, Header, IMG } from "../src/nav/header";
-import { ThemeToggle } from "../src/gen";
+import { ThemeToggle } from "../src/ui/theme_toggle";
 
 //FN:START
 //Header

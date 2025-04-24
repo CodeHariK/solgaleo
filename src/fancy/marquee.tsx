@@ -1,7 +1,7 @@
 import { For, JSX } from "solid-js";
 import { CssFANCY } from "./gen";
 
-/*CSS:-
+/*CSS:*
 .Marquee{
     display: flex;
     align-items: center;

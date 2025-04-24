@@ -1,4 +1,4 @@
-/*CSS:-
+/*CSS:*
 button, .IconButton, .MaterialButton, .OutlinedButton,
 .MaterialRoundButton, .OutlinedRoundButton, .Tag {
     display: inline-flex;
@@ -32,10 +32,10 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .IconButton {
-    --icon-bg: var(--surface);
-    --icon-border-radius: var : 100rem;
-    --icon-border: 1px solid transparent;
-    --icon-hover-bg: var(--primary-container);
+    sol(--icon-bg , var(--surface));
+    sol(--icon-border-radius , 100rem);
+    sol(--icon-border , 1px solid transparent);
+    sol(--icon-hover-bg , var(--primary-container));
 
     padding: .5rem;
     background: var(--icon-bg);
@@ -46,11 +46,11 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .MaterialButton, .MaterialRoundButton {
-    --mat-bg: var(--primary-container);
-    --mat-color: var(--primary);
-    --mat-border: 1px solid transparent;
-    --mat-hover-bg: var(--primary-container);
-    --mat-hover-color: var(--primary);
+    sol(--mat-bg , var(--primary-container));
+    sol(--mat-color , var(--primary));
+    sol(--mat-border , 1px solid transparent);
+    sol(--mat-hover-bg , var(--primary-container));
+    sol(--mat-hover-color , var(--primary));
 
     color: var(--mat-color);
     background: var(--mat-bg);
@@ -62,11 +62,11 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .OutlinedButton, .OutlinedRoundButton {
-    --out-bg: transparent;
-    --out-color: var(--primary);
-    --out-border: 1px solid var(--primary-border);
-    --out-hover-bg: var(--primary-container);
-    --out-hover-color: var(--primary);
+    sol(--out-bg , transparent);
+    sol(--out-color , var(--primary));
+    sol(--out-border , 1px solid var(--primary-border));
+    sol(--out-hover-bg , var(--primary-container));
+    sol(--out-hover-color , var(--primary));
 
     color: var(--out-color);
     background: var(--out-bg);

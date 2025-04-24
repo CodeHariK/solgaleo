@@ -1,11 +1,11 @@
 import { JSX } from "solid-js";
 import { CssFANCY } from "./gen";
 
-/*CSS:-
+/*CSS:*
 .FlickerText {
-    --flicker-shadow: var : #36e2f8;
+    sol(--flicker-shadow , #36e2f8);
 
-    color: var : #3694f8;
+    color: #3694f8;
     letter-spacing: 5px;
     animation: AnimFlicker 2s infinite alternate;
 }

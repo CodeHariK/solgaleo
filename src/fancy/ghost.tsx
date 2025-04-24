@@ -1,7 +1,7 @@
 import { onCleanup, onMount } from "solid-js";
 import { CssFANCY } from "./gen";
 
-/*CSS:-
+/*CSS:*
 .GhostCon {
     --ghostWaveColor: var(--primary);
     --ghostColor: var(--primary-container);
@@ -22,11 +22,11 @@ import { CssFANCY } from "./gen";
 }
 
 .ghost {
-    background: var(--ghostColor);
+    background: sol(--ghostColor);
     width: 120px;
     height: 150px;
     border-radius: 100px 100px 0 0;
-    box-shadow: 0 0 50px var(--ghostColor);
+    box-shadow: 0 0 50px sol(--ghostColor);
     position: relative;
     transform-origin: center;
     animation: float 3s ease-out infinite;
@@ -43,7 +43,7 @@ import { CssFANCY } from "./gen";
 .GhostEye {
     width: 10px;
     height: 16px;
-    border: 6px solid var(--ghostEyeColor);
+    border: 6px solid sol(--ghostEyeColor);
     border-radius: 100px;
     clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
     transition: .1s;
@@ -51,8 +51,8 @@ import { CssFANCY } from "./gen";
 
 .ghost:hover .GhostEye,
 .GhostCon.active .GhostEye {
-    background: var(--ghostWaveColor);
-    border-color: var(--ghostEyeColor);
+    background: sol(--ghostWaveColor);
+    border-color: sol(--ghostEyeColor);
     clip-path: none;
     height: 25px;
 }
@@ -69,20 +69,20 @@ import { CssFANCY } from "./gen";
 .GhostWave {
     width: 200%;
     height: 30px;
-    background: var(--ghostWaveColor);
+    background: sol(--ghostWaveColor);
     flex-shrink: 0;
 
     animation: ghost-wave 3s linear infinite;
 
     -webkit-mask:
-        radial-gradient(var(--ghostCircleRadius) at 50% calc(100% - (var(--ghostCircleSize) + var(--ghostCircleDistance))), blue 99%, #0000 101%) calc(50% - 2*var(--ghostCircleSize)) 0/calc(4*var(--ghostCircleSize)) 100%,
-        radial-gradient(var(--ghostCircleRadius) at 50% calc(100% + var(--ghostCircleDistance)), #0000 99%, red 101%) 50% calc(100% - var(--ghostCircleSize))/calc(4*var(--ghostCircleSize)) 100% repeat-x;
+        radial-gradient(sol(--ghostCircleRadius) at 50% calc(100% - (sol(--ghostCircleSize) + sol(--ghostCircleDistance))), blue 99%, #0000 101%) calc(50% - 2 * sol(--ghostCircleSize)) 0/calc(4 * sol(--ghostCircleSize)) 100%,
+        radial-gradient(sol(--ghostCircleRadius) at 50% calc(100% + sol(--ghostCircleDistance)), #0000 99%, red 101%) 50% calc(100% - sol(--ghostCircleSize))/calc(4 * sol(--ghostCircleSize)) 100% repeat-x;
 }
 
 .GhostMouth {
     width: 44px;
     height: 8px;
-    background: var(--ghostEyeColor);
+    background: sol(--ghostEyeColor);
     border-radius: 10px;
     margin: 16px auto 0;
     position: relative;
@@ -98,7 +98,7 @@ import { CssFANCY } from "./gen";
 .ghost:hover .GhostMouth,
 .GhostCon.active .GhostMouth {
     animation: none;
-    background: var(--ghostEyeColor);
+    background: sol(--ghostEyeColor);
     width: 32px;
     height: 29px;
     clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);

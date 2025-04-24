@@ -8,197 +8,153 @@ src/button.tsx
 src/input.tsx
 */
 
-.light {
-    --DropdownHeader-border-bottom: 1px solid var(--body-bg);
-    --DropdownItem-col-hover: none;
-    --DropdownItem-bg-hover: var(--secondary);
+:root {
     --icon-bg: var(--surface);
     --icon-border-radius: 100rem;
-    --icon-hover-bg: var(--primary-container);
-    --mat-color: var(--primary);
-    --mat-bg: var(--primary-container);
-    --mat-border: 1px solid transparent;
-    --mat-hover-color: var(--primary);
-    --mat-hover-bg: var(--primary-container);
-    --out-color: var(--primary);
-    --out-bg: transparent;
-    --out-border: 1px solid var(--primary-border);
-    --out-hover-color: var(--primary);
-    --out-hover-bg: var(--primary-container);
     --icon-border: 1px solid transparent;
+    --icon-hover-bg: var(--primary-container);
+    --mat-bg: var(--primary-container);
+    --mat-color: var(--primary);
+    --mat-border: 1px solid transparent;
+    --mat-hover-bg: var(--primary-container);
+    --mat-hover-color: var(--primary);
+    --out-bg: transparent;
+    --out-color: var(--primary);
+    --out-border: 1px solid var(--primary-border);
+    --out-hover-bg: var(--primary-container);
+    --out-hover-color: var(--primary);
     --input-accent-color: var(--primary);
-    --label-transform-x: 0.6rem;
-    --label-transform-y: -1.0rem;
-    --label-scale: 0.85;
-    --input-label-focus-color: var(--primary);
-    --input-label-focus-bg: var(--surface);
+}
+
+.light {
     --input-bg: #ffffff;
-    --Input-label-border: 1px solid transparent;
 }
 
 .night {
-    --DropdownHeader-border-bottom: 1px solid var(--body-bg);
-    --DropdownItem-col-hover: none;
-    --DropdownItem-bg-hover: var(--secondary);
-    --icon-bg: var(--surface);
-    --icon-border-radius: 100rem;
-    --icon-hover-bg: var(--primary-container);
-    --mat-color: var(--primary);
-    --mat-bg: var(--primary-container);
-    --mat-border: 1px solid transparent;
-    --mat-hover-color: var(--primary);
-    --mat-hover-bg: var(--primary-container);
-    --out-color: var(--primary);
-    --out-bg: transparent;
-    --out-border: 1px solid var(--primary-border);
-    --out-hover-color: var(--primary);
-    --out-hover-bg: var(--primary-container);
-    --icon-border: 1px solid transparent;
-    --input-accent-color: var(--primary);
-    --label-transform-x: 0.6rem;
-    --label-transform-y: -1.0rem;
-    --label-scale: 0.85;
-    --input-label-focus-color: var(--primary);
-    --input-label-focus-bg: var(--surface);
     --input-bg: #3b3b3b;
-    --Input-label-border: 1px solid transparent;
 }
 
 .DragBox {
-    position: fixed;
-    inset: 0px;
-    background-color: #e7e7e727;
-    pointer-events: none;
-}
-
-.DragBox>div {
-    display: flex;
-    padding: 1rem;
-    justify-content: center;
-    align-items: center;
-    width: 10rem;
-    height: 10rem;
-    color: #ffffff;
-    background-color: #ff3fc2d6;
-    cursor: move;
-    pointer-events: auto;
-}
-
+        position: fixed;
+        inset: 0px;
+        background-color: #e7e7e727;
+        pointer-events: none;
+    }
+    .DragBox > div {
+        display: flex;
+        padding: 1rem;
+        justify-content: center;
+        align-items: center;
+        width: 10rem;
+        height: 10rem;
+        color: #ffffff;
+        background-color: #ff3fc2d6;
+        cursor: move;
+        pointer-events: auto;
+    }
 .GridLayout {
     width: 100%;
     height: 100%;
     display: grid;
     gap: .1rem;
 }
-
 .GridLayoutFixed {
-    grid-template-areas: "header  header  header"
+    grid-template-areas:
+        "header  header  header"
         "left   middle  right"
         "footer footer  footer";
     grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
     grid-template-rows: auto 1fr auto;
 }
-
-.GridLayoutFixed:not(:has(>.GridLeft)):not(:has(>.GridRight)) {
+.GridLayoutFixed:not(:has(> .GridLeft)):not(:has(> .GridRight)) {
     grid-template-columns: 1fr;
-    grid-template-areas: "header"
+    grid-template-areas:
+        "header"
         "middle"
         "footer";
 }
-
-.GridLayoutFixed:not(:has(>.GridLeft)):has(>.GridRight) {
+.GridLayoutFixed:not(:has(> .GridLeft)):has(> .GridRight) {
     grid-template-columns: 1fr minmax(200px, 15%);
-    grid-template-areas: "header  header"
+    grid-template-areas:
+        "header  header"
         "middle  right"
         "footer  footer";
 }
-
-.GridLayoutFixed:has(>.GridLeft):not(:has(>.GridRight)) {
+.GridLayoutFixed:has(> .GridLeft):not(:has(> .GridRight)) {
     grid-template-columns: minmax(200px, 15%) 1fr;
-    grid-template-areas: "header header"
+    grid-template-areas:
+        "header header"
         "left   middle"
         "footer footer";
 }
-
 .GridLayoutScroll {
     grid-template-areas: "left middle right";
     grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
 }
-
-.GridLayoutScroll:not(:has(>.GridLeft)):not(:has(>.GridRight)) {
+.GridLayoutScroll:not(:has(> .GridLeft)):not(:has(> .GridRight)) {
     grid-template-columns: 1fr;
     grid-template-areas: "middle";
 }
-
-.GridLayoutScroll:not(:has(>.GridLeft)):has(>.GridRight) {
+.GridLayoutScroll:not(:has(> .GridLeft)):has(> .GridRight) {
     grid-template-columns: 1fr minmax(200px, 15%);
     grid-template-areas: "middle right";
 }
-
-.GridLayoutScroll:has(>.GridLeft):not(:has(>.GridRight)) {
+.GridLayoutScroll:has(> .GridLeft):not(:has(> .GridRight)) {
     grid-template-columns: minmax(200px, 15%) 1fr;
     grid-template-areas: "left middle";
 }
-
 .GridHeader {
     grid-area: header;
 }
-
 .GridFooter {
     grid-area: footer;
 }
-
 .GridLeft {
     grid-area: left;
     overflow-y: auto;
 }
-
 .GridRight {
     grid-area: right;
     overflow-y: auto;
 }
-
 .GridMiddle {
     grid-area: middle;
     overflow-y: auto;
 }
-
 .GridScrollContainer {
     display: flex;
     flex-direction: column;
     min-height: 100%;
 }
-
 .GridContent {
     flex: 1;
     overflow-y: auto;
     padding: 1rem;
 }
-
 .GridLayoutFlow {
-    grid-template-areas: "header header header"
+    grid-template-areas:
+        "header header header"
         "left  middle right";
     grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
 }
-
-.GridLayoutFlow:not(:has(>.GridLeft)):not(:has(>.GridRight)) {
+.GridLayoutFlow:not(:has(> .GridLeft)):not(:has(> .GridRight)) {
     grid-template-columns: 1fr;
-    grid-template-areas: "header"
+    grid-template-areas:
+        "header"
         "middle";
 }
-
-.GridLayoutFlow:not(:has(>.GridLeft)):has(>.GridRight) {
+.GridLayoutFlow:not(:has(> .GridLeft)):has(> .GridRight) {
     grid-template-columns: 1fr minmax(200px, 15%);
-    grid-template-areas: "header header"
+    grid-template-areas:
+        "header header"
         "middle right";
 }
-
-.GridLayoutFlow:has(>.GridLeft):not(:has(>.GridRight)) {
+.GridLayoutFlow:has(> .GridLeft):not(:has(> .GridRight)) {
     grid-template-columns: minmax(200px, 15%) 1fr;
-    grid-template-areas: "header header"
+    grid-template-areas:
+        "header header"
         "left  middle";
 }
-
 .GridLayoutFlow .GridLeft,
 .GridLayoutFlow .GridRight {
     position: static;
@@ -207,60 +163,48 @@ src/input.tsx
     border: none;
     overflow: visible;
 }
-
 .GridLayoutFlow .GridRight {
     border-right: none;
 }
-
 .GridLayoutFlow .GridMiddle {
     overflow: visible;
 }
-
 .GridLayoutFlow .GridScrollContainer {
     min-height: auto;
 }
-
 .GridLayoutFlow .GridContent {
     overflow: visible;
 }
-
 .GridLayoutFlow .GridFooter {
     grid-column: 1 / -1;
     margin-top: 1rem;
 }
-
 .AccordionLabel {
     cursor: pointer;
+    :hover {
+        background: var(--surface);
+    }
 }
-
-.AccordionLabel:hover {
-    background: var(--surface);
-}
-
 .AccordionContent {
     max-height: 0;
     overflow: hidden;
     transition: all 0.2s ease-out;
     opacity: 0;
 }
-
 .Dropdown {
     display: flex;
     flex-direction: row;
     gap: .5rem;
+    ul {
+        list-style-type: none;
+        padding-left: 0rem;
+        margin: 0.2rem 0;
+    }
 }
-
-.Dropdown ul {
-    list-style-type: none;
-    padding-left: 0rem;
-    margin: 0.2rem 0;
-}
-
 .DropdownHeader {
-    border-bottom: var(--DropdownHeader-border-bottom);
+    border-bottom: 1px solid var(--body-bg);
     padding: 0.3rem;
 }
-
 .DropdownItem {
     display: inline-flex;
     justify-content: space-between;
@@ -269,35 +213,29 @@ src/input.tsx
     padding: 0.3rem;
     cursor: pointer;
 }
-
 .DropdownItem:hover {
-    color: var(--DropdownItem-col-hover);
-    background: var(--DropdownItem-bg-hover);
+    color: none;
+    background: var(--secondary);
 }
-
-ul.DropdownNested {
+ul .DropdownNested {
     padding-left: 1rem;
     margin: 0.2rem 0;
 }
-
 .DropdownToggle {
     display: inline-flex;
     align-items: center;
     margin-left: 0.5rem;
     transition: transform 0.2s;
 }
-
 .DropdownToggle.open {
     transform: rotate(90deg);
 }
-
 .Progress {
     height: 20px;
     background: var(--surface);
     border-radius: 5px;
     overflow: hidden;
 }
-
 .ProgressFill {
     height: 100%;
     background: linear-gradient(90deg,
@@ -306,14 +244,8 @@ ul.DropdownNested {
         var(--primary) 100%);
     transition: width 0.2s ease-in-out;
 }
-
-button,
-.IconButton,
-.MaterialButton,
-.OutlinedButton,
-.MaterialRoundButton,
-.OutlinedRoundButton,
-.Tag {
+button, .IconButton, .MaterialButton, .OutlinedButton,
+.MaterialRoundButton, .OutlinedRoundButton, .Tag {
     display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
@@ -330,105 +262,74 @@ button,
     user-select: none;
     cursor: pointer;
 }
-
-button:hover,
-.IconButton:hover,
-.MaterialButton:hover,
-.OutlinedButton:hover,
-.MaterialRoundButton:hover,
-.OutlinedRoundButton:hover {
+button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
+.MaterialRoundButton:hover, .OutlinedRoundButton:hover {
     opacity: 0.9;
     background: var(--surface);
 }
-
-button:disabled,
-.IconButton:disabled,
-.MaterialButton:disabled,
-.OutlinedButton:disabled,
-.MaterialRoundButton:disabled,
-.OutlinedRoundButton:disabled {
+button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
+.MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
     color: var(--disabled);
     background: var(--disabled-container);
     cursor: not-allowed;
 }
-
 .IconButton {
     padding: .5rem;
     background: var(--icon-bg);
     border-radius: var(--icon-border-radius);
 }
-
 .IconButton:hover {
     background: var(--icon-hover-bg);
 }
-
-.MaterialButton,
-.MaterialRoundButton {
+.MaterialButton, .MaterialRoundButton {
     color: var(--mat-color);
     background: var(--mat-bg);
     border: var(--mat-border);
 }
-
-.MaterialButton:hover,
-.MaterialRoundButton:hover {
+.MaterialButton:hover, .MaterialRoundButton:hover {
     color: var(--mat-hover-color);
     background: var(--mat-hover-bg);
 }
-
-.OutlinedButton,
-.OutlinedRoundButton {
+.OutlinedButton, .OutlinedRoundButton {
     color: var(--out-color);
     background: var(--out-bg);
     border: var(--out-border);
 }
-
-.OutlinedButton:hover,
-.OutlinedRoundButton:hover {
+.OutlinedButton:hover, .OutlinedRoundButton:hover {
     color: var(--out-hover-color);
     background: var(--out-hover-bg);
 }
-
 .OutlinedRoundButton {
     border-radius: 2rem;
 }
-
 .MaterialRoundButton {
     border-radius: 2rem;
 }
-
 .GradientTag {
     background: linear-gradient(45deg, var(--primary-container), var(--secondary-container));
     border-radius: 2rem;
     padding: .3rem .5rem;
 }
-
 .ErrorButton {
     color: var(--error);
     background: var(--error-container);
 }
-
 fieldset {
     border: none;
 }
-
 fieldset div {
     display: flex;
     align-items: center;
 }
-
-input[type="checkbox"],
-input[type="radio"] {
+input[type="checkbox"], input[type="radio"] {
     accent-color: var(--input-accent-color, var(--primary));
     width: 1rem;
     height: 1rem;
     margin: .25rem;
 }
-
-input[type="checkbox"]:disabled,
-input[type="radio"]:disabled {
+input[type="checkbox"]:disabled, input[type="radio"]:disabled {
     cursor: not-allowed;
 }
-
 select {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
@@ -440,18 +341,15 @@ select {
     color: var(--primary);
     background-color: var(--surface);
     appearance: none;
+    :disabled {
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+    :hover ~ .SelectChevron {
+        transform: translateX(-150%) scale(1.2);
+        transition: transform 0.15s ease;
+    }
 }
-
-select:disabled {
-    cursor: not-allowed;
-    opacity: 0.75;
-}
-
-select:hover~.SelectChevron {
-    transform: translateX(-150%) scale(1.2);
-    transition: transform 0.15s ease;
-}
-
 .SelectChevron {
     transform: translateX(-150%);
     align-self: center;
@@ -460,7 +358,6 @@ select:hover~.SelectChevron {
     pointer-events: none;
     color: var(--primary);
 }
-
 .ToggleSwitch {
     width: 60px;
     height: 30px;
@@ -470,7 +367,6 @@ select:hover~.SelectChevron {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
 .ToggleThumb {
     width: 26px;
     height: 26px;
@@ -481,110 +377,88 @@ select:hover~.SelectChevron {
     left: 2px;
     transition: transform 0.3s;
 }
-
 .ToggleChecked .ToggleThumb {
     transform: translateX(30px);
 }
-
 .ToggleChecked {
     background: var(--primary-container);
 }
-
 .Input {
     position: relative;
-    background: var(--input-bg, var(--surface));
+    background: sol(var(--input-bg), var(--surface));
     border-bottom: 2px solid var(--primary-container);
-}
-
-.Input>input,
-.Input>textarea {
-    width: 100%;
-    padding: .5rem;
-    font-size: 0.875rem;
-    color: var(--primary);
-    background: transparent;
-    border: none;
-    outline: none;
-    resize: vertical;
-}
-
-.Input> input:disabled,
-.Input> textarea:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.Input> input:disabled ~ label,
-.Input> textarea:disabled ~ label {
-    opacity: 0.5;
-}
-
-.Input> input::placeholder,
-.Input> textarea::placeholder {
-    color: var(--primary);
-}
-
-.Input[data-has-label="true"] > input::placeholder,
-.Input[data-has-label="true"] > textarea::placeholder {
-    color: transparent;
-}
-
-.Input[data-has-icon="true"] > input ~ label,
-.Input[data-has-icon="true"] > textarea ~ label {
-    left: 3rem;
-}
-
-.Input> input:focus::placeholder,
-.Input> textarea:focus::placeholder {
-    color: var(--primary);
-    transition: color 0.2s ease-out;
-}
-
-.Input label {
-    position: absolute;
-    top: 0rem;
-    left: 1rem;
-    color: var(--primary);
-    border: var(--Input-label-border);
-    font-size: 0.875rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none;
-    transition: all 0.2s ease-in-out;
-    transform-origin: 0 0;
-    align-self: anchor-center;
-}
-
-.Input:has([data-has-icon="false"]) label {
-    display: none;
-}
-
-.Input:has(input[type="range"]) {
-    margin: 0rem 1rem;
-}
-
-.Input> input:focus-within ~ label,
-.Input> textarea:focus-within ~ label,
-.Input> input:not(:placeholder-shown) ~ label,
-.Input> textarea:not(:placeholder-shown) ~ label {
-    transform: translateX(var(--label-transform-x))
+    >input, >textarea {
+        width: 100%;
+        padding: .5rem;
+        font-size: 0.875rem;
+        color: var(--primary);
+        background: transparent;
+        border: none;
+        outline: none;
+        resize: vertical;
+    }
+    > input:disabled, > textarea:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    > input:disabled ~ label, > textarea:disabled ~ label {
+        opacity: 0.5;
+    }
+    > input::placeholder, > textarea::placeholder {
+        color: var(--primary);
+    }
+    [data-has-label="true"] > input::placeholder, [data-has-label="true"] > textarea::placeholder {
+        color: transparent;
+    }
+    [data-has-icon="true"] > input ~ label, [data-has-icon="true"] > textarea ~ label {
+        left : 3rem;
+    }
+    > input:focus::placeholder, > textarea:focus::placeholder {
+        color: var(--primary);
+        transition: color 0.2s ease-out;
+    }
+    label {
+        position: absolute;
+        top: 0rem;
+        left: 1rem;
+        color: var(--primary);
+        border: 1px solid transparent;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        transition: all 0.2s ease-in-out;
+        transform-origin: 0 0;
+        align-self: anchor-center;
+    }
+    :has([data-has-icon="false"]) label {
+        display: none;
+    }
+    :has(input[type="range"]) {
+        margin: 0rem 1rem;
+    }
+    > input:focus-within ~ label,
+    > textarea:focus-within ~ label,
+    > input:not(:placeholder-shown) ~ label,
+    > textarea:not(:placeholder-shown) ~ label {
+        transform: 
+            translateX(var(--label-transform-x))
             translateY(var(--label-transform-y))
             scale(var(--label-scale));
-    top: 0rem;
-    left: 0rem;
-    height: auto;
-    opacity: 1;
-    color: var(--input-label-focus-color);
-    background: var(--input-label-focus-bg);
-    align-self: auto;
+        top: 0rem;
+        left: 0rem;
+        height: auto;
+        opacity: 1;
+        color: var(--input-label-focus-color);
+        background: var(--input-label-focus-bg);
+        align-self: auto;
+    }
 }
-
 .InputIcon {
     pointer-events: none;
     padding-inline-start: 1rem;
 }
-
 .InputEnd {
     display: flex;
     gap: .25rem;
@@ -592,33 +466,27 @@ select:hover~.SelectChevron {
     background: var(--input-bg, inherit);
     cursor: pointer;
 }
-
 .InputEnd:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
 }
-
 .ErrorTextInput {
     border-color: var(--error);
 }
-
 .ErrorText {
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--error);
 }
-
 input[type="range"] {
     padding: 0;
     -webkit-appearance: none;
     border-radius: 50%;
     cursor: pointer;
 }
-
 .Input[data-is-range="true"] {
     border-bottom: none;
 }
-
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 1rem;
@@ -628,12 +496,11 @@ input[type="range"]::-webkit-slider-thumb {
     cursor: pointer;
     margin-top: -0.25rem;
 }
-
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
     height: 0.5rem;
     border-radius: 0.25rem;
-    background: linear-gradient(
+        background: linear-gradient(
         to right,
         var(--primary) 0%,
         var(--primary) var(--value-left, 0%),
@@ -641,7 +508,6 @@ input[type="range"]::-webkit-slider-runnable-track {
         var(--primary-container) 100%
     );
 }
-
 .RangeValue {
     position: absolute;
     left: var(--value-left, 0);
@@ -654,12 +520,10 @@ input[type="range"]::-webkit-slider-runnable-track {
     pointer-events: none;
     transition: opacity 0.2s;
 }
-
 input[type="range"]:hover ~ .RangeValue,
 input[type="range"]:focus ~ .RangeValue {
     opacity: 1;
 }
-
 .UploadContainer {
     border: 2px dashed var(--primary);
     margin: 0.5rem;
@@ -669,7 +533,6 @@ input[type="range"]:focus ~ .RangeValue {
     align-items: baseline;
     width: max-content;
 }
-
 .Dropzone {
     min-height: 250px;
     width: 100%;
@@ -680,22 +543,18 @@ input[type="range"]:focus ~ .RangeValue {
     text-align: center;
     cursor: pointer;
 }
-
 .DropzoneDragging {
     background: var(--surface);
 }
-
 .ImagePreview {
     height: auto;
     flex-shrink: 0;
     display: block;
     margin: 0 auto;
 }
-
 .ImagePreviewInvalid {
     filter: blur(8px);
 }
-
 .InvalidMessage {
     position: absolute;
     color: var(--surface);
@@ -703,7 +562,6 @@ input[type="range"]:focus ~ .RangeValue {
     padding: 0.5rem;
     border-radius: 0.25rem;
 }
-
 .HiddenInput {
     display: none;
 }

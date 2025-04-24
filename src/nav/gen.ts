@@ -36,14 +36,7 @@ export const CssNAV = {
     ModalContent: "ModalContent",
     ModalContentShow: "ModalContentShow",
 
-    varPrimaryContainer: "--primary-container",
-    varPrimary: "--primary",
-    varSurface: "--surface",
-    varSecondary: "--secondary",
-    varSecondaryContainer: "--secondary-container",
-    varModalBg: "--modal-bg",
-    varModalCol: "--modal-col",
-    varModalFullScreen: "--ModalFullScreen",
+    
 
     
 } as const;

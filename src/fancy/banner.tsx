@@ -1,7 +1,7 @@
 import { JSX } from "solid-js";
 import { IconRocket } from "../svg/svg";
 
-/*CSS:-
+/*CSS:*
 .banner {
     padding: 1rem;
     background: var(--surface);

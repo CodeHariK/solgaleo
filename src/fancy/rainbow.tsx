@@ -1,7 +1,7 @@
 import { type JSX } from 'solid-js';
 import { CssFANCY } from './gen';
 
-/*CSS:-
+/*CSS:*
 .Rainbow {
     background: linear-gradient(to right,
             blueviolet,
@@ -25,12 +25,12 @@ import { CssFANCY } from './gen';
 }
 
 .Raincon {
-    background-image: var(--rainsrc);
-    -webkit-mask-image: var(--rainsrc);
+    background-image: sol(--rainsrc);
+    -webkit-mask-image: sol(--rainsrc);
     -webkit-mask-size: cover;
-    background-size: var(--rainsize);
-    width: var(--rainsize);
-    height: var(--rainsize);
+    background-size: sol(--rainsize);
+    width: sol(--rainsize);
+    height: sol(--rainsize);
     display: inline-block;
 }
 .RainconGrad {

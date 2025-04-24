@@ -3,7 +3,7 @@ import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
-/*CSS:-
+/*CSS:*
 
 .blog-title {
     font-size: 1.875rem;

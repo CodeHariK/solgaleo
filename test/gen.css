@@ -6,126 +6,29 @@ page.svg.tsx
 css.tsx
 */
 
-.light {
-    --blog-title-color: ;
-    --comment: #6272A4;
-    --purple: #BD93F9;
-    --selection: #44475A;
-    --foreground: #F8F8F2;
-    --green: #50FA7B;
-    --background: #000;
-    --pink: #FF79C6;
-    --yellow: #F1FA8C;
-    --cyan: #8BE9FD;
-    --orange: #FFB86C;
-    --red: #FF5555;
-    --selection-30: #44475A33;
-    --comment-30: #6272A433;
-    --green-30: #50FA7B33;
-    --red-30: #FF555533;
-    --background-30: #282A3633;
-    --foreground-30: #F8F8F233;
-    --cyan-30: #8BE9FD33;
-    --orange-30: #FFB86C33;
-    --pink-30: #FF79C633;
-    --purple-30: #BD93F933;
-    --yellow-30: #F1FA8C33;
-    --background-40: #282A3666;
-    --comment-40: #6272A466;
-    --foreground-40: #F8F8F266;
-    --selection-40: #44475A66;
-    --cyan-40: #8BE9FD66;
-    --green-40: #50FA7B66;
-    --orange-40: #FFB86C66;
-    --pink-40: #FF79C666;
-    --purple-40: #BD93F966;
-    --red-40: #FF555566;
-    --yellow-40: #F1FA8C66;
-    --visibility: ;
-    --svg-ring-width: 4px;
-    --svg-ring-color: #82f680;
-    --marquee-width: ;
-    --keyframes-marqu2ee-100-height: ;
-    --keyframes-marqu2ee-100-col: red;
-    --marquee-font-color: ;
-    --marquee-span-bg: ;
-    --neon-pink: ;
-    --input-placeholder: ;
-    --dom-decoration: ;
-    --dom-border: ;
-    --dom-display: ;
-    --box-dom-bg-hover: yellow;
-    --box-dom-col-hover: ;
+:root {
     --box-hello: 4px;
-    --box-hi: ;
-    --box-alola: ;
-    --svg-ring-bg: #3b82f6;
-    --s2g-background-color: #A7F3D0;
-    --hell2o-col: orange;
-    --hello--stepper-col: orange;
-    --marqu2ee-span-col: #000;
-    --fieldfont-col: ;
+    --box-hi: none;
+    --dom-decoration: ;
+    --dom-border: 1px solid blue;
+    --svg-ring-width: 4px;
+    --hello-span-bg: red;
+    --marquee-width: ;
+    --mark-anim-height: 10px;
+}
+
+.light {
+    --box-dom-hover: yellow;
+    --svg-ring-color: #eee;
+    --hello-span: #000;
+    --mark-anim-col: red;
 }
 
 .night {
-    --blog-title-color: ;
-    --comment: #6272A4;
-    --purple: #BD93F9;
-    --selection: #44475A;
-    --foreground: #F8F8F2;
-    --green: #50FA7B;
-    --background: #000;
-    --pink: #FF79C6;
-    --yellow: #F1FA8C;
-    --cyan: #8BE9FD;
-    --orange: #FFB86C;
-    --red: #FF5555;
-    --selection-30: #44475A33;
-    --comment-30: #6272A433;
-    --green-30: #50FA7B33;
-    --red-30: #FF555533;
-    --background-30: #282A3633;
-    --foreground-30: #F8F8F233;
-    --cyan-30: #8BE9FD33;
-    --orange-30: #FFB86C33;
-    --pink-30: #FF79C633;
-    --purple-30: #BD93F933;
-    --yellow-30: #F1FA8C33;
-    --background-40: #282A3666;
-    --comment-40: #6272A466;
-    --foreground-40: #F8F8F266;
-    --selection-40: #44475A66;
-    --cyan-40: #8BE9FD66;
-    --green-40: #50FA7B66;
-    --orange-40: #FFB86C66;
-    --pink-40: #FF79C666;
-    --purple-40: #BD93F966;
-    --red-40: #FF555566;
-    --yellow-40: #F1FA8C66;
-    --visibility: ;
-    --svg-ring-width: 4px;
-    --svg-ring-color: #3b82f680;
-    --marquee-width: ;
-    --keyframes-marqu2ee-100-height: ;
-    --keyframes-marqu2ee-100-col: blue;
-    --marquee-font-color: ;
-    --marquee-span-bg: ;
-    --neon-pink: ;
-    --input-placeholder: ;
-    --dom-decoration: ;
-    --dom-border: 1px solid blue;
-    --dom-display: ;
-    --box-dom-bg-hover: red;
-    --box-dom-col-hover: ;
-    --box-hello: 4px;
-    --box-hi: ;
-    --box-alola: ;
-    --svg-ring-bg: #3b82f6;
-    --s2g-background-color: #A7F3D0;
-    --hell2o-col: blue;
-    --hello--stepper-col: blue;
-    --marqu2ee-span-col: #fff;
-    --fieldfont-col: ;
+    --box-dom-hover: red;
+    --svg-ring-color: red;
+    --hello-span: #fff;
+    --mark-anim-col: blue;
 }
 
 .blog-title {
@@ -137,14 +40,12 @@ css.tsx
     position: relative;
     margin-bottom: .7rem;
 }
-
 .blog-item:hover .blog-title {
     text-decoration-line: underline;
     text-decoration-style: wavy;
     text-underline-offset: .4rem;
     text-decoration-color: var(--primary);
 }
-
 .blog-meta {
     display: flex;
     align-items: center;
@@ -152,50 +53,14 @@ css.tsx
     gap: .4em;
     margin: 4px 0;
 }
-
 .CodeCard {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     transition: transform 0.2s ease-in-out;
+    :hover {
+        transform: translateY(-2px);
+    }
 }
-
-.CodeCard:hover {
-    transform: translateY(-2px);
-}
-
 :root {
-    --background: #000;
-    --comment: #6272A4;
-    --foreground: #F8F8F2;
-    --selection: #44475A;
-    --cyan: #8BE9FD;
-    --green: #50FA7B;
-    --orange: #FFB86C;
-    --pink: #FF79C6;
-    --purple: #BD93F9;
-    --red: #FF5555;
-    --yellow: #F1FA8C;
-    --background-30: #282A3633;
-    --comment-30: #6272A433;
-    --foreground-30: #F8F8F233;
-    --selection-30: #44475A33;
-    --cyan-30: #8BE9FD33;
-    --green-30: #50FA7B33;
-    --orange-30: #FFB86C33;
-    --pink-30: #FF79C633;
-    --purple-30: #BD93F933;
-    --red-30: #FF555533;
-    --yellow-30: #F1FA8C33;
-    --background-40: #282A3666;
-    --comment-40: #6272A466;
-    --foreground-40: #F8F8F266;
-    --selection-40: #44475A66;
-    --cyan-40: #8BE9FD66;
-    --green-40: #50FA7B66;
-    --orange-40: #FFB86C66;
-    --pink-40: #FF79C666;
-    --purple-40: #BD93F966;
-    --red-40: #FF555566;
-    --yellow-40: #F1FA8C66;
 }
 .tab-radio {
     @apply absolute opacity-0 pointer-events-none;
@@ -567,7 +432,6 @@ pre[class*="language-"] {
     gap: 1rem;
     padding: 1rem;
 }
-
 .IconItem {
     display: flex;
     flex-direction: column;
@@ -577,139 +441,39 @@ pre[class*="language-"] {
     border: 1px solid #e5e7eb;
     border-radius: 0.5rem;
     transition: all 0.2s;
+    svg{
+        background: #5c1d5c11;
+    }
 }
-
-.IconItem svg {
-    background: #5c1d5c11;
-}
-
 .IconItem:hover {
     background: #fe81e720;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
-
 .IconLabel {
     font-size: 0.75rem;
     color: #6b7280;
     text-align: center;
 }
-
-.dom {
+.box .dom:hover {
     position: fixed;
     decoration: var(--dom-decoration);
     border: var(--dom-border);
-    display: var(--dom-display);
+    visibility: var(--box-hi);
+    background: var(--box-dom-hover);
 }
-
-.box .dom:hover {
-    visibility: var(--visibility);
-    background: var(--box-dom-bg-hover);
-    color: var(--box-dom-col-hover);
+#hello > .stepper {
+    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 var(--svg-ring-bg);
+    span {
+        color: var(--hello-span);
+        background: var(--hello-span-bg);
+    }
 }
-
-.s2g {
-    box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
-    background-color: var(--s2g-background-color);
-}
-
-#hell2o {
-    color: var(--hell2o-col);
-}
-
-#hello>.stepper {
-    color: var(--hello--stepper-col);
-}
-
-.marqu2ee {
-    font-color: var(--marquee-font-color);
-}
-
-.marqu2ee span {
-    color: var(--marqu2ee-span-col);
-    font-size: 200px;
-    background: var(--marquee-span-bg);
-}
-
-.typewri2ter-animation {
-    animation: typewriter 5s steps(50) 1s 1 normal both,
-        blinkingCursor 500ms steps(50) infinite normal;
-}
-
-.tab-le2vel:not(:last-child)::after {
-    content: '';
-}
-
-.tab-lev2el.level-2 {
-    padding-left: 4rem;
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.flicker-text {
-    margin-bottom: 10px;
-    text-shadow: 0 0 20px var(--neon-pink),
-        0 0 30px var(--neon-pink);
-}
-
-fieldfont {
-    font-size: 1rem;
-    color: var(--fieldfont-col);
-    font-size: 1rem;
-}
-
-field2 {
-    line-height: 1.5rem;
-}
-
-field2:focus::placeholder {
-    color: var(--input-placeholder);
-    transition: color 0.2s ease-out;
-}
-
-.Glitter[data-has-label="true"]:focus,
-.Glitter[data-has-label="true"]:not(:placeholder-shown) {
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
-}
-
-.AppTextInput[data-has-label="true"]:focus,
-.AppTextInput[data-has-label="true"]:not(:placeholder-shown) {
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
-}
-
-.potato {
-    width: 100%;
-}
-
 @keyframes marqu2ee {
     100% {
         transform: translateX(-100%);
         width: var(--marquee-width);
-        height: var(--keyframes-marqu2ee-100-height);
-        color: var(--keyframes-marqu2ee-100-col);
-    }
-}
-
-@keyframes flicker {
-    0%,
-    100% {
-        text-shadow:
-            0 0 10px var(--neon-pink),
-            0 0 20px var(--neon-pink),
-            0 0 30px var(--neon-pink);
-    }
-}
-
-@media (min-width: 700px) {}
-
-@media (min-width: 800px) {
-}
-
-@media (min-width: 900px) {
-    f6 {
-        font-size: 1rem;
-        line-height: 1.4rem;
-        font-weight: 400;
+        height : var(--mark-anim-height);
+        color : var(--mark-anim-col);
     }
 }

@@ -1,6 +1,6 @@
 import { CssFANCY } from "./gen";
 
-/*CSS:-
+/*CSS:*
 
 .Typewriter {
     display: inline-block;
@@ -34,7 +34,7 @@ export function TypeWriter() {
     return <p class={CssFANCY.Typewriter}>Hi there, I'm a Typewriter Animation made in pure CSS!</p>
 }
 
-/*CSS:-
+/*CSS:*
 .TerminalWindow {
     z-index: 0;
     height: 100%;

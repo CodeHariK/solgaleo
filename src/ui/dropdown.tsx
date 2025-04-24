@@ -3,7 +3,7 @@ import { For, Show, createSignal, type JSX } from 'solid-js';
 import { IconChevronRight } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 
-/*CSS:-
+/*CSS:*
 
 .Dropdown {
     display: flex;
@@ -18,7 +18,7 @@ import { CssUI } from "./gen.ts";
 }
 
 .DropdownHeader {
-    border-bottom: var : 1px solid var(--body-bg);
+    border-bottom: 1px solid var(--body-bg);
     padding: 0.3rem;
 }
 
@@ -32,11 +32,11 @@ import { CssUI } from "./gen.ts";
 }
 
 .DropdownItem:hover {
-    color: var : none;
-    background: var : var(--secondary);
+    color: none;
+    background: var(--secondary);
 }
 
-ul.DropdownNested {
+ul .DropdownNested {
     padding-left: 1rem;
     margin: 0.2rem 0;
 }

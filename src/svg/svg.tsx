@@ -7,7 +7,7 @@ type IconProps = {
     fill?: boolean;
 };
 
-/*CSS:-
+/*CSS:*
 @keyframes spin {
     to {
         transform: rotate(360deg);
@@ -18,7 +18,7 @@ type IconProps = {
 }
 
 svg {
-    --svg-size: var : 1.3rem;
+    sol(--svg-size , 1.3rem);
 
     display: inline-block;
     // margin: .4rem;
@@ -27,8 +27,8 @@ svg {
     height: var(--svg-size);
     color: currentColor;
     // background: var(--icon-bg);
-    // --svg-ring-width: 4px;
-    // --svg-ring-color: var : #3b82f680 : #3b82f680;
+    // sol(--svg-ring-width , 4px);
+    // sol(--svg-ring-color , #3b82f680 , #3b82f680);
     // box-shadow: 0 0 #0000, 0 0 0 var(--svg-ring-width) var(--svg-ring-color), 0 0 #0000;
 }
 */

@@ -4,7 +4,7 @@ import { createSignal, type JSX } from "solid-js";
 import { IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 
-/*CSS:-
+/*CSS:*
 
 fieldset {
     border: none;
@@ -16,7 +16,7 @@ fieldset div {
 }
 
 input[type="checkbox"], input[type="radio"] {
-    --input-accent-color: var(--primary);
+    sol(--input-accent-color , var(--primary));
     accent-color: var(--input-accent-color, var(--primary));
     width: 1rem;
     height: 1rem;
@@ -219,7 +219,7 @@ export function Select(props: SelectProps) {
     );
 }
 
-/*CSS:-
+/*CSS:*
 .ToggleSwitch {
     width: 60px;
     height: 30px;
@@ -279,14 +279,13 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
     );
 }
 
-/*CSS:-
+/*CSS:*
 
 .Input {
     position: relative;
-    --input-bg : var : #ffffff : #3b3b3b;
-    background: var(--input-bg, var(--surface));
-    // border: var : 1px solid var(--primary-container);
-    // border-radius: var : 0.5rem;
+    background: sol(sol(--input-bg , #ffffff , #3b3b3b), var(--surface));
+    // border: 1px solid var(--primary-container);
+    // border-radius: 0.5rem;
     border-bottom: 2px solid var(--primary-container);
 
     >input, >textarea {
@@ -329,7 +328,7 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
         top: 0rem;
         left: 1rem;
         color: var(--primary);
-        border: var : 1px solid transparent;
+        border: 1px solid transparent;
         font-size: 0.875rem;
         white-space: nowrap;
         overflow: hidden;
@@ -586,7 +585,7 @@ export function Input(props: InputProps) {
     );
 }
 
-/*CSS:-
+/*CSS:*
 .UploadContainer {
     // display: inline-block;
     border: 2px dashed var(--primary);

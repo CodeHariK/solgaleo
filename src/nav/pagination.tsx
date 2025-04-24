@@ -2,7 +2,7 @@ import { createSignal, For } from "solid-js";
 import { CssNAV } from "./gen";
 import { IconChevronLeft, IconChevronRight } from "../gen";
 
-/*CSS:-
+/*CSS:*
 .PaginationNav {
     margin-top: 1.5rem;
     display: flex;

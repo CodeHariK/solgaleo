@@ -2,27 +2,29 @@
 src/svg.tsx
 */
 
-.light {
+:root {
     --svg-size: 1.3rem;
+}
+
+.light {
+
 }
 
 .night {
-    --svg-size: 1.3rem;
-}
 
-.animate-spin {
-    animation: spin 1s linear infinite;
-}
-
-svg {
-    display: inline-block;
-    width: var(--svg-size);
-    height: var(--svg-size);
-    color: currentColor;
 }
 
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
+}
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+svg {
+    display: inline-block;
+    width: var(--svg-size);
+    height: var(--svg-size);
+    color: currentColor;
 }

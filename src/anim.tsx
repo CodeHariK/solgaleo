@@ -1,4 +1,4 @@
-/*CSS:+
+/*CSS:*
 
 @keyframes fade-in {
     to {

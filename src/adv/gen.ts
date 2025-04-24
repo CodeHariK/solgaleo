@@ -24,20 +24,11 @@ export const CssADV = {
     CellItem: "CellItem",
     TableRowDetails: "TableRowDetails",
     TableRowDetailsShow: "TableRowDetailsShow",
-    Vcarousel: "vcarousel",
     ScrollLayout: "scroll-layout",
     Carousel: "carousel",
+    Vcarousel: "vcarousel",
 
-    varSurface: "--surface",
-    varPrimaryContainer: "--primary-container",
-    varMarkdownCodeBg: "--MarkdownCode-bg",
-    varEaseSpring3: "--ease-spring-3",
-    varSecondary: "--secondary",
-    varPrimary: "--primary",
-    varDisabled: "--disabled",
-    varDisabledContainer: "--disabled-container",
-    varEase3: "--ease-3",
-    varSecondaryContainer: "--secondary-container",
+    
 
     
 } as const;

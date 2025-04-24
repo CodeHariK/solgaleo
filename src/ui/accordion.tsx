@@ -1,7 +1,7 @@
 import { createSignal, JSX } from "solid-js";
 import { CssUI } from "./gen";
 
-/*CSS:-
+/*CSS:*
 
 .AccordionLabel {
     cursor: pointer;

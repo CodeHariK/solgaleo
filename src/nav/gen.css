@@ -6,12 +6,16 @@ src/header.tsx
 src/modal.tsx
 */
 
+:root {
+
+}
+
 .light {
-    --ModalFullScreen: ;
+
 }
 
 .night {
-    --ModalFullScreen: ;
+
 }
 
 .PaginationNav {
@@ -20,7 +24,6 @@ src/modal.tsx
     align-items: center;
     justify-content: center;
 }
-
 .PaginationList {
     display: flex;
     align-items: center;
@@ -29,7 +32,6 @@ src/modal.tsx
     padding: 0;
     margin: 0;
 }
-
 .PaginationButton {
     display: flex;
     align-items: center;
@@ -42,57 +44,47 @@ src/modal.tsx
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
-
 .PaginationActive {
     background: var(--primary);
     color: var(--primary-container);
     border-color: var(--primary);
 }
-
 .PaginationItem {
     transition: transform 0.2s ease-in-out;
 }
-
 .PaginationItem:hover {
     transform: translateY(-1px);
 }
-
 .TabsContainer {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 }
-
 .TabsLevels {
     display: flex;
     flex-direction: column;
 }
-
 .TabLevel {
     display: flex;
     flex-direction: row;
     align-self: start;
 }
-
 .TabContent {
     flex: 1;
     overflow: auto;
 }
-
 .TreeView {
     display: inline-flex;
     padding: 0.5rem;
     user-select: none;
     flex-direction: column;
 }
-
 .TreeItem {
     display: flex;
     flex-direction: column;
     cursor: pointer;
 }
-
 .TreeHeader {
     width: 8rem;
     overflow-x: clip;
@@ -102,62 +94,50 @@ src/modal.tsx
     color: var(--primary);
     padding: 0.25rem;
     border: 1px solid;
+    :hover {
+        color: var(--secondary);
+        background: var(--secondary-container);
+    }
 }
-
-.TreeHeader:hover {
-    color: var(--secondary);
-    background: var(--secondary-container);
-}
-
 .TreeActive {
     background: var(--primary);
     color: var(--primary-container);
 }
-
 .TreeToggle {
     padding: 0rem .3rem;
     transition: all .3s ease;
 }
-
 .TreeToggleOpen {
     transform: rotate(180deg);
 }
-
 .TreeChildren {
     padding-left: 1rem;
 }
-
 .Breadcrumb {
     padding: 0.75rem 1.25rem;
 }
-
 .BreadcrumbLinks {
     list-style-type: none;
     display: flex;
     align-items: center;
     margin: 0;
     padding: 0;
+    li {
+        display: flex;
+    }
 }
-
-.BreadcrumbLinks li {
-    display: flex;
-}
-
 .BreadcrumbLink {
     color: var(--primary);
     text-decoration: none;
     transition: color 0.2s;
 }
-
 .BreadcrumbLink:hover {
     color: var(--secondary);
 }
-
 .BreadcrumbSeparator {
     color: var(--primary);
     margin: 0 0.5rem;
 }
-
 .HeaderNav {
     margin: 0 auto;
     padding: .4rem 1rem;
@@ -166,39 +146,34 @@ src/modal.tsx
     max-height: 3rem;
     justify-content: space-between;
 }
-
-.HeaderLeft a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.HeaderLeft {
+    a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    img {
+        height: 2.4rem;
+    }
+    p {
+        font-size: 1.1rem;
+    }
 }
-
-.HeaderLeft img {
-    height: 2.4rem;
-}
-
-.HeaderLeft p {
-    font-size: 1.1rem;
-}
-
 .HeaderLinks {
     display: flex;
     align-items: center;
     gap: 2rem;
 }
-
 .HeaderRight {
     display: flex;
     align-items: center;
 }
-
 @media (min-width: 1024px) {
     .HeaderRight {
         gap: 0.5rem;
     }
 }
-
 .ModalOverlay {
     position: fixed;
     top: 0;
@@ -212,7 +187,6 @@ src/modal.tsx
     z-index: 50;
     pointer-events: none;
 }
-
 .ModalContent {
     background: var(--modal-bg);
     color: var(--modal-col);
@@ -229,7 +203,6 @@ src/modal.tsx
     transform: scale(1) translateY(50px);
     opacity: 0;
 }
-
 .ModalContentShow {
     pointer-events: auto;
     transform: scale(1) translateY(0px);

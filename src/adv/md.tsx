@@ -1,12 +1,12 @@
 import { Component, JSX } from "solid-js";
 import { CssADV } from "./gen";
 
-/*CSS:-
+/*CSS:*
 .Markdown {
     background: var(--surface);
 }
 .MarkdownCode {
-    background: var : var(--surface);
+    background: var(--surface);
     
     >div {
         padding: .5rem;

@@ -6,29 +6,30 @@ src/table.tsx
 src/carousel.tsx
 */
 
+:root {
+
+}
+
 .light {
-    --MarkdownCode-bg: var(--surface);
+
 }
 
 .night {
-    --MarkdownCode-bg: var(--surface);
+
 }
 
 .Markdown {
     background: var(--surface);
 }
-
 .MarkdownCode {
-    background: var(--MarkdownCode-bg);
+    background: var(--surface);
+    >div {
+        padding: .5rem;
+        background: var(--primary-container);
+        display: flex;
+        justify-content: space-between;
+    }
 }
-
-.MarkdownCode>div {
-    padding: .5rem;
-    background: var(--primary-container);
-    display: flex;
-    justify-content: space-between;
-}
-
 .Slides {
     scroll-snap-type: y mandatory;
     overflow-y: auto;
@@ -69,13 +70,11 @@ src/carousel.tsx
     align-items: flex-start;
     justify-content: center;
 }
-
 .BlogSection {
     display: flex;
     flex-direction: column;
     width: 80%;
 }
-
 .BlogAside {
     max-width: 300px;
     max-height: 300px;
@@ -90,29 +89,24 @@ src/carousel.tsx
     overflow-x: clip;
     overflow-y: auto;
 }
-
 .BlogItem {
     padding: 1rem;
 }
-
 .BlogItemAnimate {
     animation: fadeSlideIn 1s ease forwards;
 }
-
 .BlogLinkActive {
     font-weight: bold;
     color: var(--secondary);
     transition: color 0.5s ease, transform 0.3s ease;
     transform: scale(1.05);
 }
-
 .SuperTable {
     display: flex;
     flex-direction: column;
     border-radius: 0.75rem;
     background-clip: border-box;
 }
-
 .TableHeader {
     display: flex;
     overflow: hidden;
@@ -120,13 +114,11 @@ src/carousel.tsx
     justify-content: space-between;
     background-clip: border - box;
 }
-
 .TableFooter {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .TableHeaderContainer {
     display: grid;
     flex-direction: column;
@@ -134,41 +126,21 @@ src/carousel.tsx
     top: 0;
     z-index: 10;
 }
-
 .CellItem {
     display: flex;
     align-items: center;
 }
-
 .TableRowDetails {
     overflow: hidden;
     transition: max-height .8s ease, opacity 0.3s ease;
     max-height: 0;
     opacity: 0;
 }
-
 .TableRowDetailsShow {
     padding: 1rem;
     max-height: 4rem;
     opacity: 1;
 }
-
-.vcarousel {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    overscroll-behavior-y: contain;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.vcarousel li {
-    scroll-snap-align: center;
-}
-
 .scroll-layout {
     display: grid;
     grid-template-areas: 
@@ -294,4 +266,18 @@ src/carousel.tsx
             }
         }
     }
+}
+.vcarousel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.vcarousel li {
+    scroll-snap-align: center;
 }

@@ -8,7 +8,7 @@ import { CssTEST } from "./gen";
 import Prism from "prismjs"; // Explicitly import Prism
 import "prismjs/components/prism-typescript.min.js"; // Load Go syntax support
 
-/*CSS:-
+/*CSS:*
 .CodeCard {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     transition: transform 0.2s ease-in-out;
@@ -23,96 +23,95 @@ import "prismjs/components/prism-typescript.min.js"; // Load Go syntax support
 //Hello
 //FN:DOC
 export function Hello() {
-    return <div>
-        Hello
-    </div>
+  return <div>
+    Hello
+  </div>
 }
 //FN:END
 
 export function RootPage() {
 
-    const { getTheme } = useSolContext()
+  const { getTheme } = useSolContext()
 
-    const light = () => getTheme()?.type == "light"
+  const light = () => getTheme()?.type == "light"
 
-    const [codeIndex, setCodeIndex] = createSignal(0);
+  const [codeIndex, setCodeIndex] = createSignal(0);
 
-    return <Code code={goCode} lang="ts" />
+  return <Code code={goCode} lang="ts" />
 
+  return <GridLayout
 
-    return <GridLayout
+    childrenStyle={{
+      "align-content": "center",
+    }}
 
-        childrenStyle={{
-            "align-content": "center",
-        }}
+    header={<TestHeader />}
 
-        header={<TestHeader />}
+    left={<VCarousel
+      children={CssTEST.Docs.map((c, i) => {
+        return <div
+          class={CssTEST.CodeCard}
+          style={{
+            "border": `2px solid ${RandomColor({ lightness: light() ? 50 : 30 })}`,
+            "border-radius": "1rem",
+            overflow: "clip"
+          }}
+          onClick={() => {
+            console.log(i)
+            setCodeIndex(i)
+          }}
+        >
+          <Accordion
+            title={<div style={{
+              background: i == codeIndex() ? "var(--primary-container)" : "",
+              padding: "1rem",
+            }}>
+              {c.doc}
+            </div>}
 
-        left={<VCarousel
-            children={CssTEST.Docs.map((c, i) => {
-                return <div
-                    class={CssTEST.CodeCard}
-                    style={{
-                        "border": `2px solid ${RandomColor({ lightness: light() ? 50 : 30 })}`,
-                        "border-radius": "1rem",
-                        overflow: "clip"
-                    }}
-                    onClick={() => {
-                        console.log(i)
-                        setCodeIndex(i)
-                    }}
-                >
-                    <Accordion
-                        title={<div style={{
-                            background: i == codeIndex() ? "var(--primary-container)" : "",
-                            padding: "1rem",
-                        }}>
-                            {c.doc}
-                        </div>}
+            contentStyle={{
+              padding: "1rem",
+            }}
 
-                        contentStyle={{
-                            padding: "1rem",
-                        }}
+            children={<pre>
+              {c.data}
+            </pre>} />
+        </div>
+      })}
+      listStyle={{ padding: "1rem" }}
+      itemStyle={{}}
+    />}
 
-                        children={<pre>
-                            {c.data}
-                        </pre>} />
-                </div>
-            })}
-            listStyle={{ padding: "1rem" }}
-            itemStyle={{}}
-        />}
-
-        gridStyle={{
-            "grid-template-columns": "minmax(200px, 45%) 1fr"
-        }}
-    >
-        <>{CssTEST.Docs[codeIndex()].element()}</>
-    </GridLayout>
+    gridStyle={{
+      "grid-template-columns": "minmax(200px, 45%) 1fr"
+    }}
+  >
+    <>{CssTEST.Docs[codeIndex()].element()}</>
+  </GridLayout>
 }
 
 export function Code({ code, lang }: { code: string; lang: string }) {
-    let codeRef: HTMLPreElement | undefined;
-    const [highlightedCode, _setHighlightedCode] = createSignal(code);
+  let codeRef: HTMLPreElement | undefined;
+  const [highlightedCode, _setHighlightedCode] = createSignal(code);
 
-    const highlight = () => {
-        requestAnimationFrame(() => {
-            if (codeRef) {
-                Prism.highlightElement(codeRef.querySelector("code") as HTMLElement);
-            }
-        });
-    };
-
-    onMount(highlight);
-    onCleanup(() => {
-        if (codeRef) codeRef.innerHTML = "";
+  const highlight = () => {
+    requestAnimationFrame(() => {
+      if (codeRef) {
+        Prism.highlightElement(codeRef.querySelector("code") as HTMLElement);
+      }
     });
+  };
 
-    return (
-        <pre ref={codeRef} class="line-numbers" style={{ "white-space": 'pre' }}>
-            <code class={`language-${lang}`} innerHTML={highlightedCode()
-                .replace(/</g, '&lt;').replace(/>/g, '&gt;')}></code>
-        </pre>);
+  onMount(highlight);
+  onCleanup(() => {
+    if (codeRef) codeRef.innerHTML = "";
+  });
+
+  return (
+    <pre ref={codeRef} class="line-numbers" style={{ "white-space": 'pre' }}>
+      <code class={`language-${lang}`} innerHTML={highlightedCode()
+        .replace(/</g, '&lt;').replace(/>/g, '&gt;')}></code>
+    </pre>);
 }
 
 

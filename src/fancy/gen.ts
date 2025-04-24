@@ -27,6 +27,7 @@ export const CssFANCY = {
     FlickerText: "FlickerText",
     Card: "card",
     Title: "title",
+    Description: "description",
     Stats: "stats",
     Stat: "stat",
     StatValue: "stat-value",
@@ -35,24 +36,15 @@ export const CssFANCY = {
     Raincon: "Raincon",
     RainconGrad: "RainconGrad",
 
-    varSurface: "--surface",
-    varPrimary: "--primary",
-    varBannerBorder: "--banner-border",
-    varSecondary: "--secondary",
-    varPrimaryContainer: "--primary-container",
     varGhostColor: "--ghostColor",
     varGhostEyeColor: "--ghostEyeColor",
     varGhostWaveColor: "--ghostWaveColor",
     varGhostCircleRadius: "--ghostCircleRadius",
     varGhostCircleSize: "--ghostCircleSize",
     varGhostCircleDistance: "--ghostCircleDistance",
-    varStermBorderColor: "--sterm-border-color",
-    varStermBgColor: "--sterm-bg-color",
     varFlickerShadow: "--flicker-shadow",
-    varFlickerTextCol: "--FlickerText-col",
-    varSecondaryContainer: "--secondary-container",
     varRainsrc: "--rainsrc",
-    varRainsize: "--rainsize",
+    varRainsize: "--rainsize"
 
     
 } as const;

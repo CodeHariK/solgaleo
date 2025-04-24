@@ -3,7 +3,7 @@ import { CssNAV, ParseUrlParams, UpdateQueryParam } from './gen';
 import { CssUI } from '../gen';
 import { createStore } from 'solid-js/store';
 
-/*CSS:-
+/*CSS:*
 .TabsContainer {
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@ import { createStore } from 'solid-js/store';
 
 */
 
-/*CSS:-
+/*CSS:*
 .TreeView {
     display: inline-flex;
     padding: 0.5rem;
