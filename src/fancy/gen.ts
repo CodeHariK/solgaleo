@@ -24,6 +24,7 @@ export const CssFANCY = {
     TerminalHeader: "TerminalHeader",
     TerminalLine: "TerminalLine",
     Marquee: "Marquee",
+    MarqueeChild: "MarqueeChild",
     FlickerText: "FlickerText",
     Card: "card",
     Title: "title",

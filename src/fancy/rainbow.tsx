@@ -74,10 +74,12 @@ export function RainbowText({ children, style, class: className }: {
 export function RainbowImage(props: {
     size: string;
     src: string;
+    style?: JSX.CSSProperties,
 }) {
     return <div
         class={CssFANCY.Raincon}
         style={{
+            ...props.style,
             [CssFANCY.varRainsize]: props.size,
             [CssFANCY.varRainsrc]: `url(${props.src})`,
         }}>

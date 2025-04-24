@@ -442,6 +442,11 @@ select {
     > textarea:focus-within ~ label,
     > input:not(:placeholder-shown) ~ label,
     > textarea:not(:placeholder-shown) ~ label {
+        --label-transform-x: 0.6rem;
+        --label-transform-y: -1.0rem;
+        --label-scale: 0.85;
+        --input-label-focus-color: var(--primary);
+        --input-label-focus-bg: var(--surface);
         transform: 
             translateX(var(--label-transform-x))
             translateY(var(--label-transform-y))

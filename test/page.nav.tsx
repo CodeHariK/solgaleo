@@ -10,15 +10,25 @@ export function NavTest() {
 
     return <GridLayout
         header={<TestHeader />}
-        left={<VCarousel children={[
-            <p onclick={() => { setExperiment(0), modalVisibility[1](true); }}>Modal</p>,
-            <p onclick={() => { setExperiment(1), modalVisibility[1](true); }}>ModalScroll</p>,
-            <p onclick={() => { setExperiment(2), modalVisibility[1](true); }}>ModalAnchorLeft</p>,
-            <p onclick={() => { setExperiment(3), modalVisibility[1](true); }}>ModalAnchorRight</p>,
-            <p onclick={() => { setExperiment(4), modalVisibility[1](true); }}>ModalAnchorTop</p>,
-            <p onclick={() => { setExperiment(5), modalVisibility[1](true); }}>ModalAnchorBottom</p>,
-            <p onclick={() => { setExperiment(6), modalVisibility[1](true); }}>ModalAnchorDrag</p>,
-        ]} />}
+        left={<VCarousel
+
+            itemStyle={{
+                background: "var(--primary-container)",
+                "border-radius": "1rem",
+                "text-align": 'center',
+                "align-content": 'center'
+            }}
+            listStyle={{ padding: "10px" }}
+
+            children={[
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(0), modalVisibility[1](true); }}>Modal</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(1), modalVisibility[1](true); }}>ModalScroll</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(2), modalVisibility[1](true); }}>ModalAnchorLeft</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(3), modalVisibility[1](true); }}>ModalAnchorRight</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(4), modalVisibility[1](true); }}>ModalAnchorTop</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(5), modalVisibility[1](true); }}>ModalAnchorBottom</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(6), modalVisibility[1](true); }}>ModalAnchorDrag</p>,
+            ]} />}
     >
         {BreadcrumbTest()}
 

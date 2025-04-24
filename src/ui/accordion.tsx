@@ -23,9 +23,10 @@ import { CssUI } from "./gen";
 export function Accordion(props: {
     title: JSX.Element,
     children: JSX.Element,
-    contentStyle?: JSX.CSSProperties
+    contentStyle?: JSX.CSSProperties,
+    open?: boolean
 }) {
-    const [isOpen, setIsOpen] = createSignal(false);
+    const [isOpen, setIsOpen] = createSignal(props.open);
 
     const toggle = () => {
         setIsOpen(!isOpen());

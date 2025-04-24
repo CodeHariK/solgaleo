@@ -64,7 +64,7 @@ function ProcessCSS(input: string) {
         let line = lines[i]
         let trimLine = line.trim()
 
-        if (trimLine.startsWith("//") || trimLine.startsWith("--") || !trimLine) {
+        if (trimLine.startsWith("//") || !trimLine) {
             continue;
         }
 
@@ -354,11 +354,14 @@ export const Css${fileName} = {
 
     ${cssVarMappings.map(({ name, value }) => `${name}: "${value}"`).join(',\n    ')}
 
-    ${FUNCTION_DOCS.length > 0 ? `,Docs: [${FUNCTION_DOCS.map((f) => {
+    ${FUNCTION_DOCS.length > 0 ? `,Docs: [${FUNCTION_DOCS.sort((a, b) => {
+                const comparison = a.doc.charCodeAt(0) - b.doc.charCodeAt(0);
+                return comparison !== 0 ? a.doc.localeCompare(b.doc) : comparison
+            }).map((f) => {
                 return `
         {
             element: ${f.element}, 
-            doc: "${f.doc}", 
+            doc: "${f.doc.replace(/^\d+\.\s*/, '')}", 
             data: ${JSON.stringify(f.data).replaceAll("    ", "  ")}
         }`
             })}

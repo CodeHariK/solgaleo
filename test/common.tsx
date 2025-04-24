@@ -1,3 +1,4 @@
+import { CssUI } from "../src/gen";
 import { AA, Header, IMG } from "../src/nav/header";
 import { ThemeToggle } from "../src/ui/theme_toggle";
 
@@ -21,6 +22,12 @@ export function TestHeader() {
             <AA href="/tabs?two.light=Root.Pictures.Vacation" >Tabs</AA>,
         ]}
         right={[
+            <button
+                class={CssUI.IconButton}
+                type="button"
+                onClick={() => window.open('https://github.com/codeharik/solgaleo', '_blank')}>
+                Github
+            </button>,
             <ThemeToggle />
         ]}
     />;

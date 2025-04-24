@@ -1,518 +1,299 @@
 /*CSS:*
 
-:root {
-    --background: #000;
-    --comment: #6272A4;
-    --foreground: #F8F8F2;
-    --selection: #44475A;
-
-    --cyan: #8BE9FD;
-    --green: #50FA7B;
-    --orange: #FFB86C;
-    --pink: #FF79C6;
-    --purple: #BD93F9;
-    --red: #FF5555;
-    --yellow: #F1FA8C;
-
-    --background-30: #282A3633;
-    --comment-30: #6272A433;
-    --foreground-30: #F8F8F233;
-    --selection-30: #44475A33;
-
-    --cyan-30: #8BE9FD33;
-    --green-30: #50FA7B33;
-    --orange-30: #FFB86C33;
-    --pink-30: #FF79C633;
-    --purple-30: #BD93F933;
-    --red-30: #FF555533;
-    --yellow-30: #F1FA8C33;
-
-    --background-40: #282A3666;
-    --comment-40: #6272A466;
-    --foreground-40: #F8F8F266;
-    --selection-40: #44475A66;
-
-    --cyan-40: #8BE9FD66;
-    --green-40: #50FA7B66;
-    --orange-40: #FFB86C66;
-    --pink-40: #FF79C666;
-    --purple-40: #BD93F966;
-    --red-40: #FF555566;
-    --yellow-40: #F1FA8C66;
+.light {
+    --mono-1: hsl(230, 8%, 24%);
+    --mono-2: hsl(230, 6%, 44%);
+    --mono-3: hsl(230, 4%, 64%);
+    --hue-1: hsl(198, 99%, 37%);
+    --hue-2: hsl(221, 87%, 60%);
+    --hue-3: hsl(301, 63%, 40%);
+    --hue-4: hsl(119, 34%, 47%);
+    --hue-5: hsl(5, 74%, 59%);
+    --hue-5-2: hsl(344, 84%, 43%);
+    --hue-6: hsl(35, 99%, 36%);
+    --hue-6-2: hsl(35, 99%, 40%);
+    --syntax-fg: var(--mono-1);
+    --syntax-bg: hsl(230, 1%, 98%);
+    --syntax-gutter: hsl(230, 1%, 62%);
+    --syntax-guide: hsla(230, 8%, 24%, 0.2);
+    --syntax-accent: hsl(230, 100%, 66%);
+    --syntax-selection-color: hsl(230, 1%, 90%);
+    --syntax-gutter-background-color-selected: var(--syntax-selection-color);
+    --syntax-cursor-line: hsla(230, 8%, 24%, 0.05)); 
 }
 
-// Hide the radio buttons
-.tab-radio {
-    @apply absolute opacity-0 pointer-events-none;
-}
-
-// Default state - hide all tab content
-.tab-content {
-    @apply hidden opacity-0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-// Default state for tab links
-.tab-link {
-    @apply border-b-2 border-transparent bg-transparent;
-    transition: background-color 0.2s ease-in-out;
-}
-
-// When tab1 is checked, show content1 and highlight its tab
-#tab1:checked~* #content1 {
-    @apply block opacity-100;
-}
-
-#tab1:checked~.flex .tab-link:nth-child(1) {
-    @apply border-b-2 border-violet-50;
-}
-
-// When tab2 is checked, show content2 and highlight its tab 
-#tab2:checked~* #content2 {
-    @apply block opacity-100;
-}
-
-#tab2:checked~.flex .tab-link:nth-child(2) {
-    @apply border-b-2 border-violet-300;
-}
-
-pre::-webkit-scrollbar {
-    width: 14px;
-}
-
-pre::-webkit-scrollbar-track {
-    background-color: var(--comment);
-    border-radius: 0px;
-}
-
-pre::-webkit-scrollbar-thumb {
-    background-color: var(--purple);
-    border-radius: 0px;
-}
-
-// Selection 
-pre[class*="language-"]::-moz-selection,
-pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection,
-code[class*="language-"] ::-moz-selection {
-    text-shadow: none;
-    background-color: var(--selection);
-}
-
-pre[class*="language-"]::selection,
-pre[class*="language-"] ::selection,
-code[class*="language-"]::selection,
-code[class*="language-"] ::selection {
-    text-shadow: none;
-    background-color: var(--selection);
-}
-
-// Line numbers
-
-pre.line-numbers {
-    position: relative;
-    padding-left: 3.8em;
-    counter-reset: linenumber;
-}
-
-pre.line-numbers>code {
-    position: relative;
-    white-space: inherit;
-}
-
-.line-numbers .line-numbers-rows {
-    position: absolute;
-    pointer-events: none;
-    top: 0;
-    font-size: 100%;
-    left: -3.8em;
-    width: 3em;
-
-    letter-spacing: -1px;
-    border-right: none;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.line-numbers-rows>span {
-    pointer-events: none;
-    display: block;
-    counter-increment: linenumber;
-}
-
-.line-numbers-rows>span:before {
-    content: counter(linenumber);
-    color: #999;
-    display: block;
-    padding-right: 0.8em;
-    text-align: right;
-}
-
-// Toolbar for copying
-div.code-toolbar {
-    position: relative;
-}
-
-div.code-toolbar>.toolbar {
-    position: absolute;
-    top: 0.3em;
-    right: 0.2em;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-}
-
-div.code-toolbar:hover>.toolbar {
-    opacity: 1;
-}
-
-div.code-toolbar>.toolbar .toolbar-item {
-    display: inline-block;
-    padding-right: 20px;
-}
-
-div.code-toolbar>.toolbar a {
-    cursor: pointer;
-}
-
-div.code-toolbar>.toolbar button {
-    background: none;
-    border: 0;
-    color: inherit;
-    font: inherit;
-    line-height: normal;
-    overflow: visible;
-    padding: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-div.code-toolbar>.toolbar a,
-div.code-toolbar>.toolbar button,
-div.code-toolbar>.toolbar span {
-    color: var(--foreground);
-    font-size: 0.8em;
-    padding: 0.5em;
-    background: var(--comment);
-    border-radius: 0.5em;
-}
-
-div.code-toolbar>.toolbar a:hover,
-div.code-toolbar>.toolbar a:focus,
-div.code-toolbar>.toolbar button:hover,
-div.code-toolbar>.toolbar button:focus,
-div.code-toolbar>.toolbar span:hover,
-div.code-toolbar>.toolbar span:focus {
-    color: inherit;
-    text-decoration: none;
-    background-color: var(--green);
-}
-
-// Remove text shadow for printing 
-@media print {
-
-    code[class*="language-"],
-    pre[class*="language-"] {
-        text-shadow: none;
-    }
+.night {
+    --mono-1: hsl(220, 14%, 71%);
+    --mono-2: hsl(220, 9%, 55%);
+    --mono-3: hsl(220, 10%, 40%);
+    --hue-1: hsl(187, 47%, 55%);
+    --hue-2: hsl(207, 82%, 66%);
+    --hue-3: hsl(286, 60%, 67%);
+    --hue-4: hsl(95, 38%, 62%);
+    --hue-5: hsl(355, 65%, 65%);
+    --hue-5-2: hsl(5, 48%, 51%);
+    --hue-6: hsl(29, 54%, 61%);
+    --hue-6-2: hsl(39, 67%, 69%);
+    --syntax-fg: hsl(220, 14%, 71%);
+    --syntax-bg: hsl(220, 13%, 18%);
+    --syntax-gutter: hsl(220, 14%, 45%);
+    --syntax-guide: hsla(220, 14%, 71%, 0.15);
+    --syntax-accent: hsl(220, 100%, 66%);
+    --syntax-selection-color: hsl(220, 13%, 28%);
+    --syntax-gutter-background-color-selected: hsl(220, 13%, 26%);
+    --syntax-cursor-line: hsla(220, 100%, 80%, 0.04);
 }
 
 code[class*="language-"],
 pre[class*="language-"] {
-    color: var(--foreground);
-    background: var(--background);
-    text-shadow: none;
-    font-family: PT Mono, Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
-        monospace;
+    background: var(--syntax-bg);
+    color: var(--mono-1);
+    font-family: "Fira Code", "Fira Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    direction: ltr;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
     word-break: normal;
-    word-wrap: normal;
     line-height: 1.5;
-
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-
+    -moz-tab-size: 2;
+    -o-tab-size: 2;
+    tab-size: 2;
     -webkit-hyphens: none;
     -moz-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
 }
 
-// Code blocks 
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] *::-moz-selection,
+pre[class*="language-"] *::-moz-selection {
+    background: var(--syntax-selection-color);
+    color: inherit;
+}
+
+code[class*="language-"]::selection,
+code[class*="language-"] *::selection,
+pre[class*="language-"] *::selection {
+    background: var(--syntax-selection-color);
+    color: inherit;
+}
 
 pre[class*="language-"] {
-    background: var(--background);
-    border-radius: 0.5em;
-    padding: 1em;
-    margin: 0.5em 0;
+    padding: .5em;
+    margin: 0;
     overflow: auto;
-    height: auto;
+    border-radius: 0.3em;
 }
 
-:not(pre)>code[class*="language-"],
-pre[class*="language-"] {
-    background: var(--background);
-}
-
-// Inline code 
 :not(pre)>code[class*="language-"] {
-    padding: 4px 7px;
+    padding: 0.2em 0.3em;
     border-radius: 0.3em;
     white-space: normal;
 }
 
-// Code box limit
-
-.limit-300 {
-    height: 300px !important;
+.token.comment,
+.token.prolog,
+.token.cdata {
+    color: var(--mono-3);
 }
 
-.limit-300 {
-    height: 400px !important;
+.token.doctype,
+.token.punctuation,
+.token.entity {
+    color: var(--mono-1);
 }
 
-.limit-500 {
-    height: 500px !important;
+.token.attr-name,
+.token.class-name,
+.token.boolean,
+.token.constant,
+.token.number,
+.token.atrule {
+    color: var(--hue-6);
 }
 
-.limit-600 {
-    height: 600px !important;
+.token.keyword {
+    color: var(--hue-3);
 }
 
-.limit-700 {
-    height: 700px !important;
+.token.property,
+.token.tag,
+.token.symbol,
+.token.deleted,
+.token.important {
+    color: var(--hue-5);
 }
 
-.limit-800 {
-    height: 800px !important;
+.token.selector,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted,
+.token.regex,
+.token.attr-value,
+.token.attr-value>.token.punctuation {
+    color: var(--hue-4);
 }
 
-.language-css {
-    color: var(--purple);
+.token.variable,
+.token.operator,
+.token.function {
+    color: var(--hue-2);
 }
 
-.token {
-    color: var(--pink);
+.token.url {
+    color: var(--hue-1);
 }
 
-.language-css .token {
-    color: var(--pink);
+.token.attr-value>.token.punctuation.attr-equals,
+.token.special-attr>.token.attr-value>.token.value.css {
+    color: var(--mono-1);
 }
 
-.token.script {
-    color: var(--foreground);
+.language-css .token.selector {
+    color: var(--hue-5);
+}
+
+.language-css .token.property {
+    color: var(--mono-1);
+}
+
+.language-css .token.function,
+.language-css .token.url>.token.function {
+    color: var(--hue-1);
+}
+
+.language-css .token.url>.token.string.url {
+    color: var(--hue-4);
+}
+
+.language-css .token.important,
+.language-css .token.atrule .token.rule {
+    color: var(--hue-3);
+}
+
+.language-javascript .token.operator {
+    color: var(--hue-3);
+}
+
+.language-javascript .token.template-string>.token.interpolation>.token.interpolation-punctuation.punctuation {
+    color: var(--hue-5-2);
+}
+
+.language-json .token.operator {
+    color: var(--mono-1);
+}
+
+.language-json .token.null.keyword {
+    color: var(--hue-6);
+}
+
+.language-markdown .token.url,
+.language-markdown .token.url>.token.operator,
+.language-markdown .token.url-reference.url>.token.string {
+    color: var(--mono-1);
+}
+
+.language-markdown .token.url>.token.content {
+    color: var(--hue-2);
+}
+
+.language-markdown .token.url>.token.url,
+.language-markdown .token.url-reference.url {
+    color: var(--hue-1);
+}
+
+.language-markdown .token.blockquote.punctuation,
+.language-markdown .token.hr.punctuation {
+    color: var(--mono-3);
+    font-style: italic;
+}
+
+.language-markdown .token.code-snippet {
+    color: var(--hue-4);
+}
+
+.language-markdown .token.bold .token.content {
+    color: var(--hue-6);
+}
+
+.language-markdown .token.italic .token.content {
+    color: var(--hue-3);
+}
+
+.language-markdown .token.strike .token.content,
+.language-markdown .token.strike .token.punctuation,
+.language-markdown .token.list.punctuation,
+.language-markdown .token.title.important>.token.punctuation {
+    color: var(--hue-5);
 }
 
 .token.bold {
     font-weight: bold;
 }
 
+.token.comment,
 .token.italic {
     font-style: italic;
 }
 
-.token.atrule,
-.token.attr-name,
-.token.attr-value {
-    color: var(--green);
-}
-
-.language-css .token.atrule {
-    color: var(--purple);
-}
-
-.language-html .token.attr-value,
-.language-markup .token.attr-value {
-    color: var(--yellow);
-}
-
-.token.boolean {
-    color: var(--purple);
-}
-
-.token.builtin,
-.token.class-name {
-    color: var(--cyan);
-}
-
-.token.comment {
-    color: var(--comment);
-}
-
-.token.constant {
-    color: var(--purple);
-}
-
-.language-javascript .token.constant {
-    color: var(--orange);
-    font-style: italic;
-}
-
 .token.entity {
-    color: var(--pink);
-}
-
-.language-css .token.entity {
-    color: var(--green);
-}
-
-.language-html .token.entity.named-entity {
-    color: var(--purple);
-}
-
-.language-html .token.entity:not(.named-entity) {
-    color: var(--pink);
-}
-
-.language-markup .token.entity.named-entity {
-    color: var(--purple);
-}
-
-.language-markup .token.entity:not(.named-entity) {
-    color: var(--pink);
-}
-
-.token.function {
-    color: var(--green);
-}
-
-.language-css .token.function {
-    color: var(--cyan);
-}
-
-.token.important,
-.token.keyword {
-    color: var(--pink);
-}
-
-.token.prolog {
-    color: var(--foreground);
-}
-
-.token.property {
-    color: var(--orange);
-}
-
-.language-css .token.property {
-    color: var(--cyan);
-}
-
-.token.punctuation {
-    color: var(--pink);
-}
-
-.language-css .token.punctuation {
-    color: var(--orange);
-}
-
-.language-html .token.punctuation,
-.language-markup .token.punctuation {
-    color: var(--foreground);
-}
-
-.token.selector {
-    color: var(--pink);
-}
-
-.language-css .token.selector {
-    color: var(--green);
-}
-
-.token.regex {
-    color: var(--red);
-}
-
-.language-css .token.rule:not(.atrule) {
-    color: var(--foreground);
-}
-
-.token.string {
-    color: var(--yellow);
-}
-
-.token.tag {
-    color: var(--pink);
-}
-
-.token.url {
-    color: var(--cyan);
-}
-
-.language-css .token.url {
-    color: var(--orange);
-}
-
-.token.variable {
-    color: var(--comment);
-}
-
-.token.number {
-    color: rgba(189, 147, 249, 1);
-}
-
-.token.operator {
-    color: rgba(139, 233, 253, 1);
-}
-
-.token.char {
-    color: rgba(255, 135, 157, 1);
-}
-
-.token.symbol {
-    color: rgba(255, 184, 108, 1);
-}
-
-.token.deleted {
-    color: #e2777a;
+    cursor: help;
 }
 
 .token.namespace {
-    color: #e2777a;
+    opacity: 0.8;
 }
 
-// Line Highlighter
-.highlight-line {
-    color: inherit;
-    display: inline-block;
-    text-decoration: none;
-
-    border-radius: 4px;
-    padding: 2px 10px;
+.token.token.tab:not(:empty):before,
+.token.token.cr:before,
+.token.token.lf:before,
+.token.token.space:before {
+    color: var(--syntax-guide);
 }
 
-.highlight-line:empty:before {
-    content: " ";
+div.code-toolbar>.toolbar.toolbar>.toolbar-item {
+    margin-right: 0.4em;
 }
 
-.highlight-line:not(:last-child) {
-    min-width: 100%;
+div.code-toolbar>.toolbar.toolbar>.toolbar-item>button,
+div.code-toolbar>.toolbar.toolbar>.toolbar-item>a,
+div.code-toolbar>.toolbar.toolbar>.toolbar-item>span {
+    background: var(--syntax-selection-color);
+    color: var(--mono-2);
+    padding: 0.1em 0.4em;
+    border-radius: 0.3em;
 }
 
-.highlight-line .highlight-line:not(:last-child) {
-    min-width: 0;
+.line-highlight.line-highlight {
+    background: var(--syntax-cursor-line);
 }
 
-.highlight-line-isdir {
-    color: var(--foreground);
-    background-color: var(--selection-30);
+.line-highlight.line-highlight:before,
+.line-highlight.line-highlight[data-end]:after {
+    background: var(--syntax-selection-color);
+    color: var(--mono-1);
+    padding: 0.1em 0.6em;
+    border-radius: 0.3em;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
 }
 
-.highlight-line-active {
-    background-color: var(--comment-30);
+pre[id].linkable-line-numbers.linkable-line-numbers span.line-numbers-rows>span:hover:before {
+    background-color: var(--syntax-cursor-line);
 }
 
-.highlight-line-add {
-    background-color: var(--green-30);
+.line-numbers.line-numbers .line-numbers-rows,
+.command-line .command-line-prompt {
+    border-right-color: var(--syntax-guide);
 }
 
-.highlight-line-remove {
-    background-color: var(--red-30);
+.line-numbers .line-numbers-rows>span:before,
+.command-line .command-line-prompt>span:before {
+    color: var(--syntax-gutter);
+}
+
+.prism-previewer-easing.prism-previewer-easing circle {
+    fill: transparent;
 }
 
 */

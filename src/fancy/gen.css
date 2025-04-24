@@ -31,6 +31,7 @@ src/rainbow.tsx
 .banner {
     padding: 1rem;
     background: var(--surface);
+    --banner-border: var(--primary);
     border-inline-start: .25rem solid var(--banner-border);
     h5 {
         display: flex;
@@ -58,6 +59,12 @@ src/rainbow.tsx
     }
 }
 .GhostCon {
+    --ghostWaveColor: var(--primary);
+    --ghostColor: var(--primary-container);
+    --ghostEyeColor: var(--secondary);
+    --ghostCircleSize: 10px;
+    --ghostCircleDistance: 5px;
+    --ghostCircleRadius: 11.18px;
     position: fixed;
     top: 0;
     left: 0;
@@ -230,7 +237,7 @@ src/rainbow.tsx
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    span{
+    .MarqueeChild{
         text-transform: uppercase;
         will-change: transform;
         transform: translateX(0);

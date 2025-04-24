@@ -8,7 +8,7 @@ import { CssFANCY } from "./gen";
     justify-content: flex-start;
     overflow: hidden;
 
-    span{
+    .MarqueeChild{
         text-transform: uppercase;
         will-change: transform;
         transform: translateX(0);
@@ -35,7 +35,7 @@ export function Marquee({ child, repeatCount, className, style }: {
     return <div class={CssFANCY.Marquee} classList={{ className: className != null }} style={style}>
         <For each={Array.from({ length: repeatCount })}>
             {() => (
-                <span>
+                <span class="MarqueeChild">
                     {child()}
                 </span>
             )}

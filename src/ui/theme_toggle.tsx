@@ -53,12 +53,11 @@ export function ThemeToggle() {
         setData("themeIndex", themeIndex);
     });
 
-    return (
-        <button
-            class={CssUI.IconButton}
-            type="button"
-            onClick={toggleTheme}
-        > {data.themes[data?.themeIndex]?.name} {data.themes[data?.themeIndex]?.type === "night" ? <IconMoon /> : <IconSun />}
-        </button>
-    );
+    return <button
+        class={CssUI.IconButton}
+        type="button"
+        onClick={toggleTheme}
+    > {data.themes[data?.themeIndex]?.name} {data.themes[data?.themeIndex]?.type === "night" ? <IconMoon /> : <IconSun />}
+    </button>
+
 }
