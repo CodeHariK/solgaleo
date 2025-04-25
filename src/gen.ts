@@ -1,5 +1,5 @@
 
-import "./gen.css"
+
 
 export * from "./svg/gen";
 export * from "./ui/gen";

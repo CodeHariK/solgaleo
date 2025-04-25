@@ -1,5 +1,5 @@
 import '../gen.css'
-import "./gen.css"
+
 export * from "./pagination.tsx"; 
 export * from "./tab.tsx"; 
 export * from "./breadcrumb.tsx"; 

@@ -124,7 +124,7 @@ async function runExtract(dir) {
         FILE_CSS = FINAL_FILE_CSS
         UNIQUE_CLASS_SELECTORS = FINAL_UNIQUE_CLASS_SELECTORS
 
-        await writeCssTs(dir, true, true);
+        await writeCssTs(dir);
     }
 
     LIGHT_VARS = {};
@@ -198,31 +198,19 @@ async function processDirectory(dirPath: string, allFiles = new Map<string, Map<
             PROCESSED_FILES.set(path, file);
         }
 
-        await writeCssTs(dirPath, true, true);
+        await writeCssTs(dirPath);
     }
 
     return allFiles;
 }
 
-async function writeCssTs(folderPath: string, genCSSFile: boolean, genTsFile: boolean) {
+async function writeCssTs(folderPath: string) {
 
     const folderName = path.basename(folderPath);
 
     if (ROOT_VARS || LIGHT_VARS || NIGHT_VARS || FILE_CSS) {
         const buildVars = (theme: string, vars: Record<string, string>) => `${theme == "root" ? ":root" : ("." + theme)} {\n` +
             Object.entries(vars)
-                // .filter(([k, _]) => folderPath == "src" ? true : !(
-                //     k.startsWith("--body") ||
-                //     k.startsWith("--primary") ||
-                //     k.startsWith("--secondary") ||
-                //     k.startsWith("--surface") ||
-                //     k.startsWith("--disabled") ||
-                //     k.startsWith("--modal-") ||
-                //     k.startsWith("--a-") ||
-                //     k.startsWith("--animation") ||
-                //     k.startsWith("--ease") ||
-                //     k.startsWith("--error")
-                // ))
                 .map(([k, v]) => (v != "" && v != ";")
                     ? `    ${k}: ${v}${v.endsWith(";") ? "" : ";"}`
                     : `    ${k}: ;`)
@@ -250,16 +238,16 @@ async function writeCssTs(folderPath: string, genCSSFile: boolean, genTsFile: bo
                 .map(file => file.path.replace(folderName + "/", ""))
                 .join("\n");
 
-            if (genCSSFile) {
+            console.log(folderPath)
+            if (folderPath == "src" || folderPath == "test") {
+                console.log(`Extracted CSS to ${folderPath}/gen.css`);
                 await fs.promises.writeFile(`${folderPath}/gen.css`,
                     `/*\n${styleFiles}\n*/\n\n` +
                     combinedCSS.trim() + "\n",
                     "utf-8");
             }
 
-            console.log(`Extracted CSS to ${folderPath}/gen.css`);
-
-            await WriteTsFile(`${folderPath}/gen.ts`, exportFiles.trim(), genTsFile);
+            await WriteTsFile(`${folderPath}/gen.ts`, exportFiles.trim());
 
             FINAL_ROOT_VARS = {
                 ...FINAL_ROOT_VARS,
@@ -288,7 +276,7 @@ async function writeCssTs(folderPath: string, genCSSFile: boolean, genTsFile: bo
     }
 }
 
-async function WriteTsFile(filePath, exportFiles: string, genFile: boolean) {
+async function WriteTsFile(filePath, exportFiles: string) {
 
     const cssVarMappings = Object.keys({ ...LIGHT_VARS, ...ROOT_VARS })
         .filter(key => key.startsWith('--'))
@@ -343,7 +331,7 @@ async function WriteTsFile(filePath, exportFiles: string, genFile: boolean) {
     const fileName = filePath.split("/").at(-2).toUpperCase()
 
     const content = `${filePath != "src/gen.ts" && filePath != "test/gen.ts" ? "import '../gen.css'" : ""}
-${false ? "" : `import "./gen.css"`}
+${filePath.startsWith('test') ? `import "./gen.css"` : ""}
 ${exportFiles}
 ${subFolderExports.filter(Boolean).map(exp => exp?.export).join("\n")}
 
@@ -371,9 +359,7 @@ export const Css${fileName} = {
 export type Css${fileName}Type = keyof typeof Css${fileName};
 `;
 
-    if (genFile) {
-        await fs.promises.writeFile(filePath, content, 'utf-8');
-    }
+    await fs.promises.writeFile(filePath, content, 'utf-8');
 
     console.log(`Generated selectors file: ${filePath}`);
 

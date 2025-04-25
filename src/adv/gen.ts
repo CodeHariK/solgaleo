@@ -1,5 +1,5 @@
 import '../gen.css'
-import "./gen.css"
+
 export * from "./md.tsx"; 
 export * from "./slides.tsx"; 
 export * from "./blog.tsx"; 

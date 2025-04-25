@@ -1,5 +1,5 @@
 import '../gen.css'
-import "./gen.css"
+
 export * from "./svg.tsx";
 
 

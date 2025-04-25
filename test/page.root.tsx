@@ -122,4 +122,3 @@ export function Code({ code, lang }: { code: string; lang: string }) {
 				.replace(/</g, '&lt;').replace(/>/g, '&gt;')}></code>
 		</pre>);
 }
-

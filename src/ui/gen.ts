@@ -1,5 +1,5 @@
 import '../gen.css'
-import "./gen.css"
+
 export * from "./position.tsx"; 
 export * from "./gridlayout.tsx"; 
 export * from "./accordion.tsx"; 
