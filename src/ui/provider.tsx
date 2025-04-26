@@ -1,8 +1,8 @@
 import { createContext, JSX, onMount, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
-import { Theme } from "./theme_toggle";
+import { Theme, ThemeMount } from "./theme_toggle";
 
-interface SolData {
+export interface SolData {
     baseroute: string,
     themes: Theme[],
     themeIndex?: number
@@ -35,6 +35,7 @@ export const SolProvider = (props: { initialData: SolData; children: JSX.Element
 
     onMount(() => {
         console.log("SolStart", data)
+        ThemeMount(data, setData)
     })
 
     const getTheme = () => {

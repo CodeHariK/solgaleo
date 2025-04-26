@@ -1,4 +1,4 @@
-import { BlogList, Carousel, MiniMarkdown, Slides, SuperTable } from "../src/adv/gen";
+import { BlogList, Carousel, Markdown, Slides, SuperTable } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -166,10 +166,45 @@ export function SuperTableTest() {
 //FN:END
 
 //FN:START
-//MiniMarkdown : Simple Markdown renderer
+//2.Markdown : Simple Markdown renderer
 //FN:DOC
 export function MarkdownTest() {
-    return <MiniMarkdown content="
+    return <Markdown content='
+# Bloom filter 
+
+--
+
+1. Hello
+2. Hi
+    3. [Wikipedia](https://en.wikipedia.org/wiki/Bloom_filter)
+
+* [Wikipedia](https://en.wikipedia.org/wiki/Bloom_filter)
+    * Hello
+    * Hi
+        * Sol
+* [mCoding : Bloom Filters](https://www.youtube.com/watch?v=qZNJTh2NEiU)
+* [Number0 : Bloom Filters](https://www.youtube.com/watch?v=eCUm4U3WDpM)
+* [ByteByteGo : Bloom Filters](https://www.youtube.com/watch?v=V3pzxngeLqw)
+* [Spanning Tree : What Are Bloom Filters?](https://www.youtube.com/watch?v=kfFacplFY4Y)
+* [ByteMonk : Bloom Filters](https://www.youtube.com/watch?v=GT0En1dGntY)
+
+Bloom filter is a space-efficient probabilistic data structure, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not - in other words, a query returns either "possibly in set" or "definitely not in set". Elements can be added to the set, but not removed.
+
+## Uses
+
+### Cache filtering {#cache-filtering}
+
+Regular paragraph with an ![inline image](https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1903340/ss_483a27df5072beb3a4650634a764bda750fbcb82.1920x1080.jpg?t=1745509513) in the middle.
+
+[![IMAGE ALT TEXT HERE](https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1903340/ss_483a27df5072beb3a4650634a764bda750fbcb82.1920x1080.jpg?t=1745509513)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+
+![Standalone image](https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1903340/ss_483a27df5072beb3a4650634a764bda750fbcb82.1920x1080.jpg?t=1745509513)
+
+* List item with ![embedded image](https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1903340/ss_483a27df5072beb3a4650634a764bda750fbcb82.1920x1080.jpg?t=1745509513) inside it
+    * Nested list with image ![nested](https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1903340/ss_483a27df5072beb3a4650634a764bda750fbcb82.1920x1080.jpg?t=1745509513)
+
+<iframe width="951" height="535" src="https://www.youtube.com/embed/ltK_AhiXGDU" title="Clair Obscur: Expedition 33 - Official Trailer | Galaxies Gaming Showcase 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
     # Title
         ## Subtitle
 ### Smaller Title
@@ -186,15 +221,15 @@ sudo pacman -Sy    # Sync package databases
     sudo pacman -Sy    # Sync package databases
 
     import (
-        'io',
-        'os',
-        'fmt'
+        "io",
+        "os",
+        "fmt"
     )
 
     func main(){
-        fmt.Println('Hello')
+        fmt.Println("Hello")
     }
-```"
+```'
     />
 }
 //FN:END

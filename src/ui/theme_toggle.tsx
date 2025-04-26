@@ -1,5 +1,4 @@
-import { onMount } from "solid-js";
-import { CssUI, useSolContext } from "./gen";
+import { CssUI, SolData, useSolContext } from "./gen";
 import { IconMoon, IconSun } from "../gen";
 
 export type Theme = {
@@ -24,7 +23,6 @@ export function ThemeToggle() {
     const toggleTheme = () => {
         let themeIndex = (data.themeIndex + 1) % data.themes.length
 
-
         setData("themeIndex", themeIndex);
 
         const newTheme = data.themes[themeIndex]
@@ -34,25 +32,6 @@ export function ThemeToggle() {
         localStorage.setItem("theme", newTheme.name);
     };
 
-    // Detect system theme preference and apply it on mount
-    onMount(() => {
-        let savedTheme = localStorage.getItem("theme");
-
-        if (!data.themes.filter((e) => e.name == savedTheme)) {
-            const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            savedTheme = prefersNight ? "night" : "light";
-        }
-
-        let themeIndex = data.themes.findIndex((e) => e.name == savedTheme)
-        if (themeIndex < 0) themeIndex = 0
-
-        const theme = data.themes[themeIndex]
-
-        changeTheme(theme);
-
-        setData("themeIndex", themeIndex);
-    });
-
     return <button
         class={CssUI.IconButton}
         type="button"
@@ -61,3 +40,22 @@ export function ThemeToggle() {
     </button>
 
 }
+
+export function ThemeMount(data: SolData, setData: (key: keyof SolData, value: any) => void) {
+    let savedTheme = localStorage.getItem("theme");
+
+    if (!data.themes.filter((e) => e.name == savedTheme)) {
+        const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        savedTheme = prefersNight ? "night" : "light";
+    }
+
+    let themeIndex = data.themes.findIndex((e) => e.name == savedTheme);
+    if (themeIndex < 0) themeIndex = 0;
+
+    const theme = data.themes[themeIndex];
+
+    changeTheme(theme);
+
+    setData("themeIndex", themeIndex);
+}
+

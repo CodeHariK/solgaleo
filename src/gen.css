@@ -638,6 +638,48 @@ input[type="range"]:focus ~ .RangeValue {
         justify-content: space-between;
     }
 }
+.MarkdownImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.MarkdownIframe {
+    margin: 1rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.MarkdownIframe iframe {
+    max-width: 100%;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+}
+.HeadingLink {
+    text-decoration: none;
+    * {
+        display: inline-block;
+    }
+    h1::before,
+    h2::before,
+    h3::before,
+    h4::before,
+    h5::before,
+    h6::before {
+        content: "# ";
+        opacity: 0;
+    }
+    h1:hover::before,
+    h2:hover::before,
+    h3:hover::before,
+    h4:hover::before,
+    h5:hover::before,
+    h6:hover::before {
+        opacity: 1;
+        cursor: pointer;
+    }
+}
 .Slides {
     scroll-snap-type: y mandatory;
     overflow-y: auto;
@@ -1468,6 +1510,7 @@ input[type="range"]:focus ~ .RangeValue {
 * {
   scroll-behavior: smooth;
   margin: 0;
+  transition: all .3s;
 }
 *,
 *::before,

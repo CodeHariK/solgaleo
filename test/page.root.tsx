@@ -21,7 +21,7 @@ import { Marquee, RainbowImage, RainbowText } from "../src/gen";
 */
 
 //FN:START
-//1.Hello
+//3.Hello
 //FN:DOC
 export function Hello() {
 	return <div class="flex flex-col items-center h-full">
@@ -72,7 +72,7 @@ export function RootPage() {
 					}}
 				>
 					<Accordion
-						open={c.doc == "Hello"}
+						open={i == 0}
 						title={<div style={{
 							background: i == codeIndex() ? "var(--primary-container)" : "",
 							padding: ".7rem",

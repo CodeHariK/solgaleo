@@ -10,6 +10,9 @@ export * from "./carousel.tsx";
 export const CssADV = {
     Markdown: "Markdown",
     MarkdownCode: "MarkdownCode",
+    MarkdownImage: "MarkdownImage",
+    MarkdownIframe: "MarkdownIframe",
+    HeadingLink: "HeadingLink",
     Slides: "Slides",
     BlogContainer: "BlogContainer",
     BlogSection: "BlogSection",
