@@ -90,26 +90,26 @@ type TreeItemProps = {
     onClick?: (tab: Tab) => void;
 };
 
-export function useDelayedTruth(delay: number) {
-    const [delayedState, setDelayedState] = createSignal(false);
+// export function useDelayedTruth(delay: number) {
+//     const [delayedState, setDelayedState] = createSignal(false);
 
-    createEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setDelayedState(true);
-        }, delay);
+//     createEffect(() => {
+//         const timeoutId = setTimeout(() => {
+//             setDelayedState(true);
+//         }, delay);
 
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    });
+//         return () => {
+//             clearTimeout(timeoutId);
+//         };
+//     });
 
-    return [delayedState] as const;
-}
+//     return [delayedState] as const;
+// }
 
 const TreeItem = (props: TreeItemProps) => {
     const hasChildren = props.tab.children && props.tab.children.length > 0;
     const isExpanded = props.tab.open
-    const [delayed] = useDelayedTruth(50);
+    // const [delayed] = useDelayedTruth(50);
 
     const handleClick = (e: MouseEvent) => {
         e.stopPropagation();
@@ -124,7 +124,7 @@ const TreeItem = (props: TreeItemProps) => {
                     [CssNAV.TreeActive]: props.activePath?.startsWith(props.tab.id)
                 }}
             >
-                <div class={`${CssNAV.TreeToggle} ${(isExpanded && delayed()) ? CssNAV.TreeToggleOpen : ''}`}>
+                <div class={`${CssNAV.TreeToggle} ${(isExpanded /*&& delayed()*/) ? CssNAV.TreeToggleOpen : ''}`}>
                     {hasChildren ? (isExpanded ? '-' : '+') : ""}
                 </div>
                 <span>{props.tab.label}</span>
@@ -228,16 +228,25 @@ type TabsProps = {
 
 export function NestedTabs(props: TabsProps) {
 
-    const [tabStore, setTabStore] = createStore<{
-        tabsData: Tab[],
-        visibleTabs: Tab[][],
-        activeTab: Tab | null,
+    const [tabData, setTabData] = createSignal(convertTree(props.tabsData))
+    const [active, setActive] = createSignal<{
         activePath: string,
+        activeTab: Tab | null
     }>({
-        tabsData: convertTree(props.tabsData),
+        activePath: "",
+        activeTab: null
+    })
+
+    const [tabStore, setTabStore] = createSignal<{
+        // tabsData: Tab[],
+        visibleTabs: Tab[][],
+        // activeTab: Tab | null,
+        // activePath: string,
+    }>({
+        // tabsData: convertTree(props.tabsData),
         visibleTabs: [],
-        activeTab: null,
-        activePath: ""
+        // activeTab: null,
+        // activePath: ""
     });
 
     onMount(() => {
@@ -252,7 +261,8 @@ export function NestedTabs(props: TabsProps) {
 
     function updateContent() {
 
-        let tabsData = tabStore.tabsData
+        let tabsData = tabData()
+        // let tabsData = tabStore.tabsData
 
         const states = ParseUrlParams();
         let activePath = (states[props.id] || tabsData[0]?.id) ?? ""
@@ -277,11 +287,17 @@ export function NestedTabs(props: TabsProps) {
 
         let updatedPath = activatePath(tabsData, activePath)
 
-        setTabStore({
-            tabsData: updatedPath,
-            visibleTabs: result,
-            activeTab: currentTab,
+        setTabData(updatedPath)
+        setActive({
             activePath: activePath,
+            activeTab: currentTab
+        })
+
+        setTabStore({
+            // tabsData: updatedPath,
+            visibleTabs: result,
+            // activeTab: currentTab,
+            // activePath: activePath,
         });
     }
 
@@ -304,15 +320,18 @@ export function NestedTabs(props: TabsProps) {
         <div class={CssNAV.TabsContainer} style={props.styles?.tabContainer}>
             <Show when={props.showTreeView}>
                 <Treeview nested
-                    activePath={tabStore.activePath}
-                    tabsData={tabStore.tabsData}
+                    activePath={active().activePath}
+                    // activePath={tabStore.activePath}
+                    tabsData={tabData()}
+                    // tabsData={tabStore.tabsData}
                     onClick={handleTabClick} />
             </Show>
 
             <Show when={props.showPathTabs}>
                 <LevelTabs
-                    tabs={tabStore.visibleTabs}
-                    activePath={tabStore.activePath}
+                    tabs={tabStore().visibleTabs}
+                    activePath={active().activePath}
+                    // activePath={tabStore.activePath}
                     handleTabClick={handleTabClick}
                     buttonStyle={props.styles?.button}
                     tabLevelStyle={props.styles?.tabLevel}
@@ -320,9 +339,13 @@ export function NestedTabs(props: TabsProps) {
                 />
             </Show>
 
-            <Show when={props.showContent && tabStore.activeTab?.content}>
+            <Show when={props.showContent && (/*tabStore.activeTab*/ active().activeTab)?.content}>
                 <div class={CssNAV.TabContent} style={props.styles?.content}>
-                    {tabStore.activeTab.content}
+                    {active().activePath}
+                    <hr />
+                    {active().activeTab.id}
+                    <hr />
+                    {(/*tabStore.activeTab*/ active().activeTab).content}
                 </div>
             </Show>
         </div>
