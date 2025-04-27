@@ -2,6 +2,7 @@ import '../gen.css'
 
 export * from "./pagination.tsx"; 
 export * from "./tab.tsx"; 
+export * from "./useRoutes.tsx"; 
 export * from "./breadcrumb.tsx"; 
 export * from "./header.tsx"; 
 export * from "./modal.tsx";
@@ -13,10 +14,6 @@ export const CssNAV = {
     PaginationButton: "PaginationButton",
     PaginationActive: "PaginationActive",
     PaginationItem: "PaginationItem",
-    TabsContainer: "TabsContainer",
-    TabsLevels: "TabsLevels",
-    TabLevel: "TabLevel",
-    TabContent: "TabContent",
     TreeView: "TreeView",
     TreeItem: "TreeItem",
     TreeHeader: "TreeHeader",
@@ -24,6 +21,9 @@ export const CssNAV = {
     TreeToggle: "TreeToggle",
     TreeToggleOpen: "TreeToggleOpen",
     TreeChildren: "TreeChildren",
+    TabsLevels: "TabsLevels",
+    TabLevel: "TabLevel",
+    TabContent: "TabContent",
     Breadcrumb: "Breadcrumb",
     BreadcrumbLinks: "BreadcrumbLinks",
     BreadcrumbLink: "BreadcrumbLink",

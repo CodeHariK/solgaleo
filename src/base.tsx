@@ -9,7 +9,7 @@ sol(--primary , #6750A4 , #d8c8fa);
 sol(--primary-container , #EADDFF , #4F378B);
 sol(--primary-border , oklch(from var(--primary) calc(l + 0.1) c h));
 
-sol(--secondary , #ff69b4 , #ff69b4);
+sol(--secondary , #d1ffc5 , #d1ffc5);
 sol(--secondary-container , #ffe3f1 , #454245);
 
 sol(--surface , oklch(from var(--body-bg) calc(l - .02) c h) , oklch(from var(--body-bg) calc(l + .3) c h) );

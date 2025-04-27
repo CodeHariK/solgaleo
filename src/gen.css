@@ -46,7 +46,7 @@
     --body-col: black;
     --primary: #6750A4;
     --primary-container: #EADDFF;
-    --secondary: #ff69b4;
+    --secondary: #d1ffc5;
     --secondary-container: #ffe3f1;
     --surface: oklch(from var(--body-bg) calc(l - .02) c h);
     --surface-container: oklch(from var(--body-col) calc(l + .9) c h);
@@ -64,7 +64,7 @@
     --body-col: white;
     --primary: #d8c8fa;
     --primary-container: #4F378B;
-    --secondary: #ff69b4;
+    --secondary: #d1ffc5;
     --secondary-container: #454245;
     --surface: oklch(from var(--body-bg) calc(l + .3) c h);
     --surface-container: oklch(from var(--body-col) calc(l - .6) c h);
@@ -1338,30 +1338,11 @@ input[type="range"]:focus ~ .RangeValue {
 .PaginationItem:hover {
     transform: translateY(-1px);
 }
-.TabsContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
-.TabsLevels {
-    display: flex;
-    flex-direction: column;
-}
-.TabLevel {
-    display: flex;
-    flex-direction: row;
-    align-self: start;
-}
-.TabContent {
-    flex: 1;
-    overflow: auto;
-}
 .TreeView {
     display: inline-flex;
+    flex-direction: column;
     padding: 0.5rem;
     user-select: none;
-    flex-direction: column;
 }
 .TreeItem {
     display: flex;
@@ -1369,18 +1350,17 @@ input[type="range"]:focus ~ .RangeValue {
     cursor: pointer;
 }
 .TreeHeader {
-    width: 8rem;
     overflow-x: clip;
     display: flex;
     align-items: center;
     background: var(--surface);
     color: var(--primary);
     padding: 0.25rem;
-    border: 1px solid;
-    :hover {
-        color: var(--secondary);
-        background: var(--secondary-container);
-    }
+    border: 1px solid var(--secondary-container);
+}
+.TreeHeader:hover {
+    color: var(--secondary-container);
+    background: var(--secondary);
 }
 .TreeActive {
     background: var(--primary);
@@ -1395,6 +1375,19 @@ input[type="range"]:focus ~ .RangeValue {
 }
 .TreeChildren {
     padding-left: 1rem;
+}
+.TabsLevels {
+    display: flex;
+    flex-direction: column;
+}
+.TabLevel {
+    display: flex;
+    flex-direction: row;
+    align-self: start;
+}
+.TabContent {
+    flex: 1;
+    overflow: auto;
 }
 .Breadcrumb {
     padding: 0.75rem 1.25rem;

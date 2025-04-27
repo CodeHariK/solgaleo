@@ -1,46 +1,14 @@
-import { GridLayout, NestedTabs, VCarousel } from '../src/gen';
+import { GridLayout, TabContent, Treeview, VCarousel } from '../src/gen';
 import { TestHeader } from './common';
 
 export function GridTest() {
     return <GridLayout
         header={<TestHeader />}
+        left={<Treeview id='grid' tabsData={gridTabs()} />}
     >
-        <NestedTabs
+        <TabContent
             id='grid'
-            showContent
-            showPathTabs
-            tabsData={[
-                {
-                    id: "fixed-all-3",
-                    label: "fixed-all-3",
-                    content: <FixedAll3 />
-                },
-                {
-                    id: "fixed-middle",
-                    label: "fixed-middle",
-                    content: <FixedMiddle />
-                },
-                {
-                    id: "fixed-empty",
-                    label: "fixed-empty",
-                    content: <FixedEmpty />
-                },
-                {
-                    id: "fixed-left",
-                    label: "fixed-left",
-                    content: <FixedLeft />
-                },
-                {
-                    id: "fixed-right",
-                    label: "fixed-right",
-                    content: <FixedRight />
-                },
-                {
-                    id: "fixed-left-right",
-                    label: "fixed-left-right",
-                    content: <FixedLeftRight />
-                }
-            ]}
+            tabsData={gridTabs()}
         />
     </GridLayout>
 }
@@ -118,10 +86,43 @@ export function TestVCarousel() {
             background: "var(--primary-container)",
             padding: "10px",
             "border-radius": "1rem",
-            height: "400px",
+            height: "200px",
             "text-align": 'center',
             "align-content": 'center'
         }}
         listStyle={{ padding: "10px" }} />
 }
 //FN:END
+
+const gridTabs = () => [
+    {
+        id: "fixed-all-3",
+        label: "fixed-all-3",
+        content: <FixedAll3 />
+    },
+    {
+        id: "fixed-middle",
+        label: "fixed-middle",
+        content: <FixedMiddle />
+    },
+    {
+        id: "fixed-empty",
+        label: "fixed-empty",
+        content: <FixedEmpty />
+    },
+    {
+        id: "fixed-left",
+        label: "fixed-left",
+        content: <FixedLeft />
+    },
+    {
+        id: "fixed-right",
+        label: "fixed-right",
+        content: <FixedRight />
+    },
+    {
+        id: "fixed-left-right",
+        label: "fixed-left-right",
+        content: <FixedLeftRight />
+    }
+]

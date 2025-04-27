@@ -99,12 +99,12 @@ export const CssTEST = {
         {
             element: test_page_tabs_tsx.TestTreeView, 
             doc: "TreeView", 
-            data: "export function TestTreeView() {\n  return <Treeview\n    tabsData={sampleTabData()}\n    onClick={(node) => {\n      console.log(\"Leaf clicked:\", node);\n    }} />;\n}"
+            data: "export function TestTreeView() {\n  return <Treeview\n    id=\"two.light\"\n    tabsData={sampleTabData()}\n    onClick={(node) => {\n      console.log(\"Leaf clicked:\", node);\n    }} />;\n}"
         },
         {
             element: test_page_grid_tsx.TestVCarousel, 
             doc: "VCarousel : Vertical carousel list", 
-            data: "export function TestVCarousel() {\n  return <VCarousel children={[\n    \"one\",\n    \"two\",\n    \"three\",\n    \"four\",\n    \"five\",\n    \"six\",\n    \"seven\",\n    \"nine\",\n    \"ten\",\n  ]}\n    itemStyle={{\n      background: \"var(--primary-container)\",\n      padding: \"10px\",\n      \"border-radius\": \"1rem\",\n      height: \"400px\",\n      \"text-align\": 'center',\n      \"align-content\": 'center'\n    }}\n    listStyle={{ padding: \"10px\" }} />\n}"
+            data: "export function TestVCarousel() {\n  return <VCarousel children={[\n    \"one\",\n    \"two\",\n    \"three\",\n    \"four\",\n    \"five\",\n    \"six\",\n    \"seven\",\n    \"nine\",\n    \"ten\",\n  ]}\n    itemStyle={{\n      background: \"var(--primary-container)\",\n      padding: \"10px\",\n      \"border-radius\": \"1rem\",\n      height: \"200px\",\n      \"text-align\": 'center',\n      \"align-content\": 'center'\n    }}\n    listStyle={{ padding: \"10px\" }} />\n}"
         }
     ]
 } as const;

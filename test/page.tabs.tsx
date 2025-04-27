@@ -1,4 +1,4 @@
-import { NestedTabs, Treeview } from "../src/gen";
+import { LevelTabs, TabContent, Treeview } from "../src/gen";
 import { GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
@@ -18,16 +18,10 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <NestedTabs
+                    <TabContent
                         tabsData={sampleTabData()}
                         id="two.light"
-                        showContent
-                        showPathTabs
-                        showTreeView
-                        styles={{
-                            tabContainer: { "flex-direction": "row" },
-                            content: { margin: "1rem", padding: "1rem", border: "1px solid red", "border-radius": "20px" }
-                        }}
+                        contentStyle={{ margin: "1rem", padding: "1rem", }}
                     />
                 </div>
 
@@ -58,12 +52,10 @@ export function TabTest() {
                 </div>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <Treeview
+                    <LevelTabs
+                        id="two.light"
                         tabsData={sampleTabData()}
-                        onClick={(node) => {
-                            console.log("Leaf clicked:", node);
-                        }} />
-
+                    />
                 </div>
             </div>
 
@@ -118,6 +110,7 @@ export const sampleTabData = () => [
 //FN:DOC
 export function TestTreeView() {
     return <Treeview
+        id="two.light"
         tabsData={sampleTabData()}
         onClick={(node) => {
             console.log("Leaf clicked:", node);
