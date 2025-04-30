@@ -67,6 +67,7 @@ export function TabTest() {
 export const sampleTabData = () => [
     {
         id: 'Root',
+        header: 'Root',
         label: 'Root',
         content: <div>fruitcake lollipop dragée pudding biscuit cake. Lollipop liquorice lollipop halvah tootsie roll sweet. Oat cake lemon drops sesame snaps jelly-o halvah. Tiramisu danish shortbread jujubes jujubes</div>,
         open: true,
@@ -93,6 +94,7 @@ export const sampleTabData = () => [
     },
     {
         id: 'Pictures',
+        header: 'Pictures',
         label: 'Pictures',
         content: <div>Pictures</div>,
         children: [

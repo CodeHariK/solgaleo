@@ -1404,13 +1404,14 @@ input[type="range"]:focus ~ .RangeValue {
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    margin: 0;
-    padding-left: 1rem;
+    [aria-level]:not([aria-level="0"]) {
+        padding-left: 1rem;
+    }
 }
 .TreeHeader {
     overflow-x: clip;
     display: flex;
-    align-items: center;
+    align-items: start;
     background: var(--surface);
     color: var(--primary);
     padding: 0.25rem;
@@ -1428,13 +1429,15 @@ input[type="range"]:focus ~ .RangeValue {
     transition: all .3s ease;
 }
 .TreeToggleOpen {
-    transform: rotate(180deg);
+    transform: rotate(90deg);
 }
 .TreeContent {
     max-height: 0;
     overflow: hidden;
     transition: all 0.2s ease-out;
     opacity: 0;
+    user-select: text;
+    cursor: text;
 }
 .TabsLevels {
     display: flex;

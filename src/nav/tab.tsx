@@ -1,10 +1,10 @@
 import { For, createSignal, JSX, Show } from 'solid-js';
 import { CssNAV, UpdateQueryParam } from './gen';
 import { useRoutes } from './useRoutes';
+import { IconChevronRight } from '../svg/svg';
 
 /*CSS:*
 .TreeView {
-
     list-style: none;
     margin: 0;
     padding: 0;
@@ -17,15 +17,17 @@ import { useRoutes } from './useRoutes';
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    margin: 0;
-    padding-left: 1rem;
+    
+    [aria-level]:not([aria-level="0"]) {
+        padding-left: 1rem;
+    }
 }
 
 .TreeHeader {
     // width: 8rem;
     overflow-x: clip;
     display: flex;
-    align-items: center;
+    align-items: start;
     // gap: 0.5rem;
     background: var(--surface);
     color: var(--primary);
@@ -46,7 +48,7 @@ import { useRoutes } from './useRoutes';
     transition: all .3s ease;
 }
 .TreeToggleOpen {
-    transform: rotate(180deg);
+    transform: rotate(90deg);
 }
 
 .TreeContent {
@@ -54,12 +56,15 @@ import { useRoutes } from './useRoutes';
     overflow: hidden;
     transition: all 0.2s ease-out;
     opacity: 0;
+    user-select: text;
+    cursor: text;
 }
 */
 
 type Tree = {
     id: string
     label: string
+    header?: string
     content?: JSX.Element
     children?: Tree[]
     open?: boolean
@@ -70,12 +75,12 @@ export function TreeView(props: {
     activePath?: string;
     data: Tree[];
     level?: number;
+    showContent?: boolean;
     onClick?: (tab: Tree) => void;
     style?: JSX.CSSProperties;
 }) {
-
     const [_] = useRoutes(props.id, updateContent);
-    const [tree, setTree] = createSignal(props.level ? props.data : convertTree(props.data));
+    const [tree] = createSignal(props.level ? props.data : convertTree(props.data));
     const [activePath, setActivePath] = createSignal<string>(props.activePath);
 
     function updateContent(route?: string) {
@@ -87,8 +92,8 @@ export function TreeView(props: {
 
         e.stopPropagation();
 
-        let newData = activatePath(tree(), treeItem.id);
-        setTree(newData);
+        // let newData = activatePath(tree(), treeItem.id);
+        // setTree(newData);
 
         if (!treeItem.content && treeItem.children) {
             let newTab = findContentInTree(treeItem.children);
@@ -99,56 +104,58 @@ export function TreeView(props: {
         props.onClick?.(treeItem);
     };
 
-    console.log(tree())
-
     return (
         <ul
             class={CssNAV.TreeView}
             style={props.style}
             role="tree"
+            aria-level={props.level ?? 0}
         >
             <For each={tree()}>
-                {(tab) => (
-                    <li class={CssNAV.TreeItem}>
-                        <div
-                            class={CssNAV.TreeHeader}
-                            classList={{ [CssNAV.TreeActive]: activePath()?.startsWith(tab.id) }}
-                            onClick={(e) => handleToggle(tab, e)}
-                        >
-                            <div class={`${CssNAV.TreeToggle} ${activePath()?.startsWith(tab.id) ? CssNAV.TreeToggleOpen : ''}`}
+                {(treeItem) => {
+                    const [isOpen, setIsOpen] = createSignal(treeItem.open);
+
+                    return (
+                        <li class={CssNAV.TreeItem}>
+
+                            {treeItem.header && <span>{treeItem.header}</span>}
+
+                            <div
+                                class={CssNAV.TreeHeader}
+                                classList={{ [CssNAV.TreeActive]: activePath()?.startsWith(treeItem.id) }}
+                                onClick={(e) => {
+                                    setIsOpen(!isOpen());
+                                    handleToggle(treeItem, e);
+                                }}
                             >
-                                {tab.children?.length ? (tab.open ? '-' : '+') : ''}
+                                <div class={`${CssNAV.TreeToggle} ${isOpen() ? CssNAV.TreeToggleOpen : ''}`}>
+                                    {treeItem.children?.length ? (<IconChevronRight style={{ width: ".7rem", height: ".7rem" }} />) : ''}
+                                </div>
+
+                                <div style={{ display: "flex", "flex-direction": "column" }}>
+                                    <span>{treeItem.label}</span>
+
+                                    <Show when={props.showContent && isOpen() && treeItem.content}>
+                                        <div class={CssNAV.TreeContent}
+                                            style={{ "max-height": "40vh", "overflow-y": "auto", opacity: 1 }}
+                                        >{treeItem.content}</div>
+                                    </Show>
+                                </div>
+
                             </div>
-                            <div style={{ display: "flex", "flex-direction": "column" }}>
 
-                                <span>{tab.label}</span>
-
-                                <Show when={tab.open && tab.content && activePath()?.startsWith(tab.id)}>
-                                    <div
-                                        class={CssNAV.TreeContent}
-                                        style={{
-                                            "max-height": "40vh",
-                                            "overflow-y": "scroll",
-                                            opacity: 1
-                                        }}
-                                    >
-                                        {tab.content}
-                                    </div>
-                                </Show>
-                            </div>
-                        </div>
-
-                        <Show when={tab.open && tab.children?.length}>
-                            <TreeView
-                                id={props.id}
-                                data={tab.children}
-                                onClick={props.onClick}
-                                activePath={activePath()}
-                                level={(props.level ?? 0) + 1}
-                            />
-                        </Show>
-                    </li>
-                )}
+                            <Show when={isOpen() && treeItem.children?.length}>
+                                <TreeView
+                                    id={props.id}
+                                    data={treeItem.children}
+                                    onClick={props.onClick}
+                                    activePath={activePath()}
+                                    level={(props.level ?? 0) + 1}
+                                    showContent={props.showContent} />
+                            </Show>
+                        </li>
+                    );
+                }}
             </For>
         </ul>
     );
@@ -212,7 +219,8 @@ export function LevelTabs(props: {
                                 }}
                             >
                                 <div class={`${CssNAV.TreeToggle} ${(isActive(tab)) ? CssNAV.TreeToggleOpen : ''}`}>
-                                    {isActive(tab) ? '-' : '+'}
+                                    {/* {isActive(tab) ? '-' : '+'} */}
+                                    <IconChevronRight style={{ width: ".7rem", height: ".7rem" }} />
                                 </div>
                                 <span>{tab.label}</span>
                             </div>
