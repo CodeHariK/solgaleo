@@ -1,4 +1,4 @@
-import { LevelTabs, TabContent, Treeview } from "../src/gen";
+import { LevelTabs, TreeContent, TreeView } from "../src/gen";
 import { GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 
@@ -18,8 +18,8 @@ export function TabTest() {
             }}>
 
                 <div style={{ border: "1px solid red", width: "100%" }}>
-                    <TabContent
-                        tabsData={sampleTabData()}
+                    <TreeContent
+                        data={sampleTabData()}
                         id="two.light"
                         contentStyle={{ margin: "1rem", padding: "1rem", }}
                     />
@@ -68,7 +68,7 @@ export const sampleTabData = () => [
     {
         id: 'Root',
         label: 'Root',
-        content: <div>Root</div>,
+        content: <div>fruitcake lollipop dragée pudding biscuit cake. Lollipop liquorice lollipop halvah tootsie roll sweet. Oat cake lemon drops sesame snaps jelly-o halvah. Tiramisu danish shortbread jujubes jujubes</div>,
         open: true,
         children: [
             {
@@ -109,9 +109,9 @@ export const sampleTabData = () => [
 //TreeView
 //FN:DOC
 export function TestTreeView() {
-    return <Treeview
+    return <TreeView
         id="two.light"
-        tabsData={sampleTabData()}
+        data={sampleTabData()}
         onClick={(node) => {
             console.log("Leaf clicked:", node);
         }} />;

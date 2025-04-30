@@ -1,19 +1,24 @@
 import { For, createSignal, JSX, Show } from 'solid-js';
 import { CssNAV, UpdateQueryParam } from './gen';
 import { useRoutes } from './useRoutes';
-import { CssUI } from '../ui/gen';
 
 /*CSS:*
 .TreeView {
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
     display: inline-flex;
     flex-direction: column;
-    padding: 0.5rem;
     user-select: none;
 }
 .TreeItem {
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    margin: 0;
+    padding-left: 1rem;
 }
 
 .TreeHeader {
@@ -25,15 +30,15 @@ import { CssUI } from '../ui/gen';
     background: var(--surface);
     color: var(--primary);
     padding: 0.25rem;
-    border: 1px solid var(--secondary-container);
+    // border: 1px solid var(--secondary-container);
 }
 .TreeHeader:hover {
-    color: var(--secondary-container);
-    background: var(--secondary);
+    color: var(--secondary);
+    background: var(--secondary-container);
 }
 .TreeActive {
-    background: var(--primary);
-    color: var(--primary-container);
+    background: var(--primary-container);
+    color: var(--primary);
 }
 
 .TreeToggle {
@@ -44,123 +49,108 @@ import { CssUI } from '../ui/gen';
     transform: rotate(180deg);
 }
 
-.TreeChildren {
-    padding-left: 1rem;
+.TreeContent {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.2s ease-out;
+    opacity: 0;
 }
 */
 
-type Tab = {
+type Tree = {
     id: string
     label: string
     content?: JSX.Element
-    children?: Tab[]
+    children?: Tree[]
     open?: boolean
 };
 
-const TreeItem = (props: {
-    tab: Tab;
-    showContent?: boolean;
-    activePath?: string;
-    onClick?: (tab: Tab) => void;
-}) => {
-    const hasChildren = props.tab.children && props.tab.children.length > 0;
-    const isExpanded = () => props.tab.open
-    const isActive = () => props.activePath?.startsWith(props.tab.id)
-
-    const handleClick = (e: MouseEvent) => {
-        e.stopPropagation();
-        props.onClick?.(props.tab);
-    };
-
-    return (
-        <div class={`${CssNAV.TreeItem}`} onClick={handleClick}>
-            <div
-                classList={{
-                    [CssNAV.TreeHeader]: true,
-                    [CssNAV.TreeActive]: isActive()
-                }}
-            >
-                <div class={`${CssNAV.TreeToggle} ${(isActive()) ? CssNAV.TreeToggleOpen : ''}`}>
-                    {hasChildren ? (isExpanded() ? '-' : '+') : ""}
-                </div>
-                <div style={{
-                    display: "flex",
-                    "flex-direction": "column"
-                }}>
-                    <span>{props.tab.label}</span>
-
-                    <Show when={props.showContent}>
-                        <div
-                            class={CssUI.AccordionContent}
-                            style={isActive() ? {
-                                // ...props.contentStyle,
-                                "max-height": "40vh",
-                                "overflow-y": "scroll",
-                                opacity: 1,
-                            } : {}}
-                        >
-                            {props.tab.content}
-                        </div>
-                    </Show>
-
-
-                </div>
-            </div>
-
-            <Show when={isExpanded() && hasChildren}>
-                <div class={`${CssNAV.TreeChildren}`}>
-                    <For each={props.tab.children}>
-                        {(child) => (<TreeItem {...props} tab={child} />)}
-                    </For>
-                </div>
-            </Show>
-        </div>
-    );
-};
-
-export function Treeview(props: {
+export function TreeView(props: {
     id: string;
-    showContent?: boolean;
-    tabsData: Tab[];
-    onClick?: (tab: Tab) => void;
+    activePath?: string;
+    data: Tree[];
+    level?: number;
+    onClick?: (tab: Tree) => void;
+    style?: JSX.CSSProperties;
 }) {
 
-    const [_] = useRoutes(props.id, updateContent)
-    const [tabTree, setTabTree] = createSignal(convertTree(props.tabsData));
-    const [activeTab, setActiveTab] = createSignal(null);
-
-    const handleToggle = (tab: Tab) => {
-        let newData = activatePath(tabTree(), tab.id)
-        setTabTree(newData)
-        if (!tab.content && tab.children) {
-            let newTab = findContentInTab(tab.children)
-            if (newTab) {
-                tab = newTab
-            }
-        }
-        UpdateQueryParam(props.id, tab.id);
-        props.onClick?.(tab)
-    };
+    const [_] = useRoutes(props.id, updateContent);
+    const [tree, setTree] = createSignal(props.level ? props.data : convertTree(props.data));
+    const [activePath, setActivePath] = createSignal<string>(props.activePath);
 
     function updateContent(route?: string) {
-        let activePath = (route || tabTree()[0]?.id) ?? ""
-        let tabById = getTabById(tabTree(), activePath);
-        setActiveTab(tabById.currentTab)
+        let activePath = (route || tree()[0]?.id) ?? "";
+        setActivePath(activePath);
     }
 
+    const handleToggle = (treeItem: Tree, e: MouseEvent) => {
+
+        e.stopPropagation();
+
+        let newData = activatePath(tree(), treeItem.id);
+        setTree(newData);
+
+        if (!treeItem.content && treeItem.children) {
+            let newTab = findContentInTree(treeItem.children);
+            if (newTab) treeItem = newTab;
+        }
+
+        UpdateQueryParam(props.id, treeItem.id);
+        props.onClick?.(treeItem);
+    };
+
+    console.log(tree())
+
     return (
-        <div class={`${CssNAV.TreeView}`}>
-            <For each={tabTree()}>
+        <ul
+            class={CssNAV.TreeView}
+            style={props.style}
+            role="tree"
+        >
+            <For each={tree()}>
                 {(tab) => (
-                    <TreeItem
-                        tab={tab}
-                        showContent={props.showContent}
-                        onClick={handleToggle}
-                        activePath={activeTab()?.id}
-                    />
+                    <li class={CssNAV.TreeItem}>
+                        <div
+                            class={CssNAV.TreeHeader}
+                            classList={{ [CssNAV.TreeActive]: activePath()?.startsWith(tab.id) }}
+                            onClick={(e) => handleToggle(tab, e)}
+                        >
+                            <div class={`${CssNAV.TreeToggle} ${activePath()?.startsWith(tab.id) ? CssNAV.TreeToggleOpen : ''}`}
+                            >
+                                {tab.children?.length ? (tab.open ? '-' : '+') : ''}
+                            </div>
+                            <div style={{ display: "flex", "flex-direction": "column" }}>
+
+                                <span>{tab.label}</span>
+
+                                <Show when={tab.open && tab.content && activePath()?.startsWith(tab.id)}>
+                                    <div
+                                        class={CssNAV.TreeContent}
+                                        style={{
+                                            "max-height": "40vh",
+                                            "overflow-y": "scroll",
+                                            opacity: 1
+                                        }}
+                                    >
+                                        {tab.content}
+                                    </div>
+                                </Show>
+                            </div>
+                        </div>
+
+                        <Show when={tab.open && tab.children?.length}>
+                            <TreeView
+                                id={props.id}
+                                data={tab.children}
+                                onClick={props.onClick}
+                                activePath={activePath()}
+                                level={(props.level ?? 0) + 1}
+                            />
+                        </Show>
+                    </li>
                 )}
             </For>
-        </div>
+        </ul>
     );
 }
 
@@ -181,8 +171,8 @@ export function Treeview(props: {
 
 export function LevelTabs(props: {
     id: string,
-    tabsData: Tab[];
-    onClick?: (tab: Tab) => void;
+    tabsData: Tree[];
+    onClick?: (tab: Tree) => void;
 
     tabLevelsStyle?: JSX.CSSProperties,
     tabLevelStyle?: JSX.CSSProperties,
@@ -191,20 +181,20 @@ export function LevelTabs(props: {
 
     const [_] = useRoutes(props.id, updateContent)
     const [tabTree, __] = createSignal(convertTree(props.tabsData));
-    const [activeTab, setActiveTab] = createSignal(null);
-    const [leveledTree, setLeveledTree] = createSignal<Tab[][]>([]);
+    const [activeItem, setActiveItem] = createSignal(null);
+    const [leveledTree, setLeveledTree] = createSignal<Tree[][]>([]);
 
-    const isActive = (tab: Tab) => activeTab().id?.startsWith(tab.id)
+    const isActive = (tab: Tree) => activeItem()?.id?.startsWith(tab.id)
 
-    const handleToggle = (tab: Tab) => {
+    const handleToggle = (tab: Tree) => {
         UpdateQueryParam(props.id, tab.id);
         props.onClick?.(tab)
     };
 
     function updateContent(route?: string) {
         let activePath = (route || tabTree()[0]?.id) ?? ""
-        let tabById = getTabById(tabTree(), activePath);
-        setActiveTab(tabById.currentTab)
+        let tabById = getTreeItemById(tabTree(), activePath);
+        setActiveItem(tabById.currentItem)
         setLeveledTree(tabById.leveledTree);
     }
 
@@ -244,47 +234,47 @@ export function LevelTabs(props: {
 
 */
 
-export function TabContent(props: {
+export function TreeContent(props: {
     id: string;
-    tabsData: Tab[];
+    data: Tree[];
     contentStyle?: JSX.CSSProperties;
 }) {
     const [_] = useRoutes(props.id, updateContent)
-    const [tabTree] = createSignal(convertTree(props.tabsData))
-    const [activeTab, setActiveTab] = createSignal(null);
+    const [tabTree] = createSignal(convertTree(props.data))
+    const [activeItem, setActiveItem] = createSignal<Tree>(null);
 
     function updateContent(route?: string) {
         let activePath = (route || tabTree()[0]?.id) ?? ""
-        let tabById = getTabById(tabTree(), activePath);
-        setActiveTab(tabById.currentTab)
+        let result = getTreeItemById(tabTree(), activePath);
+        setActiveItem(result.currentItem)
     }
 
     return <div class={CssNAV.TabContent} style={props?.contentStyle}>
-        {activeTab()?.content}
+        {activeItem()?.content}
     </div>
 }
 
-function convertTree(tree: Tab[], parentId: string = ''): Tab[] {
-    return tree.map(tab => {
+function convertTree(treeArray: Tree[], parentId: string = ''): Tree[] {
+    return treeArray.map(tree => {
         // Create a new node with the updated ID
-        const newTab: Tab = {
-            ...tab,
-            id: parentId ? `${parentId}.${tab.id}` : tab.id, // Append parent's ID with a dot
-            open: tab.open || false // Initialize open to false if not defined
+        const newTree: Tree = {
+            ...tree,
+            id: parentId ? `${parentId}.${tree.id}` : tree.id, // Append parent's ID with a dot
+            open: tree.open || false // Initialize open to false if not defined
         };
 
         // If the node has children, recursively convert them
-        if (tab.children && tab.children.length > 0) {
-            newTab.children = convertTree(tab.children, newTab.id);
+        if (tree.children && tree.children.length > 0) {
+            newTree.children = convertTree(tree.children, newTree.id);
             // Set open to true if any child is open
-            newTab.open = newTab.open || newTab.children.some(child => child.open);
+            newTree.open = newTree.open || newTree.children.some(child => child.open);
         }
 
-        return newTab;
+        return newTree;
     });
 }
 
-function activatePath(tree: Tab[], activePath: string): Tab[] {
+function activatePath(tree: Tree[], activePath: string): Tree[] {
     return tree.map(tab => {
         const newTab = { ...tab };
 
@@ -302,42 +292,42 @@ function activatePath(tree: Tab[], activePath: string): Tab[] {
     });
 }
 
-function findContentInTab(tabs: Tab[]): Tab | null {
-    const queue: Tab[] = [...tabs]; // Initialize the queue with the initial tabs
+function findContentInTree(tree: Tree[]): Tree | null {
+    const queue: Tree[] = [...tree]; // Initialize the queue with the initial tabs
 
     while (queue.length > 0) {
-        const currentTab = queue.shift(); // Dequeue the first tab
+        const current = queue.shift(); // Dequeue the first tab
 
         // Check if the current tab has content
-        if (currentTab?.content) {
-            return currentTab; // Return the tab if it has content
+        if (current?.content) {
+            return current; // Return the tab if it has content
         }
 
         // If no content, enqueue the children
-        if (currentTab?.children) {
-            queue.push(...currentTab.children); // Add children to the queue
+        if (current?.children) {
+            queue.push(...current.children); // Add children to the queue
         }
     }
 
     return null; // Return null if no content is found
 }
 
-function getTabById(tabTree: Tab[], activePath: string) {
-    const leveledTree: Tab[][] = [tabTree];
-    let currentChildren = tabTree;
+function getTreeItemById(tree: Tree[], activePath: string) {
+    const leveledTree: Tree[][] = [tree];
+    let currentChildren = tree;
 
-    let currentTab: Tab | undefined;
+    let currentItem: Tree | undefined;
 
     for (const _ of activePath.split(".")) {
-        currentTab = currentChildren.find(tab => activePath.startsWith(tab.id)
+        currentItem = currentChildren.find(tab => activePath.startsWith(tab.id)
         );
 
-        if (currentTab) {
-            leveledTree.push(currentTab.children || []);
-            currentChildren = currentTab.children || [];
+        if (currentItem) {
+            leveledTree.push(currentItem.children || []);
+            currentChildren = currentItem.children || [];
         } else {
             break;
         }
     }
-    return { leveledTree, currentTab };
+    return { leveledTree, currentItem };
 }

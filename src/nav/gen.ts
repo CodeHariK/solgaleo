@@ -20,7 +20,7 @@ export const CssNAV = {
     TreeActive: "TreeActive",
     TreeToggle: "TreeToggle",
     TreeToggleOpen: "TreeToggleOpen",
-    TreeChildren: "TreeChildren",
+    TreeContent: "TreeContent",
     TabsLevels: "TabsLevels",
     TabLevel: "TabLevel",
     TabContent: "TabContent",

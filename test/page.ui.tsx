@@ -42,87 +42,8 @@ export function UiTest() {
                     </button>
                 }
             }}
-            child={() => {
-                return (
-                    <Dropdown<string>
-                        handleItemClick={(data) => { console.log(data) }}
-                        items={[
-                            {
-                                header: "Settings",
-                                subitems: [
-                                    {
-                                        element: <span>Profile</span>,
-                                        data: "profile",
-                                        children: [
-                                            {
-                                                element: <span>Edit Info</span>,
-                                                data: "profile.edit",
-                                                children: [
-                                                    {
-                                                        element: <span>Profile</span>,
-                                                        data: "profile",
-                                                        children: [
-                                                            {
-                                                                element: <span>Edit Info</span>,
-                                                                data: "profile.edit"
-                                                            },
-                                                            {
-                                                                element: <span>Privacy</span>,
-                                                                data: "profile.privacy"
-                                                            }
-                                                        ]
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                element: <span>Privacy</span>,
-                                                data: "profile.privacy"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        element: <span>Account</span>,
-                                        data: "account",
-                                        children: [
-                                            {
-                                                element: <span>Security</span>,
-                                                data: "account.security"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                header: "Names",
-                                subitems: [
-                                    {
-                                        element: "The most popular",
-                                        data: "Hello",
-                                    },
-                                    { element: <p> Increasing price </p>, },
-                                ]
-                            },
-                            {
-                                header: "Names",
-                                subitems: [
-                                    { element: <p> Newest </p>, },
-                                    { element: <p> Decreasing price </p>, },
-                                ]
-                            },
-                            {
-                                subitems: [
-                                    { element: <p> No. reviews </p>, },
-                                    { element: <p> Discount % </p>, },
-                                ]
-                            },
-                            { subitems: [] }
-                        ]} />
-
-                )
-            }}
+            child={TestDropdown}
         />
-
-
 
         <SpaceForm
             id="Form"
@@ -285,5 +206,85 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
             Click Me
         </AsyncButton>
     </div>;
+}
+//FN:END
+
+//FN:START
+//Dropdown
+//FN:DOC
+export function TestDropdown() {
+    return <Dropdown<string>
+        handleItemClick={(data) => { console.log(data); }}
+        items={[
+            {
+                header: "Settings",
+                subitems: [
+                    {
+                        element: <span>Profile</span>,
+                        data: "profile",
+                        children: [
+                            {
+                                element: <span>Edit Info</span>,
+                                data: "profile.edit",
+                                children: [
+                                    {
+                                        element: <span>Profile</span>,
+                                        data: "profile",
+                                        children: [
+                                            {
+                                                element: <span>Edit Info</span>,
+                                                data: "profile.edit"
+                                            },
+                                            {
+                                                element: <span>Privacy</span>,
+                                                data: "profile.privacy"
+                                            }
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                element: <span>Privacy</span>,
+                                data: "profile.privacy"
+                            }
+                        ]
+                    },
+                    {
+                        element: <span>Account</span>,
+                        data: "account",
+                        children: [
+                            {
+                                element: <span>Security</span>,
+                                data: "account.security"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                header: "Names",
+                subitems: [
+                    {
+                        element: "The most popular",
+                        data: "Hello",
+                    },
+                    { element: <p> Increasing price </p>, },
+                ]
+            },
+            {
+                header: "Names",
+                subitems: [
+                    { element: <p> Newest </p>, },
+                    { element: <p> Decreasing price </p>, },
+                ]
+            },
+            {
+                subitems: [
+                    { element: <p> No. reviews </p>, },
+                    { element: <p> Discount % </p>, },
+                ]
+            },
+            { subitems: [] }
+        ]} />;
 }
 //FN:END

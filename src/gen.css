@@ -46,7 +46,7 @@
     --body-col: black;
     --primary: #6750A4;
     --primary-container: #EADDFF;
-    --secondary: #d1ffc5;
+    --secondary: #b4216b;
     --secondary-container: #ffe3f1;
     --surface: oklch(from var(--body-bg) calc(l - .02) c h);
     --surface-container: oklch(from var(--body-col) calc(l + .9) c h);
@@ -64,7 +64,7 @@
     --body-col: white;
     --primary: #d8c8fa;
     --primary-container: #4F378B;
-    --secondary: #d1ffc5;
+    --secondary: #b4216b;
     --secondary-container: #454245;
     --surface: oklch(from var(--body-bg) calc(l + .3) c h);
     --surface-container: oklch(from var(--body-col) calc(l - .6) c h);
@@ -714,6 +714,60 @@ input[type="range"]:focus ~ .RangeValue {
         background: hsl(290 80% 40%);
     }
 }
+.RichContainer {
+    display: flex;
+    gap: 1rem;
+}
+.RichEditorPane, .preview-pane {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #ccc;
+    display: flex;
+    flex-direction: column;
+}
+.RichToolbar {
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    button, select {
+        padding: 0.2rem 0.4rem;
+    }
+}
+.RichEditor {
+    flex: 1;
+    padding: 1rem;
+    min-height: 300px;
+    outline: none;
+    img {
+        max-width: 100%;
+        height: auto;
+        margin: 0.5rem 0;
+    }
+    ul, ol {
+        margin: 0.5rem 0;
+        padding-left: 1.5rem;
+    }
+    li {
+        margin: 0.25rem 0;
+    }
+}
+.RichPreview {
+    max-width: 30%;
+    padding: 1rem;
+    font-family: monospace;
+    overflow: auto;
+    pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+    span[style*="background-color"] {
+        display: inline-block;
+        padding: 0 2px;
+        border-radius: 2px;
+    }
+}
 .BlogContainer {
     display: flex;
     width: 100%;
@@ -1339,15 +1393,19 @@ input[type="range"]:focus ~ .RangeValue {
     transform: translateY(-1px);
 }
 .TreeView {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: inline-flex;
     flex-direction: column;
-    padding: 0.5rem;
     user-select: none;
 }
 .TreeItem {
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    margin: 0;
+    padding-left: 1rem;
 }
 .TreeHeader {
     overflow-x: clip;
@@ -1356,15 +1414,14 @@ input[type="range"]:focus ~ .RangeValue {
     background: var(--surface);
     color: var(--primary);
     padding: 0.25rem;
-    border: 1px solid var(--secondary-container);
 }
 .TreeHeader:hover {
-    color: var(--secondary-container);
-    background: var(--secondary);
+    color: var(--secondary);
+    background: var(--secondary-container);
 }
 .TreeActive {
-    background: var(--primary);
-    color: var(--primary-container);
+    background: var(--primary-container);
+    color: var(--primary);
 }
 .TreeToggle {
     padding: 0rem .3rem;
@@ -1373,8 +1430,11 @@ input[type="range"]:focus ~ .RangeValue {
 .TreeToggleOpen {
     transform: rotate(180deg);
 }
-.TreeChildren {
-    padding-left: 1rem;
+.TreeContent {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.2s ease-out;
+    opacity: 0;
 }
 .TabsLevels {
     display: flex;
@@ -1530,7 +1590,7 @@ body {
     }
 }
 input,
-button,
+// button,
 textarea,
 select {
   font: inherit;

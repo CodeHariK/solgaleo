@@ -1,14 +1,14 @@
-import { GridLayout, TabContent, Treeview, VCarousel } from '../src/gen';
+import { GridLayout, TreeContent, TreeView, VCarousel } from '../src/gen';
 import { TestHeader } from './common';
 
 export function GridTest() {
     return <GridLayout
         header={<TestHeader />}
-        left={<Treeview id='grid' tabsData={gridTabs()} />}
+        left={<TreeView id='grid' data={gridTabs()} />}
     >
-        <TabContent
+        <TreeContent
             id='grid'
-            tabsData={gridTabs()}
+            data={gridTabs()}
         />
     </GridLayout>
 }

@@ -178,7 +178,7 @@ async function processDirectory(dirPath: string, allFiles = new Map<string, Map<
 
                 const element = SafeString(fullPath) + "." + functionName;
 
-                FUNCTION_DOCS.push({ element, doc, data });
+                FUNCTION_DOCS.push({ element, doc: `${doc}  (${fullPath})`, data });
             }
 
             if (hasStyles || hasExports) {

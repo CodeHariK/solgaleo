@@ -1,4 +1,4 @@
-import { BlogList, Carousel, Markdown, Slides, SuperTable } from "../src/adv/gen";
+import { RichText, BlogList, Carousel, Markdown, Slides, SuperTable } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -39,6 +39,8 @@ export function AdvTest() {
         header={<TestHeader />}
         footer={<TestHeader />}
     >
+
+        <RichText />
 
         <Carousel />
 
@@ -130,7 +132,7 @@ export function SuperTableTest() {
                 ].map((s, _i) => {
                     return {
                         // info: <p>`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the `</p>,
-                        hiddenDetails: <div>More info about John Doe...</div>,
+                        hiddenDetails: <div>More info...</div>,
 
                         rowItems: [
                             <p>{s.agent}</p>,
