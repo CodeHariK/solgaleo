@@ -99,23 +99,16 @@ import { CssADV } from "./gen";
 }
 */
 
-declare global {
-    interface Window {
-        lastBlockData?: BlockNode;
-    }
-}
-
 // Add these types at the top of the file
 type BlockNode = {
     type: string;
-    data: {
-        text?: string;
-        level?: number;
-        style?: Partial<CSSStyleDeclaration>;
-        url?: string;
-        items?: string[];
-        range?: [start: number, end: number]
-    };
+    node: Node;
+    text?: string;
+    level?: number;
+    style?: Partial<CSSStyleDeclaration>;
+    url?: string;
+    items?: string[];
+    range?: [start: number, end: number]
     children?: BlockNode[];
 };
 
@@ -123,6 +116,90 @@ type EditorData = {
     time: number;
     blocks: BlockNode[];
     version: string;
+};
+
+// Add this type for the renderer props
+type JSONRendererProps = {
+    data: EditorData;
+    range: [start: number, end: number],
+    onSelect: (block: BlockNode) => void;
+}
+
+// Add this component for rendering individual blocks
+const BlockRenderer = (props: {
+    block: BlockNode,
+    depth: number,
+    range: [start: number, end: number],
+    onSelect: (block: BlockNode) => void
+}) => {
+    const colors = ['#e3f2fd', '#f3e5f5', '#e8f5e9', '#fff3e0', '#f1f8e9'];
+
+    const isHighlighted = () => {
+        if (!props.range || !props.block.range) return false;
+        const [selStart, selEnd] = props.range;
+        const [blockStart, blockEnd] = props.block.range;
+
+        // Check if ranges overlap
+        return !(blockEnd <= selStart || blockStart >= selEnd);
+    };
+
+    return (
+        <div style={{
+            "padding-left": `${props.depth * 20}px`,
+            "background": isHighlighted() ? "#ffeb3b" : colors[props.depth % colors.length],
+            "margin": "2px 0",
+            "border-radius": "4px",
+            "cursor": "pointer",
+            "transition": "background-color 0.2s"
+        }}
+            onClick={(e) => {
+                e.stopPropagation();
+                props.onSelect(props.block);
+            }}
+        >
+            <div style={{ "font-weight": "bold" }}>type: {props.block.type}</div>
+            {props.block.text && (
+                <div style={{ "color": "#0277bd" }}>text: {props.block.text}</div>
+            )}
+            {props.block.range && (
+                <div style={{ "color": "#558b2f" }}>
+                    range: [{props.block.range[0]}, {props.block.range[1]}]
+                </div>
+            )}
+            {props.block.style && (
+                <div style={{ "color": "#6a1b9a" }}>
+                    style: {JSON.stringify(props.block.style)}
+                </div>
+            )}
+            {props.block.children?.map(child => (
+                <BlockRenderer
+                    block={child}
+                    depth={props.depth + 1}
+                    range={props.range}
+                    onSelect={props.onSelect}
+                />
+            ))}
+        </div>
+    );
+};
+
+// Add the main JSON renderer component
+const JSONRenderer = (props: JSONRendererProps) => {
+    return (
+        <div style={{ "font-family": "monospace" }}>
+            <div style={{ "font-weight": "bold", "margin-bottom": "8px" }}>
+                version: {props.data.version}
+            </div>
+            {props.data.blocks.map(block => (
+                <BlockRenderer
+                    block={block}
+                    depth={0}
+                    range={props.range}
+                    onSelect={props.onSelect}
+                />
+            ))}
+        </div>
+    );
 };
 
 // Add these conversion functions
@@ -139,10 +216,9 @@ const htmlToBlocks = (html: string): EditorData => {
         if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
             return {
                 type: 'text',
-                data: {
-                    text: node.textContent,
-                    range: [start, end]
-                }
+                node: node,
+                text: node.textContent,
+                range: [start, end]
             };
         }
 
@@ -163,15 +239,14 @@ const htmlToBlocks = (html: string): EditorData => {
 
             return {
                 type: el.tagName,
-                data: {
-                    style: el.style.cssText ? Object.fromEntries(
-                        el.style.cssText.split(';')
-                            .map(s => s.split(':').map(p => p.trim()))
-                            .filter(p => p.length === 2)
-                    ) : undefined,
-                    range: [start, end],
-                    text: (children.length == 1) ? children[0].data.text : undefined
-                },
+                node: node,
+                style: el.style.cssText ? Object.fromEntries(
+                    el.style.cssText.split(';')
+                        .map(s => s.split(':').map(p => p.trim()))
+                        .filter(p => p.length === 2)
+                ) : undefined,
+                range: [start, end],
+                text: (children.length == 1) ? children[0].text : undefined,
                 children: children.length > 1 ? children : undefined
             };
         }
@@ -188,35 +263,20 @@ const htmlToBlocks = (html: string): EditorData => {
     return {
         time: Date.now(),
         blocks,
-        version: "2.28.2"
+        version: Date.now().toString()
     };
 };
 
-function findElementByText(root: Node, text: string): HTMLElement | null {
-    const walker = document.createTreeWalker(
-        root,
-        NodeFilter.SHOW_ELEMENT,
-        {
-            acceptNode: (node: Node) => {
-                return node.textContent === text ?
-                    NodeFilter.FILTER_ACCEPT :
-                    NodeFilter.FILTER_SKIP;
-            }
-        }
-    );
-
-    return walker.nextNode() as HTMLElement;
-}
-
 export function RichText() {
     const [content, setContent] = createSignal("");
-    const [highlightedContent, setHighlightedContent] = createSignal("");
     const [fontFamily, setFontFamily] = createSignal("inherit");
     const [fontSize, setFontSize] = createSignal("inherit");
     const [textAlign, setTextAlign] = createSignal("left");
     const [fgColor, setFgColor] = createSignal("#000000");
     const [bgColor, setBgColor] = createSignal("transparent");
     const [padding, setPadding] = createSignal("0px");
+
+    const [selectedRange, setSelectedRange] = createSignal<[number, number] | null>(null);
 
     let editor: HTMLDivElement;
 
@@ -260,17 +320,36 @@ export function RichText() {
         }
     };
 
+    const findNodeInEditor = (editor: HTMLElement, blockData: BlockNode): Node | null => {
+        const walker = document.createTreeWalker(
+            editor,
+            NodeFilter.SHOW_ALL,
+            {
+                acceptNode: (node: Node) => {
+                    console.log(
+                        blockData.node.textContent,
+                        blockData.node.nodeType,
+                        blockData.node.nodeName)
+                    if (node.textContent == blockData.node.textContent) {
+                        return NodeFilter.FILTER_ACCEPT
+                    }
+
+                    return NodeFilter.FILTER_SKIP;
+
+                }
+            }
+        );
+        return walker.nextNode();
+    };
+
     const selectElementFromJson = (blockData: BlockNode) => {
         if (!editor) return;
 
-        const text = blockData.data.text;
-        if (!text) return;
-
-        const element = findElementByText(editor, text);
-        if (!element) return;
+        const node = findNodeInEditor(editor, blockData);
+        if (!node) return;
 
         const range = document.createRange();
-        range.selectNode(element);
+        range.selectNode(node);
 
         const sel = window.getSelection();
         sel?.removeAllRanges();
@@ -308,7 +387,6 @@ export function RichText() {
         setContent(editor.innerHTML);
         saveToHistory(editor.innerHTML);
     };
-
 
     const clearFormattingOfSelection = () => {
         const sel = window.getSelection();
@@ -426,28 +504,44 @@ export function RichText() {
     const handleSelectionChange = () => {
         const sel = window.getSelection();
         if (!sel || sel.rangeCount === 0 || !editor) {
-            setHighlightedContent(content());
+            setSelectedRange(null);
             return;
         }
 
         const range = sel.getRangeAt(0);
         if (!editor.contains(range.commonAncestorContainer)) {
-            setHighlightedContent(content());
+            setSelectedRange(null);
             return;
         }
 
-        // Clone the editor content
-        const tempDiv = editor.cloneNode(true) as HTMLDivElement;
-        const tempRange = document.createRange();
-        tempRange.setStart(tempDiv, 0);
-        tempRange.setEnd(tempDiv, tempDiv.childNodes.length);
+        // Calculate the absolute range of the selection
+        const textNodes: Text[] = [];
+        const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+            textNodes.push(walker.currentNode as Text);
+        }
 
-        // Add highlight to selected content
-        const selectedContent = tempDiv.innerHTML.replace(
-            sel.toString(),
-            `<span style="background-color: #ffeb3b">${sel.toString()}</span>`
-        );
-        setHighlightedContent(selectedContent);
+        let start = 0;
+        let selectionStart = 0;
+        let selectionEnd = 0;
+
+        for (const node of textNodes) {
+            const length = node.textContent?.length || 0;
+
+            if (node === range.startContainer) {
+                selectionStart = start + range.startOffset;
+            }
+            if (node === range.endContainer) {
+                selectionEnd = start + range.endOffset;
+                break;
+            }
+
+            start += length;
+        }
+
+        console.log(selectionStart, selectionEnd)
+
+        setSelectedRange([selectionStart, selectionEnd]);
     };
 
     onMount(() => {
@@ -460,11 +554,12 @@ export function RichText() {
     return (
         <div class={CssADV.RichContainer}>
             <div class={CssADV.RichEditorPane}>
+
                 <div class={CssADV.RichToolbar}>
+
                     <button onClick={() => applyTag("b")}>Bold</button>
                     <button onClick={() => applyTag("i")}>Italic</button>
                     <button onClick={() => applyTag("u")}>Underline</button>
-                    <button onClick={clearFormattingOfSelection}>Clear Format</button>
                     <select
                         onChange={(e) => applyTag(e.currentTarget.value)}
                         value="p"
@@ -477,12 +572,18 @@ export function RichText() {
                         <option value="h5">Heading 5</option>
                         <option value="h6">Heading 6</option>
                     </select>
-                    <button onClick={() => insertList('ul')}>Bullet List</button>
-                    <button onClick={() => insertList('ol')}>Number List</button>
-                    <button onClick={insertImage}>Image</button>
+
+                    <button onClick={clearFormattingOfSelection}>Clear Format</button>
                     <button onClick={undo}>Undo</button>
                     <button onClick={redo}>Redo</button>
+
+                    <button onClick={() => insertList('ul')}>Bullet List</button>
+                    <button onClick={() => insertList('ol')}>Number List</button>
+
+                    <button onClick={insertImage}>Image</button>
+
                     <button onClick={deserialize}>Deserialize</button>
+
                     <select
                         onChange={(e) => {
                             setTextAlign(e.currentTarget.value);
@@ -495,6 +596,7 @@ export function RichText() {
                         <option value="right">Right</option>
                         <option value="justify">Justify</option>
                     </select>
+
                     <input
                         type="color"
                         value={fgColor()}
@@ -504,15 +606,17 @@ export function RichText() {
                         }}
                         title="Text Color"
                     />
+
                     <input
                         type="color"
                         value={bgColor()}
                         onChange={(e) => {
                             setBgColor(e.currentTarget.value);
-                            applyStyle({ backgroundColor: e.currentTarget.value });
+                            applyStyle({ background: e.currentTarget.value });
                         }}
                         title="Background Color"
                     />
+
                     <select
                         onChange={(e) => {
                             setPadding(e.currentTarget.value);
@@ -525,6 +629,7 @@ export function RichText() {
                         <option value="8px">Medium</option>
                         <option value="16px">Large</option>
                     </select>
+
                     <select
                         onChange={(e) => {
                             setFontFamily(e.currentTarget.value);
@@ -537,6 +642,7 @@ export function RichText() {
                         <option value="Georgia">Georgia</option>
                         <option value="Verdana">Verdana</option>
                     </select>
+
                     <select
                         onChange={(e) => {
                             setFontSize(e.currentTarget.value);
@@ -572,27 +678,19 @@ export function RichText() {
 
             <div
                 class={CssADV.RichPreview}
-                onClick={() => {
-                    if (window.lastBlockData) {
-                        selectElementFromJson(window.lastBlockData);
-                        window.lastBlockData = undefined;
-                    }
-                }}
             >
-                <h3>HTML:</h3>
-                <pre innerHTML={highlightedContent()}></pre>
-                <h3>JSON:</h3>
-                <pre style={{ "white-space": "pre-wrap" }}>
-                    {(() => {
-                        const data = htmlToBlocks(content());
-                        return JSON.stringify(data, (key, value) => {
-                            if (key === 'text' && typeof value === 'string') {
-                                return value;
-                            }
-                            return value;
-                        }, 2);
-                    })()}
-                </pre>
+                <div style={{ "white-space": "pre-wrap" }}>
+                    <JSONRenderer
+                        data={htmlToBlocks(content())}
+                        range={selectedRange()}
+                        onSelect={(block) => {
+                            console.log(block)
+                            // if (block.text) {
+                            selectElementFromJson(block);
+                            // }
+                        }}
+                    />
+                </div>
             </div>
 
         </div>
