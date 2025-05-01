@@ -40,7 +40,9 @@ export function AdvTest() {
         footer={<TestHeader />}
     >
 
-        <RichText />
+        <div style={{ "max-height": "800px", overflow: "scroll" }}>
+            <RichText />
+        </div>
 
         <Carousel />
 

@@ -108,7 +108,7 @@ export function TreeView(props: {
         <ul
             class={CssNAV.TreeView}
             style={props.style}
-            role="tree"
+            role="menu"
             aria-level={props.level ?? 0}
         >
             <For each={tree()}>

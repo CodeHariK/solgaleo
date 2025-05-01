@@ -722,7 +722,6 @@ input[type="range"]:focus ~ .RangeValue {
     flex: 1;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 0 5px #ccc;
     display: flex;
     flex-direction: column;
 }
@@ -733,6 +732,21 @@ input[type="range"]:focus ~ .RangeValue {
     gap: 0.5rem;
     button, select {
         padding: 0.2rem 0.4rem;
+    }
+    input[type="color"] {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+    input[type="color"]::-webkit-color-swatch {
+        border: none;
+        border-radius: 4px;
     }
 }
 .RichEditor {
@@ -754,18 +768,28 @@ input[type="range"]:focus ~ .RangeValue {
     }
 }
 .RichPreview {
-    max-width: 30%;
+    width: 40%;
     padding: 1rem;
     font-family: monospace;
     overflow: auto;
     pre {
         white-space: pre-wrap;
         word-break: break-word;
+        margin-bottom: 1rem;
     }
     span[style*="background-color"] {
         display: inline-block;
         padding: 0 2px;
         border-radius: 2px;
+    }
+    span[style*="cursor: pointer"] {
+        text-decoration: underline;
+        &:hover {
+            opacity: 0.8;
+        }
+        &:active {
+            opacity: 0.6;
+        }
     }
 }
 .BlogContainer {
