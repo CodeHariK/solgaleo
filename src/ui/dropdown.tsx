@@ -3,7 +3,7 @@ import { For, Show, createSignal, type JSX } from 'solid-js';
 import { IconChevronRight } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 
-/*CSS:*
+/*CSS:
 
 .Dropdown {
     display: flex;

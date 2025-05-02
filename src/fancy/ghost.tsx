@@ -1,7 +1,7 @@
 import { onCleanup, onMount } from "solid-js";
 import { CssFANCY } from "./gen";
 
-/*CSS:*
+/*CSS:
 .GhostCon {
     --ghostWaveColor: var(--primary);
     --ghostColor: var(--primary-container);

@@ -4,7 +4,7 @@ import path from "path";
 import { Plugin } from "vite";
 import { SafeString } from "./src/utils/regex";
 
-const CSS_COMMENT_STRING_REGEX = /\/\*\s*CSS:\*\s*([\s\S]*?)\*\//gm;
+const CSS_COMMENT_STRING_REGEX = /\/\*\s*CSS:\s*([\s\S]*?)\*\//gm;
 const FUNCTION_DOC_REGEX = /\/\/FN:START\s*([\s\S]*?)\/\/FN:(DOC|END)\s*([\s\S]*?)\/\/FN:END/g;
 const EXPORT_REGEX = /export\s+(?:const|let|var|function|class|type|interface|enum)/;
 const NESTED_VAR_REGEX = /sol\((--[\w-]+)(?:\s*,\s*((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*))?\)/g;

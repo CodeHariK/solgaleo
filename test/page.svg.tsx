@@ -2,7 +2,7 @@ import * as svg from '../src/svg/gen'
 import { GridLayout } from '../src/ui/gridlayout.tsx';
 import { CssTEST, TestHeader } from './gen.ts'
 
-/*CSS:*
+/*CSS:
 .IconGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));

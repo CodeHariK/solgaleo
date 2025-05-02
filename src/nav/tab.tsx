@@ -3,7 +3,7 @@ import { CssNAV, UpdateQueryParam } from './gen';
 import { useRoutes } from './useRoutes';
 import { IconChevronRight } from '../svg/svg';
 
-/*CSS:*
+/*CSS:
 .TreeView {
     list-style: none;
     margin: 0;
@@ -161,7 +161,7 @@ export function TreeView(props: {
     );
 }
 
-/*CSS:*
+/*CSS:
 
 .TabsLevels {
     display: flex;
@@ -233,7 +233,7 @@ export function LevelTabs(props: {
     </div>;
 }
 
-/*CSS:*
+/*CSS:
 
 .TabContent {
     flex: 1;

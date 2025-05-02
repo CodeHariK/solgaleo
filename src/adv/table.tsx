@@ -3,7 +3,7 @@ import { createSignal, type JSX, Show } from "solid-js";
 import { For } from "solid-js";
 import { debounce } from '../utils/debounce';
 
-/*CSS:*
+/*CSS:
 
 .SuperTable {
     display: flex; 

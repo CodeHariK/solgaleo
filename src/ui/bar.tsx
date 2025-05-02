@@ -28,7 +28,7 @@ export function RatingsBar(props: { ratings?: number, reviews?: number }) {
     );
 }
 
-/*CSS:*
+/*CSS:
 .Progress {
     height: 20px;
     background: var(--surface); 

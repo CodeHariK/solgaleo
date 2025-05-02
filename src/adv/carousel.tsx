@@ -1,4 +1,4 @@
-/*CSS:*
+/*CSS:
 
 .scroll-layout {
 
@@ -227,7 +227,7 @@ let imgs = [
     "https://assets.codepen.io/2585/New+Beginnings.svg",
 ]
 
-/*CSS:*
+/*CSS:
 .vcarousel {
     display: flex;
     flex-direction: column;

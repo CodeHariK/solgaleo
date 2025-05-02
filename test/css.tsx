@@ -1,5 +1,5 @@
 
-/*CSS:*
+/*CSS:
 .box .dom:hover {
     sol(--box-hello, 4px);
     sol(--box-hi);

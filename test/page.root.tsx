@@ -9,7 +9,7 @@ import Prism from "prismjs"; // Explicitly import Prism
 import "prismjs/components/prism-typescript.min.js"; // Load Go syntax support
 import { Marquee, RainbowImage, RainbowText } from "../src/gen";
 
-/*CSS:*
+/*CSS:
 .CodeCard {
 	box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 	transition: transform 0.2s ease-in-out;

@@ -2,7 +2,7 @@ import { JSX } from "solid-js/jsx-runtime";
 import { CssNAV, RouteChange } from "./gen";
 import { useSolContext } from "../ui/provider";
 
-/*CSS:*
+/*CSS:
 .HeaderNav {
     margin: 0 auto;
     padding: .4rem 1rem;

@@ -1,4 +1,4 @@
-/*CSS:*
+/*CSS:
 
 .Slides {
     scroll-snap-type: y mandatory;

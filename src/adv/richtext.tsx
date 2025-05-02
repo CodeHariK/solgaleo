@@ -1,7 +1,7 @@
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { CssADV } from "./gen";
 
-/*CSS:*
+/*CSS:
 
 .RichContainer {
     display: flex;
@@ -99,7 +99,6 @@ import { CssADV } from "./gen";
 }
 */
 
-// Add these types at the top of the file
 type BlockNode = {
     type: string;
     node: Node;
@@ -108,448 +107,237 @@ type BlockNode = {
     style?: Partial<CSSStyleDeclaration>;
     url?: string;
     items?: string[];
-    range?: [start: number, end: number]
+    range?: [start: number, end: number];
+    htmlRange?: [start: number, end: number];
     children?: BlockNode[];
-};
+}
 
 type EditorData = {
     time: number;
     blocks: BlockNode[];
     version: string;
-};
-
-// Add this type for the renderer props
-type JSONRendererProps = {
-    data: EditorData;
-    range: [start: number, end: number],
-    onSelect: (block: BlockNode) => void;
 }
 
-// Add this component for rendering individual blocks
-const BlockRenderer = (props: {
-    block: BlockNode,
-    depth: number,
-    range: [start: number, end: number],
-    onSelect: (block: BlockNode) => void
-}) => {
-    const colors = ['#e3f2fd', '#f3e5f5', '#e8f5e9', '#fff3e0', '#f1f8e9'];
-
-    const isHighlighted = () => {
-        if (!props.range || !props.block.range) return false;
-        const [selStart, selEnd] = props.range;
-        const [blockStart, blockEnd] = props.block.range;
-
-        // Check if ranges overlap
-        return !(blockEnd <= selStart || blockStart >= selEnd);
-    };
-
-    return (
-        <div style={{
-            "padding-left": `${props.depth * 20}px`,
-            "background": isHighlighted() ? "#ffeb3b" : colors[props.depth % colors.length],
-            "margin": "2px 0",
-            "border-radius": "4px",
-            "cursor": "pointer",
-            "transition": "background-color 0.2s"
-        }}
-            onClick={(e) => {
-                e.stopPropagation();
-                props.onSelect(props.block);
-            }}
-        >
-            <div style={{ "font-weight": "bold" }}>type: {props.block.type}</div>
-            {props.block.text && (
-                <div style={{ "color": "#0277bd" }}>text: {props.block.text}</div>
-            )}
-            {props.block.range && (
-                <div style={{ "color": "#558b2f" }}>
-                    range: [{props.block.range[0]}, {props.block.range[1]}]
-                </div>
-            )}
-            {props.block.style && (
-                <div style={{ "color": "#6a1b9a" }}>
-                    style: {JSON.stringify(props.block.style)}
-                </div>
-            )}
-            {props.block.children?.map(child => (
-                <BlockRenderer
-                    block={child}
-                    depth={props.depth + 1}
-                    range={props.range}
-                    onSelect={props.onSelect}
-                />
-            ))}
-        </div>
-    );
-};
-
-// Add the main JSON renderer component
-const JSONRenderer = (props: JSONRendererProps) => {
-    return (
-        <div style={{ "font-family": "monospace" }}>
-            <div style={{ "font-weight": "bold", "margin-bottom": "8px" }}>
-                version: {props.data.version}
-            </div>
-            {props.data.blocks.map(block => (
-                <BlockRenderer
-                    block={block}
-                    depth={0}
-                    range={props.range}
-                    onSelect={props.onSelect}
-                />
-            ))}
-        </div>
-    );
-};
-
-// Add these conversion functions
-const htmlToBlocks = (html: string): EditorData => {
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-    const blocks: BlockNode[] = [];
-
-    const processNode = (node: Node, start: number, end: number): BlockNode | null => {
-
-        // console.log(node.nodeName, node.nodeType, node.textContent, node, node.nodeValue)
-
-        // Handle text nodes
-        if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-            return {
-                type: 'text',
-                node: node,
-                text: node.textContent,
-                range: [start, end]
-            };
-        }
-
-        if (node.nodeType === Node.ELEMENT_NODE) {
-            const el = node as HTMLElement;
-            const children: BlockNode[] = [];
-            let currentOffset = start;
-
-            // Process child nodes first
-            Array.from(el.childNodes).forEach(child => {
-                const length = child.textContent?.length || 0;
-                const childBlock = processNode(child, currentOffset, currentOffset + length);
-                if (childBlock) {
-                    children.push(childBlock);
-                }
-                currentOffset += length;
-            });
-
-            return {
-                type: el.tagName,
-                node: node,
-                style: el.style.cssText ? Object.fromEntries(
-                    el.style.cssText.split(';')
-                        .map(s => s.split(':').map(p => p.trim()))
-                        .filter(p => p.length === 2)
-                ) : undefined,
-                range: [start, end],
-                text: (children.length == 1) ? children[0].text : undefined,
-                children: children.length > 1 ? children : undefined
-            };
-        }
-        return null;
-    };
-
-    // Start processing from root elements
-    Array.from(temp.childNodes).forEach(node => {
-        const length = node.textContent?.length || 0;
-        const block = processNode(node, 0, length);
-        if (block) blocks.push(block);
-    });
-
-    return {
-        time: Date.now(),
-        blocks,
-        version: Date.now().toString()
-    };
-};
-
 export function RichText() {
-    const [content, setContent] = createSignal("");
-    const [fontFamily, setFontFamily] = createSignal("inherit");
-    const [fontSize, setFontSize] = createSignal("inherit");
-    const [textAlign, setTextAlign] = createSignal("left");
-    const [fgColor, setFgColor] = createSignal("#000000");
-    const [bgColor, setBgColor] = createSignal("transparent");
-    const [padding, setPadding] = createSignal("0px");
+    const [fontFamily, setFontFamily] = createSignal("inherit")
+    const [fontSize, setFontSize] = createSignal("inherit")
+    const [textAlign, setTextAlign] = createSignal("left")
+    const [fgColor, setFgColor] = createSignal("#000000")
+    const [bgColor, setBgColor] = createSignal("transparent")
+    const [padding, setPadding] = createSignal("0px")
 
-    const [selectedRange, setSelectedRange] = createSignal<[number, number] | null>(null);
+    const [selectedRange, setSelectedRange] = createSignal<[number, number] | null>(null)
 
-    let editor: HTMLDivElement;
+    let editorRef: HTMLDivElement;
 
     const history: string[] = [];
     let historyIndex = -1;
 
     const saveToHistory = (html: string) => {
         if (historyIndex >= 0 && history[historyIndex] === html) return;
-        history.splice(historyIndex + 1);
-        history.push(html);
+        history.splice(historyIndex + 1)
+        history.push(html)
         historyIndex = history.length - 1;
-    };
+    }
 
     const restoreHistory = () => {
-        if (editor && history[historyIndex] !== undefined) {
-            editor.innerHTML = history[historyIndex];
-            setContent(history[historyIndex]);
+        if (editorRef && history[historyIndex] !== undefined) {
+            editorRef.innerHTML = history[historyIndex];
         }
-    };
+    }
 
     const undo = () => {
         if (historyIndex > 0) {
             historyIndex--;
-            restoreHistory();
+            restoreHistory()
         }
-    };
+    }
 
     const redo = () => {
         if (historyIndex < history.length - 1) {
             historyIndex++;
-            restoreHistory();
+            restoreHistory()
         }
-    };
+    }
 
     const deserialize = () => {
         const html = prompt("Paste HTML to restore:") || "";
-        if (editor) {
-            editor.innerHTML = html;
-            setContent(html);
-            saveToHistory(html);
+        if (editorRef) {
+            editorRef.innerHTML = html;
+            saveToHistory(html)
         }
-    };
+    }
 
-    const findNodeInEditor = (editor: HTMLElement, blockData: BlockNode): Node | null => {
-        const walker = document.createTreeWalker(
-            editor,
-            NodeFilter.SHOW_ALL,
-            {
-                acceptNode: (node: Node) => {
-                    console.log(
-                        blockData.node.textContent,
-                        blockData.node.nodeType,
-                        blockData.node.nodeName)
-                    if (node.textContent == blockData.node.textContent) {
-                        return NodeFilter.FILTER_ACCEPT
-                    }
-
-                    return NodeFilter.FILTER_SKIP;
-
-                }
-            }
-        );
-        return walker.nextNode();
-    };
-
-    const selectElementFromJson = (blockData: BlockNode) => {
-        if (!editor) return;
-
-        const node = findNodeInEditor(editor, blockData);
-        if (!node) return;
-
-        const range = document.createRange();
-        range.selectNode(node);
-
-        const sel = window.getSelection();
-        sel?.removeAllRanges();
-        sel?.addRange(range);
-    };
-
-    // Modify applyStyle to update existing element if selected
     const applyStyle = (style: Partial<CSSStyleDeclaration>) => {
-        const sel = window.getSelection();
+        const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0 || sel.toString().trim() === '') return;
 
-        const range = sel.getRangeAt(0);
-        if (!editor || !editor.contains(range.commonAncestorContainer)) return;
+        const range = sel.getRangeAt(0)
+        if (!editorRef || !editorRef.contains(range.commonAncestorContainer)) return;
 
         const element = range.commonAncestorContainer.nodeType === 1 ?
             (range.commonAncestorContainer as HTMLElement) :
             range.commonAncestorContainer.parentElement;
 
-        if (element && element !== editor) {
+        if (element && element !== editorRef) {
             // Update existing element
-            Object.assign(element.style, style);
+            Object.assign(element.style, style)
         } else {
             // Create new span only if no existing element
-            const span = document.createElement("span");
-            Object.assign(span.style, style);
-            span.appendChild(range.extractContents());
-            range.insertNode(span);
+            const span = document.createElement("span")
+            Object.assign(span.style, style)
 
-            const newRange = document.createRange();
-            newRange.selectNode(span);
-            sel.removeAllRanges();
-            sel.addRange(newRange);
+            span.appendChild(range.extractContents())
+            range.insertNode(span)
+
+            const newRange = document.createRange()
+            newRange.selectNode(span)
+            sel.removeAllRanges()
+            sel.addRange(newRange)
         }
 
-        setContent(editor.innerHTML);
-        saveToHistory(editor.innerHTML);
-    };
+        saveToHistory(editorRef.innerHTML)
+    }
 
     const clearFormattingOfSelection = () => {
-        const sel = window.getSelection();
+        const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0) return;
-        const range = sel.getRangeAt(0);
+        const range = sel.getRangeAt(0)
 
-        const fragment = range.extractContents();
-        const text = document.createTextNode(fragment.textContent || "");
-        range.insertNode(text);
+        const fragment = range.extractContents()
+        const text = document.createTextNode(fragment.textContent || "")
+        range.insertNode(text)
 
-        const newRange = document.createRange();
-        newRange.setStartAfter(text);
-        newRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
+        const newRange = document.createRange()
+        newRange.setStartAfter(text)
+        newRange.collapse(true)
+        sel.removeAllRanges()
+        sel.addRange(newRange)
 
-        if (editor) {
-            setContent(editor.innerHTML);
-            saveToHistory(editor.innerHTML);
+        if (editorRef) {
+            saveToHistory(editorRef.innerHTML)
         }
-    };
+    }
 
     const applyTag = (tag: string) => {
-        const sel = window.getSelection();
+        const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0 || sel.toString().trim() === '') return;
 
-        const range = sel.getRangeAt(0);
-        if (!editor || !editor.contains(range.commonAncestorContainer)) return;
+        const range = sel.getRangeAt(0)
+        if (!editorRef || !editorRef.contains(range.commonAncestorContainer)) return;
 
-        const el = document.createElement(tag);
-        el.appendChild(range.extractContents());
-        range.insertNode(el);
+        const el = document.createElement(tag)
+        el.appendChild(range.extractContents())
+        range.insertNode(el)
 
         // Keep the formatted text selected
-        const newRange = document.createRange();
-        newRange.selectNode(el);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
+        const newRange = document.createRange()
+        newRange.selectNode(el)
+        sel.removeAllRanges()
+        sel.addRange(newRange)
 
-        setContent(editor.innerHTML);
-        saveToHistory(editor.innerHTML);
-    };
-
-    const applyFontStyle = () => {
-        const sel = window.getSelection();
-        if (!sel || sel.rangeCount === 0 || sel.toString().trim() === '') return;
-
-        const range = sel.getRangeAt(0);
-        if (!editor || !editor.contains(range.commonAncestorContainer)) return;
-
-        const span = document.createElement("span");
-        if (fontFamily() !== "inherit") span.style.fontFamily = fontFamily();
-        if (fontSize() !== "inherit") span.style.fontSize = fontSize();
-        span.appendChild(range.extractContents());
-        range.insertNode(span);
-
-        // Maintain selection
-        const newRange = document.createRange();
-        newRange.selectNode(span);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
-
-        setContent(editor.innerHTML);
-        saveToHistory(editor.innerHTML);
-    };
+        saveToHistory(editorRef.innerHTML)
+    }
 
     const insertImage = () => {
         const url = prompt("Enter image URL:") || "";
         if (!url) return;
 
-        const img = document.createElement("img");
+        const img = document.createElement("img")
         img.src = url;
         img.style.maxWidth = "100%";
 
-        const sel = window.getSelection();
+        const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0) return;
-        const range = sel.getRangeAt(0);
-        if (!editor || !editor.contains(range.commonAncestorContainer)) return;
+        const range = sel.getRangeAt(0)
+        if (!editorRef || !editorRef.contains(range.commonAncestorContainer)) return;
 
-        range.insertNode(img);
+        range.insertNode(img)
 
-        const newRange = document.createRange();
-        newRange.setStartAfter(img);
-        newRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
+        const newRange = document.createRange()
+        newRange.setStartAfter(img)
+        newRange.collapse(true)
+        sel.removeAllRanges()
+        sel.addRange(newRange)
 
-        setContent(editor.innerHTML);
-        saveToHistory(editor.innerHTML);
-    };
+        saveToHistory(editorRef.innerHTML)
+    }
 
     const insertList = (type: 'ul' | 'ol') => {
-        const list = document.createElement(type);
-        const item = document.createElement('li');
+        const list = document.createElement(type)
+        const item = document.createElement('li')
         item.textContent = "List item";
-        list.appendChild(item);
+        list.appendChild(item)
 
-        const sel = window.getSelection();
+        const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0) return;
-        const range = sel.getRangeAt(0);
-        if (!editor || !editor.contains(range.commonAncestorContainer)) return;
+        const range = sel.getRangeAt(0)
+        if (!editorRef || !editorRef.contains(range.commonAncestorContainer)) return;
 
-        range.insertNode(list);
+        range.insertNode(list)
 
-        const newRange = document.createRange();
-        newRange.setStartAfter(list);
-        newRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
+        const newRange = document.createRange()
+        newRange.setStartAfter(list)
+        newRange.collapse(true)
+        sel.removeAllRanges()
+        sel.addRange(newRange)
 
-        setContent(editor.innerHTML);
-        saveToHistory(editor.innerHTML);
-    };
+        saveToHistory(editorRef.innerHTML)
+    }
+
+    const getHtmlOffsets = (editor: HTMLElement, range: Range): [number, number] => {
+
+        // Create a range from start of editor to selection start
+        const startRange = document.createRange()
+        startRange.setStart(editor, 0)
+        startRange.setEnd(range.startContainer, range.startOffset)
+        const startContainer = document.createElement('div')
+        startContainer.appendChild(startRange.cloneContents())
+        const startHtml = startContainer.innerHTML;
+
+        // Create a range from start of editor to selection end
+        const endRange = document.createRange()
+        endRange.setStart(editor, 0)
+        endRange.setEnd(range.endContainer, range.endOffset)
+        const endContainer = document.createElement('div')
+        endContainer.appendChild(endRange.cloneContents())
+        const endHtml = endContainer.innerHTML;
+
+        // console.table([
+        //     ["startContainer", range.startContainer],
+        //     ["startContainerParent", range.startContainer.parentElement],
+        //     ["endContainer", range.endContainer],
+        //     ["endContainerParent", range.endContainer.parentElement],
+        //     ["startHtml", startHtml, startHtml.length],
+        //     ["endHtml", endHtml, endHtml.length],
+        // ])
+
+        return [startHtml.length, endHtml.length];
+    }
 
     const handleSelectionChange = () => {
-        const sel = window.getSelection();
-        if (!sel || sel.rangeCount === 0 || !editor) {
-            setSelectedRange(null);
+        const sel = window.getSelection()
+        if (!sel || sel.rangeCount === 0 || !editorRef) {
+            setSelectedRange(null)
             return;
         }
 
-        const range = sel.getRangeAt(0);
-        if (!editor.contains(range.commonAncestorContainer)) {
-            setSelectedRange(null);
+        const range = sel.getRangeAt(0)
+        if (!editorRef.contains(range.commonAncestorContainer)) {
+            setSelectedRange([0, 0])
             return;
         }
 
-        // Calculate the absolute range of the selection
-        const textNodes: Text[] = [];
-        const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
-        while (walker.nextNode()) {
-            textNodes.push(walker.currentNode as Text);
-        }
-
-        let start = 0;
-        let selectionStart = 0;
-        let selectionEnd = 0;
-
-        for (const node of textNodes) {
-            const length = node.textContent?.length || 0;
-
-            if (node === range.startContainer) {
-                selectionStart = start + range.startOffset;
-            }
-            if (node === range.endContainer) {
-                selectionEnd = start + range.endOffset;
-                break;
-            }
-
-            start += length;
-        }
-
-        console.log(selectionStart, selectionEnd)
-
-        setSelectedRange([selectionStart, selectionEnd]);
-    };
+        const [start, end] = getHtmlOffsets(editorRef, range)
+        setSelectedRange([start, end])
+    }
 
     onMount(() => {
-        const initial = "<p>Edit this text...</p>";
-        setContent(initial);
-        saveToHistory(initial);
-        document.addEventListener('selectionchange', handleSelectionChange);
-    });
+        const initial = '<b>Hi</b> <i>Hi</i>';
+        editorRef.innerHTML = initial
+        saveToHistory(initial)
+        document.addEventListener('selectionchange', handleSelectionChange)
+    })
 
     return (
         <div class={CssADV.RichContainer}>
@@ -586,8 +374,8 @@ export function RichText() {
 
                     <select
                         onChange={(e) => {
-                            setTextAlign(e.currentTarget.value);
-                            applyStyle({ textAlign: e.currentTarget.value });
+                            setTextAlign(e.currentTarget.value)
+                            applyStyle({ textAlign: e.currentTarget.value })
                         }}
                         value={textAlign()}
                     >
@@ -600,9 +388,9 @@ export function RichText() {
                     <input
                         type="color"
                         value={fgColor()}
-                        onChange={(e) => {
-                            setFgColor(e.currentTarget.value);
-                            applyStyle({ color: e.currentTarget.value });
+                        onInput={(e) => {
+                            setFgColor(e.currentTarget.value)
+                            applyStyle({ color: e.currentTarget.value })
                         }}
                         title="Text Color"
                     />
@@ -611,16 +399,16 @@ export function RichText() {
                         type="color"
                         value={bgColor()}
                         onChange={(e) => {
-                            setBgColor(e.currentTarget.value);
-                            applyStyle({ background: e.currentTarget.value });
+                            setBgColor(e.currentTarget.value)
+                            applyStyle({ background: e.currentTarget.value })
                         }}
                         title="Background Color"
                     />
 
                     <select
                         onChange={(e) => {
-                            setPadding(e.currentTarget.value);
-                            applyStyle({ padding: e.currentTarget.value });
+                            setPadding(e.currentTarget.value)
+                            applyStyle({ padding: e.currentTarget.value })
                         }}
                         value={padding()}
                     >
@@ -631,9 +419,10 @@ export function RichText() {
                     </select>
 
                     <select
+                        value={fontFamily()}
                         onChange={(e) => {
-                            setFontFamily(e.currentTarget.value);
-                            applyFontStyle();
+                            setFontFamily(e.currentTarget.value)
+                            applyStyle({ fontFamily: e.currentTarget.value })
                         }}
                     >
                         <option value="inherit">Font</option>
@@ -644,9 +433,10 @@ export function RichText() {
                     </select>
 
                     <select
+                        value={fontSize()}
                         onChange={(e) => {
-                            setFontSize(e.currentTarget.value);
-                            applyFontStyle();
+                            setFontSize(e.currentTarget.value)
+                            applyStyle({ fontSize: e.currentTarget.value })
                         }}
                     >
                         <option value="inherit">Size</option>
@@ -659,20 +449,17 @@ export function RichText() {
                 </div>
 
                 <div
-                    ref={editor}
+                    ref={editorRef}
                     class={CssADV.RichEditor}
                     contentEditable
                     onInput={(e) => {
                         const html = (e.currentTarget as HTMLElement).innerHTML;
-                        setContent(html);
-                        saveToHistory(html);
+                        saveToHistory(html)
                     }}
-                    onBlur={(e) => {
-                        const html = (e.currentTarget as HTMLElement).innerHTML;
-                        setContent(html);
-                    }}
+                // onBlur={(e) => {
+                //     const html = (e.currentTarget as HTMLElement).innerHTML;
+                // }}
                 >
-                    <p>Edit this text...</p>
                 </div>
             </div>
 
@@ -681,18 +468,273 @@ export function RichText() {
             >
                 <div style={{ "white-space": "pre-wrap" }}>
                     <JSONRenderer
-                        data={htmlToBlocks(content())}
+                        data={editorRef}
                         range={selectedRange()}
-                        onSelect={(block) => {
-                            console.log(block)
-                            // if (block.text) {
-                            selectElementFromJson(block);
-                            // }
-                        }}
+                        onSelect={(block) => { selectElementFromJson(block, editorRef) }}
                     />
                 </div>
             </div>
 
         </div>
+    )
+}
+
+const BlockRenderer = (props: {
+    block: BlockNode,
+    depth: number,
+    range: [start: number, end: number],
+    onSelect: (block: BlockNode) => void
+}) => {
+    const colors = ['#61bbfb', '#cef682', '#9533ff', '#f8be61', '#f13a84'];
+
+    const isHighlighted = () => {
+        if (!props.range) return false;
+        const [selStart, selEnd] = props.range;
+
+        // Only use HTML range since we're tracking HTML positions
+        if (props.block.htmlRange) {
+            const [blockStart, blockEnd] = props.block.htmlRange;
+
+            // Check if ranges overlap
+            // Block starts before selection ends AND block ends after selection starts
+            if (blockStart < selEnd && blockEnd > selStart) return true;
+        }
+
+        return false;
+    }
+
+    return (
+        <div style={{
+            "margin-left": `${props.depth * 20}px`,
+            "border": "2px solid",
+            "border-color": isHighlighted() ? "#ff6767" : colors[props.depth % colors.length],
+            "margin": "2px",
+            "border-radius": "4px",
+            "cursor": "pointer",
+            "transition": "background-color 0.2s"
+        }}
+            onClick={(e) => {
+                e.stopPropagation()
+                props.onSelect(props.block)
+            }}
+        >
+            <div style={{ "font-weight": "bold" }}>type: {props.block.type}</div>
+            {props.block.text && (
+                <div style={{ "color": "#2c7aa7" }}>text: {props.block.text}</div>
+            )}
+            {props.block.range && (
+                <div style={{ "color": "#69a63e" }}>
+                    range: [{props.block.range[0]}, {props.block.range[1]}]
+                </div>
+            )}
+            {props.block.htmlRange && (
+                <div style={{ "color": "#e69a21" }}>
+                    range: [{props.block.htmlRange[0]}, {props.block.htmlRange[1]}]
+                </div>
+            )}
+            {props.block.style && (
+                <div style={{ "color": "#d1d63d" }}>
+                    style: {JSON.stringify(props.block.style)}
+                </div>
+            )}
+            {props.block.children?.map(child => (
+                <BlockRenderer
+                    block={child}
+                    depth={props.depth + 1}
+                    range={props.range}
+                    onSelect={props.onSelect}
+                />
+            ))}
+        </div>
+    )
+}
+
+const JSONRenderer = (props: {
+    data: HTMLDivElement;
+    range: [start: number, end: number],
+    onSelect: (block: BlockNode) => void;
+}) => {
+    // Create signals for reactive data
+    const [editorData, setEditorData] = createSignal<EditorData>({
+        version: "0",
+        blocks: [],
+        time: 0
+    });
+    const [htmlContent, setHtmlContent] = createSignal('');
+
+    // Create mutation observer to track DOM changes
+    let observer: MutationObserver;
+
+    // Create effect to update data when editor changes
+    createEffect(() => {
+        if (!props.data) return;
+
+        // Setup mutation observer
+        observer?.disconnect();
+        observer = new MutationObserver(() => {
+            const html = props.data.innerHTML;
+            setHtmlContent(html);
+            const newData = htmlToBlocks(props.data);
+            setEditorData(newData);
+        });
+
+        // Start observing editor changes
+        observer.observe(props.data, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+            attributes: true
+        });
+
+        // Initial data load
+        const html = props.data.innerHTML;
+        setHtmlContent(html);
+        const newData = htmlToBlocks(props.data);
+        setEditorData(newData);
+
+        // Cleanup observer on effect cleanup
+        return () => observer.disconnect();
+    });
+
+    return (
+        <div style={{ "font-family": "monospace" }}>
+            version: {editorData().version}
+            <hr />
+            selected : {props.range ? `[${props.range[0]}:${props.range[1]})` : ''}
+            <hr />
+            {(props.range?.length == 2) ? <>
+                {htmlContent().substring(0, props.range[0])}
+                <span style={{ color: "red" }}>
+                    {htmlContent().substring(props.range[0], props.range[1])}
+                </span>
+                {htmlContent().substring(props.range[1])}
+            </> : htmlContent()}
+            {
+                editorData().blocks.map(block => (
+                    <BlockRenderer
+                        block={block}
+                        depth={0}
+                        range={props.range}
+                        onSelect={props.onSelect}
+                    />
+                ))
+            }
+        </div>
     );
+}
+
+const htmlToBlocks = (editor: HTMLElement): EditorData => {
+    const blocks: BlockNode[] = [];
+
+    console.log("Hello")
+
+    const processNode = (node: Node, textStart: number, htmlStart: number): BlockNode | null => {
+        // Handle text nodes
+        if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+            const textLength = node.textContent.length;
+            return {
+                type: 'text',
+                node: node,  // Store reference to actual text node
+                text: node.textContent,
+                range: [textStart, textStart + textLength],
+                htmlRange: [htmlStart, htmlStart + textLength]
+            };
+        }
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const el = node as HTMLElement;
+            const children: BlockNode[] = [];
+            let currentTextOffset = textStart;
+            let currentHtmlOffset = htmlStart + el.outerHTML.indexOf('>') + 1;
+
+            // Process child nodes
+            Array.from(el.childNodes).forEach(child => {
+                const textLength = child.textContent?.length || 0;
+                const childHtmlLength = child.nodeType === Node.ELEMENT_NODE ?
+                    (child as HTMLElement).outerHTML.length : textLength;
+
+                const childBlock = processNode(child, currentTextOffset, currentHtmlOffset);
+                if (childBlock) {
+                    children.push(childBlock);
+                }
+                currentTextOffset += textLength;
+                currentHtmlOffset += childHtmlLength;
+            });
+
+            return {
+                type: el.tagName.toLowerCase(),
+                node: el,  // Store reference to actual element
+                style: el.style.cssText ? Object.fromEntries(
+                    el.style.cssText.split(';')
+                        .map(s => s.split(':').map(p => p.trim()))
+                        .filter(p => p.length === 2)
+                ) : undefined,
+                range: [textStart, currentTextOffset],
+                htmlRange: [htmlStart, htmlStart + el.outerHTML.length],
+                text: (children.length === 1) ? children[0].text : undefined,
+                children: children.length > 0 ? children : undefined
+            };
+        }
+        return null;
+    };
+
+    let textOffset = 0;
+    let htmlOffset = 0;
+    Array.from(editor.childNodes).forEach(node => {
+        const block = processNode(node, textOffset, htmlOffset);
+        if (block) {
+            textOffset = block.range[1];
+            htmlOffset = block.htmlRange[1];
+            blocks.push(block);
+        }
+    });
+
+    console.log(blocks)
+
+    return {
+        time: Date.now(),
+        blocks,
+        version: Date.now().toString()
+    };
+};
+
+const findNodeInEditor = (editor: HTMLElement, block: BlockNode): Node | null => {
+    const walker = document.createTreeWalker(
+        editor,
+        NodeFilter.SHOW_ALL,
+        {
+            acceptNode: (node: Node) => {
+
+                console.table(
+                    [
+                        [block, node.textContent == block.node.textContent && node.nodeType == block.node.nodeType],
+                        [node, block.node],
+                        [node.textContent, block.node.textContent],
+                        [node.nodeType, block.node.nodeType],
+                    ])
+
+                if (node == block.node) {
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+
+                return NodeFilter.FILTER_SKIP;
+
+            }
+        }
+    )
+    return walker.nextNode()
+}
+
+const selectElementFromJson = (block: BlockNode, editor: HTMLDivElement) => {
+    if (!editor) return;
+
+    const node = findNodeInEditor(editor, block)
+    if (!node) return;
+
+    const range = document.createRange()
+    range.selectNode(node)
+
+    const sel = window.getSelection()
+    sel?.removeAllRanges()
+    sel?.addRange(range)
 }

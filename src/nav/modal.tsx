@@ -9,7 +9,7 @@ import { CssNAV } from "./gen";
 import { type JSX } from 'solid-js';
 import { CssUI } from "../gen";
 
-/*CSS:*
+/*CSS:
 .ModalOverlay {
     position: fixed;
     top: 0;

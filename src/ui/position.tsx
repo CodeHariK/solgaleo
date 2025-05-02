@@ -57,7 +57,7 @@ export function DragBox({ anchorRef, setAnchorRef }: {
         });
     });
 
-    /*CSS:*
+    /*CSS:
 
     .DragBox {
         position: fixed; 

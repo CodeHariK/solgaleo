@@ -1,7 +1,7 @@
 import { For, JSX } from "solid-js";
 import { CssNAV } from "./gen";
 
-/*CSS:*
+/*CSS:
 .Breadcrumb {
     padding: 0.75rem 1.25rem;
 }
