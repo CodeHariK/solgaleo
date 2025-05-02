@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { CssADV } from "./gen";
 
 /*CSS:
@@ -10,7 +10,6 @@ import { CssADV } from "./gen";
 
 .RichEditorPane, .preview-pane {
     flex: 1;
-    background: white;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -30,7 +29,7 @@ import { CssADV } from "./gen";
         width: 32px;
         height: 32px;
         padding: 0;
-        border: none;
+        border: 1px solid var(--primary);
         border-radius: 4px;
         cursor: pointer;
     }
@@ -113,9 +112,9 @@ type BlockNode = {
 }
 
 type EditorData = {
-    time: number;
     blocks: BlockNode[];
     version: string;
+    html: string
 }
 
 export function RichText() {
@@ -125,6 +124,8 @@ export function RichText() {
     const [fgColor, setFgColor] = createSignal("#000000")
     const [bgColor, setBgColor] = createSignal("transparent")
     const [padding, setPadding] = createSignal("0px")
+
+    const [editorData, setEditorData] = createSignal<EditorData>(null);
 
     const [selectedRange, setSelectedRange] = createSignal<[number, number] | null>(null)
 
@@ -316,6 +317,8 @@ export function RichText() {
     }
 
     const handleSelectionChange = () => {
+        console.log("handleSelectionChange")
+
         const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0 || !editorRef) {
             setSelectedRange(null)
@@ -333,8 +336,9 @@ export function RichText() {
     }
 
     onMount(() => {
-        const initial = '<b>Hi</b> <i>Hi</i>';
+        const initial = '<b>Yo</b> <i>Hi</i>';
         editorRef.innerHTML = initial
+        setEditorData(htmlToBlocks(editorRef));
         saveToHistory(initial)
         document.addEventListener('selectionchange', handleSelectionChange)
     })
@@ -455,10 +459,8 @@ export function RichText() {
                     onInput={(e) => {
                         const html = (e.currentTarget as HTMLElement).innerHTML;
                         saveToHistory(html)
+                        setEditorData(htmlToBlocks(editorRef));
                     }}
-                // onBlur={(e) => {
-                //     const html = (e.currentTarget as HTMLElement).innerHTML;
-                // }}
                 >
                 </div>
             </div>
@@ -468,7 +470,7 @@ export function RichText() {
             >
                 <div style={{ "white-space": "pre-wrap" }}>
                     <JSONRenderer
-                        data={editorRef}
+                        editorData={editorData()}
                         range={selectedRange()}
                         onSelect={(block) => { selectElementFromJson(block, editorRef) }}
                     />
@@ -520,16 +522,16 @@ const BlockRenderer = (props: {
         >
             <div style={{ "font-weight": "bold" }}>type: {props.block.type}</div>
             {props.block.text && (
-                <div style={{ "color": "#2c7aa7" }}>text: {props.block.text}</div>
+                <div style={{ "color": "#2c7aa7" }}>text: {props.block.text.length} : '{props.block.text}'</div>
             )}
             {props.block.range && (
                 <div style={{ "color": "#69a63e" }}>
-                    range: [{props.block.range[0]}, {props.block.range[1]}]
+                    range: [{props.block.range[0]}, {props.block.range[1]})
                 </div>
             )}
             {props.block.htmlRange && (
                 <div style={{ "color": "#e69a21" }}>
-                    range: [{props.block.htmlRange[0]}, {props.block.htmlRange[1]}]
+                    range: [{props.block.htmlRange[0]}, {props.block.htmlRange[1]})
                 </div>
             )}
             {props.block.style && (
@@ -550,67 +552,25 @@ const BlockRenderer = (props: {
 }
 
 const JSONRenderer = (props: {
-    data: HTMLDivElement;
+    editorData: EditorData;
     range: [start: number, end: number],
     onSelect: (block: BlockNode) => void;
 }) => {
-    // Create signals for reactive data
-    const [editorData, setEditorData] = createSignal<EditorData>({
-        version: "0",
-        blocks: [],
-        time: 0
-    });
-    const [htmlContent, setHtmlContent] = createSignal('');
-
-    // Create mutation observer to track DOM changes
-    let observer: MutationObserver;
-
-    // Create effect to update data when editor changes
-    createEffect(() => {
-        if (!props.data) return;
-
-        // Setup mutation observer
-        observer?.disconnect();
-        observer = new MutationObserver(() => {
-            const html = props.data.innerHTML;
-            setHtmlContent(html);
-            const newData = htmlToBlocks(props.data);
-            setEditorData(newData);
-        });
-
-        // Start observing editor changes
-        observer.observe(props.data, {
-            childList: true,
-            subtree: true,
-            characterData: true,
-            attributes: true
-        });
-
-        // Initial data load
-        const html = props.data.innerHTML;
-        setHtmlContent(html);
-        const newData = htmlToBlocks(props.data);
-        setEditorData(newData);
-
-        // Cleanup observer on effect cleanup
-        return () => observer.disconnect();
-    });
-
     return (
         <div style={{ "font-family": "monospace" }}>
-            version: {editorData().version}
+            version: {props.editorData?.version}
             <hr />
             selected : {props.range ? `[${props.range[0]}:${props.range[1]})` : ''}
             <hr />
             {(props.range?.length == 2) ? <>
-                {htmlContent().substring(0, props.range[0])}
+                {props.editorData.html.substring(0, props.range[0])}
                 <span style={{ color: "red" }}>
-                    {htmlContent().substring(props.range[0], props.range[1])}
+                    {props.editorData.html.substring(props.range[0], props.range[1])}
                 </span>
-                {htmlContent().substring(props.range[1])}
-            </> : htmlContent()}
+                {props.editorData.html.substring(props.range[1])}
+            </> : props.editorData?.html}
             {
-                editorData().blocks.map(block => (
+                props.editorData?.blocks.map(block => (
                     <BlockRenderer
                         block={block}
                         depth={0}
@@ -626,11 +586,9 @@ const JSONRenderer = (props: {
 const htmlToBlocks = (editor: HTMLElement): EditorData => {
     const blocks: BlockNode[] = [];
 
-    console.log("Hello")
-
     const processNode = (node: Node, textStart: number, htmlStart: number): BlockNode | null => {
         // Handle text nodes
-        if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+        if (node.nodeType === Node.TEXT_NODE) {
             const textLength = node.textContent.length;
             return {
                 type: 'text',
@@ -689,47 +647,22 @@ const htmlToBlocks = (editor: HTMLElement): EditorData => {
         }
     });
 
-    console.log(blocks)
-
     return {
-        time: Date.now(),
         blocks,
-        version: Date.now().toString()
+        version: Date.now().toString(),
+        html: editor.innerHTML,
     };
 };
-
-const findNodeInEditor = (editor: HTMLElement, block: BlockNode): Node | null => {
-    const walker = document.createTreeWalker(
-        editor,
-        NodeFilter.SHOW_ALL,
-        {
-            acceptNode: (node: Node) => {
-
-                console.table(
-                    [
-                        [block, node.textContent == block.node.textContent && node.nodeType == block.node.nodeType],
-                        [node, block.node],
-                        [node.textContent, block.node.textContent],
-                        [node.nodeType, block.node.nodeType],
-                    ])
-
-                if (node == block.node) {
-                    return NodeFilter.FILTER_ACCEPT;
-                }
-
-                return NodeFilter.FILTER_SKIP;
-
-            }
-        }
-    )
-    return walker.nextNode()
-}
 
 const selectElementFromJson = (block: BlockNode, editor: HTMLDivElement) => {
     if (!editor) return;
 
-    const node = findNodeInEditor(editor, block)
+    let node = block.node
     if (!node) return;
+
+    if (node.nodeType == Node.TEXT_NODE && node?.parentElement != editor) {
+        node = node?.parentElement
+    }
 
     const range = document.createRange()
     range.selectNode(node)

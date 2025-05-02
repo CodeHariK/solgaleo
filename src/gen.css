@@ -720,7 +720,6 @@ input[type="range"]:focus ~ .RangeValue {
 }
 .RichEditorPane, .preview-pane {
     flex: 1;
-    background: white;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -737,7 +736,7 @@ input[type="range"]:focus ~ .RangeValue {
         width: 32px;
         height: 32px;
         padding: 0;
-        border: none;
+        border: 1px solid var(--primary);
         border-radius: 4px;
         cursor: pointer;
     }
