@@ -129,6 +129,9 @@ export function RichText() {
 
     const [selectedRange, setSelectedRange] = createSignal<[number, number] | null>(null)
 
+    // Add flag to track programmatic selection
+    const [isProgrammaticSelection, setIsProgrammaticSelection] = createSignal(false);
+
     let editorRef: HTMLDivElement;
 
     const history: string[] = [];
@@ -161,11 +164,23 @@ export function RichText() {
         }
     }
 
+    const updateEditor = () => {
+        if (!editorRef) return;
+        const html = editorRef.innerHTML
+            .replaceAll("<b></b>", "")
+            .replaceAll("<i></i>", "");
+        saveToHistory(html);
+        console.log(html)
+        editorRef.innerHTML = html
+        setEditorData(htmlToBlocks(editorRef));
+        setSelectedRange([0, 0])
+    };
+
     const deserialize = () => {
         const html = prompt("Paste HTML to restore:") || "";
         if (editorRef) {
             editorRef.innerHTML = html;
-            saveToHistory(html)
+            updateEditor();
         }
     }
 
@@ -197,7 +212,7 @@ export function RichText() {
             sel.addRange(newRange)
         }
 
-        saveToHistory(editorRef.innerHTML)
+        updateEditor();
     }
 
     const clearFormattingOfSelection = () => {
@@ -215,9 +230,7 @@ export function RichText() {
         sel.removeAllRanges()
         sel.addRange(newRange)
 
-        if (editorRef) {
-            saveToHistory(editorRef.innerHTML)
-        }
+        updateEditor();
     }
 
     const applyTag = (tag: string) => {
@@ -237,7 +250,7 @@ export function RichText() {
         sel.removeAllRanges()
         sel.addRange(newRange)
 
-        saveToHistory(editorRef.innerHTML)
+        updateEditor();
     }
 
     const insertImage = () => {
@@ -261,7 +274,7 @@ export function RichText() {
         sel.removeAllRanges()
         sel.addRange(newRange)
 
-        saveToHistory(editorRef.innerHTML)
+        updateEditor();
     }
 
     const insertList = (type: 'ul' | 'ol') => {
@@ -283,41 +296,14 @@ export function RichText() {
         sel.removeAllRanges()
         sel.addRange(newRange)
 
-        saveToHistory(editorRef.innerHTML)
-    }
-
-    const getHtmlOffsets = (editor: HTMLElement, range: Range): [number, number] => {
-
-        // Create a range from start of editor to selection start
-        const startRange = document.createRange()
-        startRange.setStart(editor, 0)
-        startRange.setEnd(range.startContainer, range.startOffset)
-        const startContainer = document.createElement('div')
-        startContainer.appendChild(startRange.cloneContents())
-        const startHtml = startContainer.innerHTML;
-
-        // Create a range from start of editor to selection end
-        const endRange = document.createRange()
-        endRange.setStart(editor, 0)
-        endRange.setEnd(range.endContainer, range.endOffset)
-        const endContainer = document.createElement('div')
-        endContainer.appendChild(endRange.cloneContents())
-        const endHtml = endContainer.innerHTML;
-
-        // console.table([
-        //     ["startContainer", range.startContainer],
-        //     ["startContainerParent", range.startContainer.parentElement],
-        //     ["endContainer", range.endContainer],
-        //     ["endContainerParent", range.endContainer.parentElement],
-        //     ["startHtml", startHtml, startHtml.length],
-        //     ["endHtml", endHtml, endHtml.length],
-        // ])
-
-        return [startHtml.length, endHtml.length];
+        updateEditor();
     }
 
     const handleSelectionChange = () => {
-        console.log("handleSelectionChange")
+        if (isProgrammaticSelection()) {
+            setIsProgrammaticSelection(false);
+            return;
+        }
 
         const sel = window.getSelection()
         if (!sel || sel.rangeCount === 0 || !editorRef) {
@@ -331,12 +317,61 @@ export function RichText() {
             return;
         }
 
-        const [start, end] = getHtmlOffsets(editorRef, range)
-        setSelectedRange([start, end])
+        let startContainer = range.startContainer
+        let endContainer = range.endContainer
+        let commonAncestor = range.commonAncestorContainer;
+
+        // Check if all children of common ancestor are selected
+        if (commonAncestor.nodeType === Node.ELEMENT_NODE) {
+            const el = commonAncestor as HTMLElement;
+            const firstChild = el.firstChild;
+            const lastChild = el.lastChild;
+
+            if (firstChild && lastChild &&
+                startContainer === firstChild && range.startOffset === 0 &&
+                endContainer === lastChild && range.endOffset === lastChild.textContent?.length) {
+                // All children are selected, use the parent element
+                startContainer = commonAncestor;
+                endContainer = commonAncestor;
+            }
+        }
+
+        if (startContainer.nodeType == Node.TEXT_NODE && startContainer?.parentElement != editorRef) {
+            startContainer = startContainer?.parentElement
+        }
+        if (endContainer.nodeType == Node.TEXT_NODE && endContainer?.parentElement != editorRef) {
+            endContainer = endContainer?.parentElement
+        }
+
+        const startRange = startContainer["range"]
+        const endRange = endContainer["range"]
+        const ancestorRange = commonAncestor["range"]
+
+        if (!startRange || !endRange) return
+
+        const [startStart, _startEnd] = startRange
+        const [_endStart, endEnd] = endRange
+        const [ancStart, ancEnd] = ancestorRange
+
+        console.table([
+            [ancStart + commonAncestor.nodeName.length + 2, ancEnd - commonAncestor.nodeName.length - 3],
+            ["commonAncestor", commonAncestor, ancestorRange?.toString()],
+            ["startContainer", startContainer, startRange?.toString()],
+            ["endContainer", endContainer, endRange?.toString()],
+        ])
+
+        if ((ancStart + commonAncestor.nodeName.length + 2) == startStart
+            &&
+            (ancEnd - commonAncestor.nodeName.length - 3) == endEnd) {
+
+            setSelectedRange([ancStart, ancEnd])
+        } else {
+            setSelectedRange([startStart, endEnd])
+        }
     }
 
     onMount(() => {
-        const initial = '<b>Yo</b> <i>Hi</i>';
+        const initial = '<h4><b>Yo</b> <i>Hi</i></h4>';
         editorRef.innerHTML = initial
         setEditorData(htmlToBlocks(editorRef));
         saveToHistory(initial)
@@ -456,11 +491,7 @@ export function RichText() {
                     ref={editorRef}
                     class={CssADV.RichEditor}
                     contentEditable
-                    onInput={(e) => {
-                        const html = (e.currentTarget as HTMLElement).innerHTML;
-                        saveToHistory(html)
-                        setEditorData(htmlToBlocks(editorRef));
-                    }}
+                    onInput={updateEditor}
                 >
                 </div>
             </div>
@@ -472,7 +503,28 @@ export function RichText() {
                     <JSONRenderer
                         editorData={editorData()}
                         range={selectedRange()}
-                        onSelect={(block) => { selectElementFromJson(block, editorRef) }}
+                        onSelect={(block) => {
+                            if (!editorRef) return;
+
+                            let node = block.node;
+                            if (!node) return;
+
+                            if (node.nodeType == Node.TEXT_NODE && node?.parentElement != editorRef) {
+                                node = node?.parentElement;
+                            }
+
+                            // Set flag before changing selection
+                            setIsProgrammaticSelection(true);
+
+                            const range = document.createRange();
+                            range.selectNode(node);
+
+                            const sel = window.getSelection();
+                            sel?.removeAllRanges();
+                            sel?.addRange(range);
+
+                            setSelectedRange(block.htmlRange);
+                        }}
                     />
                 </div>
             </div>
@@ -564,7 +616,7 @@ const JSONRenderer = (props: {
             <hr />
             {(props.range?.length == 2) ? <>
                 {props.editorData.html.substring(0, props.range[0])}
-                <span style={{ color: "red" }}>
+                <span style={{ border: "1px solid red" }}>
                     {props.editorData.html.substring(props.range[0], props.range[1])}
                 </span>
                 {props.editorData.html.substring(props.range[1])}
@@ -590,6 +642,9 @@ const htmlToBlocks = (editor: HTMLElement): EditorData => {
         // Handle text nodes
         if (node.nodeType === Node.TEXT_NODE) {
             const textLength = node.textContent.length;
+
+            node["range"] = [htmlStart, htmlStart + textLength]
+
             return {
                 type: 'text',
                 node: node,  // Store reference to actual text node
@@ -619,6 +674,8 @@ const htmlToBlocks = (editor: HTMLElement): EditorData => {
                 currentHtmlOffset += childHtmlLength;
             });
 
+            node["range"] = [htmlStart, htmlStart + el.outerHTML.length]
+
             return {
                 type: el.tagName.toLowerCase(),
                 node: el,  // Store reference to actual element
@@ -630,7 +687,7 @@ const htmlToBlocks = (editor: HTMLElement): EditorData => {
                 range: [textStart, currentTextOffset],
                 htmlRange: [htmlStart, htmlStart + el.outerHTML.length],
                 text: (children.length === 1) ? children[0].text : undefined,
-                children: children.length > 0 ? children : undefined
+                children: children.length > 1 ? children : undefined
             };
         }
         return null;
@@ -653,21 +710,3 @@ const htmlToBlocks = (editor: HTMLElement): EditorData => {
         html: editor.innerHTML,
     };
 };
-
-const selectElementFromJson = (block: BlockNode, editor: HTMLDivElement) => {
-    if (!editor) return;
-
-    let node = block.node
-    if (!node) return;
-
-    if (node.nodeType == Node.TEXT_NODE && node?.parentElement != editor) {
-        node = node?.parentElement
-    }
-
-    const range = document.createRange()
-    range.selectNode(node)
-
-    const sel = window.getSelection()
-    sel?.removeAllRanges()
-    sel?.addRange(range)
-}
