@@ -50,6 +50,16 @@ import { CssADV } from "./gen";
     min-height: 300px;
     outline: none;
 
+    ::selection {
+        color: unset;
+        background: unset;
+        text-shadow: 
+            #fc0 -5px -5px 10px,
+            #fc0 5px 5px 10px,
+            #fc0 -5px 5px 10px,
+            #fc0 5px -5px 10px;
+    }
+
     img {
         max-width: 100%;
         height: auto;
@@ -166,9 +176,13 @@ export function RichText() {
 
     const updateEditor = () => {
         if (!editorRef) return;
-        const html = editorRef.innerHTML
-            .replaceAll("<b></b>", "")
-            .replaceAll("<i></i>", "");
+
+        let html = editorRef.innerHTML
+        // let html = editorRef.innerHTML
+        //     .replaceAll("<b></b>", "")
+        //     .replaceAll("<i></i>", "")
+        // html = html.trim() + " "
+
         saveToHistory(html);
         console.log(html)
         editorRef.innerHTML = html
@@ -327,6 +341,12 @@ export function RichText() {
             const firstChild = el.firstChild;
             const lastChild = el.lastChild;
 
+            console.table([
+                [startContainer, firstChild, startContainer === firstChild],
+                [endContainer, lastChild, endContainer === lastChild],
+                [range.startOffset, range.endOffset, lastChild.textContent?.length]
+            ])
+
             if (firstChild && lastChild &&
                 startContainer === firstChild && range.startOffset === 0 &&
                 endContainer === lastChild && range.endOffset === lastChild.textContent?.length) {
@@ -336,10 +356,16 @@ export function RichText() {
             }
         }
 
-        if (startContainer.nodeType == Node.TEXT_NODE && startContainer?.parentElement != editorRef) {
+        if (startContainer.nodeType == Node.TEXT_NODE
+            && startContainer?.parentElement != editorRef
+            && startContainer?.parentElement?.textContent == startContainer?.textContent
+        ) {
             startContainer = startContainer?.parentElement
         }
-        if (endContainer.nodeType == Node.TEXT_NODE && endContainer?.parentElement != editorRef) {
+        if (endContainer.nodeType == Node.TEXT_NODE
+            && endContainer?.parentElement != editorRef
+            && endContainer?.parentElement?.textContent == endContainer?.textContent
+        ) {
             endContainer = endContainer?.parentElement
         }
 
@@ -437,7 +463,7 @@ export function RichText() {
                     <input
                         type="color"
                         value={bgColor()}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             setBgColor(e.currentTarget.value)
                             applyStyle({ background: e.currentTarget.value })
                         }}

@@ -753,6 +753,15 @@ input[type="range"]:focus ~ .RangeValue {
     padding: 1rem;
     min-height: 300px;
     outline: none;
+    ::selection {
+        color: unset;
+        background: unset;
+        text-shadow: 
+            #fc0 -5px -5px 10px,
+            #fc0 5px 5px 10px,
+            #fc0 -5px 5px 10px,
+            #fc0 5px -5px 10px;
+    }
     img {
         max-width: 100%;
         height: auto;
