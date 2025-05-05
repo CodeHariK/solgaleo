@@ -753,14 +753,12 @@ input[type="range"]:focus ~ .RangeValue {
     padding: 1rem;
     min-height: 300px;
     outline: none;
-    ::selection {
+    [data-edit]::selection {
         color: unset;
         background: unset;
-        text-shadow: 
-            #fc0 -5px -5px 10px,
-            #fc0 5px 5px 10px,
-            #fc0 -5px 5px 10px,
-            #fc0 5px -5px 10px;
+    }
+    [data-edit] {
+        outline: 1px dashed #888;
     }
     img {
         max-width: 100%;
