@@ -44,7 +44,7 @@ export function ThemeToggle() {
 export function ThemeMount(data: SolData, setData: (key: keyof SolData, value: any) => void) {
     let savedTheme = localStorage.getItem("theme");
 
-    if (!data.themes.filter((e) => e.name == savedTheme)) {
+    if (data.themes.filter((e) => e.name == savedTheme).length == 0) {
         const prefersNight = window.matchMedia("(prefers-color-scheme: dark)").matches;
         savedTheme = prefersNight ? "night" : "light";
     }

@@ -49,7 +49,7 @@ sol(--modal-col , var(--body-col) );
 * {
   scroll-behavior: smooth;
   margin: 0;
-  transition: all .3s;
+  // transition: all .3s;
 }
 
 *,

@@ -319,9 +319,7 @@ export function RichText() {
         console.clear()
 
         //
-        //
         setSelectedRange(null)
-        //
         //
 
         if (isProgrammaticSelection()) {
@@ -343,8 +341,7 @@ export function RichText() {
 
 
         let selHtmlRange = getSelectedHtmlInEditable()
-        console.log(selHtmlRange.range)
-        console.log(selHtmlRange.innerHTML)
+        console.log(selHtmlRange.range, selHtmlRange.innerHTML)
 
         let startContainer = range.startContainer
         let endContainer = range.endContainer
@@ -352,142 +349,68 @@ export function RichText() {
         let oriEndParent = endContainer?.parentElement
         let commonAncestor = range.commonAncestorContainer;
 
+        console.log(range.getClientRects())
+        console.log(range.getBoundingClientRect())
+
         console.table([
-            ["startContainer", startContainer],
-            ["endContainer", endContainer],
-            ["oriStartParent", oriStartParent],
-            ["oriEndParent", oriEndParent],
+            ["startContainer", startContainer, startContainer["range"]?.toString()],
+            ["endContainer", endContainer, endContainer["range"]?.toString()],
+            ["oriStartParent", oriStartParent, oriStartParent["range"]?.toString()],
+            ["oriEndParent", oriEndParent, oriEndParent["range"]?.toString()],
             ["commonAncestor", commonAncestor],
             ["range", [range.startOffset, range.endOffset].toString()],
-            ["selHtmlRange", selHtmlRange.toString()]
         ])
+
+        if (selHtmlRange.innerHTML.includes("<img")) {
+            setSelectedRange(selHtmlRange.range)
+            return
+        }
 
         {
             let rangeLength = range.endOffset - range.startOffset
-            if (startContainer == endContainer && oriStartParent != editorRef) {
+            if (startContainer == endContainer
+                && startContainer != editorRef) {
                 console.log(
                     oriStartParent.textContent.length,
                     startContainer.textContent.length,
                     rangeLength)
 
                 if (oriStartParent.textContent.length == rangeLength) {
-                    setSelectedRange(oriStartParent["range"])
+                    let r: [number, number] = oriStartParent["range"]
+                    setSelectedRange(r)
+                    console.log(r)
                     return
                 }
-                else {
-                    let [s, e] = startContainer["range"]
-                    setSelectedRange([s + range.startOffset, s + range.startOffset + rangeLength])
+                else if (startContainer["range"]) {
+                    let [s, _] = startContainer["range"]
+                    let r: [number, number] = [s + range.startOffset, s + range.startOffset + rangeLength]
+                    console.log(r, editorRef.innerHTML.substring(...r))
+                    setSelectedRange(r)
                     return
                 }
             }
         }
 
         // Check if all children of common ancestor are selected
-        if (commonAncestor.nodeType === Node.ELEMENT_NODE) {
-            // const el = commonAncestor as HTMLElement;
-            // const firstChild = el.firstChild;
-            // const lastChild = el.lastChild;
-
-            const commonAncestorHtmlLength = commonAncestor.nodeType === Node.ELEMENT_NODE ?
+        if (commonAncestor.nodeType === Node.ELEMENT_NODE && commonAncestor != editorRef) {
+            const commonAncestorHtml = commonAncestor.nodeType === Node.ELEMENT_NODE ?
                 (commonAncestor as HTMLElement).innerHTML : "";
 
             console.table([
-                [selHtmlRange.innerHTML, commonAncestorHtmlLength],
-                [commonAncestor["range"], ""],
-                // ["firstChild", firstChild, startContainer === firstChild],
-                // ["lastChild", lastChild, endContainer === lastChild],
+                [selHtmlRange.innerHTML, commonAncestorHtml],
+                [commonAncestor["range"]?.toString(), selHtmlRange.innerHTML == commonAncestorHtml],
             ])
-
-            if (selHtmlRange.innerHTML == commonAncestorHtmlLength) {
-                setSelectedRange(commonAncestor["range"])
-                return
+            if (selHtmlRange.innerHTML == commonAncestorHtml) {
+                let r: [number, number] = commonAncestor["range"]
+                if (r) {
+                    console.log(r, editorRef.innerHTML.substring(...r))
+                    setSelectedRange(r)
+                    return
+                }
             }
         }
 
-        if (selHtmlRange.innerHTML.includes("<img")
-            || oriStartParent == editorRef) {
-            setSelectedRange(selHtmlRange.range)
-            return
-        }
-
-
-
-        // const oriStartRange = startContainer["range"]
-        // const oriEndRange = endContainer["range"]
-
-        // if (!oriStartRange || !oriEndRange) return
-
-        // const [oriStartStart, _oriStartEnd] = oriStartRange
-        // const [_oriEndStart, oriEndEnd] = oriEndRange
-
-        // const oriStartEndLength = oriEndEnd - oriStartStart
-
-        // console.table([
-        //     ["oriStartStart", oriStartStart],
-        //     ["oriEndEnd", oriEndEnd],
-        //     ["oriStartEndLength", oriStartEndLength]])
-
-        // let startParent = startContainer?.parentElement
-        // let endParent = endContainer?.parentElement
-        // if (startContainer.nodeType == Node.TEXT_NODE
-        //     && startParent != editorRef
-        //     && startParent?.textContent == startContainer?.textContent
-        //     && oriStartEndLength == rangeLength
-        // ) {
-        //     startContainer = startParent
-        //     console.log("startContainer", startContainer)
-        // }
-        // if (endContainer.nodeType == Node.TEXT_NODE
-        //     && endParent != editorRef
-        //     && endParent?.textContent == endContainer?.textContent
-        //     && oriStartEndLength == rangeLength
-        // ) {
-        //     endContainer = endParent
-        //     console.log("endContainer", endContainer)
-        // }
-
-
-
-
-        // const startRange = startContainer["range"]
-        // const endRange = endContainer["range"]
-        // const ancestorRange = commonAncestor["range"]
-
-        // if (!startRange || !endRange) return
-
-        // const [startStart, _startEnd] = startRange
-        // const [_endStart, endEnd] = endRange
-
-
-
-        // if (ancestorRange) {
-
-        //     const [ancStart, ancEnd] = ancestorRange
-
-        //     // console.table([
-        //     //     [ancStart, ancEnd],
-        //     //     [ancStart + commonAncestor.nodeName.length + 2, ancEnd - commonAncestor.nodeName.length - 3],
-        //     //     ["commonAncestor", commonAncestor, ancestorRange?.toString()],
-        //     //     ["startContainer", startContainer, startRange?.toString()],
-        //     //     ["endContainer", endContainer, endRange?.toString()],
-        //     // ])
-
-        //     if ((ancStart + commonAncestor.nodeName.length + 2) == startStart
-        //         &&
-        //         (ancEnd - commonAncestor.nodeName.length - 3) == endEnd) {
-
-        //         setSelectedRange([ancStart, ancEnd])
-        //         console.log(">", [ancStart, ancEnd])
-        //     }
-        // }
-
-        // console.table([
-        //     [startStart, endEnd],
-        //     [startStart + range.startOffset, endEnd - (oriStartEndLength - range.endOffset)]
-        // ])
-
-        // setSelectedRange([startStart, endEnd])
-        // // setSelectedRange([startStart + range.startOffset, endEnd - (oriStartEndLength - range.endOffset)])
+        setSelectedRange(selHtmlRange.range)
     }
 
     function getSelectedHtmlInEditable(): { range: [number, number], innerHTML: string } {
@@ -508,9 +431,11 @@ export function RichText() {
 
         let common = maxCommonSubstring(div.innerHTML, editorRef.innerHTML)
 
+        console.log(div.innerHTML)
+
         let offset = editorRef.innerHTML.indexOf(common)
 
-        return { range: [offset, offset + div.innerHTML.length], innerHTML: common };
+        return { range: [offset, offset + common.length], innerHTML: common };
     }
 
     function maxCommonSubstring(a: string, b: string): string {
@@ -543,7 +468,7 @@ export function RichText() {
     })
 
     onMount(() => {
-        const initial = 'Hi<h4>-Alola-<b><i>Yo</i><u>Ya</u></b> <i>Hi</i><img height="300" width="300" src="/solgaleo/logo.png"></h4>Hi';
+        const initial = 'Hi<h4>-Alola-<b><i>Yo</i><u>Ya</u></b> <i>Hi</i><img height="100" width="100" src="/solgaleo/logo.png"></h4>Hi<img height="100" width="100" src="/solgaleo/logo.png">';
         editorRef.innerHTML = initial
         setEditorData(htmlToBlocks(editorRef));
         saveToHistory(initial)

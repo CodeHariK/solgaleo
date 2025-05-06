@@ -1596,7 +1596,6 @@ input[type="range"]:focus ~ .RangeValue {
 * {
   scroll-behavior: smooth;
   margin: 0;
-  transition: all .3s;
 }
 *,
 *::before,
