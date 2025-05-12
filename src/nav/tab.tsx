@@ -63,10 +63,11 @@ import { IconChevronRight } from '../svg/svg';
 
 type Tree = {
     id: string
-    label: string
-    header?: string
+    label: JSX.Element
+    header?: JSX.Element
     content?: JSX.Element
     children?: Tree[]
+    data?: any
     open?: boolean
 };
 
@@ -75,32 +76,41 @@ export function TreeView(props: {
     activePath?: string;
     data: Tree[];
     level?: number;
+    updateRoute?: boolean
     showContent?: boolean;
     onClick?: (tab: Tree) => void;
     style?: JSX.CSSProperties;
 }) {
     const [_] = useRoutes(props.id, updateContent);
-    const [tree] = createSignal(props.level ? props.data : convertTree(props.data));
+    const [tree, setTree] = createSignal(props.level ? props.data : convertTree(props.data));
     const [activePath, setActivePath] = createSignal<string>(props.activePath);
+
+    let mount = true
 
     function updateContent(route?: string) {
         let activePath = (route || tree()[0]?.id) ?? "";
         setActivePath(activePath);
+
+        if (mount) {
+            let newData = togglePath(tree(), activePath);
+            setTree(newData);
+            mount = false
+        }
     }
 
     const handleToggle = (treeItem: Tree, e: MouseEvent) => {
 
         e.stopPropagation();
 
-        // let newData = activatePath(tree(), treeItem.id);
-        // setTree(newData);
-
         if (!treeItem.content && treeItem.children) {
             let newTab = findContentInTree(treeItem.children);
             if (newTab) treeItem = newTab;
         }
 
-        UpdateQueryParam(props.id, treeItem.id);
+        if (props.updateRoute) {
+            UpdateQueryParam(props.id, treeItem.id);
+        }
+
         props.onClick?.(treeItem);
     };
 
@@ -282,7 +292,7 @@ function convertTree(treeArray: Tree[], parentId: string = ''): Tree[] {
     });
 }
 
-function activatePath(tree: Tree[], activePath: string): Tree[] {
+function togglePath(tree: Tree[], activePath: string): Tree[] {
     return tree.map(tab => {
         const newTab = { ...tab };
 
@@ -293,7 +303,7 @@ function activatePath(tree: Tree[], activePath: string): Tree[] {
         }
 
         if (newTab.children) {
-            newTab.children = activatePath(newTab.children, activePath);
+            newTab.children = togglePath(newTab.children, activePath);
         }
 
         return newTab;

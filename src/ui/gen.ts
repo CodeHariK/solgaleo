@@ -3,7 +3,6 @@ import '../gen.css'
 export * from "./position.tsx"; 
 export * from "./gridlayout.tsx"; 
 export * from "./accordion.tsx"; 
-export * from "./dropdown.tsx"; 
 export * from "./bar.tsx"; 
 export * from "./button.tsx"; 
 export * from "./theme_toggle.tsx"; 
@@ -27,11 +26,6 @@ export const CssUI = {
     GridLayoutFlow: "GridLayoutFlow",
     AccordionLabel: "AccordionLabel",
     AccordionContent: "AccordionContent",
-    Dropdown: "Dropdown",
-    DropdownHeader: "DropdownHeader",
-    DropdownItem: "DropdownItem",
-    DropdownNested: "DropdownNested",
-    DropdownToggle: "DropdownToggle",
     Progress: "Progress",
     ProgressFill: "ProgressFill",
     IconButton: "IconButton",

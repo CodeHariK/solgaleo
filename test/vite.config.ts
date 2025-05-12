@@ -11,7 +11,7 @@ export default defineConfig({
   root: "test",
   base: '/solgaleo',
   server: {
-    port: 3000,
+    port: 8888,
     host: '0.0.0.0',
   },
   plugins: [

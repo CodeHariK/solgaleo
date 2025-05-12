@@ -47,7 +47,7 @@ func main() {
 		http.ServeFile(w, r, filepath.Join(dir, "index.html"))
 	})
 
-	port := ":3000"
+	port := ":7000"
 	log.Printf("Serving %s on http://localhost%s\n", dir, port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }

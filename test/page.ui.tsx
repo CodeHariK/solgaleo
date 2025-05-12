@@ -1,10 +1,10 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, Dropdown, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
+import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
 import { IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 import { createSignal } from 'solid-js';
-import { Modal } from '../src/nav/gen.ts';
+import { Modal, TreeView } from '../src/nav/gen.ts';
 
 export function UiTest() {
 
@@ -42,7 +42,7 @@ export function UiTest() {
                     </button>
                 }
             }}
-            child={TestDropdown}
+            child={TestTree}
         />
 
         <SpaceForm
@@ -210,33 +210,44 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
 //FN:END
 
 //FN:START
-//Dropdown
+//TreeView
 //FN:DOC
-export function TestDropdown() {
-    return <Dropdown<string>
-        handleItemClick={(data) => { console.log(data); }}
-        items={[
+export function TestTree() {
+    return <TreeView
+        id="testtree"
+        onClick={(data) => { console.log(data.data); }}
+        style={{
+            "flex-direction": "row"
+        }}
+        data={[
             {
+                id: "settings",
+                label: "settings",
                 header: "Settings",
-                subitems: [
+                children: [
                     {
-                        element: <span>Profile</span>,
+                        id: "profile",
+                        label: <span>Profile</span>,
                         data: "profile",
                         children: [
                             {
-                                element: <span>Edit Info</span>,
+                                id: "editInfo",
+                                label: <span>Edit Info</span>,
                                 data: "profile.edit",
                                 children: [
                                     {
-                                        element: <span>Profile</span>,
+                                        id: "profile",
+                                        label: <span>Profile</span>,
                                         data: "profile",
                                         children: [
                                             {
-                                                element: <span>Edit Info</span>,
+                                                id: "editInfo",
+                                                label: <span>Edit Info</span>,
                                                 data: "profile.edit"
                                             },
                                             {
-                                                element: <span>Privacy</span>,
+                                                id: "privacy",
+                                                label: <span>Privacy</span>,
                                                 data: "profile.privacy"
                                             }
                                         ]
@@ -244,17 +255,20 @@ export function TestDropdown() {
                                 ]
                             },
                             {
-                                element: <span>Privacy</span>,
+                                id: "privacy",
+                                label: <span>Privacy</span>,
                                 data: "profile.privacy"
                             }
                         ]
                     },
                     {
-                        element: <span>Account</span>,
+                        id: "account",
+                        label: <span>Account</span>,
                         data: "account",
                         children: [
                             {
-                                element: <span>Security</span>,
+                                id: "security",
+                                label: <span>Security</span>,
                                 data: "account.security"
                             }
                         ]
@@ -262,29 +276,22 @@ export function TestDropdown() {
                 ]
             },
             {
+                id: "names",
+                label: "names",
                 header: "Names",
-                subitems: [
+                open: true,
+                children: [
                     {
-                        element: "The most popular",
+                        id: "themostpopular",
+                        label: "The most popular",
                         data: "Hello",
                     },
-                    { element: <p> Increasing price </p>, },
+                    {
+                        id: "increasingprice",
+                        label: <p> Increasing price </p>,
+                    },
                 ]
             },
-            {
-                header: "Names",
-                subitems: [
-                    { element: <p> Newest </p>, },
-                    { element: <p> Decreasing price </p>, },
-                ]
-            },
-            {
-                subitems: [
-                    { element: <p> No. reviews </p>, },
-                    { element: <p> Discount % </p>, },
-                ]
-            },
-            { subitems: [] }
         ]} />;
 }
 //FN:END

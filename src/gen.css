@@ -247,45 +247,6 @@ svg {
     transition: all 0.2s ease-out;
     opacity: 0;
 }
-.Dropdown {
-    display: flex;
-    flex-direction: row;
-    gap: .5rem;
-    ul {
-        list-style-type: none;
-        padding-left: 0rem;
-        margin: 0.2rem 0;
-    }
-}
-.DropdownHeader {
-    border-bottom: 1px solid var(--body-bg);
-    padding: 0.3rem;
-}
-.DropdownItem {
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0.3rem;
-    cursor: pointer;
-}
-.DropdownItem:hover {
-    color: none;
-    background: var(--secondary);
-}
-ul .DropdownNested {
-    padding-left: 1rem;
-    margin: 0.2rem 0;
-}
-.DropdownToggle {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 0.5rem;
-    transition: transform 0.2s;
-}
-.DropdownToggle.open {
-    transform: rotate(90deg);
-}
 .Progress {
     height: 20px;
     background: var(--surface);
@@ -1857,6 +1818,7 @@ hr {
 .border-none { border-style: none; }
 .border-primary { border-color: var(--primary); }
 .border-secondary { border-color: var(--secondary); }
+.secbg { background: var(--secondary-container); }
 @keyframes fade-in {
     to {
         opacity: 1

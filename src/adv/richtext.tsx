@@ -136,7 +136,12 @@ export function RichText() {
     const [editorData, setEditorData] = createSignal<EditorData>(null);
 
     const [selectedRange, setSelectedRange] = createSignal<[number, number] | null>(null)
-    const [selectedElement, setSelectedElement] = createSignal<HTMLElement>(null)
+
+    // 
+    // 
+    // const [selectedElement, setSelectedElement] = createSignal<HTMLElement>(null)
+    // 
+    // 
 
     // Add flag to track programmatic selection
     const [isProgrammaticSelection, setIsProgrammaticSelection] = createSignal(false);

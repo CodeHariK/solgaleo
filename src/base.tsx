@@ -380,4 +380,6 @@ sol(--size-16 , calc(var(--spacing) * 4));
 .border-primary { border-color: var(--primary); }
 .border-secondary { border-color: var(--secondary); }
 
+.secbg { background: var(--secondary-container); }
+
 */
