@@ -9,7 +9,7 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    background: var(--surface);
+    background: var(--surface-bg);
     border: 1px solid transparent;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -21,7 +21,7 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
 button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
 .MaterialRoundButton:hover, .OutlinedRoundButton:hover {
     opacity: 0.9;
-    background: var(--surface);
+    background: var(--surface-bg);
 }
 
 button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
@@ -32,10 +32,10 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .IconButton {
-    sol(--icon-bg , var(--surface));
+    sol(--icon-bg , var(--surface-bg));
     sol(--icon-border-radius , 100rem);
     sol(--icon-border , 1px solid transparent);
-    sol(--icon-hover-bg , var(--primary-container));
+    sol(--icon-hover-bg , var(--primary-bg));
 
     padding: .5rem;
     background: var(--icon-bg);
@@ -46,10 +46,10 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .MaterialButton, .MaterialRoundButton {
-    sol(--mat-bg , var(--primary-container));
+    sol(--mat-bg , var(--primary-bg));
     sol(--mat-color , var(--primary));
     sol(--mat-border , 1px solid transparent);
-    sol(--mat-hover-bg , var(--primary-container));
+    sol(--mat-hover-bg , var(--primary-bg));
     sol(--mat-hover-color , var(--primary));
 
     color: var(--mat-color);
@@ -65,7 +65,7 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
     sol(--out-bg , transparent);
     sol(--out-color , var(--primary));
     sol(--out-border , 1px solid var(--primary-border));
-    sol(--out-hover-bg , var(--primary-container));
+    sol(--out-hover-bg , var(--primary-bg));
     sol(--out-hover-color , var(--primary));
 
     color: var(--out-color);
@@ -84,7 +84,7 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
     border-radius: 2rem;
 }
 .GradientTag {
-    background: linear-gradient(45deg, var(--primary-container), var(--secondary-container));
+    background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
     border-radius: 2rem;
     padding: .3rem .5rem; 
 }

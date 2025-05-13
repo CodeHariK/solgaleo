@@ -5,7 +5,8 @@ import { CssUI } from "../gen";
 .card {
     width: 100%;
     max-width: 400px;
-    // background: var(--surface);
+    color: var(--primary-bg);
+    background: var(--primary);
     border-radius: 16px;
     padding: 2rem;
     position: relative;
@@ -25,8 +26,8 @@ import { CssUI } from "../gen";
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg,
-        var(--primary-container),
-        var(--secondary-container));
+        var(--primary),
+        var(--secondary));
     z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -42,7 +43,6 @@ import { CssUI } from "../gen";
 
 .title {
     font-size: 1.8rem;
-    color: white;
     margin-bottom: 1rem;
     background: linear-gradient(to right, #fff, #ccc);
     -webkit-background-clip: text;
@@ -68,14 +68,12 @@ import { CssUI } from "../gen";
 }
 
 .stat-value {
-    color: white;
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.3rem;
 }
 
 .stat-label {
-    color: #666;
     font-size: 0.8rem;
     text-transform: uppercase;
 }

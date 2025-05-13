@@ -4,7 +4,7 @@ import { IconRocket } from "../svg/svg";
 /*CSS:
 .banner {
     padding: 1rem;
-    background: var(--surface);
+    background: var(--surface-bg);
     --banner-border: var(--primary);
     border-inline-start: .25rem solid var(--banner-border);
     

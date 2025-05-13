@@ -4,7 +4,7 @@ import { CssFANCY } from "./gen";
 /*CSS:
 .GhostCon {
     --ghostWaveColor: var(--primary);
-    --ghostColor: var(--primary-container);
+    --ghostColor: var(--primary-bg);
     --ghostEyeColor: var(--secondary);
     --ghostCircleSize: 10px;
     --ghostCircleDistance: 5px;

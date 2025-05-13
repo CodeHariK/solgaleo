@@ -15,7 +15,7 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 9000,
+    port: 9444,
     host: '0.0.0.0',
   },
   build: {

@@ -27,7 +27,7 @@ import { For, JSX } from "solid-js";
     flex-direction: column;
 
     align-items: center;
-    background: var(--surface);
+    background: var(--surface-bg);
     padding: 20px;
     border-radius: 10px;
     overflow-x: clip;

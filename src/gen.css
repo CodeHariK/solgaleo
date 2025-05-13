@@ -4,19 +4,19 @@
 
 :root {
     --svg-size: 1.3rem;
-    --icon-bg: var(--surface);
+    --icon-bg: var(--surface-bg);
     --icon-border-radius: 100rem;
     --icon-border: 1px solid transparent;
-    --icon-hover-bg: var(--primary-container);
-    --mat-bg: var(--primary-container);
+    --icon-hover-bg: var(--primary-bg);
+    --mat-bg: var(--primary-bg);
     --mat-color: var(--primary);
     --mat-border: 1px solid transparent;
-    --mat-hover-bg: var(--primary-container);
+    --mat-hover-bg: var(--primary-bg);
     --mat-hover-color: var(--primary);
     --out-bg: transparent;
     --out-color: var(--primary);
     --out-border: 1px solid var(--primary-border);
-    --out-hover-bg: var(--primary-container);
+    --out-hover-bg: var(--primary-bg);
     --out-hover-color: var(--primary);
     --input-accent-color: var(--primary);
     --ghostColor: ;
@@ -45,11 +45,11 @@
     --body-bg: white;
     --body-col: black;
     --primary: #6750A4;
-    --primary-container: #EADDFF;
+    --primary-bg: #EADDFF;
     --secondary: #b4216b;
-    --secondary-container: #ffe3f1;
-    --surface: oklch(from var(--body-bg) calc(l - .02) c h);
-    --surface-container: oklch(from var(--body-col) calc(l + .9) c h);
+    --secondary-bg: #ffe3f1;
+    --surface: oklch(from var(--body-col) calc(l + .5) c h);
+    --surface-bg: oklch(from var(--body-bg) calc(l - .025) c h);
     --error: #B3261E;
     --error-container: #F9DEDC;
     --disabled: #bdbdbd;
@@ -63,11 +63,11 @@
     --body-bg: black;
     --body-col: white;
     --primary: #d8c8fa;
-    --primary-container: #4F378B;
+    --primary-bg: #4F378B;
     --secondary: #b4216b;
-    --secondary-container: #454245;
-    --surface: oklch(from var(--body-bg) calc(l + .3) c h);
-    --surface-container: oklch(from var(--body-col) calc(l - .6) c h);
+    --secondary-bg: #454245;
+    --surface: oklch(from var(--body-col) calc(l + .3) c h);
+    --surface-bg: oklch(from var(--body-bg) calc(l - .6) c h);
     --error: #ff7262;
     --error-container: #8C1D18;
     --disabled: #bcbcbc;
@@ -248,17 +248,14 @@ svg {
     opacity: 0;
 }
 .Progress {
-    height: 20px;
-    background: var(--surface);
+    height: 4px;
+    background: var(--surface-bg);
     border-radius: 5px;
     overflow: hidden;
 }
 .ProgressFill {
     height: 100%;
-    background: linear-gradient(90deg,
-        var(--primary) 0%, 
-        var(--secondary) 50%,
-        var(--primary) 100%);
+    background: var(--primary);
     transition: width 0.2s ease-in-out;
 }
 button, .IconButton, .MaterialButton, .OutlinedButton,
@@ -271,7 +268,7 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    background: var(--surface);
+    background: var(--surface-bg);
     border: 1px solid transparent;
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -282,7 +279,7 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
 button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
 .MaterialRoundButton:hover, .OutlinedRoundButton:hover {
     opacity: 0.9;
-    background: var(--surface);
+    background: var(--surface-bg);
 }
 button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
 .MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
@@ -323,7 +320,7 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
     border-radius: 2rem;
 }
 .GradientTag {
-    background: linear-gradient(45deg, var(--primary-container), var(--secondary-container));
+    background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
     border-radius: 2rem;
     padding: .3rem .5rem;
 }
@@ -351,12 +348,12 @@ select {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border-width: 1px;
-    border-color: var(--primary-container);
+    border-color: var(--primary-bg);
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--primary);
-    background-color: var(--surface);
+    background: var(--surface-bg);
     appearance: none;
     :disabled {
         cursor: not-allowed;
@@ -378,8 +375,9 @@ select {
 .ToggleSwitch {
     width: 60px;
     height: 30px;
-    background-color: var(--surface);
+    background: var(--surface-bg);
     border-radius: 15px;
+    border: 1px solid var(--primary);
     position: relative;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -390,20 +388,19 @@ select {
     background-color: var(--primary);
     border-radius: 50%;
     position: absolute;
-    top: 2px;
-    left: 2px;
+    margin-left: 2px;
     transition: transform 0.3s;
 }
 .ToggleChecked .ToggleThumb {
-    transform: translateX(30px);
+    transform: translateX(28px);
 }
 .ToggleChecked {
-    background: var(--primary-container);
+    background: var(--primary-bg);
 }
 .Input {
     position: relative;
-    background: sol(var(--input-bg), var(--surface));
-    border-bottom: 2px solid var(--primary-container);
+    background: sol(var(--input-bg), var(--surface-bg));
+    border-bottom: 2px solid var(--primary-bg);
     >input, >textarea {
         width: 100%;
         padding: .5rem;
@@ -424,9 +421,6 @@ select {
     > input::placeholder, > textarea::placeholder {
         color: var(--primary);
     }
-    [data-has-label="true"] > input::placeholder, [data-has-label="true"] > textarea::placeholder {
-        color: transparent;
-    }
     [data-has-icon="true"] > input ~ label, [data-has-icon="true"] > textarea ~ label {
         left : 3rem;
     }
@@ -438,7 +432,7 @@ select {
         position: absolute;
         top: 0rem;
         left: 1rem;
-        color: var(--primary);
+        color: transparent;
         border: 1px solid transparent;
         font-size: 0.875rem;
         white-space: nowrap;
@@ -463,7 +457,7 @@ select {
         --label-transform-y: -1.0rem;
         --label-scale: 0.85;
         --input-label-focus-color: var(--primary);
-        --input-label-focus-bg: var(--surface);
+        --input-label-focus-bg: transparent;
         transform: 
             translateX(var(--label-transform-x))
             translateY(var(--label-transform-y))
@@ -526,15 +520,15 @@ input[type="range"]::-webkit-slider-runnable-track {
         to right,
         var(--primary) 0%,
         var(--primary) var(--value-left, 0%),
-        var(--primary-container) var(--value-left, 0%),
-        var(--primary-container) 100%
+        var(--primary-bg) var(--value-left, 0%),
+        var(--primary-bg) 100%
     );
 }
 .RangeValue {
     position: absolute;
     left: var(--value-left, 0);
     transform: translateX(-50%);
-    background: var(--secondary-container);
+    background: var(--secondary-bg);
     color: var(--secondary);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
@@ -566,7 +560,7 @@ input[type="range"]:focus ~ .RangeValue {
     cursor: pointer;
 }
 .DropzoneDragging {
-    background: var(--surface);
+    background: var(--surface-bg);
 }
 .ImagePreview {
     height: auto;
@@ -588,13 +582,13 @@ input[type="range"]:focus ~ .RangeValue {
     display: none;
 }
 .Markdown {
-    background: var(--surface);
+    background: var(--surface-bg);
 }
 .MarkdownCode {
-    background: var(--surface);
+    background: var(--surface-bg);
     >div {
         padding: .5rem;
-        background: var(--primary-container);
+        background: var(--primary-bg);
         display: flex;
         justify-content: space-between;
     }
@@ -778,7 +772,7 @@ input[type="range"]:focus ~ .RangeValue {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--surface);
+    background: var(--surface-bg);
     padding: 20px;
     border-radius: 10px;
     overflow-x: clip;
@@ -866,10 +860,10 @@ input[type="range"]:focus ~ .RangeValue {
         inline-size: 48px;
         aspect-ratio: 1;
         border-radius: 1e3px;
-        border: 1px solid var(--primary-container);
+        border: 1px solid var(--primary-bg);
         color: var(--primary);
         margin: 5px;
-        background: var(--primary-container);
+        background: var(--primary-bg);
     }
     &::scroll-button(*):focus-visible {
         outline-offset: 5px;
@@ -879,7 +873,7 @@ input[type="range"]:focus ~ .RangeValue {
         background: var(--disabled-container);
     }
     &::scroll-button(*):not(:disabled):is(:hover, :active) {
-        background-color: var(--primary-container);
+        background-color: var(--primary-bg);
     }
     &::scroll-button(*):not(:disabled):active {
         scale: 90%;
@@ -909,7 +903,7 @@ input[type="range"]:focus ~ .RangeValue {
             content: " ";
             padding: 15px;
             text-decoration: none;
-            border: 1px solid var(--primary-container);
+            border: 1px solid var(--primary-bg);
             border-radius: 20%;
             outline-offset: 4px;
             -webkit-tap-highlight-color: transparent;
@@ -939,7 +933,7 @@ input[type="range"]:focus ~ .RangeValue {
                 display: grid;
                 gap: .5rem;
                 transition: transform .3s var(--ease-3);
-                background: linear-gradient(to top, var(--secondary-container), 75%, transparent);
+                background: linear-gradient(to top, var(--secondary-bg), 75%, transparent);
                 padding-inline: 1.5rem;
                 padding-block: 4rem 1rem;
                 & h5 {
@@ -978,7 +972,7 @@ input[type="range"]:focus ~ .RangeValue {
 }
 .banner {
     padding: 1rem;
-    background: var(--surface);
+    background: var(--surface-bg);
     --banner-border: var(--primary);
     border-inline-start: .25rem solid var(--banner-border);
     h5 {
@@ -1008,7 +1002,7 @@ input[type="range"]:focus ~ .RangeValue {
 }
 .GhostCon {
     --ghostWaveColor: var(--primary);
-    --ghostColor: var(--primary-container);
+    --ghostColor: var(--primary-bg);
     --ghostEyeColor: var(--secondary);
     --ghostCircleSize: 10px;
     --ghostCircleDistance: 5px;
@@ -1228,6 +1222,8 @@ input[type="range"]:focus ~ .RangeValue {
 .card {
     width: 100%;
     max-width: 400px;
+    color: var(--primary-bg);
+    background: var(--primary);
     border-radius: 16px;
     padding: 2rem;
     position: relative;
@@ -1246,8 +1242,8 @@ input[type="range"]:focus ~ .RangeValue {
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg,
-        var(--primary-container),
-        var(--secondary-container));
+        var(--primary),
+        var(--secondary));
     z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -1260,7 +1256,6 @@ input[type="range"]:focus ~ .RangeValue {
 }
 .title {
     font-size: 1.8rem;
-    color: white;
     margin-bottom: 1rem;
     background: linear-gradient(to right, #fff, #ccc);
     -webkit-background-clip: text;
@@ -1282,13 +1277,11 @@ input[type="range"]:focus ~ .RangeValue {
     text-align: center;
 }
 .stat-value {
-    color: white;
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.3rem;
 }
 .stat-label {
-    color: #666;
     font-size: 0.8rem;
     text-transform: uppercase;
 }
@@ -1366,7 +1359,7 @@ input[type="range"]:focus ~ .RangeValue {
     justify-content: center;
     height: 2rem;
     padding: 0 0.75rem;
-    border: 1px solid var(--primary-container);
+    border: 1px solid var(--primary-bg);
     background: var(--bg-color, white);
     color: var(--primary);
     transition: all 0.2s ease-in-out;
@@ -1374,7 +1367,7 @@ input[type="range"]:focus ~ .RangeValue {
 }
 .PaginationActive {
     background: var(--primary);
-    color: var(--primary-container);
+    color: var(--primary-bg);
     border-color: var(--primary);
 }
 .PaginationItem {
@@ -1403,16 +1396,16 @@ input[type="range"]:focus ~ .RangeValue {
     overflow-x: clip;
     display: flex;
     align-items: start;
-    background: var(--surface);
+    background: var(--surface-bg);
     color: var(--primary);
     padding: 0.25rem;
 }
 .TreeHeader:hover {
     color: var(--secondary);
-    background: var(--secondary-container);
+    background: var(--secondary-bg);
 }
 .TreeActive {
-    background: var(--primary-container);
+    background: var(--primary-bg);
     color: var(--primary);
 }
 .TreeToggle {
@@ -1544,13 +1537,13 @@ input[type="range"]:focus ~ .RangeValue {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--surface);
+  background: var(--surface-bg);
 }
 ::-webkit-scrollbar-track:hover {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 20px;
-  background: var(--surface-container);
+  background: var(--primary-bg);
 }
 *:hover::-webkit-scrollbar-thumb {
 }
@@ -1683,7 +1676,7 @@ hr {
 }
 @media (min-width: 1024px) {}
 .flex { display: flex; }
-.flex-col { flex-direction: row; }
+.flex-row { flex-direction: row; }
 .flex-col { flex-direction: column; }
 .flex-wrap { flex-wrap: wrap; }
 .flex-nowrap { flex-wrap: nowrap; }
@@ -1705,6 +1698,13 @@ hr {
 .text-left { text-align: left; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
+.text0 { font-size: var(--spacing); }
+.text1 { font-size: calc(var(--spacing) * 2); }
+.text2 { font-size: calc(var(--spacing) * 1.75); }
+.text3 { font-size: calc(var(--spacing) * 1.5); }
+.text4 { font-size: calc(var(--spacing) * 1.4); }
+.text5 { font-size: calc(var(--spacing) * 1.25); }
+.text6 { font-size: calc(var(--spacing) * 1.1); }
 .p0 { padding: var(--size-0); }
 .p1 { padding: var(--size-1); }
 .p2 { padding: var(--size-2); }
@@ -1735,18 +1735,18 @@ hr {
 .pr4 { padding-right: var(--size-4); }
 .pr8 { padding-right: var(--size-8); }
 .pr16 { padding-right: var(--size-16); }
-.ptb0 { padding-top: var(--size-0); padding-bottom: var(--size-0); }
-.ptb1 { padding-top: var(--size-1); padding-bottom: var(--size-1); }
-.ptb2 { padding-top: var(--size-2); padding-bottom: var(--size-2); }
-.ptb4 { padding-top: var(--size-4); padding-bottom: var(--size-4); }
-.ptb8 { padding-top: var(--size-8); padding-bottom: var(--size-8); }
-.ptb16 { padding-top: var(--size-16); padding-bottom: var(--size-16); }
-.plr0 { padding-left: var(--size-0); padding-right: var(--size-0); }
-.plr1 { padding-left: var(--size-1); padding-right: var(--size-1); }
-.plr2 { padding-left: var(--size-2); padding-right: var(--size-2); }
-.plr4 { padding-left: var(--size-4); padding-right: var(--size-4); }
-.plr8 { padding-left: var(--size-8); padding-right: var(--size-8); }
-.plr16 { padding-left: var(--size-16); padding-right: var(--size-16); }
+.py0 { padding-top: var(--size-0); padding-bottom: var(--size-0); }
+.py1 { padding-top: var(--size-1); padding-bottom: var(--size-1); }
+.py2 { padding-top: var(--size-2); padding-bottom: var(--size-2); }
+.py4 { padding-top: var(--size-4); padding-bottom: var(--size-4); }
+.py8 { padding-top: var(--size-8); padding-bottom: var(--size-8); }
+.py16 { padding-top: var(--size-16); padding-bottom: var(--size-16); }
+.px0 { padding-left: var(--size-0); padding-right: var(--size-0); }
+.px1 { padding-left: var(--size-1); padding-right: var(--size-1); }
+.px2 { padding-left: var(--size-2); padding-right: var(--size-2); }
+.px4 { padding-left: var(--size-4); padding-right: var(--size-4); }
+.px8 { padding-left: var(--size-8); padding-right: var(--size-8); }
+.px16 { padding-left: var(--size-16); padding-right: var(--size-16); }
 .m0 { margin: var(--size-0); }
 .m1 { margin: var(--size-1); }
 .m2 { margin: var(--size-2); }
@@ -1818,7 +1818,32 @@ hr {
 .border-none { border-style: none; }
 .border-primary { border-color: var(--primary); }
 .border-secondary { border-color: var(--secondary); }
-.secbg { background: var(--secondary-container); }
+.shadowm {
+  --shadow-color: 0deg 0% 79%;
+  box-shadow:
+    0px 0.1px 0.2px hsl(var(--shadow-color) / 0),
+    0px 0.4px 0.6px hsl(var(--shadow-color) / 0.09),
+    0px 0.7px 1px hsl(var(--shadow-color) / 0.18),
+    0px 1.4px 2.1px hsl(var(--shadow-color) / 0.26);
+}
+.shadowh {
+  --shadow-color: 0deg 0% 79%;
+  box-shadow:
+    0px 0.1px 0.1px hsl(var(--shadow-color) / 0.07),
+    0px 0.4px 0.5px -0.1px hsl(var(--shadow-color) / 0.09),
+    0px 0.8px 1.1px -0.3px hsl(var(--shadow-color) / 0.11),
+    0px 1.1px 1.5px -0.4px hsl(var(--shadow-color) / 0.14),
+    0px 1.6px 2.2px -0.6px hsl(var(--shadow-color) / 0.16),
+    0px 2.3px 3.1px -0.7px hsl(var(--shadow-color) / 0.19),
+    0px 3.3px 4.5px -0.9px hsl(var(--shadow-color) / 0.21),
+    0px 4.6px 6.2px -1px hsl(var(--shadow-color) / 0.24);
+}
+.pri { color: var(--primary); background: var(--primary-bg); }
+.revpri { color: var(--primary-bg); background: var(--primary); }
+.sec { color: var(--secondary); background: var(--secondary-bg); }
+.revsec { color: var(--secondary-bg); background: var(--secondary); }
+.surface { color: var(--surface); background: var(--surface-bg); }
+.revsurface { color: var(--surface-bg); background: var(--surface); }
 @keyframes fade-in {
     to {
         opacity: 1

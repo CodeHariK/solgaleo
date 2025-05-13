@@ -49,10 +49,10 @@
         inline-size: 48px;
         aspect-ratio: 1;
         border-radius: 1e3px;
-        border: 1px solid var(--primary-container);
+        border: 1px solid var(--primary-bg);
         color: var(--primary);
         margin: 5px;
-        background: var(--primary-container);
+        background: var(--primary-bg);
     }
     &::scroll-button(*):focus-visible {
         outline-offset: 5px;
@@ -62,7 +62,7 @@
         background: var(--disabled-container);
     }
     &::scroll-button(*):not(:disabled):is(:hover, :active) {
-        background-color: var(--primary-container);
+        background-color: var(--primary-bg);
     }
     &::scroll-button(*):not(:disabled):active {
         scale: 90%;
@@ -110,7 +110,7 @@
             padding: 15px;
             text-decoration: none;
 
-            border: 1px solid var(--primary-container);
+            border: 1px solid var(--primary-bg);
             border-radius: 20%;
             outline-offset: 4px;
             -webkit-tap-highlight-color: transparent;
@@ -160,7 +160,7 @@
                 display: grid;
                 gap: .5rem;
                 transition: transform .3s var(--ease-3);
-                background: linear-gradient(to top, var(--secondary-container), 75%, transparent);
+                background: linear-gradient(to top, var(--secondary-bg), 75%, transparent);
                 padding-inline: 1.5rem;
                 padding-block: 4rem 1rem;
 

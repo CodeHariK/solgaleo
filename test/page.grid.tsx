@@ -4,7 +4,7 @@ import { TestHeader } from './common';
 export function GridTest() {
     return <GridLayout
         header={<TestHeader />}
-        left={<TreeView id='grid' data={gridTabs()} />}
+        left={<TreeView id='grid' updateRoute data={gridTabs()} />}
     >
         <TreeContent
             id='grid'
@@ -83,7 +83,7 @@ export function TestVCarousel() {
         "ten",
     ]}
         itemStyle={{
-            background: "var(--primary-container)",
+            background: "var(--primary-bg)",
             padding: "10px",
             "border-radius": "1rem",
             height: "200px",

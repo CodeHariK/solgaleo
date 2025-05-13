@@ -88,9 +88,9 @@ render(() =>
   --spacing: 1rem;
 
   --primary: #f06432;
-  --primary-container: #ffdbcc8b;
+  --primary-bg: #ffdbcc8b;
   --secondary: #845ec2;
-  --secondary-container: #e4d8f7;
+  --secondary-bg: #e4d8f7;
   --surface: #fffffcc6;
   --error: #B3261E;
   --error-container: #F9DEDC;

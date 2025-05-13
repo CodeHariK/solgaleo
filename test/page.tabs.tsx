@@ -114,6 +114,7 @@ export function TestTreeView() {
     return <TreeView
         id="two.light"
         data={sampleTabData()}
+        updateRoute
         onClick={(node) => {
             console.log("Leaf clicked:", node);
         }} />;

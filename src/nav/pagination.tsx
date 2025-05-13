@@ -25,7 +25,7 @@ import { IconChevronLeft, IconChevronRight } from "../gen";
     justify-content: center;
     height: 2rem;
     padding: 0 0.75rem;
-    border: 1px solid var(--primary-container);
+    border: 1px solid var(--primary-bg);
     background: var(--bg-color, white);
     color: var(--primary);
     transition: all 0.2s ease-in-out;
@@ -40,7 +40,7 @@ import { IconChevronLeft, IconChevronRight } from "../gen";
 
 .PaginationActive {
     background: var(--primary);
-    color: var(--primary-container);
+    color: var(--primary-bg);
     border-color: var(--primary);
 }
 

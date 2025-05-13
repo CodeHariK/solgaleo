@@ -3,14 +3,14 @@ import { CssADV } from "./gen";
 
 /*CSS:
 .Markdown {
-    background: var(--surface);
+    background: var(--surface-bg);
 }
 .MarkdownCode {
-    background: var(--surface);
+    background: var(--surface-bg);
     
     >div {
         padding: .5rem;
-        background: var(--primary-container);
+        background: var(--primary-bg);
         display: flex;
         justify-content: space-between;
     }

@@ -13,7 +13,7 @@ export function NavTest() {
         left={<VCarousel
 
             itemStyle={{
-                background: "var(--primary-container)",
+                background: "var(--primary-bg)",
                 "border-radius": "1rem",
                 "text-align": 'center',
                 "align-content": 'center'

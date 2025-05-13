@@ -74,7 +74,7 @@ export function RootPage() {
 					<Accordion
 						open={i == 0}
 						title={<div style={{
-							background: i == codeIndex() ? "var(--primary-container)" : "",
+							background: i == codeIndex() ? "var(--primary-bg)" : "",
 							padding: ".7rem",
 						}}>
 							{c.doc}

@@ -30,17 +30,18 @@ export function RatingsBar(props: { ratings?: number, reviews?: number }) {
 
 /*CSS:
 .Progress {
-    height: 20px;
-    background: var(--surface); 
+    height: 4px;
+    background: var(--surface-bg); 
     border-radius: 5px;
     overflow: hidden;
 }
 .ProgressFill {
     height: 100%;
-    background: linear-gradient(90deg,
-        var(--primary) 0%, 
-        var(--secondary) 50%,
-        var(--primary) 100%);
+    background: var(--primary);
+    // background: linear-gradient(90deg,
+    //     var(--primary) 0%, 
+    //     var(--secondary) 50%,
+    //     var(--primary) 100%);
     transition: width 0.2s ease-in-out;
 }
 */

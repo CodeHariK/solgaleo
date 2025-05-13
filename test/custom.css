@@ -2,9 +2,9 @@
     --spacing: .9rem;
 
     --primary: #58a028;
-    --primary-container: #def4b8;
+    --primary-bg: #def4b8;
     --secondary: #e7ff5f;
-    --secondary-container: rgb(255, 255, 199);
+    --secondary-bg: rgb(255, 255, 199);
     --surface: oklch(from var(--body-bg) calc(l - .01) c h);
     --error: #B3261E;
     --error-container: #F9DEDC;

@@ -31,12 +31,12 @@ select {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border-width: 1px;
-    border-color: var(--primary-container);
+    border-color: var(--primary-bg);
     outline-style: none;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--primary);
-    background-color: var(--surface);
+    background: var(--surface-bg);
     appearance: none;
 
     :disabled {
@@ -223,8 +223,9 @@ export function Select(props: SelectProps) {
 .ToggleSwitch {
     width: 60px;
     height: 30px;
-    background-color: var(--surface);
+    background: var(--surface-bg);
     border-radius: 15px;
+    border: 1px solid var(--primary);
     position: relative;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -236,17 +237,16 @@ export function Select(props: SelectProps) {
     background-color: var(--primary);
     border-radius: 50%;
     position: absolute;
-    top: 2px;
-    left: 2px;
+    margin-left: 2px;
     transition: transform 0.3s;
 }
 
 .ToggleChecked .ToggleThumb {
-    transform: translateX(30px); 
+    transform: translateX(28px); 
 }
 
 .ToggleChecked {
-    background: var(--primary-container);
+    background: var(--primary-bg);
 }
 
 */
@@ -283,10 +283,10 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
 
 .Input {
     position: relative;
-    background: sol(sol(--input-bg , #ffffff , #3b3b3b), var(--surface));
-    // border: 1px solid var(--primary-container);
+    background: sol(sol(--input-bg , #ffffff , #3b3b3b), var(--surface-bg));
+    // border: 1px solid var(--primary-bg);
     // border-radius: 0.5rem;
-    border-bottom: 2px solid var(--primary-container);
+    border-bottom: 2px solid var(--primary-bg);
 
     >input, >textarea {
         width: 100%;
@@ -311,9 +311,9 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
     > input::placeholder, > textarea::placeholder {
         color: var(--primary);
     }
-    [data-has-label="true"] > input::placeholder, [data-has-label="true"] > textarea::placeholder {
-        color: transparent;
-    }
+    // [data-has-label="true"] > input::placeholder, [data-has-label="true"] > textarea::placeholder {
+    //     color: transparent;
+    // }
     [data-has-icon="true"] > input ~ label, [data-has-icon="true"] > textarea ~ label {
         left : 3rem;
     }
@@ -327,7 +327,7 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
         position: absolute;
         top: 0rem;
         left: 1rem;
-        color: var(--primary);
+        color: transparent;
         border: 1px solid transparent;
         font-size: 0.875rem;
         white-space: nowrap;
@@ -355,7 +355,7 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
         --label-transform-y: -1.0rem;
         --label-scale: 0.85;
         --input-label-focus-color: var(--primary);
-        --input-label-focus-bg: var(--surface);
+        --input-label-focus-bg: transparent;
 
         transform: 
             translateX(var(--label-transform-x))
@@ -432,8 +432,8 @@ input[type="range"]::-webkit-slider-runnable-track {
         to right,
         var(--primary) 0%,
         var(--primary) var(--value-left, 0%),
-        var(--primary-container) var(--value-left, 0%),
-        var(--primary-container) 100%
+        var(--primary-bg) var(--value-left, 0%),
+        var(--primary-bg) 100%
     );
 }
 
@@ -442,7 +442,7 @@ input[type="range"]::-webkit-slider-runnable-track {
     // top: -2rem;
     left: var(--value-left, 0);
     transform: translateX(-50%);
-    background: var(--secondary-container);
+    background: var(--secondary-bg);
     color: var(--secondary);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
@@ -608,7 +608,7 @@ export function Input(props: InputProps) {
     cursor: pointer;
 }
 .DropzoneDragging {
-    background: var(--surface);
+    background: var(--surface-bg);
 }
 
 .ImagePreview {

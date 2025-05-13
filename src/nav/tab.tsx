@@ -29,17 +29,17 @@ import { IconChevronRight } from '../svg/svg';
     display: flex;
     align-items: start;
     // gap: 0.5rem;
-    background: var(--surface);
+    background: var(--surface-bg);
     color: var(--primary);
     padding: 0.25rem;
-    // border: 1px solid var(--secondary-container);
+    // border: 1px solid var(--secondary-bg);
 }
 .TreeHeader:hover {
     color: var(--secondary);
-    background: var(--secondary-container);
+    background: var(--secondary-bg);
 }
 .TreeActive {
-    background: var(--primary-container);
+    background: var(--primary-bg);
     color: var(--primary);
 }
 
@@ -158,6 +158,7 @@ export function TreeView(props: {
                                 <TreeView
                                     id={props.id}
                                     data={treeItem.children}
+                                    updateRoute={props.updateRoute}
                                     onClick={props.onClick}
                                     activePath={activePath()}
                                     level={(props.level ?? 0) + 1}
