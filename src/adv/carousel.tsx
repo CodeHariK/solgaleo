@@ -190,7 +190,7 @@
 
 */
 
-import { For, JSX } from "solid-js";
+import { createSignal, For, JSX, onCleanup, onMount } from "solid-js";
 import { CssADV } from "./gen";
 
 export function Carousel() {
@@ -263,5 +263,250 @@ export function VCarousel({ children, listStyle, itemStyle }: {
                 )}
             </For>
         </ul>
+    );
+}
+
+
+/*CSS:
+.tabbar {
+    // background: red;
+    position: relative;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    // padding: 10px;
+    border-bottom: 2px solid #ccc;
+    scrollbar-width: none;
+}
+.tabbar::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-button, .tab-button:hover {
+    position: relative;
+    // flex: 1;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+
+.scroll-list {
+    width: 100vw;
+    height: 300px;
+    padding: 20px;
+    display: flex;
+    gap: 4vw;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+.scroll-list::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-list li {
+    list-style-type: none;
+    background-color: #222222;
+    border: 1px solid #ddd;
+    padding: 20px;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+}
+.scroll-list li:nth-child(even) {
+    background-color: purple;
+}
+
+.tab-slider {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    border-radius: 100px;
+    // height: 3px;
+    z-index: 0;
+    transition: all 1s ease;
+    overflow: hidden;
+    }
+    
+.tab-slider-inner {
+    width: 100%;
+    height: 100%;
+    background: dodgerblue;
+}
+
+*/
+
+export function Tabs(props: { titles: JSX.Element[] }) {
+    const [currentTab, setCurrentTab] = createSignal(0);
+    let tabRefs: HTMLElement[] = [];
+    let sliderRef: HTMLDivElement | undefined;
+    let scrollListRef: HTMLUListElement | undefined;
+
+    let innerRef: HTMLDivElement | undefined;
+
+    const moveSlider = (i: number) => {
+        const el = tabRefs[i];
+        if (el && sliderRef && innerRef) {
+            sliderRef.style.width = `${el.offsetWidth}px`;
+            sliderRef.style.transform = `translateX(${el.offsetLeft}px)`;
+
+            // Animate only the inner layer
+            innerRef.classList.add("animate-jello");
+            const handle = () => {
+                innerRef?.classList.remove("animate-jello");
+                innerRef?.removeEventListener("animationend", handle);
+            };
+            innerRef.addEventListener("animationend", handle);
+        }
+    };
+
+    const scrollToPage = (index: number) => {
+        const child = scrollListRef?.children[index] as HTMLElement | undefined;
+        if (child && scrollListRef) {
+            const left = child.offsetLeft;
+            scrollListRef.scrollTo({ left, behavior: "smooth" });
+            setCurrentTab(index);
+        }
+    };
+
+    const setTab = (i: number) => {
+        setCurrentTab(i);
+        moveSlider(i);
+        scrollToPage(i);
+    };
+
+    onMount(() => {
+        moveSlider(currentTab());
+
+        const onResize = () => moveSlider(currentTab());
+        window.addEventListener("resize", onResize);
+        onCleanup(() => window.removeEventListener("resize", onResize));
+    });
+
+    return (
+        <>
+            <div class="tabbar">
+                <div class="tab-slider" ref={sliderRef}>
+                    <div class="tab-slider-inner" ref={innerRef} />
+                </div>
+                {props.titles.map((name, i) => (
+                    <button
+                        class={`tab-button ${currentTab() === i ? "active" : ""}`}
+                        onClick={() => setTab(i)}
+                        ref={(el) => (tabRefs[i] = el)}
+                    >
+                        {name}
+                    </button>
+                ))}
+            </div>
+
+            <ul class="scroll-list" ref={scrollListRef}>
+                {props.titles.map((page) => (
+                    <li>
+                        <h2>{page}</h2>
+                    </li>
+                ))}
+            </ul>
+        </>
+    );
+}
+
+/*CSS:
+
+.carousel3d {
+  width: 100vw;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  --items: 5;
+  --middle: 3;
+  --position: 1;
+  pointer-events: none;
+  position: relative;
+
+  li {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  background-color: coral;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-radius: 10px;
+  --r: calc(var(--position) - var(--offset));
+  --abs: max(calc(var(--r) * -1), var(--r));
+  transition: all 0.4s ease;
+  transform: rotateY(calc(-10deg * var(--r)))
+    translateX(calc(-300px * var(--r)));
+  z-index: calc((var(--items) - var(--abs)));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.controls button {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+}
+*/
+
+const TOTAL_ITEMS = 5;
+const MIDDLE = 3;
+
+export function Carousel3D() {
+    const [position, setPosition] = createSignal(1);
+
+    const items = Array.from({ length: TOTAL_ITEMS }, (_, i) => i + 1);
+
+    const prev = () => setPosition((p) => Math.max(1, p - 1));
+    const next = () => setPosition((p) => Math.min(TOTAL_ITEMS, p + 1));
+
+    return (
+        <>
+            <ul
+                class="carousel3d"
+                style={{
+                    "--items": TOTAL_ITEMS,
+                    "--middle": MIDDLE,
+                    "--position": position(),
+                }}
+            >
+                <For each={items}>
+                    {(item, i) => (
+                        <li
+                            class="item"
+                            style={{
+                                "--offset": i() + 1,
+                            }}
+                        >
+                            <h2>Item {item}</h2>
+                        </li>
+                    )}
+                </For>
+            </ul>
+            <div class="controls">
+                <button onClick={prev}>◀</button>
+                <button onClick={next}>▶</button>
+            </div>
+        </>
     );
 }

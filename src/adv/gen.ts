@@ -37,6 +37,13 @@ export const CssADV = {
     ScrollLayout: "scroll-layout",
     Carousel: "carousel",
     Vcarousel: "vcarousel",
+    Tabbar: "tabbar",
+    TabButton: "tab-button",
+    ScrollList: "scroll-list",
+    TabSlider: "tab-slider",
+    TabSliderInner: "tab-slider-inner",
+    Carousel3d: "carousel3d",
+    Controls: "controls",
 
     
 

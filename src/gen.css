@@ -970,6 +970,111 @@ input[type="range"]:focus ~ .RangeValue {
 .vcarousel li {
     scroll-snap-align: center;
 }
+.tabbar {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    border-bottom: 2px solid #ccc;
+    scrollbar-width: none;
+}
+.tabbar::-webkit-scrollbar {
+    display: none;
+}
+.tab-button, .tab-button:hover {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 1;
+}
+.scroll-list {
+    width: 100vw;
+    height: 300px;
+    padding: 20px;
+    display: flex;
+    gap: 4vw;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+.scroll-list::-webkit-scrollbar {
+    display: none;
+}
+.scroll-list li {
+    list-style-type: none;
+    background-color: #222222;
+    border: 1px solid #ddd;
+    padding: 20px;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+}
+.scroll-list li:nth-child(even) {
+    background-color: purple;
+}
+.tab-slider {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    border-radius: 100px;
+    z-index: 0;
+    transition: all 1s ease;
+    overflow: hidden;
+    }
+.tab-slider-inner {
+    width: 100%;
+    height: 100%;
+    background: dodgerblue;
+}
+.carousel3d {
+  width: 100vw;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  --items: 5;
+  --middle: 3;
+  --position: 1;
+  pointer-events: none;
+  position: relative;
+  li {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  background-color: coral;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-radius: 10px;
+  --r: calc(var(--position) - var(--offset));
+  --abs: max(calc(var(--r) * -1), var(--r));
+  transition: all 0.4s ease;
+  transform: rotateY(calc(-10deg * var(--r)))
+    translateX(calc(-300px * var(--r)));
+  z-index: calc((var(--items) - var(--abs)));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+}
+.controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.controls button {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+}
 .banner {
     padding: 1rem;
     background: var(--surface-bg);
@@ -2114,4 +2219,16 @@ hr {
     --animation-float: float 3s var(--ease-in-out-3) infinite;
     --animation-bounce: bounce 2s var(--ease-squish-2) infinite;
     --animation-pulse: pulse 2s var(--ease-out-3) infinite;
+}
+@keyframes jello {
+    0%   { transform: scale3d(1, 1, 1); }
+    30%  { transform: scale3d(1.25, 0.75, 1); }
+    40%  { transform: scale3d(0.75, 1.25, 1); }
+    50%  { transform: scale3d(1.15, 0.85, 1); }
+    65%  { transform: scale3d(0.95, 1.05, 1); }
+    75%  { transform: scale3d(1.05, 0.95, 1); }
+    100% { transform: scale3d(1, 1, 1); }
+}
+.animate-jello {
+    animation: jello 1s ease;
 }
