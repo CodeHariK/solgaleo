@@ -57,20 +57,6 @@ export const CssUI = {
     HiddenInput: "HiddenInput",
 
     varInputBg: "--input-bg",
-    varIconBg: "--icon-bg",
-    varIconBorderRadius: "--icon-border-radius",
-    varIconBorder: "--icon-border",
-    varIconHoverBg: "--icon-hover-bg",
-    varMatBg: "--mat-bg",
-    varMatColor: "--mat-color",
-    varMatBorder: "--mat-border",
-    varMatHoverBg: "--mat-hover-bg",
-    varMatHoverColor: "--mat-hover-color",
-    varOutBg: "--out-bg",
-    varOutColor: "--out-color",
-    varOutBorder: "--out-border",
-    varOutHoverBg: "--out-hover-bg",
-    varOutHoverColor: "--out-hover-color",
     varInputAccentColor: "--input-accent-color"
 
     

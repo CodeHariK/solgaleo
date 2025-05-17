@@ -46,7 +46,7 @@ export function AdvTest() {
         <TabBar
             titles={["Font", "Display", "Grid", "Tip"]}
             tabBarStyle={{ "justify-content": "center" }}
-            pagination={{ totalItems: 10, itemsPerPage: 5 }}
+            pagination={{ totalItems: 10, itemsPerPage: 4 }}
             onTabChange={(i) => { setCurrentTab(i) }} />
         <TabBar
             titles={["Font", "Display", "Grid", "Tip"]}

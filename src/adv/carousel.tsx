@@ -2,6 +2,7 @@ import { Accessor, createEffect, createSignal, For, JSX, onCleanup, onMount, Sho
 import { CssADV } from "./gen";
 import { RandomColor } from "../utils/color";
 import { IconChevronLeft, IconChevronRight } from "../svg/svg";
+import { CssUI } from "../gen";
 
 /*CSS:
 
@@ -303,7 +304,7 @@ export function VCarousel({ children, listStyle, itemStyle }: {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: #1e8fff28;
+    background: var(--primary-bg);
     border-radius: 100px;
     z-index: 0;
     transition: all 1s ease;
@@ -373,13 +374,13 @@ export function TabBar(props: {
         <div class={CssADV.Tabby} ref={sliderRef} />
 
         <Show when={props.pagination}>
-            <button class={CssADV.TabButton}
+            <button class={CssUI.IconButton}
                 onClick={() => {
                     if (currentTab() > 0) {
                         setTab(currentTab() - 1)
                     }
                 }}
-                disabled={currentTab() === 0}
+                disabled={Math.floor(currentTab() / props.pagination.itemsPerPage) === 0}
                 aria-label="Previous page"
             >
                 <IconChevronLeft />
@@ -414,13 +415,13 @@ export function TabBar(props: {
         </Show>
 
         <Show when={props.pagination}>
-            <button class={CssADV.TabButton}
+            <button class={CssUI.IconButton}
                 onClick={() => {
                     if (currentTab() < props.pagination.totalItems) {
                         setTab(currentTab() + 1)
                     }
                 }}
-                disabled={currentTab() === (props.pagination.totalItems - 1)}
+                disabled={Math.floor(currentTab() / props.pagination.itemsPerPage) === Math.floor(props.pagination.totalItems / props.pagination.itemsPerPage)}
                 aria-label="Next page"
             >
                 <IconChevronRight />

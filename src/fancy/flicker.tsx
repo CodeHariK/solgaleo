@@ -41,3 +41,64 @@ export function FlickerText({ children, style, class: className }: {
 }) {
     return <span class={[CssFANCY.FlickerText, className].join(" ")} style={style}>{children}</span>;
 }
+
+/*CSS:
+.skeleton {
+    background-color: var(--surface-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--surface-bg) 0%,
+        var(--surface-tint) 50%,
+        var(--surface-bg) 100%
+    );
+    animation: shimmer 2s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+    100% {
+        left: 100%;
+    }
+}
+
+*/
+
+export function Skeleton(props: {
+    width?: number | string;
+    height?: number | string;
+    variant?: "circular" | "rectangular" | "rounded";
+    class?: string;
+}) {
+    const borderRadius = () => {
+        switch (props.variant) {
+            case "circular":
+                return "50%";
+            case "rounded":
+                return "8px";
+            case "rectangular":
+            default:
+                return "0";
+        }
+    };
+
+    return (
+        <div
+            class={`skeleton ${props.class ?? ""}`}
+            style={{
+                width: typeof props.width === "number" ? `${props.width}px` : props.width,
+                height: typeof props.height === "number" ? `${props.height}px` : props.height,
+                "border-radius": borderRadius(),
+            }}
+        />
+    );
+}

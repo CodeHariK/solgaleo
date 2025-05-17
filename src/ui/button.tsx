@@ -11,18 +11,32 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
     color: var(--primary);
     background: var(--surface-bg);
     border: 1px solid transparent;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
     user-select: none;
     cursor: pointer;
+    
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.6s;
+}
+button:focus {
+    outline: none;
 }
 
-button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
-.MaterialRoundButton:hover, .OutlinedRoundButton:hover {
-    opacity: 0.9;
-    background: var(--surface-bg);
+button:hover, .MaterialButton:hover, .MaterialRoundButton:hover {
+    background: var(--surface-bg) radial-gradient(circle, transparent 1%, var(--surface-bg) 1%) center/15000%;
 }
+.IconButton:hover,  .OutlinedButton:hover, .OutlinedRoundButton:hover {
+    color: var(--primary);
+    background: var(--primary-bg) radial-gradient(circle, transparent 1%, var(--primary-bg) 1%) center/15000%;
+}
+
+button:active, .IconButton:active, .MaterialButton:active, .OutlinedButton:active,
+.MaterialRoundButton:active, .OutlinedRoundButton:active {
+    background-color: var(--surface);
+    background-size: 100%;
+    transition: background 0s;
+}
+
 
 button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
 .MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
@@ -32,49 +46,21 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .IconButton {
-    sol(--icon-bg , var(--surface-bg));
-    sol(--icon-border-radius , 100rem);
-    sol(--icon-border , 1px solid transparent);
-    sol(--icon-hover-bg , var(--primary-bg));
-
     padding: .5rem;
-    background: var(--icon-bg);
-    border-radius: var(--icon-border-radius);
-}
-.IconButton:hover {
-    background: var(--icon-hover-bg);
+    background: var(--surface-bg);
+    border-radius: 100rem;
 }
 
 .MaterialButton, .MaterialRoundButton {
-    sol(--mat-bg , var(--primary-bg));
-    sol(--mat-color , var(--primary));
-    sol(--mat-border , 1px solid transparent);
-    sol(--mat-hover-bg , var(--primary-bg));
-    sol(--mat-hover-color , var(--primary));
-
-    color: var(--mat-color);
-    background: var(--mat-bg);
-    border: var(--mat-border);
-}
-.MaterialButton:hover, .MaterialRoundButton:hover {
-    color: var(--mat-hover-color);
-    background: var(--mat-hover-bg);
+    color: var(--surface);
+    background: var(--primary-bg);
+    border: 1px solid transparent;
 }
 
 .OutlinedButton, .OutlinedRoundButton {
-    sol(--out-bg , transparent);
-    sol(--out-color , var(--primary));
-    sol(--out-border , 1px solid var(--primary-border));
-    sol(--out-hover-bg , var(--primary-bg));
-    sol(--out-hover-color , var(--primary));
-
-    color: var(--out-color);
-    background: var(--out-bg);
-    border: var(--out-border);
-}
-.OutlinedButton:hover, .OutlinedRoundButton:hover {
-    color: var(--out-hover-color);
-    background: var(--out-hover-bg);
+    color: var(--primary);
+    background: transparent;
+    border: 1px solid var(--primary-border);
 }
 
 .OutlinedRoundButton {
@@ -83,6 +69,7 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 .MaterialRoundButton {
     border-radius: 2rem;
 }
+
 .GradientTag {
     background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
     border-radius: 2rem;

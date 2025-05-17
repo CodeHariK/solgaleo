@@ -26,6 +26,7 @@ export const CssFANCY = {
     Marquee: "Marquee",
     MarqueeChild: "MarqueeChild",
     FlickerText: "FlickerText",
+    Skeleton: "skeleton",
     Card: "card",
     Title: "title",
     Description: "description",

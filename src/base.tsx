@@ -13,7 +13,8 @@ sol(--secondary , #b4216b , #b4216b);
 sol(--secondary-bg , #ffe3f1 , #454245);
 
 sol(--surface , oklch(from var(--body-col) calc(l + .5) c h) , oklch(from var(--body-col) calc(l + .3) c h) );
-sol(--surface-bg , oklch(from var(--body-bg) calc(l - .025) c h) , oklch(from var(--body-bg) calc(l - .6) c h) );
+sol(--surface-bg , oklch(from var(--body-bg) calc(l - .025) c h) , oklch(from var(--body-bg) calc(l + .25) c h) );
+sol(--surface-tint , oklch(from var(--surface-bg) calc(l - .08) c h) , oklch(from var(--surface-bg) calc(l + .08) c h) );
 
 sol(--error , #B3261E , #ff7262);
 sol(--error-container , #F9DEDC , #8C1D18);

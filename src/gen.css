@@ -4,20 +4,6 @@
 
 :root {
     --svg-size: 1.3rem;
-    --icon-bg: var(--surface-bg);
-    --icon-border-radius: 100rem;
-    --icon-border: 1px solid transparent;
-    --icon-hover-bg: var(--primary-bg);
-    --mat-bg: var(--primary-bg);
-    --mat-color: var(--primary);
-    --mat-border: 1px solid transparent;
-    --mat-hover-bg: var(--primary-bg);
-    --mat-hover-color: var(--primary);
-    --out-bg: transparent;
-    --out-color: var(--primary);
-    --out-border: 1px solid var(--primary-border);
-    --out-hover-bg: var(--primary-bg);
-    --out-hover-color: var(--primary);
     --input-accent-color: var(--primary);
     --ghostColor: ;
     --ghostEyeColor: ;
@@ -50,6 +36,7 @@
     --secondary-bg: #ffe3f1;
     --surface: oklch(from var(--body-col) calc(l + .5) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l - .025) c h);
+    --surface-tint: oklch(from var(--surface-bg) calc(l - .08) c h);
     --error: #B3261E;
     --error-container: #F9DEDC;
     --disabled: #bdbdbd;
@@ -67,7 +54,8 @@
     --secondary: #b4216b;
     --secondary-bg: #454245;
     --surface: oklch(from var(--body-col) calc(l + .3) c h);
-    --surface-bg: oklch(from var(--body-bg) calc(l - .6) c h);
+    --surface-bg: oklch(from var(--body-bg) calc(l + .25) c h);
+    --surface-tint: oklch(from var(--surface-bg) calc(l + .08) c h);
     --error: #ff7262;
     --error-container: #8C1D18;
     --disabled: #bcbcbc;
@@ -302,16 +290,27 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
     color: var(--primary);
     background: var(--surface-bg);
     border: 1px solid transparent;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
     user-select: none;
     cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.6s;
 }
-button:hover, .IconButton:hover, .MaterialButton:hover, .OutlinedButton:hover,
-.MaterialRoundButton:hover, .OutlinedRoundButton:hover {
-    opacity: 0.9;
-    background: var(--surface-bg);
+button:focus {
+    outline: none;
+}
+button:hover, .MaterialButton:hover, .MaterialRoundButton:hover {
+    background: var(--surface-bg) radial-gradient(circle, transparent 1%, var(--surface-bg) 1%) center/15000%;
+}
+.IconButton:hover,  .OutlinedButton:hover, .OutlinedRoundButton:hover {
+    color: var(--primary);
+    background: var(--primary-bg) radial-gradient(circle, transparent 1%, var(--primary-bg) 1%) center/15000%;
+}
+button:active, .IconButton:active, .MaterialButton:active, .OutlinedButton:active,
+.MaterialRoundButton:active, .OutlinedRoundButton:active {
+    background-color: var(--surface);
+    background-size: 100%;
+    transition: background 0s;
 }
 button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
 .MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
@@ -321,29 +320,18 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 .IconButton {
     padding: .5rem;
-    background: var(--icon-bg);
-    border-radius: var(--icon-border-radius);
-}
-.IconButton:hover {
-    background: var(--icon-hover-bg);
+    background: var(--surface-bg);
+    border-radius: 100rem;
 }
 .MaterialButton, .MaterialRoundButton {
-    color: var(--mat-color);
-    background: var(--mat-bg);
-    border: var(--mat-border);
-}
-.MaterialButton:hover, .MaterialRoundButton:hover {
-    color: var(--mat-hover-color);
-    background: var(--mat-hover-bg);
+    color: var(--surface);
+    background: var(--primary-bg);
+    border: 1px solid transparent;
 }
 .OutlinedButton, .OutlinedRoundButton {
-    color: var(--out-color);
-    background: var(--out-bg);
-    border: var(--out-border);
-}
-.OutlinedButton:hover, .OutlinedRoundButton:hover {
-    color: var(--out-hover-color);
-    background: var(--out-hover-bg);
+    color: var(--primary);
+    background: transparent;
+    border: 1px solid var(--primary-border);
 }
 .OutlinedRoundButton {
     border-radius: 2rem;
@@ -992,7 +980,7 @@ input[type="range"]:focus ~ .RangeValue {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: #1e8fff28;
+    background: var(--primary-bg);
     border-radius: 100px;
     z-index: 0;
     transition: all 1s ease;
@@ -1328,6 +1316,31 @@ input[type="range"]:focus ~ .RangeValue {
     24%,
     55% {
         text-shadow: none;
+    }
+}
+.skeleton {
+    background-color: var(--surface-bg);
+    position: relative;
+    overflow: hidden;
+}
+.skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--surface-bg) 0%,
+        var(--surface-tint) 50%,
+        var(--surface-bg) 100%
+    );
+    animation: shimmer 2s infinite ease-in-out;
+}
+@keyframes shimmer {
+    100% {
+        left: 100%;
     }
 }
 .card {
