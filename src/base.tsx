@@ -63,8 +63,10 @@ body {
   color: var(--body-col);
   align-items: center;
   justify-content: center;
+  // width: 100vw;
   height: 100vh;
   min-height: 100vh;
+  // overflow: hidden;
   padding: 0px;
   margin: 0px;
   font-family: monospace, Inter, ui-sans-serif, system-ui;

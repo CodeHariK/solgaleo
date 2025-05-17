@@ -1,4 +1,5 @@
-import { RichText, BlogList, Carousel, Markdown, Slides, SuperTable } from "../src/adv/gen";
+import { createSignal } from "solid-js";
+import { RichText, BlogList, Carousel, Markdown, Slides, SuperTable, Carousel3D, TabBar, HList } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -34,17 +35,38 @@ import { TestHeader } from "./common";
 
 export function AdvTest() {
 
+    let [currentTab, setCurrentTab] = createSignal(0)
+
     return <GridLayout
         mode="flow"
         header={<TestHeader />}
         footer={<TestHeader />}
     >
 
+        <TabBar
+            titles={["Font", "Display", "Grid", "Tip"]}
+            tabBarStyle={{ "justify-content": "center" }}
+            pagination={{ totalItems: 10, itemsPerPage: 5 }}
+            onTabChange={(i) => { setCurrentTab(i) }} />
+        <TabBar
+            titles={["Font", "Display", "Grid", "Tip"]}
+            onTabChange={(i) => { setCurrentTab(i) }} />
+        <HList titles={["Font", "Display", "Grid", "Tip"]} index={currentTab} />
+
+        <Carousel3D items={[
+            <h2>Item 1</h2>,
+            <h2>Item 2</h2>,
+            <h2>Item 3</h2>,
+            <h2>Item 4</h2>,
+        ]} />
+
+        <Carousel />
+
+        <Slides />
+
         <div style={{ "max-height": "800px", overflow: "scroll" }}>
             <RichText />
         </div>
-
-        <Carousel />
 
         <BlogList
             id="sol"
@@ -70,8 +92,6 @@ export function AdvTest() {
         <SuperTableTest />
 
         <MarkdownTest />
-
-        <Slides />
 
     </GridLayout>
 }

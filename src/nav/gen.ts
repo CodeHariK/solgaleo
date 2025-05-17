@@ -1,6 +1,5 @@
 import '../gen.css'
 
-export * from "./pagination.tsx"; 
 export * from "./tab.tsx"; 
 export * from "./useRoutes.tsx"; 
 export * from "./breadcrumb.tsx"; 
@@ -9,11 +8,6 @@ export * from "./modal.tsx";
 
 
 export const CssNAV = {
-    PaginationNav: "PaginationNav",
-    PaginationList: "PaginationList",
-    PaginationButton: "PaginationButton",
-    PaginationActive: "PaginationActive",
-    PaginationItem: "PaginationItem",
     TreeView: "TreeView",
     TreeItem: "TreeItem",
     TreeHeader: "TreeHeader",

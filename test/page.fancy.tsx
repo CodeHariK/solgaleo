@@ -2,7 +2,6 @@ import { createSignal } from "solid-js";
 import { Banner, FlickerText, GlitterCard, Marquee, RainbowImage, RainbowText, Terminal, TransitionWidget, TypeWriter } from "../src/fancy/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
-import { Carousel3D, Tabs } from "../src/adv/gen";
 
 export function FancyTest() {
 
@@ -14,12 +13,6 @@ export function FancyTest() {
 
 
         {BannerTest()}
-
-
-        <Tabs titles={["Font", "Display", "Grid", "Tip"]}>
-        </Tabs>
-
-        <Carousel3D />
 
         <FlickerText style={{ "font-size": "50px" }}>Flicker text</FlickerText>
 

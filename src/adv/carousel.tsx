@@ -1,3 +1,8 @@
+import { Accessor, createEffect, createSignal, For, JSX, onCleanup, onMount, Show } from "solid-js";
+import { CssADV } from "./gen";
+import { RandomColor } from "../utils/color";
+import { IconChevronLeft, IconChevronRight } from "../svg/svg";
+
 /*CSS:
 
 .scroll-layout {
@@ -190,9 +195,6 @@
 
 */
 
-import { createSignal, For, JSX, onCleanup, onMount } from "solid-js";
-import { CssADV } from "./gen";
-
 export function Carousel() {
     return (
         <div class="scroll-layout">
@@ -266,118 +268,85 @@ export function VCarousel({ children, listStyle, itemStyle }: {
     );
 }
 
-
 /*CSS:
-.tabbar {
-    // background: red;
+.TabBar {
+    width: 100%;
     position: relative;
     display: flex;
-    gap: 12px;
+    gap: 10px;
+    flex: 0 0 auto;
+    white-space: nowrap;
     overflow-x: auto;
-    // padding: 10px;
-    border-bottom: 2px solid #ccc;
-    scrollbar-width: none;
-}
-.tabbar::-webkit-scrollbar {
-    display: none;
+    overflow-y: hidden;
+    // justify-content: center;
+    // scrollbar-width: none;
+    
+    // ::-webkit-scrollbar {
+    //     display: none;
+    // }
 }
 
-.tab-button, .tab-button:hover {
-    position: relative;
+.TabButton, .TabButton:hover {
     // flex: 1;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-weight: bold;
+    flex: 0 0 auto;
     white-space: nowrap;
+    background: none;
     z-index: 1;
 }
 
-
-.scroll-list {
-    width: 100vw;
-    height: 300px;
-    padding: 20px;
-    display: flex;
-    gap: 4vw;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-}
-.scroll-list::-webkit-scrollbar {
-    display: none;
+.TabButtonActive {
+    border: 1px solid purple;
 }
 
-.scroll-list li {
-    list-style-type: none;
-    background-color: #222222;
-    border: 1px solid #ddd;
-    padding: 20px;
-    flex: 0 0 100%;
-    scroll-snap-align: center;
-}
-.scroll-list li:nth-child(even) {
-    background-color: purple;
-}
-
-.tab-slider {
+.Tabby {
     position: absolute;
     bottom: 0;
+    width: 100%;
     height: 100%;
+    background: #1e8fff28;
     border-radius: 100px;
-    // height: 3px;
     z-index: 0;
     transition: all 1s ease;
     overflow: hidden;
-    }
-    
-.tab-slider-inner {
-    width: 100%;
-    height: 100%;
-    background: dodgerblue;
 }
-
 */
 
-export function Tabs(props: { titles: JSX.Element[] }) {
+export function TabBar(props: {
+    titles: JSX.Element[],
+    onTabChange: (index: number) => void,
+
+    pagination?: { totalItems: number, itemsPerPage: number },
+
+    tabBarStyle?: JSX.CSSProperties,
+    tabButtonStyle?: JSX.CSSProperties,
+}) {
     const [currentTab, setCurrentTab] = createSignal(0);
     let tabRefs: HTMLElement[] = [];
     let sliderRef: HTMLDivElement | undefined;
-    let scrollListRef: HTMLUListElement | undefined;
-
-    let innerRef: HTMLDivElement | undefined;
 
     const moveSlider = (i: number) => {
         const el = tabRefs[i];
-        if (el && sliderRef && innerRef) {
+        const tabbar = el?.parentElement as HTMLElement;
+
+        if (el && tabbar && sliderRef) {
+            let offset = el.offsetLeft;
+
             sliderRef.style.width = `${el.offsetWidth}px`;
-            sliderRef.style.transform = `translateX(${el.offsetLeft}px)`;
+            sliderRef.style.left = `${offset}px`;
 
-            // Animate only the inner layer
-            innerRef.classList.add("animate-jello");
+            sliderRef.classList.add("animate-jello");
             const handle = () => {
-                innerRef?.classList.remove("animate-jello");
-                innerRef?.removeEventListener("animationend", handle);
+                sliderRef?.classList.remove("animate-jello");
+                sliderRef?.removeEventListener("animationend", handle);
             };
-            innerRef.addEventListener("animationend", handle);
-        }
-    };
-
-    const scrollToPage = (index: number) => {
-        const child = scrollListRef?.children[index] as HTMLElement | undefined;
-        if (child && scrollListRef) {
-            const left = child.offsetLeft;
-            scrollListRef.scrollTo({ left, behavior: "smooth" });
-            setCurrentTab(index);
+            sliderRef.addEventListener("animationend", handle);
         }
     };
 
     const setTab = (i: number) => {
         setCurrentTab(i);
         moveSlider(i);
-        scrollToPage(i);
+        props.onTabChange(i)
     };
 
     onMount(() => {
@@ -388,109 +357,190 @@ export function Tabs(props: { titles: JSX.Element[] }) {
         onCleanup(() => window.removeEventListener("resize", onResize));
     });
 
-    return (
-        <>
-            <div class="tabbar">
-                <div class="tab-slider" ref={sliderRef}>
-                    <div class="tab-slider-inner" ref={innerRef} />
-                </div>
-                {props.titles.map((name, i) => (
-                    <button
-                        class={`tab-button ${currentTab() === i ? "active" : ""}`}
-                        onClick={() => setTab(i)}
-                        ref={(el) => (tabRefs[i] = el)}
-                    >
-                        {name}
-                    </button>
-                ))}
-            </div>
+    let paginationArray = () => {
+        let itemsPerPage = props.pagination.itemsPerPage
+        let totalItems = props.pagination.totalItems
+        let ll = Math.floor(currentTab() / itemsPerPage)
+        let items = Array.from(
+            { length: (ll + 1) * itemsPerPage > totalItems ? (ll + 1) * itemsPerPage - totalItems : itemsPerPage },
+            (_, i) => i + ll * itemsPerPage)
 
-            <ul class="scroll-list" ref={scrollListRef}>
-                {props.titles.map((page) => (
-                    <li>
-                        <h2>{page}</h2>
-                    </li>
-                ))}
-            </ul>
-        </>
-    );
+        return items
+    }
+
+    return <div class={CssADV.TabBar} style={props.tabBarStyle}>
+
+        <div class={CssADV.Tabby} ref={sliderRef} />
+
+        <Show when={props.pagination}>
+            <button class={CssADV.TabButton}
+                onClick={() => {
+                    if (currentTab() > 0) {
+                        setTab(currentTab() - 1)
+                    }
+                }}
+                disabled={currentTab() === 0}
+                aria-label="Previous page"
+            >
+                <IconChevronLeft />
+            </button>
+        </Show>
+
+        <Show when={!props.pagination}>
+            {props.titles.map((name, i) => (
+                <button style={props.tabButtonStyle}
+                    class={`${CssADV.TabButton} ${currentTab() === i ? CssADV.TabButtonActive : ""}`}
+                    onClick={() => setTab(i)}
+                    ref={(el) => (tabRefs[i] = el)}
+                >
+                    {name}
+                </button>
+            ))}
+        </Show>
+
+        <Show when={props.pagination}>
+            <For each={paginationArray()}>
+                {(index) => (
+                    <button
+                        style={props.tabButtonStyle}
+                        class={`${CssADV.TabButton} ${currentTab() === index ? CssADV.TabButtonActive : ""}`}
+                        onClick={() => setTab(index)}
+                        ref={(el) => (tabRefs[index] = el)}
+                    >
+                        {index + 1}
+                    </button>
+                )}
+            </For>
+        </Show>
+
+        <Show when={props.pagination}>
+            <button class={CssADV.TabButton}
+                onClick={() => {
+                    if (currentTab() < props.pagination.totalItems) {
+                        setTab(currentTab() + 1)
+                    }
+                }}
+                disabled={currentTab() === (props.pagination.totalItems - 1)}
+                aria-label="Next page"
+            >
+                <IconChevronRight />
+            </button>
+        </Show>
+
+    </div>
+}
+
+/*CSS:
+.HList {
+    display: flex;
+    padding: 0;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    li {
+        list-style-type: none;
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+    }
+}
+*/
+
+export function HList(props: { titles: JSX.Element[], index: Accessor<number> }) {
+
+    let scrollListRef: HTMLUListElement | undefined;
+
+    const scrollToPage = (index: number) => {
+        const child = scrollListRef?.children[index] as HTMLElement | undefined;
+        if (child && scrollListRef) {
+            const left = child.offsetLeft;
+            scrollListRef.scrollTo({ left, behavior: "smooth" });
+        }
+    };
+
+    createEffect(() => {
+        scrollToPage(props.index())
+    })
+
+    return <ul class={CssADV.HList} ref={scrollListRef}>
+        {props.titles.map((page) => (
+            <li
+                style={{ background: RandomColor({}) }}
+            >
+                <h2>{page}</h2>
+            </li>
+        ))}
+    </ul>;
 }
 
 /*CSS:
 
-.carousel3d {
-  width: 100vw;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transform-style: preserve-3d;
-  perspective: 600px;
-  --items: 5;
-  --middle: 3;
-  --position: 1;
-  pointer-events: none;
-  position: relative;
+.Carousel3D {
+    --items: 5;
+    --position: 1;
 
-  li {
-  position: absolute;
-  width: 300px;
-  height: 400px;
-  background-color: coral;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  border-radius: 10px;
-  --r: calc(var(--position) - var(--offset));
-  --abs: max(calc(var(--r) * -1), var(--r));
-  transition: all 0.4s ease;
-  transform: rotateY(calc(-10deg * var(--r)))
-    translateX(calc(-300px * var(--r)));
-  z-index: calc((var(--items) - var(--abs)));
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
+    // position: relative;
+    // width: 100%;
+
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    transform-style: preserve-3d;
+    perspective: 600px;
+    pointer-events: none;
+
+    li {
+        position: absolute;
+        width: 300px;
+        height: 400px;
+        list-style: none;
+        
+        display: flex;
+        background-color: coral;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        
+        --r: calc(var(--position) - var(--offset));
+        --abs: max(calc(var(--r) * -1), var(--r));
+        transition: all 0.4s ease;
+        transform: rotateY(calc(-10deg * var(--r)))
+            translateX(calc(-300px * var(--r)));
+        z-index: calc((var(--items) - var(--abs)));
+    }
 
 }
 
 .controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }
 
-.controls button {
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  cursor: pointer;
-}
 */
 
-const TOTAL_ITEMS = 5;
-const MIDDLE = 3;
-
-export function Carousel3D() {
-    const [position, setPosition] = createSignal(1);
-
-    const items = Array.from({ length: TOTAL_ITEMS }, (_, i) => i + 1);
+export function Carousel3D(props: { items: JSX.Element[], current?: number }) {
+    const [position, setPosition] = createSignal(props.current ?? 1);
 
     const prev = () => setPosition((p) => Math.max(1, p - 1));
-    const next = () => setPosition((p) => Math.min(TOTAL_ITEMS, p + 1));
+    const next = () => setPosition((p) => Math.min(props.items.length, p + 1));
 
     return (
         <>
             <ul
-                class="carousel3d"
+                class={CssADV.Carousel3D}
                 style={{
-                    "--items": TOTAL_ITEMS,
-                    "--middle": MIDDLE,
+                    "--items": props.items.length,
                     "--position": position(),
                 }}
             >
-                <For each={items}>
+                <For each={props.items}>
                     {(item, i) => (
                         <li
                             class="item"
@@ -498,7 +548,7 @@ export function Carousel3D() {
                                 "--offset": i() + 1,
                             }}
                         >
-                            <h2>Item {item}</h2>
+                            {item}
                         </li>
                     )}
                 </For>
@@ -509,4 +559,71 @@ export function Carousel3D() {
             </div>
         </>
     );
+}
+
+
+/*CSS:
+
+.Slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: auto; 
+    height: 40vh;
+
+    section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        container-type: scroll-state;
+        scroll-snap-align: start;
+
+        min-block-size: 40vh;
+        scroll-snap-stop: always;
+
+        @supports (container-type: scroll-state) {
+            >h1 {
+                transition: opacity .5s ease, transform .5s var(--ease-spring-3);
+                transition-delay: .5s;
+                opacity: 0;
+                transform: scale(1.25);
+
+                @container scroll-state(snapped: block) {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+
+    section:nth-of-type(even) {
+        color: hsl(320 80% 90%);
+        background: hsl(320 80% 40%);
+    }
+
+    section:nth-of-type(odd) {
+        color: hsl(290 80% 90%);
+        background: hsl(290 80% 40%);
+    }
+}
+
+*/
+
+export function Slides() {
+    return <article class="Slides">
+        <section>
+            <h1>slide 1</h1>
+        </section>
+        <section>
+            <h1>slide 2</h1>
+        </section>
+        <section>
+            <h1>slide 3</h1>
+        </section>
+        <section>
+            <h1>slide 4</h1>
+        </section>
+        <section>
+            <h1>slide 5</h1>
+        </section>
+    </article>
 }

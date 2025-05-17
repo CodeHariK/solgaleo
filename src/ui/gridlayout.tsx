@@ -154,7 +154,7 @@ import { MetaProvider, Title } from "@solidjs/meta";
 }
 
 .GridLayoutFlow .GridMiddle {
-    overflow: visible;
+    overflow: hidden;
 }
 
 .GridLayoutFlow .GridScrollContainer {

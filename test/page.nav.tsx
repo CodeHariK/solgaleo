@@ -1,4 +1,4 @@
-import { createMemo, createSignal, For, JSX, Show, Signal } from "solid-js";
+import { createSignal, JSX, Show, Signal } from "solid-js";
 import { DragBox, GridLayout, IconHome, VCarousel } from "../src/gen";
 import * as N from "../src/nav/gen";
 import { TestHeader } from "./common";
@@ -31,8 +31,6 @@ export function NavTest() {
             ]} />}
     >
         {BreadcrumbTest()}
-
-        <PaginationTest />
 
         <Show when={experiment() == 0}>
             {DummyModal(modalVisibility, '5%', '35%', null)}
@@ -180,30 +178,4 @@ function DummyModalAnchor(fixed: boolean, modalVisibilty: Signal<boolean>, left,
         }}
         child={() => <TestDialog info={`${left} ${top} ${align}`} modalVisibilty={modalVisibilty} />}
     />
-}
-
-function PaginationTest() {
-    const [currentPage, setCurrentPage] = createSignal(1);
-
-    const itemsPerPage = 3;
-    const items = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
-
-    const currentItems = createMemo(() => {
-        const start = (currentPage() - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        return items.slice(start, end);
-    });
-
-    return (
-        <div>
-            <For each={currentItems()}>
-                {(item) => <div>{item}</div>}
-            </For>
-
-            <N.Pagination
-                totalPages={Math.ceil(items.length / itemsPerPage)}
-                onPageChange={(page) => { setCurrentPage(page) }}
-            />
-        </div>
-    );
 }

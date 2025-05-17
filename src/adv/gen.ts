@@ -1,7 +1,6 @@
 import '../gen.css'
 
 export * from "./md.tsx"; 
-export * from "./slides.tsx"; 
 export * from "./richtext.tsx"; 
 export * from "./blog.tsx"; 
 export * from "./table.tsx"; 
@@ -14,7 +13,6 @@ export const CssADV = {
     MarkdownImage: "MarkdownImage",
     MarkdownIframe: "MarkdownIframe",
     HeadingLink: "HeadingLink",
-    Slides: "Slides",
     RichContainer: "RichContainer",
     RichEditorPane: "RichEditorPane",
     PreviewPane: "preview-pane",
@@ -37,13 +35,14 @@ export const CssADV = {
     ScrollLayout: "scroll-layout",
     Carousel: "carousel",
     Vcarousel: "vcarousel",
-    Tabbar: "tabbar",
-    TabButton: "tab-button",
-    ScrollList: "scroll-list",
-    TabSlider: "tab-slider",
-    TabSliderInner: "tab-slider-inner",
-    Carousel3d: "carousel3d",
+    TabBar: "TabBar",
+    TabButton: "TabButton",
+    TabButtonActive: "TabButtonActive",
+    Tabby: "Tabby",
+    HList: "HList",
+    Carousel3D: "Carousel3D",
     Controls: "controls",
+    Slides: "Slides",
 
     
 

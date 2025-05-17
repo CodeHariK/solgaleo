@@ -2,6 +2,7 @@ import '../gen.css'
 
 export * from "./position.tsx"; 
 export * from "./gridlayout.tsx"; 
+export * from "./grid.tsx"; 
 export * from "./accordion.tsx"; 
 export * from "./bar.tsx"; 
 export * from "./button.tsx"; 
@@ -24,6 +25,7 @@ export const CssUI = {
     GridScrollContainer: "GridScrollContainer",
     GridContent: "GridContent",
     GridLayoutFlow: "GridLayoutFlow",
+    Grid: "grid",
     AccordionLabel: "AccordionLabel",
     AccordionContent: "AccordionContent",
     Progress: "Progress",

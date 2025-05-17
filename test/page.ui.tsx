@@ -1,9 +1,9 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch } from '../src/ui/gen.ts';
+import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch, Grid, GridItem } from '../src/ui/gen.ts';
 import { IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
-import { createSignal } from 'solid-js';
+import { createSignal, For, JSX } from 'solid-js';
 import { Modal, TreeView } from '../src/nav/gen.ts';
 
 export function UiTest() {
@@ -125,6 +125,57 @@ export function UiTest() {
         <h5>{para(1)}</h5>
         <h6>{para(1)}</h6>
         <p>{para(3)}</p>
+
+        <Grid
+            cols={{ xs: 3, sm: 4, md: 6, lg: 8 }}
+            rows={{ xs: 3, sm: 4, md: 6, lg: 8 }}
+            spacingX={{ xs: 0.5, sm: 1, md: 1.5, lg: 2 }}
+            spacingY={{ xs: 0.5, sm: 1, md: 1.5, lg: 2 }}
+        >
+            <For each={Array.from({ length: 8 })}>
+                {(_, index) => (
+                    <GridItem>
+                        <Item>{index() + 1}</Item>
+                    </GridItem>
+                )}
+            </For>
+            <GridItem height={3} width={3}>
+                <Item>3x3</Item>
+            </GridItem>
+            <GridItem colStart={1} rowStart={1} height={2} width={2}>
+                <Item>Hello</Item>
+            </GridItem>
+            <For each={Array.from({ length: 8 })}>
+                {(_, index) => (
+                    <GridItem>
+                        <Item>{index() + 1}</Item>
+                    </GridItem>
+                )}
+            </For>
+        </Grid>
+
+        <Grid spacingX={1} spacingY={1} cols={4} rows={4}>
+            <For each={Array.from({ length: 8 })}>
+                {(_, index) => (
+                    <GridItem>
+                        <Item>{index() + 1}</Item>
+                    </GridItem>
+                )}
+            </For>
+            <GridItem height={3} width={3}>
+                <Item>3x3</Item>
+            </GridItem>
+            <GridItem colStart={1} rowStart={1} height={2} width={2}>
+                <Item>Hello</Item>
+            </GridItem>
+            <For each={Array.from({ length: 8 })}>
+                {(_, index) => (
+                    <GridItem>
+                        <Item>{index() + 1}</Item>
+                    </GridItem>
+                )}
+            </For>
+        </Grid>
 
     </GridLayout>
 }
@@ -295,3 +346,19 @@ export function TestTree() {
         ]} />;
 }
 //FN:END
+
+export function Item(props: { children: JSX.Element | string }) {
+    return (
+        <div
+            style={{
+                background: "#eee",
+                padding: "1rem",
+                height: "100%",
+                "border-radius": "6px",
+                "text-align": "center",
+            }}
+        >
+            {props.children}
+        </div>
+    );
+}
