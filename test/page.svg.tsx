@@ -20,13 +20,13 @@ import { CssTEST, TestHeader } from './gen.ts'
     border-radius: 0.5rem;
     transition: all 0.2s;
 
-    svg{
-        background: #5c1d5c11;
+    svg {
+        border: 1px solid var(--primary);
     }
 }
 
 .IconItem:hover {
-    background: #fe81e720;
+    background: var(--primary-bg);
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
@@ -44,11 +44,14 @@ const icons = [
     { component: svg.IconAddUser, name: 'Add User' },
     { component: svg.IconTableHeading, name: 'Table Heading' },
     { component: svg.IconPen, name: 'Pen' },
-    { component: svg.IconTick, name: 'Tick' },
+    { component: svg.IconCheck, name: 'Check' },
     { component: svg.IconCross, name: 'Cross' },
+    { component: svg.IconFilterList, name: 'FilterList' },
     { component: svg.IconUnlock, name: 'Unlock' },
     { component: svg.IconLock, name: 'Lock' },
     { component: svg.IconEmail, name: 'Email' },
+    { component: svg.IconError, name: 'Error' },
+    { component: svg.IconBlock, name: 'Block' },
     { component: svg.IconStar, name: 'Star' },
     { component: svg.IconHeart, name: 'Heart' },
     { component: svg.IconCart, name: 'Cart' },
@@ -62,8 +65,11 @@ const icons = [
     { component: svg.IconLoading, name: 'Loading' },
     { component: svg.IconRocket, name: 'Rocket' },
     { component: svg.IconCopy, name: 'Copy' },
-    { component: svg.IconSun, name: 'Sun' },
+    { component: svg.IconHome, name: 'Home' },
+    { component: svg.IconUpload, name: 'Upload' },
+    { component: svg.IconLogout, name: 'Logout' },
     { component: svg.IconMoon, name: 'Moon' },
+    { component: svg.IconSun, name: 'Sun' },
 ];
 
 export function SvgTest() {

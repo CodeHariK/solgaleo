@@ -23,8 +23,10 @@ svg {
     display: inline-block;
     // margin: .4rem;
     // border-radius: 1rem;
-    width: var(--svg-size);
-    height: var(--svg-size);
+    // width: var(--svg-size);
+    // height: var(--svg-size);
+    width: 1em;
+    height: 1em;
     color: currentColor;
     // background: var(--icon-bg);
     // sol(--svg-ring-width , 4px);
@@ -111,7 +113,7 @@ export function IconPen({ className, style, strokeWidth, fill }: IconProps) {
     </svg>;
 }
 
-export function IconTick({ className, style, strokeWidth, fill }: IconProps) {
+export function IconCheck({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="50 -900 840 840"
         style={style}
@@ -128,7 +130,7 @@ export function IconTick({ className, style, strokeWidth, fill }: IconProps) {
 
 export function IconCross({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="0 0 20 20"
+        viewBox="2 2 16 16"
         style={style}
         class={className}
         fill={fill ? "none" : "currentColor"}
@@ -142,26 +144,40 @@ export function IconCross({ className, style, strokeWidth, fill }: IconProps) {
     </svg>
 }
 
-export function IconUnlock({ className, style, strokeWidth, fill }: IconProps) {
+export function IconFilterList({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="-1 -1 26 26"
+        viewBox="0 -960 960 960"
         style={style}
         class={className}
-        fill={fill ? "currentColor" : "none"}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "currentColor" : "none"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
+    </svg>
+}
+
+export function IconUnlock({ className, style, strokeWidth, fill }: IconProps) {
+
+    return <svg
+        viewBox="0 -960 960 960"
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
         stroke={fill ? "none" : "currentColor"}
         stroke-width={strokeWidth ?? 2}
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="M2 16c0-2.828 0-4.243.879-5.121C3.757 10 5.172 10 8 10h8c2.828 0 4.243 0 5.121.879C22 11.757 22 13.172 22 16c0 2.828 0 4.243-.879 5.121C20.243 22 18.828 22 16 22H8c-2.828 0-4.243 0-5.121-.879C2 20.243 2 18.828 2 16Z" />
-        <circle cx="12" cy="16" r="2" />
-        <path d="M6 10V8a6 6 0 0 1 11.811-1.5" />
+        <path d="M240-640h360v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85h-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640Zm0 480h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM240-160v-400 400Z" />
     </svg>
 }
 
 export function IconLock({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="-1 -1 26 26"
+        viewBox="0 -960 960 960"
         style={style}
         class={className}
         stroke={fill ? "currentColor" : "none"}
@@ -170,7 +186,7 @@ export function IconLock({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path fill-rule="evenodd" d="M5.25 10.055V8a6.75 6.75 0 0 1 13.5 0v2.055c1.115.083 1.84.293 2.371.824C22 11.757 22 13.172 22 16c0 2.828 0 4.243-.879 5.121C20.243 22 18.828 22 16 22H8c-2.828 0-4.243 0-5.121-.879C2 20.243 2 18.828 2 16c0-2.828 0-4.243.879-5.121.53-.531 1.256-.741 2.371-.824ZM6.75 8a5.25 5.25 0 0 1 10.5 0v2.004C16.867 10 16.451 10 16 10H8c-.452 0-.867 0-1.25.004V8ZM14 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" clip-rule="evenodd" />
+        <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80ZM240-160v-400 400Z" />
     </svg>
 }
 
@@ -189,9 +205,39 @@ export function IconEmail({ className, style, strokeWidth, fill }: IconProps) {
     </svg>
 }
 
+export function IconError({ className, style, strokeWidth, fill }: IconProps) {
+    return <svg
+        viewBox="0 -960 960 960"
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+    </svg>
+}
+
+export function IconBlock({ className, style, strokeWidth, fill }: IconProps) {
+    return <svg
+        viewBox="0 -960 960 960"
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448Z" />
+    </svg>
+}
+
 export function IconStar({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="0 0 24 24"
+        viewBox="0 1 24 24"
         style={style}
         class={className}
         stroke={fill ? "currentColor" : "none"}
@@ -216,7 +262,7 @@ export function IconHeart({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </svg>
 }
 
@@ -231,7 +277,9 @@ export function IconCart({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
     </svg>
 }
 
@@ -246,7 +294,7 @@ export function IconDown({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="m19 9-7 7-7-7" />
+        <polyline points="6 9 12 15 18 9" />
     </svg>
 }
 
@@ -284,7 +332,7 @@ export function IconChevronRight({ className, style, strokeWidth, fill }: IconPr
 
 export function IconSearch({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="-2 -2 24 24"
+        viewBox="0 0 24 24"
         style={style}
         class={className}
         fill={fill ? "currentColor" : "none"}
@@ -293,7 +341,8 @@ export function IconSearch({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </svg>;
 }
 
@@ -314,7 +363,7 @@ export function IconFilter({ className, style, strokeWidth, fill }: IconProps) {
 
 export function IconUser({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="2 2 20 20"
+        viewBox="0 0 24 24"
         style={style}
         class={className}
         fill={fill ? "currentColor" : "none"}
@@ -323,7 +372,8 @@ export function IconUser({ className, style, strokeWidth, fill }: IconProps) {
         stroke-linecap="round"
         stroke-linejoin="round"
     >
-        <path d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
     </svg>
 }
 
@@ -403,6 +453,39 @@ export function IconHome({ className, style, strokeWidth, fill }: IconProps) {
     </svg>
 }
 
+export function IconUpload({ className, style, strokeWidth, fill }: IconProps) {
+    return <svg
+        viewBox="0 0 24 24"
+        style={style}
+        class={className}
+        fill={fill ? "currentColor" : "none"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+        <polyline points="16 6 12 2 8 6" />
+        <line x1="12" y1="2" x2="12" y2="15" />
+    </svg>
+}
+
+export function IconLogout({ className, style, strokeWidth, fill }: IconProps) {
+    return <svg
+        viewBox="0 -960 960 960"
+        style={style}
+        class={className}
+        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "none" : "currentColor"}
+        stroke-width={strokeWidth ?? 2}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+    </svg>
+}
+
+
 export function IconMoon({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
         viewBox="0 0 20 20"
@@ -418,15 +501,23 @@ export function IconMoon({ className, style, strokeWidth, fill }: IconProps) {
 
 export function IconSun({ className, style, strokeWidth, fill }: IconProps) {
     return <svg
-        viewBox="0 0 20 20"
+        viewBox="0 0 24 24"
         style={style}
         class={className}
-        stroke={fill ? "currentColor" : "none"}
-        fill={fill ? "none" : "currentColor"}
+        stroke={fill ? "none" : "currentColor"}
+        fill={fill ? "currentColor" : "none"}
         stroke-width={strokeWidth ?? 2}
-    ><path
-        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-        fill-rule="evenodd"
-        clip-rule="evenodd"></path>
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
     </svg>
 }

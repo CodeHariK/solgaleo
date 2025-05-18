@@ -14,7 +14,7 @@
     --flicker-shadow: #36e2f8;
     --rainsrc: ;
     --rainsize: ;
-    --spacing: .9rem;
+    --spacing: 1rem;
     --primary-border: oklch(from var(--primary) calc(l + 0.1) c h);
     --modal-bg: oklch(from var(--body-bg) calc(l + .3) c h);
     --modal-col: var(--body-col);
@@ -74,8 +74,8 @@
 }
 svg {
     display: inline-block;
-    width: var(--svg-size);
-    height: var(--svg-size);
+    width: 1em;
+    height: 1em;
     color: currentColor;
 }
 .DragBox {
@@ -280,15 +280,12 @@ svg {
 }
 button, .IconButton, .MaterialButton, .OutlinedButton,
 .MaterialRoundButton, .OutlinedRoundButton, .Tag {
+    all: unset;
     display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
     align-items: center;
     justify-content: center;
-    color: var(--primary);
-    background: var(--surface-bg);
     border: 1px solid transparent;
     user-select: none;
     cursor: pointer;
@@ -320,11 +317,16 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 .IconButton {
     padding: .5rem;
-    background: var(--surface-bg);
+    border-radius: 100rem;
+}
+.IconButtonPlain {
+    padding: .5rem;
+    color: inherit;
+    background: transparent;
     border-radius: 100rem;
 }
 .MaterialButton, .MaterialRoundButton {
-    color: var(--surface);
+    color: var(--primary);
     background: var(--primary-bg);
     border: 1px solid transparent;
 }
@@ -1584,6 +1586,20 @@ input[type="range"]:focus ~ .RangeValue {
         gap: 0.5rem;
     }
 }
+.BottomBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 64px;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+}
+.BottomBarItem {
+}
 .ModalOverlay {
     position: fixed;
     top: 0;
@@ -1679,28 +1695,28 @@ h1,h2,h3,h4,h5,h6 {
   isolation: isolate;
 }
 h1 {
-  font-size: calc(var(--spacing) * 2);
+  font-size: calc(var(--spacing) * 2.5);
   font-weight: 700;
   line-height: calc(var(--spacing) * 2);
   letter-spacing: -0.04rem;
   word-spacing: -0.4rem;
 }
 h2 {
-  font-size: calc(var(--spacing) * 1.75);
+  font-size: calc(var(--spacing) * 2.25);
   font-weight: 600;
   line-height: calc(var(--spacing) * 1.75);
   letter-spacing: -0.035rem;
   word-spacing: -0.3rem;
 }
 h3 {
-  font-size: calc(var(--spacing) * 1.5);
+  font-size: calc(var(--spacing) * 2);
   font-weight: 500;
-  line-height: calc(var(--spacing) * 1.6);
+  line-height: calc(var(--spacing) * 1.75);
   letter-spacing: -0.03rem;
   word-spacing: -0.25rem;
 }
 h4 {
-  font-size: calc(var(--spacing) * 1.4);
+  font-size: calc(var(--spacing) * 1.5);
   font-weight: 400;
   line-height: calc(var(--spacing) * 1.5);
   letter-spacing: -0.025rem;
@@ -1730,6 +1746,7 @@ li {
 }
 a {
   color: var(--primary);
+  text-decoration: none;
   :hover {
     color: var(--a-hover-col);
   }
@@ -1892,6 +1909,16 @@ hr {
 .underline { text-decoration: underline; }
 .line { text-decoration: line-through; }
 .overline { text-decoration: overline; }
+.bold { font-weight: bold; }
+.f100 { font-weight: 100; }
+.f200 { font-weight: 200; }
+.f300 { font-weight: 300; }
+.f400 { font-weight: 400; }
+.f500 { font-weight: 500; }
+.f600 { font-weight: 600; }
+.f700 { font-weight: 700; }
+.f800 { font-weight: 800; }
+.f900 { font-weight: 900; }
 .border-basic { border: 1px solid var(--primary);}
 .border-0 { border-width: 0; }
 .border-1 { border-width: 1px; }

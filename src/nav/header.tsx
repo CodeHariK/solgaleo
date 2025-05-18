@@ -1,6 +1,7 @@
 import { JSX } from "solid-js/jsx-runtime";
 import { CssNAV, RouteChange } from "./gen";
 import { useSolContext } from "../ui/provider";
+import { IconCart, IconHeart, IconSearch, IconSun, IconUser } from "../svg/svg";
 
 /*CSS:
 .HeaderNav {
@@ -99,4 +100,45 @@ export function Header({ title, links, right: right }: {
             {right}
         </div>
     </nav>
+}
+
+
+/*CSS:
+
+.BottomBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 64px;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+}
+
+.BottomBarItem {
+}
+
+*/
+
+export function BottomBar() {
+    return <nav class={CssNAV.BottomBar}>
+        <a href="#" class={CssNAV.BottomBarItem}>
+            <IconSun />
+        </a>
+        <a href="#" class={CssNAV.BottomBarItem}>
+            <IconSearch />
+        </a>
+        <a href="#" class={CssNAV.BottomBarItem}>
+            <IconCart />
+        </a>
+        <a href="#" class={CssNAV.BottomBarItem}>
+            <IconHeart />
+        </a>
+        <a href="#" class={CssNAV.BottomBarItem}>
+            <IconUser />
+        </a>
+    </nav>;
 }

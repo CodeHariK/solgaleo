@@ -1,15 +1,14 @@
 /*CSS:
 button, .IconButton, .MaterialButton, .OutlinedButton,
 .MaterialRoundButton, .OutlinedRoundButton, .Tag {
+    all: unset;
     display: inline-flex;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
     align-items: center;
     justify-content: center;
-    color: var(--primary);
-    background: var(--surface-bg);
+    // color: var(--primary);
+    // background: var(--surface-bg);
     border: 1px solid transparent;
     user-select: none;
     cursor: pointer;
@@ -47,12 +46,18 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 
 .IconButton {
     padding: .5rem;
-    background: var(--surface-bg);
+    border-radius: 100rem;
+}
+
+.IconButtonPlain {
+    padding: .5rem;
+    color: inherit;
+    background: transparent;
     border-radius: 100rem;
 }
 
 .MaterialButton, .MaterialRoundButton {
-    color: var(--surface);
+    color: var(--primary);
     background: var(--primary-bg);
     border: 1px solid transparent;
 }

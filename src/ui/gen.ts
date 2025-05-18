@@ -36,6 +36,7 @@ export const CssUI = {
     MaterialRoundButton: "MaterialRoundButton",
     OutlinedRoundButton: "OutlinedRoundButton",
     Tag: "Tag",
+    IconButtonPlain: "IconButtonPlain",
     GradientTag: "GradientTag",
     ErrorButton: "ErrorButton",
     SelectChevron: "SelectChevron",

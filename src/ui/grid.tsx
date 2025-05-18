@@ -44,6 +44,7 @@ export function Grid(props: {
     cols: BreakpointValue<number>;
     rows: BreakpointValue<number>;
     class?: string;
+    style?: JSX.CSSProperties;
     children?: JSX.Element | JSX.Element[];
 }) {
     const style: Record<string, string> = {};
@@ -89,7 +90,7 @@ export function Grid(props: {
     }
 
     return (
-        <div
+        <main
             class={`grid ${props.class ?? ""}`}
             style={{
                 display: "grid",
@@ -98,10 +99,11 @@ export function Grid(props: {
                 "column-gap": "var(--gap-x)",
                 "row-gap": "var(--gap-y)",
                 ...style,
+                ...props.style,
             }}
         >
             {props.children}
-        </div>
+        </main>
     );
 }
 

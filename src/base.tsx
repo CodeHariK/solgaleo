@@ -1,6 +1,6 @@
 /*CSS:
 
-sol(--spacing , .9rem);
+sol(--spacing , 1rem);
 
 sol(--body-bg , white , black);
 sol(--body-col , black , white);
@@ -112,7 +112,7 @@ h1,h2,h3,h4,h5,h6 {
 //-------
 
 h1 {
-  font-size: calc(var(--spacing) * 2);
+  font-size: calc(var(--spacing) * 2.5);
   font-weight: 700;
   line-height: calc(var(--spacing) * 2);
   letter-spacing: -0.04rem;
@@ -120,7 +120,7 @@ h1 {
 }
 
 h2 {
-  font-size: calc(var(--spacing) * 1.75);
+  font-size: calc(var(--spacing) * 2.25);
   font-weight: 600;
   line-height: calc(var(--spacing) * 1.75);
   letter-spacing: -0.035rem;
@@ -128,15 +128,15 @@ h2 {
 }
 
 h3 {
-  font-size: calc(var(--spacing) * 1.5);
+  font-size: calc(var(--spacing) * 2);
   font-weight: 500;
-  line-height: calc(var(--spacing) * 1.6);
+  line-height: calc(var(--spacing) * 1.75);
   letter-spacing: -0.03rem;
   word-spacing: -0.25rem;
 }
 
 h4 {
-  font-size: calc(var(--spacing) * 1.4);
+  font-size: calc(var(--spacing) * 1.5);
   font-weight: 400;
   line-height: calc(var(--spacing) * 1.5);
   letter-spacing: -0.025rem;
@@ -171,6 +171,8 @@ li {
 
 a {
   color: var(--primary);
+
+  text-decoration: none;
   
   :hover {
     color: var(--a-hover-col);
@@ -373,6 +375,17 @@ sol(--size-16 , calc(var(--spacing) * 4));
 .underline { text-decoration: underline; }
 .line { text-decoration: line-through; }
 .overline { text-decoration: overline; }
+
+.bold { font-weight: bold; }
+.f100 { font-weight: 100; }
+.f200 { font-weight: 200; }
+.f300 { font-weight: 300; }
+.f400 { font-weight: 400; }
+.f500 { font-weight: 500; }
+.f600 { font-weight: 600; }
+.f700 { font-weight: 700; }
+.f800 { font-weight: 800; }
+.f900 { font-weight: 900; }
 
 .border-basic { border: 1px solid var(--primary);}
 
