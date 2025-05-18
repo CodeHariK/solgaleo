@@ -258,7 +258,7 @@ svg {
 .AccordionLabel {
     cursor: pointer;
     :hover {
-        background: var(--surface);
+        background: var(--surface-bg);
     }
 }
 .AccordionContent {
@@ -280,12 +280,15 @@ svg {
 }
 button, .IconButton, .MaterialButton, .OutlinedButton,
 .MaterialRoundButton, .OutlinedRoundButton, .Tag {
-    all: unset;
     display: inline-flex;
+    line-height: 1;
+    font-size: inherit;
     gap: 0.5rem;
-    padding: 0.625rem 1rem;
+    padding: 0.9rem 1rem;
     align-items: center;
     justify-content: center;
+    color: var(--primary);
+    background: var(--surface-bg);
     border: 1px solid transparent;
     user-select: none;
     cursor: pointer;
@@ -326,8 +329,13 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
     border-radius: 100rem;
 }
 .MaterialButton, .MaterialRoundButton {
-    color: var(--primary);
+    color: var(--body);
     background: var(--primary-bg);
+    border: 1px solid transparent;
+}
+.ButtonMaterialRev, .ButtonMaterialRoundRev {
+    color: var(--body-bg);
+    background: var(--primary);
     border: 1px solid transparent;
 }
 .OutlinedButton, .OutlinedRoundButton {
@@ -335,11 +343,8 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
     background: transparent;
     border: 1px solid var(--primary-border);
 }
-.OutlinedRoundButton {
-    border-radius: 2rem;
-}
-.MaterialRoundButton {
-    border-radius: 2rem;
+.OutlinedRoundButton, .MaterialRoundButton, .ButtonMaterialRoundRev {
+    border-radius: .5rem;
 }
 .GradientTag {
     background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
@@ -349,6 +354,22 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 .ErrorButton {
     color: var(--error);
     background: var(--error-container);
+}
+.selection-options {
+    display: flex;
+    border-top: 1px solid var(--surface-tint);
+    border-bottom: 1px solid var(--surface-tint);
+    margin-top: 16px;
+}
+.option {
+    flex: 1;
+    padding: 16px 0;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    color: var(--surface);
+    border-left: 1px solid var(--surface-tint);
 }
 fieldset {
     border: none;
@@ -1587,10 +1608,6 @@ input[type="range"]:focus ~ .RangeValue {
     }
 }
 .BottomBar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -1599,6 +1616,12 @@ input[type="range"]:focus ~ .RangeValue {
     border-top: 1px solid var(--color-border);
 }
 .BottomBarItem {
+}
+.MobileHeader {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .ModalOverlay {
     position: fixed;

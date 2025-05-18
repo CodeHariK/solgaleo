@@ -4,6 +4,7 @@ export * from "./page.fancy.tsx"; import * as test_page_fancy_tsx from "./page.f
 export * from "./page.nav.tsx"; import * as test_page_nav_tsx from "./page.nav.tsx";
 export * from "./page.adv.tsx"; import * as test_page_adv_tsx from "./page.adv.tsx";
 export * from "./page.root.tsx"; import * as test_page_root_tsx from "./page.root.tsx";
+export * from "./mobile.tsx"; import * as test_mobile_tsx from "./mobile.tsx";
 export * from "./page.grid.tsx"; import * as test_page_grid_tsx from "./page.grid.tsx";
 export * from "./page.tabs.tsx"; import * as test_page_tabs_tsx from "./page.tabs.tsx";
 export * from "./page.svg.tsx"; import * as test_page_svg_tsx from "./page.svg.tsx";
@@ -13,29 +14,13 @@ export * from "./page.ui.tsx"; import * as test_page_ui_tsx from "./page.ui.tsx"
 
 
 export const CssTEST = {
-    AppContainer: "app-container",
-    BackButton: "back-button",
-    Title: "title",
-    SortFilter: "sort-filter",
-    Divider: "divider",
-    CheckIcon: "check-icon",
-    ProductCard: "product-card",
-    ProductImage: "product-image",
-    FavoriteButton: "favorite-button",
-    ProductInfo: "product-info",
-    ProductPrice: "product-price",
-    ProductDescription: "product-description",
-    Header: "header",
-    MainContent: "main-content",
-    Star: "star",
-    SelectionOptions: "selection-options",
-    Option: "option",
-    SizeOption: "size-option",
-    ActionSection: "action-section",
-    AddToBag: "add-to-bag",
     BlogTitle: "blog-title",
     BlogMeta: "blog-meta",
     CodeCard: "CodeCard",
+    ProductCard: "product-card",
+    ProductImage: "product-image",
+    ProductInfo: "product-info",
+    ProductDescription: "product-description",
     Light: "light",
     Night: "night",
     LanguageCss: "language-css",
@@ -105,6 +90,11 @@ export const CssTEST = {
             element: test_common_tsx.TestHeader, 
             doc: "Header  (test/common.tsx)", 
             data: "export function TestHeader() {\n  return <Header\n    title={<AA href=\"/\">\n      <IMG src=\"/logo.png\" alt=\"solgaleo\" />\n      <p>Solgaleo</p>\n    </AA>}\n    links={[\n      <AA href={'/nav'} title='Nav'>Nav</AA>,\n      <AA href={'/adv'} title='Adv' >Adv</AA>,\n      <AA href={'/svg'} title='Svg' >Svg</AA>,\n      <AA href={'/fancy'} title='Fancy' >Fancy</AA>,\n      <AA href={'/ui'} title='Ui' >Ui</AA>,\n      <AA href={'/grid'} title='Grid'>Grid</AA>,\n      <AA href=\"/tabs\" >Tab</AA>,\n      <AA href=\"/tabs?two.light=Root.Pictures.Vacation\" >Tabs</AA>,\n    ]}\n    right={[\n      <button\n        class={CssUI.IconButton}\n        type=\"button\"\n        onClick={() => window.open('https://github.com/codeharik/solgaleo', '_blank')}>\n        Github\n      </button>,\n      <ThemeToggle />\n    ]}\n  />;\n}"
+        },
+        {
+            element: test_mobile_tsx.MobileApp, 
+            doc: "MobileApp  (test/mobile.tsx)", 
+            data: "export function MobileApp() {\n  return (\n    <GridLayout header={<MobileHeader />} footer={<BottomBar />}>\n\n      <div class=\"product-image\"></div>\n\n      <div class=\"product-info\">\n\n        <div class=\"price-favorite\">\n          <h1 class=\"price flex space-between items-center\"><span>£173</span>\n            <button class={CssUI.IconButtonPlain}>\n              <IconHeart fill style={{ color: \"#fb6f6f\" }} />\n            </button>\n          </h1>\n        </div>\n\n        <h5 class=\"bold\">Yellow Nike Sunshine Trainers</h5>\n\n        <RatingsBar ratings={5} />\n\n      </div>\n\n      <Options />\n\n      <div class=\"p4\">\n\n        <button class={CssUI.ButtonMaterialRoundRev} style={{ width: \"100%\" }}>ADD TO BAG</button>\n\n        <div class=\"product-description\">\n          <p>\n            Lorem ipsum dolor sit amet consectetur. Enim nisi et volutpat sed bibendum molestie diam. Vestibulum\n            posuere in lacus sit sit vulputate. Adipiscing sit ornare ultricies id quis. Quisque viverra eleifend leo\n            elit convallis a parturient.\n          </p>\n          <p>\n            Blandit purus eget nulla a eu urna etiam netus. Ut aenean integer et donec nulla cras velit integer\n            adipiscing habitant.\n          </p>\n        </div>\n      </div>\n\n      <Grid cols={2} rows={2} spacingX={1} style={{ padding: \"0 16px\" }}>\n        {products.map((product) => (\n          <div class=\"product-card\" >\n            <div class=\"product-image\">\n              <button class={CssUI.IconButtonPlain} style={{\n                position: \"absolute\",\n                right: \"8px\",\n                bottom: \"8px\",\n              }}>\n                <IconHeart />\n              </button>\n\n            </div>\n            <div class=\"product-info\">\n              <h5>{product.price}</h5>\n              <p class=\"product-description\">{product.description}</p>\n            </div>\n          </div>\n        ))}\n      </Grid>\n\n    </GridLayout>\n  )\n}"
         },
         {
             element: test_page_adv_tsx.SuperTableTest, 

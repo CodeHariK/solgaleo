@@ -3,6 +3,7 @@
 
 export * from "./svg/gen";
 export * from "./ui/gen";
+export * from "./chart/gen";
 export * from "./adv/gen";
 export * from "./fancy/gen";
 export * from "./nav/gen";
@@ -33,8 +34,12 @@ export const CssSRC = {
     OutlinedRoundButton: "OutlinedRoundButton",
     Tag: "Tag",
     IconButtonPlain: "IconButtonPlain",
+    ButtonMaterialRev: "ButtonMaterialRev",
+    ButtonMaterialRoundRev: "ButtonMaterialRoundRev",
     GradientTag: "GradientTag",
     ErrorButton: "ErrorButton",
+    SelectionOptions: "selection-options",
+    Option: "option",
     SelectChevron: "SelectChevron",
     ToggleSwitch: "ToggleSwitch",
     ToggleThumb: "ToggleThumb",
@@ -133,6 +138,7 @@ export const CssSRC = {
     HeaderRight: "HeaderRight",
     BottomBar: "BottomBar",
     BottomBarItem: "BottomBarItem",
+    MobileHeader: "MobileHeader",
     ModalOverlay: "ModalOverlay",
     ModalContent: "ModalContent",
     ModalContentShow: "ModalContentShow",

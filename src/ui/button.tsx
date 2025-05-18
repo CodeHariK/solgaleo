@@ -1,14 +1,15 @@
 /*CSS:
 button, .IconButton, .MaterialButton, .OutlinedButton,
 .MaterialRoundButton, .OutlinedRoundButton, .Tag {
-    all: unset;
     display: inline-flex;
+    line-height: 1;
+    font-size: inherit;
     gap: 0.5rem;
-    padding: 0.625rem 1rem;
+    padding: 0.9rem 1rem;
     align-items: center;
     justify-content: center;
-    // color: var(--primary);
-    // background: var(--surface-bg);
+    color: var(--primary);
+    background: var(--surface-bg);
     border: 1px solid transparent;
     user-select: none;
     cursor: pointer;
@@ -57,8 +58,13 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 }
 
 .MaterialButton, .MaterialRoundButton {
-    color: var(--primary);
+    color: var(--body);
     background: var(--primary-bg);
+    border: 1px solid transparent;
+}
+.ButtonMaterialRev, .ButtonMaterialRoundRev {
+    color: var(--body-bg);
+    background: var(--primary);
     border: 1px solid transparent;
 }
 
@@ -68,11 +74,8 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
     border: 1px solid var(--primary-border);
 }
 
-.OutlinedRoundButton {
-    border-radius: 2rem;
-}
-.MaterialRoundButton {
-    border-radius: 2rem;
+.OutlinedRoundButton, .MaterialRoundButton, .ButtonMaterialRoundRev {
+    border-radius: .5rem;
 }
 
 .GradientTag {
@@ -88,9 +91,9 @@ button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton
 
 */
 
-
 import { createSignal, JSX } from "solid-js";
 import { CssUI } from "./gen";
+import { IconDown } from "../svg/svg";
 
 interface AsyncButtonProps {
     onClick: () => Promise<void>; // Async function to be executed
@@ -124,3 +127,38 @@ export function AsyncButton(props: AsyncButtonProps) {
         </button>
     );
 };
+
+/*CSS:
+
+.selection-options {
+    display: flex;
+    border-top: 1px solid var(--surface-tint);
+    border-bottom: 1px solid var(--surface-tint);
+    margin-top: 16px;
+}
+
+.option {
+    flex: 1;
+    padding: 16px 0;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    color: var(--surface);
+    border-left: 1px solid var(--surface-tint);
+}
+
+*/
+
+export function Options() {
+    return <div class="selection-options">
+
+        <div class="option">COLOUR</div>
+
+        <div class="option">
+            <span>SIZE</span>
+            <IconDown />
+        </div>
+
+    </div>;
+}

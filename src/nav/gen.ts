@@ -28,6 +28,7 @@ export const CssNAV = {
     HeaderRight: "HeaderRight",
     BottomBar: "BottomBar",
     BottomBarItem: "BottomBarItem",
+    MobileHeader: "MobileHeader",
     ModalOverlay: "ModalOverlay",
     ModalContent: "ModalContent",
     ModalContentShow: "ModalContentShow",

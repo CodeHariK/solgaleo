@@ -7,7 +7,7 @@ import { CssUI } from "./gen";
     cursor: pointer;
     
     :hover {
-        background: var(--surface); 
+        background: var(--surface-bg); 
     }
 }
 

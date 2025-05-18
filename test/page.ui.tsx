@@ -351,10 +351,12 @@ export function Item(props: { children: JSX.Element | string }) {
     return (
         <div
             style={{
-                background: "#eee",
+                color: "var(--primary-bg)",
+                background: "var(--primary)",
                 padding: "1rem",
                 height: "100%",
                 "border-radius": "6px",
+                "align-content": "center",
                 "text-align": "center",
             }}
         >
