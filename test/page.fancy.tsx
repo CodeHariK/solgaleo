@@ -2,7 +2,7 @@ import { createSignal } from "solid-js";
 import { Banner, FlickerText, GlitterCard, Marquee, RainbowImage, RainbowText, Skeleton, Terminal, TransitionWidget, TypeWriter } from "../src/fancy/gen";
 import { CssUI, GridLayout, Select } from "../src/ui/gen";
 import { TestHeader } from "./common";
-import { AreaChart } from "../src/chart/area";
+import { AreaChart, DonutChart } from "../src/chart/area";
 
 function createRandomArray(length, max) {
   return Array.from({ length }, () => Math.floor(Math.random() * max));
@@ -18,28 +18,40 @@ export function FancyTest() {
   const [toggle, setToggle] = createSignal(false);
 
   let [chartType, setChartType] = createSignal<"bar" | "line" | "stacked-bar">()
+  let [curveType, setCurveType] = createSignal<"cubic-bezier" | "catmull-rom">()
 
   return <GridLayout
     header={<TestHeader />}
   >
 
-    {chartType()}
+    <div class="flex gap2 items-center">
+      <span>{curveType()}</span>
+      <span>{chartType()}</span>
 
-    <Select
-      name="chartType"
-      setValue={setChartType}
-      initialValue="bar"
-      options={[
-        { value: "line", label: "line" },
-        { value: "bar", label: "bar" },
-        { value: "stacked-bar", label: "stacked-bar" },
-      ]} />
+      <Select
+        name="curveType"
+        setValue={setCurveType}
+        initialValue="cubic-bezier"
+        options={[
+          { value: "cubic-bezier", label: "cubic-bezier" },
+          { value: "catmull-rom", label: "catmull-rom" },
+        ]} />
+      <Select
+        name="chartType"
+        setValue={setChartType}
+        initialValue="line"
+        options={[
+          { value: "line", label: "line" },
+          { value: "bar", label: "bar" },
+          { value: "stacked-bar", label: "stacked-bar" },
+        ]} />
+    </div>
 
     <AreaChart
       width={600}
       height={300}
       smooth
-      curveType="cubic-bezier"
+      curveType={curveType()}
       chartType={chartType()}
       duration={1000}
       data={[
@@ -54,6 +66,18 @@ export function FancyTest() {
           values: toggle() ? r3 : r4,
           lineColor: "#0099ff"
         }
+      ]}
+    />
+
+    <DonutChart
+      width={400}
+      height={400}
+      thickness={50}
+      duration={1000}
+      data={[
+        { label: "Category A", value: 30, color: "#f01b1b" },
+        { label: "Category B", value: 45, color: "#0099ff" },
+        { label: "Category C", value: 25, color: "#00ff99" }
       ]}
     />
 
