@@ -1,6 +1,6 @@
 import { Key } from "@solid-primitives/keyed";
 import { useSpaceContext } from "./spaceform";
-import { createSignal, type JSX } from "solid-js";
+import { createSignal, onMount, type JSX } from "solid-js";
 import { IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 
@@ -61,6 +61,25 @@ select {
 
 */
 
+function useLocalState() {
+    const [values, setValues] = createSignal<Record<string, any>>({});
+    const [errors, setErrors] = createSignal<Record<string, string>>({});
+
+    const handleChange = (name: string, value: any) => {
+        setValues(prev => ({ ...prev, [name]: value }));
+    };
+
+    const initializeValue = (name: string, value: any) => {
+        setValues(prev => ({ ...prev, [name]: value }));
+    };
+
+    return {
+        state: () => ({ values: values(), errors: errors() }),
+        handleChange,
+        initializeValue
+    };
+}
+
 type CheckboxOption = {
     value: string;
     label: JSX.Element;
@@ -74,10 +93,35 @@ type CheckboxGroupProps = {
     horizontal?: boolean;
     checkboxes: Array<CheckboxOption>;
     onChange?: (value: Set<string>) => void;
+    setValue?: (value: Set<string>) => void;
+    initialValue?: string[];
 };
 
 export function CheckboxGroup(props: CheckboxGroupProps) {
-    const { state, handleChange } = useSpaceContext();
+    let context;
+    try {
+        context = useSpaceContext();
+    } catch {
+        context = useLocalState();
+    }
+
+    const { state, handleChange, initializeValue } = context;
+
+    onMount(() => {
+        if (props.initialValue !== undefined) {
+            initializeValue(props.name, props.initialValue);
+            props.setValue?.(new Set(props.initialValue));
+        }
+    });
+
+    const handleCheckboxChange = (s: Set<string>) => {
+        const values = props.checkboxes
+            .filter((c) => s.has(c.value))
+            .map((c) => c.value);
+        handleChange(props.name, values);
+        props.setValue?.(s);
+        props.onChange?.(s);
+    };
 
     return (
         <fieldset classList={{ "flex": props.horizontal }}>
@@ -101,12 +145,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
                                 } else {
                                     s.add(option().value)
                                 }
-                                props.onChange?.(s)
-                                handleChange(
-                                    props.name,
-                                    props.checkboxes.filter((c) => {
-                                        return s.has(c.value);
-                                    }).map((c) => c.value))
+                                handleCheckboxChange(s);
                             }}
                         />
                         <label aria-disabled={option().disabled} for={option().value} >
@@ -135,10 +174,26 @@ type RadioGroupProps = {
     horizontal?: boolean;
     options: Array<RadioOption>;
     onChange?: (value: string) => void;
+    setValue?: (value: string) => void;
+    initialValue?: string;
 };
 
 export function RadioGroup(props: RadioGroupProps) {
-    const { state, handleChange } = useSpaceContext();
+    let context;
+    try {
+        context = useSpaceContext();
+    } catch {
+        context = useLocalState();
+    }
+
+    const { state, handleChange, initializeValue } = context;
+
+    onMount(() => {
+        if (props.initialValue !== undefined) {
+            initializeValue(props.name, props.initialValue);
+            props.setValue?.(props.initialValue);
+        }
+    });
 
     return (
         <fieldset classList={{ "flex": props.horizontal }}>
@@ -155,7 +210,8 @@ export function RadioGroup(props: RadioGroupProps) {
                             checked={state().values[props.name] === option().value}
                             disabled={option().disabled}
                             onChange={(e) => {
-                                handleChange(props.name, e.target.value)
+                                handleChange(props.name, e.target.value);
+                                props.setValue?.(e.target.value);
                                 props.onChange?.(e.target.value);
                             }}
                         />
@@ -184,10 +240,26 @@ type SelectProps = {
     options: Array<SelectOption>;
     disabled?: boolean;
     onChange?: (value: string) => void;
+    setValue?: (value: string) => void;
+    initialValue?: string;
 };
 
 export function Select(props: SelectProps) {
-    const { state, handleChange } = useSpaceContext();
+    let context;
+    try {
+        context = useSpaceContext();
+    } catch {
+        context = useLocalState();
+    }
+
+    const { state, handleChange, initializeValue } = context;
+
+    onMount(() => {
+        if (props.initialValue !== undefined) {
+            initializeValue(props.name, props.initialValue);
+            props.setValue?.(props.initialValue);
+        }
+    });
 
     return (
         <fieldset>
@@ -200,8 +272,9 @@ export function Select(props: SelectProps) {
                     disabled={props.disabled}
                     onChange={
                         (e) => {
-                            handleChange(props.name, e.target.value)
-                            props.onChange(e.target.value)
+                            handleChange(props.name, e.target.value);
+                            props.setValue?.(e.target.value);
+                            props.onChange?.(e.target.value);
                         }
                     }
                 >
@@ -254,15 +327,32 @@ export function Select(props: SelectProps) {
 interface ToggleSwitchProps {
     name: string;
     onChange?: (value: boolean) => void;
+    setValue?: (value: boolean) => void;
+    initialValue?: boolean;
 }
 
 export function ToggleSwitch(props: ToggleSwitchProps) {
-    const { state, handleChange } = useSpaceContext();
+    let context;
+    try {
+        context = useSpaceContext();
+    } catch {
+        context = useLocalState();
+    }
+
+    const { state, handleChange, initializeValue } = context;
+
+    onMount(() => {
+        if (props.initialValue !== undefined) {
+            initializeValue(props.name, props.initialValue);
+            props.setValue?.(props.initialValue);
+        }
+    });
 
     const toggleValue = () => {
         const newValue = !state().values[props.name];
         handleChange(props.name, newValue);
-        props.onChange(newValue)
+        props.setValue?.(newValue);
+        props.onChange?.(newValue);
     };
 
     return (
@@ -475,13 +565,29 @@ type InputProps = {
     min?: number;
     max?: number;
     step?: number;
+    setValue?: (value: any) => void;
+    initialValue?: any;
 };
 
 export function Input(props: InputProps) {
-    const { state, handleChange } = useSpaceContext();
+    let context;
+    try {
+        context = useSpaceContext();
+    } catch {
+        context = useLocalState();
+    }
+
+    const { state, handleChange, initializeValue } = context;
     const [showPassword, setShowPassword] = createSignal(false);
 
     const [rangeLeft, setRangeLeft] = createSignal((state().values[props.name] ?? 0) + "%");
+
+    onMount(() => {
+        if (props.initialValue !== undefined) {
+            initializeValue(props.name, props.initialValue);
+            props.setValue?.(props.initialValue);
+        }
+    });
 
     const updateRangeValue = (input: HTMLInputElement) => {
         const value = parseFloat(input.value);
@@ -489,6 +595,13 @@ export function Input(props: InputProps) {
         const max = props.max ?? 100;
         const percent = ((value - min) / (max - min)) * 100;
         setRangeLeft(`${percent}%`);
+    };
+
+    const handleInputChange = (value: any) => {
+        if (!props.pattern || props.pattern.test(value)) {
+            handleChange(props.name, value);
+            props.setValue?.(value);
+        }
     };
 
     return (
@@ -520,11 +633,7 @@ export function Input(props: InputProps) {
                         placeholder={props.placeholder || ''}
                         value={state().values[props.name] || ''}
                         onInput={(e) => {
-                            if (!props.pattern || props.pattern.test(e.target.value)) {
-                                handleChange(props.name, e.target.value)
-                            } else {
-                                handleChange(props.name, state().values[props.name])
-                            }
+                            handleInputChange(e.target.value);
                         }}
                         class={`${state().errors[props.name] ? CssUI.ErrorTextInput : ''}`}
                     />
@@ -539,13 +648,9 @@ export function Input(props: InputProps) {
                         placeholder={props.placeholder || ''}
                         value={state().values[props.name] ?? (props.type === "range" ? 0 : '')}
                         onInput={(e) => {
+                            handleInputChange(e.target.value);
                             if (props.type === "range") {
                                 updateRangeValue(e.currentTarget);
-                            }
-                            if (!props.pattern || props.pattern.test(e.target.value)) {
-                                handleChange(props.name, e.target.value)
-                            } else {
-                                handleChange(props.name, state().values[props.name])
                             }
                         }}
                         min={props.min}
@@ -640,16 +745,41 @@ type FileUploaderProps = {
     header?: string;
     accept: string[];
     uploadFunc: (formdata: FormData) => Promise<{ valid: boolean, info: JSX.Element }>;
+    initialValue?: File | string;
+    setValue?: (value: string | File) => void;
 };
 
 export function FileUploader(props: FileUploaderProps) {
+    let context;
+    try {
+        context = useSpaceContext();
+    } catch {
+        context = useLocalState();
+    }
+
+    const { state, handleChange, initializeValue } = context;
+
     const [fileValid, setFildValid] = createSignal(true);
     const [fileInfo, setFileInfo] = createSignal<JSX.Element>();
     const [imageSrc, setImageSrc] = createSignal('');
     const [isDragging, setIsDragging] = createSignal(false);
     const [fileInputRef, setFileInputRef] = createSignal<HTMLInputElement | null>(null);
 
-    const { state, handleChange } = useSpaceContext();
+    onMount(() => {
+        if (props.initialValue !== undefined) {
+            initializeValue(props.name, props.initialValue);
+            props.setValue?.(props.initialValue);
+
+            // If initial value is a File or URL, also set the image preview
+            if (props.initialValue instanceof File) {
+                const reader = new FileReader();
+                reader.readAsDataURL(props.initialValue);
+                reader.onload = () => setImageSrc(reader.result as string);
+            } else if (typeof props.initialValue === 'string') {
+                setImageSrc(props.initialValue);
+            }
+        }
+    });
 
     const uploadFile = async () => {
         const formData = state().values[props.name];

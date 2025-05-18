@@ -7,6 +7,7 @@ interface Point {
     value: number;
     label: string;
     color: string;
+    stackHeight?: number;  // Add optional stackHeight for stacked bars
 }
 
 interface AreaChartProps {
@@ -21,8 +22,8 @@ interface AreaChartProps {
     smooth?: boolean;
     duration?: number;
     curveType?: 'catmull-rom' | 'cubic-bezier';
-    chartType?: 'line' | 'bar' | 'stacked-bar';  // New prop
-    barWidth?: number;  // New prop for bar width
+    chartType?: 'line' | 'bar' | 'stacked-bar';
+    barWidth?: number;
 }
 
 // Add helper function for Catmull-Rom spline
@@ -34,6 +35,10 @@ function catmullRom(p0: number, p1: number, p2: number, p3: number, t: number) {
     return (2 * p1 - 2 * p2 + v0 + v1) * t3 +
         (-3 * p1 + 3 * p2 - 2 * v0 - v1) * t2 +
         v0 * t + p1;
+}
+
+function isPointInRect(px: number, py: number, rx: number, ry: number, rw: number, rh: number): boolean {
+    return px >= rx && px <= rx + rw && py >= ry && py <= ry + rh;
 }
 
 export function AreaChart(props: AreaChartProps) {
@@ -64,10 +69,10 @@ export function AreaChart(props: AreaChartProps) {
         const drawHeight = props.height - padding.top - padding.bottom;
 
         // For stacked bars, we need to calculate max of sums
-        const maxY = props.chartType === 'stacked-bar' 
-            ? Math.max(...data[0].values.map((_, i) => 
+        const maxY = props.chartType === 'stacked-bar'
+            ? Math.max(...data[0].values.map((_, i) =>
                 data.reduce((sum, series) => sum + series.values[i], 0)
-              )) * 1.1
+            )) * 1.1
             : Math.max(...data.flatMap((d) => d.values)) * 1.1;
 
         // Draw grid
@@ -108,23 +113,23 @@ export function AreaChart(props: AreaChartProps) {
 
         if (props.chartType === 'bar' || props.chartType === 'stacked-bar') {
             const barWidth = props.barWidth ?? drawWidth / (data[0].values.length * (data.length + 1));
-            
+
             if (props.chartType === 'bar') {
-                // Regular bar chart
+                // Regular bar chart - bars start at x point and go right
                 data.forEach((series, seriesIndex) => {
                     series.values.forEach((val, i) => {
                         const x = padding.left + (drawWidth * i) / series.values.length;
-                        const barX = x + (barWidth * seriesIndex) - (barWidth * data.length / 2);
+                        const barX = x + (barWidth * seriesIndex); // Remove centering offset
                         const height = (val / maxY) * drawHeight;
                         const y = props.height - padding.bottom - height;
 
                         ctx.beginPath();
-                        ctx.fillStyle = series.areaColor ?? series.lineColor;
+                        ctx.fillStyle = series.lineColor;
                         ctx.fillRect(barX, y, barWidth, height);
 
                         // Store point data for hover
                         points.push({
-                            x: barX + barWidth/2,
+                            x: barX + barWidth / 2,
                             y: y,
                             value: val,
                             label: series.label,
@@ -133,31 +138,28 @@ export function AreaChart(props: AreaChartProps) {
                     });
                 });
             } else {
-                // Stacked bar chart
-                const barWidth = props.barWidth ?? drawWidth / (data[0].values.length * 2);
-                
-                // Process each x-position
+                // Stacked bar chart - bars align with x point
                 data[0].values.forEach((_, i) => {
                     let stackHeight = 0;
-                    
+                    const x = padding.left + (drawWidth * i) / data[0].values.length;
+
                     data.forEach((series) => {
                         const val = series.values[i];
-                        const x = padding.left + (drawWidth * i) / series.values.length;
-                        const barX = x - barWidth/2;
                         const height = (val / maxY) * drawHeight;
                         const y = props.height - padding.bottom - height - stackHeight;
 
                         ctx.beginPath();
-                        ctx.fillStyle = series.areaColor ?? series.lineColor;
-                        ctx.fillRect(barX, y, barWidth, height);
+                        ctx.fillStyle = series.lineColor;
+                        ctx.fillRect(x, y, barWidth, height);
 
                         // Store point data for hover
                         points.push({
-                            x: barX + barWidth/2,
-                            y: y + height/2,
+                            x: x + barWidth / 2,
+                            y: y + height / 2,
                             value: val,
                             label: series.label,
                             color: series.lineColor,
+                            stackHeight: stackHeight + height,
                         });
 
                         stackHeight += height;
@@ -256,15 +258,52 @@ export function AreaChart(props: AreaChartProps) {
         // Add canvas event listeners
         canvasRef.onmousemove = (e) => {
             const rect = canvasRef.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
 
-            // Find closest point
-            const point = points.find(
-                (p) => Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y - y, 2)) < 10
-            );
+            if (props.chartType === 'bar' || props.chartType === 'stacked-bar') {
+                // Calculate barWidth here so it's in scope
+                const barWidth = props.barWidth ?? drawWidth / (data[0].values.length * (data.length + 1));
 
-            setHoveredPoint(point || null);
+                // Find bar under cursor
+                const point = points.find(p => {
+                    if (props.chartType === 'bar') {
+                        const barHeight = (p.value / maxY) * drawHeight;
+                        return isPointInRect(
+                            mouseX,
+                            mouseY,
+                            p.x - barWidth / 2,
+                            p.y,
+                            barWidth,
+                            barHeight
+                        );
+                    } else {
+                        return isPointInRect(
+                            mouseX,
+                            mouseY,
+                            p.x - barWidth / 2,
+                            p.y - (p.stackHeight ?? 0) / 2,
+                            barWidth,
+                            p.stackHeight ?? barWidth
+                        );
+                    }
+                });
+                if (point) {
+                    // Update point coordinates to mouse position for bars
+                    setHoveredPoint({
+                        ...point,
+                        x: mouseX,
+                        y: mouseY
+                    });
+                } else {
+                    setHoveredPoint(null);
+                }
+            } else {
+                const point = points.find(
+                    p => Math.sqrt(Math.pow(p.x - mouseX, 2) + Math.pow(p.y - mouseY, 2)) < 10
+                );
+                setHoveredPoint(point || null);
+            }
         };
 
         canvasRef.onmouseleave = () => setHoveredPoint(null);

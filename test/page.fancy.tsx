@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import { Banner, FlickerText, GlitterCard, Marquee, RainbowImage, RainbowText, Skeleton, Terminal, TransitionWidget, TypeWriter } from "../src/fancy/gen";
-import { CssUI, GridLayout } from "../src/ui/gen";
+import { CssUI, GridLayout, Select } from "../src/ui/gen";
 import { TestHeader } from "./common";
 import { AreaChart } from "../src/chart/area";
 
@@ -17,16 +17,30 @@ export function FancyTest() {
 
   const [toggle, setToggle] = createSignal(false);
 
+  let [chartType, setChartType] = createSignal<"bar" | "line" | "stacked-bar">()
+
   return <GridLayout
     header={<TestHeader />}
   >
+
+    {chartType()}
+
+    <Select
+      name="chartType"
+      setValue={setChartType}
+      initialValue="bar"
+      options={[
+        { value: "line", label: "line" },
+        { value: "bar", label: "bar" },
+        { value: "stacked-bar", label: "stacked-bar" },
+      ]} />
 
     <AreaChart
       width={600}
       height={300}
       smooth
       curveType="cubic-bezier"
-      chartType="bar"
+      chartType={chartType()}
       duration={1000}
       data={[
         {
