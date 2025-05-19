@@ -19,6 +19,7 @@ export function TestHeader() {
             <AA href={'/ui'} title='Ui' >Ui</AA>,
             <AA href={'/grid'} title='Grid'>Grid</AA>,
             <AA href="/tabs" >Tab</AA>,
+            <AA href="/chart" >Chart</AA>,
             <AA href="/tabs?two.light=Root.Pictures.Vacation" >Tabs</AA>,
         ]}
         right={[

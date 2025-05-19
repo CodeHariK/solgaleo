@@ -7,6 +7,7 @@ export * from "./page.root.tsx"; import * as test_page_root_tsx from "./page.roo
 export * from "./mobile.tsx"; import * as test_mobile_tsx from "./mobile.tsx";
 export * from "./page.grid.tsx"; import * as test_page_grid_tsx from "./page.grid.tsx";
 export * from "./page.tabs.tsx"; import * as test_page_tabs_tsx from "./page.tabs.tsx";
+export * from "./page.chart.tsx"; import * as test_page_chart_tsx from "./page.chart.tsx";
 export * from "./page.svg.tsx"; import * as test_page_svg_tsx from "./page.svg.tsx";
 export * from "./common.tsx"; import * as test_common_tsx from "./common.tsx";
 export * from "./NotFound.tsx"; import * as test_NotFound_tsx from "./NotFound.tsx";
@@ -89,7 +90,7 @@ export const CssTEST = {
         {
             element: test_common_tsx.TestHeader, 
             doc: "Header  (test/common.tsx)", 
-            data: "export function TestHeader() {\n  return <Header\n    title={<AA href=\"/\">\n      <IMG src=\"/logo.png\" alt=\"solgaleo\" />\n      <p>Solgaleo</p>\n    </AA>}\n    links={[\n      <AA href={'/nav'} title='Nav'>Nav</AA>,\n      <AA href={'/adv'} title='Adv' >Adv</AA>,\n      <AA href={'/svg'} title='Svg' >Svg</AA>,\n      <AA href={'/fancy'} title='Fancy' >Fancy</AA>,\n      <AA href={'/ui'} title='Ui' >Ui</AA>,\n      <AA href={'/grid'} title='Grid'>Grid</AA>,\n      <AA href=\"/tabs\" >Tab</AA>,\n      <AA href=\"/tabs?two.light=Root.Pictures.Vacation\" >Tabs</AA>,\n    ]}\n    right={[\n      <button\n        class={CssUI.IconButton}\n        type=\"button\"\n        onClick={() => window.open('https://github.com/codeharik/solgaleo', '_blank')}>\n        Github\n      </button>,\n      <ThemeToggle />\n    ]}\n  />;\n}"
+            data: "export function TestHeader() {\n  return <Header\n    title={<AA href=\"/\">\n      <IMG src=\"/logo.png\" alt=\"solgaleo\" />\n      <p>Solgaleo</p>\n    </AA>}\n    links={[\n      <AA href={'/nav'} title='Nav'>Nav</AA>,\n      <AA href={'/adv'} title='Adv' >Adv</AA>,\n      <AA href={'/svg'} title='Svg' >Svg</AA>,\n      <AA href={'/fancy'} title='Fancy' >Fancy</AA>,\n      <AA href={'/ui'} title='Ui' >Ui</AA>,\n      <AA href={'/grid'} title='Grid'>Grid</AA>,\n      <AA href=\"/tabs\" >Tab</AA>,\n      <AA href=\"/chart\" >Chart</AA>,\n      <AA href=\"/tabs?two.light=Root.Pictures.Vacation\" >Tabs</AA>,\n    ]}\n    right={[\n      <button\n        class={CssUI.IconButton}\n        type=\"button\"\n        onClick={() => window.open('https://github.com/codeharik/solgaleo', '_blank')}>\n        Github\n      </button>,\n      <ThemeToggle />\n    ]}\n  />;\n}"
         },
         {
             element: test_mobile_tsx.MobileApp, 

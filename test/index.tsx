@@ -17,6 +17,7 @@ import { NotFound } from './NotFound';
 import { SolProvider } from '../src/gen';
 
 import "./custom.css"
+import { ChartTest } from './page.chart';
 
 render(() => <SolProvider
     initialData={{
@@ -32,6 +33,7 @@ render(() => <SolProvider
         <Route path="/ui" component={UiTest} />
         <Route path="/grid" component={GridTest} />
         <Route path="/tabs" component={TabTest} />
+        <Route path="/chart" component={ChartTest} />
         <Route path="*" component={NotFound} />
     </Router>
 </SolProvider>,

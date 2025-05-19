@@ -1,7 +1,7 @@
 import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { DrawBezierCurve, DrawCatmullRomSpline, DrawCircle, DrawGrid, DrawLinearCurve, DrawRectangle, DrawTriangle, IsPointInRect } from "./canvas";
 
-// Update the interface to include area color options and chart type
-interface Point {
+export type Point = {
     x: number;
     y: number;
     value: number;
@@ -9,37 +9,24 @@ interface Point {
     color: string;
     stackHeight?: number;
     percentage?: number;
+    axisLabel?: string;
 }
 
-interface AreaChartProps {
-    data: {
-        label: string;
-        values: number[];
-        lineColor: string;
-        areaColor?: string;
-    }[];
+type AreaChartData = {
+    label: string;
+    values: number[];
+    lineColor: string;
+    areaColor?: string;
+}
+
+type AreaChartProps = {
+    data: AreaChartData[];
     width: number;
     height: number;
-    smooth?: boolean;
     duration?: number;
-    curveType?: 'catmull-rom' | 'cubic-bezier';
+    curveType?: 'linear' | 'catmull-rom' | 'cubic-bezier';
     chartType?: 'line' | 'bar' | 'stacked-bar';
     barWidth?: number;
-}
-
-// Add helper function for Catmull-Rom spline
-function catmullRom(p0: number, p1: number, p2: number, p3: number, t: number) {
-    const v0 = (p2 - p0) * 0.5;
-    const v1 = (p3 - p1) * 0.5;
-    const t2 = t * t;
-    const t3 = t * t2;
-    return (2 * p1 - 2 * p2 + v0 + v1) * t3 +
-        (-3 * p1 + 3 * p2 - 2 * v0 - v1) * t2 +
-        v0 * t + p1;
-}
-
-function isPointInRect(px: number, py: number, rx: number, ry: number, rw: number, rh: number): boolean {
-    return px >= rx && px <= rx + rw && py >= ry && py <= ry + rh;
 }
 
 export function AreaChart(props: AreaChartProps) {
@@ -60,9 +47,9 @@ export function AreaChart(props: AreaChartProps) {
         // Update padding - remove right padding since legend is now in HTML
         const padding = {
             top: 20,
-            right: 20, // Reduced from 120
+            right: 20,
             bottom: 20,
-            left: 40,
+            left: 20,
         };
 
         // Calculate drawing area
@@ -76,152 +63,100 @@ export function AreaChart(props: AreaChartProps) {
             )) * 1.1
             : Math.max(...data.flatMap((d) => d.values)) * 1.1;
 
-        // Draw grid
-        const stepsY = 5;
-        ctx.strokeStyle = "#ddd";
-        ctx.lineWidth = 1;
-
-        // Horizontal grid lines
-        for (let i = 0; i <= stepsY; i++) {
-            const y = padding.top + (drawHeight * i) / stepsY;
-            ctx.beginPath();
-            ctx.moveTo(padding.left, y);
-            ctx.lineTo(props.width - padding.right, y);
-            ctx.stroke();
-
-            // Add Y axis labels
-            ctx.fillStyle = "#666";
-            ctx.textAlign = "right";
-            ctx.fillText(
-                ((maxY * (stepsY - i)) / stepsY).toFixed(1),
-                padding.left - 5,
-                y + 4
-            );
-        }
-
-        // Vertical grid lines
-        ctx.strokeStyle = "#eee";
-        for (let i = 0; i < data[0].values.length; i++) {
-            const x = padding.left + (drawWidth * i) / (data[0].values.length - 1);
-            ctx.beginPath();
-            ctx.moveTo(x, padding.top);
-            ctx.lineTo(x, props.height - padding.bottom);
-            ctx.stroke();
-        }
+        DrawGrid(ctx, props.width, props.height, 50, 1, "#ccc");
 
         // Store points for hit testing
-        const points: Point[] = [];
+        const POINTS: Point[] = [];
 
-        if (props.chartType === 'bar' || props.chartType === 'stacked-bar') {
+        if (props.chartType === 'bar') {
             const barWidth = props.barWidth ?? drawWidth / (data[0].values.length * (data.length + 1));
 
-            if (props.chartType === 'bar') {
-                // Regular bar chart - bars start at x point and go right
-                data.forEach((series, seriesIndex) => {
-                    series.values.forEach((val, i) => {
-                        const x = padding.left + (drawWidth * i) / series.values.length;
-                        const barX = x + (barWidth * seriesIndex); // Remove centering offset
-                        const height = (val / maxY) * drawHeight;
-                        const y = props.height - padding.bottom - height;
-
-                        ctx.beginPath();
-                        ctx.fillStyle = series.lineColor;
-                        ctx.fillRect(barX, y, barWidth, height);
-
-                        // Store point data for hover
-                        points.push({
-                            x: barX + barWidth / 2,
-                            y: y,
-                            value: val,
-                            label: series.label,
-                            color: series.lineColor,
-                        });
-                    });
-                });
-            } else {
-                // Stacked bar chart - bars align with x point
-                data[0].values.forEach((_, i) => {
-                    let stackHeight = 0;
-                    const x = padding.left + (drawWidth * i) / data[0].values.length;
-
-                    data.forEach((series) => {
-                        const val = series.values[i];
-                        const height = (val / maxY) * drawHeight;
-                        const y = props.height - padding.bottom - height - stackHeight;
-
-                        ctx.beginPath();
-                        ctx.fillStyle = series.lineColor;
-                        ctx.fillRect(x, y, barWidth, height);
-
-                        // Store point data for hover
-                        points.push({
-                            x: x + barWidth / 2,
-                            y: y + height / 2,
-                            value: val,
-                            label: series.label,
-                            color: series.lineColor,
-                            stackHeight: stackHeight + height,
-                        });
-
-                        stackHeight += height;
-                    });
-                });
-            }
-        } else {
-            // Original line chart code
-            data.forEach((series) => {
-                // Start path for line
-                ctx.beginPath();
-
+            // Regular bar chart - bars start at x point and go right
+            data.forEach((series, seriesIndex) => {
                 series.values.forEach((val, i) => {
-                    const x = padding.left + (drawWidth * i) / (series.values.length - 1);
-                    const y = props.height - padding.bottom - (val / maxY) * drawHeight;
+                    const barX = padding.left + (drawWidth * i) / series.values.length + (barWidth * seriesIndex);
+                    const height = (val / maxY) * drawHeight;
+                    const y = props.height - padding.bottom - height;
+
+                    DrawRectangle(ctx,
+                        { x: barX, y }, barWidth, height,
+                        1, series.lineColor
+                    );
 
                     // Store point data for hover
-                    points.push({
-                        x, y, value: val,
+                    POINTS.push({
+                        x: barX + barWidth / 2,
+                        y: y,
+                        value: val,
                         label: series.label,
                         color: series.lineColor,
                     });
-
-                    // Draw line segments
-                    if (i === 0) {
-                        ctx.moveTo(x, y);
-                    } else if (props.smooth) {
-
-                        const prevX = padding.left + (drawWidth * (i - 1)) / (series.values.length - 1);
-                        const prevY = props.height - padding.bottom - (series.values[i - 1] / maxY) * drawHeight;
-
-                        if (props.curveType === 'cubic-bezier') {
-                            // Cubic bezier interpolation
-                            const cp1x = prevX + (x - prevX) * 0.5;
-                            const cp1y = prevY;
-                            const cp2x = x - (x - prevX) * 0.5;
-                            const cp2y = y;
-                            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
-                        } else {
-                            // Default to Catmull-Rom
-                            const p0y = i > 1 ? series.values[i - 2] : series.values[i - 1];
-                            const p1y = series.values[i - 1];
-                            const p3y = i < series.values.length - 1 ? series.values[i + 1] : val;
-
-                            const py0 = props.height - padding.bottom - (p0y / maxY) * drawHeight;
-                            const py1 = props.height - padding.bottom - (p1y / maxY) * drawHeight;
-                            const py2 = y;
-                            const py3 = props.height - padding.bottom - (p3y / maxY) * drawHeight;
-
-                            for (let t = 0; t < 1; t += 0.1) {
-                                const cy = catmullRom(py0, py1, py2, py3, t);
-                                const cx = padding.left + (drawWidth * (i - 1 + t)) / (series.values.length - 1);
-                                ctx.lineTo(cx, cy);
-                            }
-                            ctx.lineTo(x, y);
-                        }
-
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
                 });
+            });
+        }
+
+        if (props.chartType === 'stacked-bar') {
+            const barWidth = props.barWidth ?? drawWidth / (data[0].values.length * (data.length + 1));
+
+            // Stacked bar chart - bars align with x point
+            data[0].values.forEach((_, i) => {
+                let stackHeight = 0;
+                const x = padding.left + (drawWidth * i) / data[0].values.length;
+
+                data.forEach((series) => {
+                    const val = series.values[i];
+                    const height = (val / maxY) * drawHeight;
+                    const y = props.height - padding.bottom - height - stackHeight;
+
+                    DrawRectangle(ctx,
+                        { x, y }, barWidth, height,
+                        1, series.lineColor
+                    );
+
+                    // Store point data for hover
+                    POINTS.push({
+                        x: x + barWidth / 2,
+                        y: y + height / 2,
+                        value: val,
+                        label: series.label,
+                        color: series.lineColor,
+                        stackHeight: stackHeight + height,
+                    });
+
+                    stackHeight += height;
+                });
+            });
+        }
+
+        if (props.chartType === 'line') {
+
+            data.forEach((series, seriesIndex) => {
+                // Start path for line
+                ctx.beginPath();
+
+                const points = series.values.map((val, i) => ({
+                    x: padding.left + (drawWidth * i) / (series.values.length - 1),
+                    y: props.height - padding.bottom - (val / maxY) * drawHeight
+                }));
+
+                points.forEach((point, i) => {
+                    POINTS.push({
+                        ...point,
+                        value: series.values[i],
+                        label: series.label,
+                        color: series.lineColor,
+                    });
+                });
+
+                if (props.curveType === 'linear') {
+                    DrawLinearCurve(ctx, points, 2, series.lineColor);
+                }
+                else if (props.curveType === 'cubic-bezier') {
+                    DrawBezierCurve(ctx, points, 2, series.lineColor);
+                }
+                else if (props.curveType === 'catmull-rom') {
+                    DrawCatmullRomSpline(ctx, points);
+                }
 
                 // Stroke the line
                 ctx.strokeStyle = series.lineColor;
@@ -242,18 +177,26 @@ export function AreaChart(props: AreaChartProps) {
                     const x = padding.left + (drawWidth * i) / (series.values.length - 1);
                     const y = props.height - padding.bottom - (val / maxY) * drawHeight;
 
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, Math.PI * 2);
-                    ctx.fillStyle = series.lineColor;
-                    ctx.fill();
-                    // ctx.strokeStyle = "#fff";
-                    // ctx.lineWidth = 2;
-                    // ctx.stroke();
-                    ctx.restore();
+                    // Draw points with different shapes based on series index
+                    switch (seriesIndex % 3) {
+                        case 0:
+                            DrawCircle(ctx, { x, y }, 4, true,
+                                1, series.lineColor, null);
+                            break;
+                        case 1:
+                            DrawRectangle(ctx, { x: x - 4, y: y - 4 }, 8, 8,
+                                1, series.lineColor);
+                            break;
+                        case 2:
+                            DrawTriangle(ctx, { x, y }, 4, 4, 0,
+                                1, series.lineColor);
+                            break;
+                    }
                 });
             });
         }
+
+        ctx.restore();
 
         // Add canvas event listeners
         canvasRef.onmousemove = (e) => {
@@ -266,10 +209,10 @@ export function AreaChart(props: AreaChartProps) {
                 const barWidth = props.barWidth ?? drawWidth / (data[0].values.length * (data.length + 1));
 
                 // Find bar under cursor
-                const point = points.find(p => {
+                const point = POINTS.find(p => {
                     if (props.chartType === 'bar') {
                         const barHeight = (p.value / maxY) * drawHeight;
-                        return isPointInRect(
+                        return IsPointInRect(
                             mouseX,
                             mouseY,
                             p.x - barWidth / 2,
@@ -278,7 +221,7 @@ export function AreaChart(props: AreaChartProps) {
                             barHeight
                         );
                     } else {
-                        return isPointInRect(
+                        return IsPointInRect(
                             mouseX,
                             mouseY,
                             p.x - barWidth / 2,
@@ -299,7 +242,7 @@ export function AreaChart(props: AreaChartProps) {
                     setHoveredPoint(null);
                 }
             } else {
-                const point = points.find(
+                const point = POINTS.find(
                     p => Math.sqrt(Math.pow(p.x - mouseX, 2) + Math.pow(p.y - mouseY, 2)) < 10
                 );
                 setHoveredPoint(point || null);
@@ -307,8 +250,6 @@ export function AreaChart(props: AreaChartProps) {
         };
 
         canvasRef.onmouseleave = () => setHoveredPoint(null);
-
-        ctx.restore();
     }
 
     function animate(prevData: typeof props.data,
@@ -444,218 +385,6 @@ export function AreaChart(props: AreaChartProps) {
                             }}
                         />
                         <span>{series.label}</span>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
-
-interface DonutChartProps {
-    data: {
-        label: string;
-        value: number;
-        color: string;
-    }[];
-    width: number;
-    height: number;
-    thickness?: number;  // Donut thickness in pixels
-    duration?: number;   // Animation duration
-    startAngle?: number; // Starting angle in radians
-}
-
-
-
-export function DonutChart(props: DonutChartProps) {
-    const [hoveredSegment, setHoveredSegment] = createSignal<Point | null>(null);
-    const [internalData, setInternalData] = createSignal(props.data);
-    let canvasRef: HTMLCanvasElement;
-    let animationFrameId: number;
-
-    function drawChart(data: typeof props.data, progress = 1) {
-        if (!canvasRef) return;
-        const ctx = canvasRef.getContext('2d');
-        if (!ctx) return;
-
-        ctx.clearRect(0, 0, props.width, props.height);
-        ctx.save();
-
-        const centerX = props.width / 2;
-        const centerY = props.height / 2;
-        const radius = Math.min(centerX, centerY) * 0.8;
-        const thickness = props.thickness ?? radius * 0.3;
-        const startAngle = props.startAngle ?? -Math.PI / 2;
-
-        // Calculate total for percentages
-        const total = data.reduce((sum, item) => sum + item.value, 0);
-        const points: Point[] = [];
-
-        let currentAngle = startAngle;
-
-        // Draw segments
-        data.forEach((item) => {
-            const segmentAngle = (item.value / total) * Math.PI * 2 * progress;
-            const endAngle = currentAngle + segmentAngle;
-            const midAngle = currentAngle + segmentAngle / 2;
-
-            // Draw segment
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius, currentAngle, endAngle);
-            ctx.arc(centerX, centerY, radius - thickness, endAngle, currentAngle, true);
-            ctx.closePath();
-            ctx.fillStyle = item.color;
-            ctx.fill();
-
-            // Store segment data for hover detection
-            points.push({
-                x: centerX + Math.cos(midAngle) * (radius - thickness / 2),
-                y: centerY + Math.sin(midAngle) * (radius - thickness / 2),
-                value: item.value,
-                label: item.label,
-                color: item.color,
-                percentage: (item.value / total) * 100
-            });
-
-            currentAngle = endAngle;
-        });
-
-        // Add hover detection
-        canvasRef.onmousemove = (e) => {
-            const rect = canvasRef.getBoundingClientRect();
-            const x = e.clientX - rect.left - centerX;
-            const y = e.clientY - rect.top - centerY;
-            const distance = Math.sqrt(x * x + y * y);
-
-            if (distance <= radius && distance >= radius - thickness) {
-                const angle = Math.atan2(y, x);
-                let normalizedAngle = angle;
-                if (normalizedAngle < startAngle) {
-                    normalizedAngle += Math.PI * 2;
-                }
-
-                let accumulatedAngle = startAngle;
-                const segment = points.find(p => {
-                    const segmentAngle = (p.value / total) * Math.PI * 2;
-                    accumulatedAngle += segmentAngle;
-                    return normalizedAngle <= accumulatedAngle;
-                });
-
-                setHoveredSegment(segment || null);
-            } else {
-                setHoveredSegment(null);
-            }
-        };
-
-        canvasRef.onmouseleave = () => setHoveredSegment(null);
-
-        ctx.restore();
-    }
-
-    function animate(prevData: typeof props.data, newData: typeof props.data, duration = 500) {
-        const startTime = performance.now();
-
-        function update(currentTime: number) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-
-            // Smooth easing
-            const t = progress < .5 ?
-                4 * progress * progress * progress :
-                1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-            drawChart(newData, t);
-
-            if (progress < 1) {
-                animationFrameId = requestAnimationFrame(update);
-            }
-        }
-
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = requestAnimationFrame(update);
-    }
-
-    // Initialize on mount
-    onMount(() => {
-        if (!canvasRef) return;
-        const initialData = props.data.map(item => ({ ...item, value: 0 }));
-        drawChart(initialData);
-        requestAnimationFrame(() => animate(initialData, props.data, props.duration ?? 500));
-    });
-
-    // Watch for data changes
-    createEffect(() => {
-        const { data, duration } = props;
-        const prevData = internalData();
-
-        if (JSON.stringify(prevData) !== JSON.stringify(data)) {
-            animate(prevData, data, duration ?? 500);
-            setInternalData(data);
-        } else {
-            drawChart(data);
-        }
-    });
-
-    onCleanup(() => {
-        cancelAnimationFrame(animationFrameId);
-    });
-
-    return (
-        <div style={{ position: "relative" }}>
-            <canvas
-                width={props.width}
-                height={props.height}
-                ref={canvasRef}
-            />
-
-            {/* Tooltip */}
-            {hoveredSegment() && (
-                <div
-                    style={{
-                        position: "absolute",
-                        left: `${hoveredSegment().x + props.width / 2}px`,
-                        top: `${hoveredSegment().y + props.height / 2 - 10}px`,
-                        transform: "translate(-50%, -100%)",
-                        background: "var(--primary-bg)",
-                        padding: "0.5rem",
-                        border: "1px solid var(--primary)",
-                        "border-radius": "4px",
-                        "pointer-events": "none",
-                        "z-index": 1000,
-                    }}
-                >
-                    <div style={{ color: hoveredSegment().color, "font-weight": "bold" }}>
-                        {hoveredSegment().label}
-                    </div>
-                    <div>Value: {hoveredSegment().value}</div>
-                    <div>{hoveredSegment().percentage.toFixed(1)}%</div>
-                </div>
-            )}
-
-            {/* Legend */}
-            <div
-                style={{
-                    display: "flex",
-                    "flex-direction": "column",
-                    gap: "0.5rem",
-                    padding: "0.5rem",
-                    position: "absolute",
-                    right: "1rem",
-                    top: "1rem",
-                }}
-            >
-                {props.data.map((item) => (
-                    <div style={{
-                        display: "flex",
-                        "align-items": "center",
-                        gap: "0.5rem",
-                    }}>
-                        <div style={{
-                            width: "15px",
-                            height: "15px",
-                            "background-color": item.color,
-                            "border-radius": "2px",
-                        }} />
-                        <span>{item.label}</span>
                     </div>
                 ))}
             </div>
