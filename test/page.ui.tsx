@@ -25,15 +25,15 @@ export function UiTest() {
         <ProgressBar progress={progress} />
 
         <Accordion
-            title="Section 1"
-            children={<div class="p8">"Content for section 1."</div>}
+            title="Accordion"
+            children={<div class="p8">Content for Accordion</div>}
         />
 
         <Modal
             // fullScreen={true}
             anchor={{
                 element: ([, setRef], [isVisible, setVisibiliy]) => {
-                    return <button ref={setRef} class={CssUI.OutlinedButton}
+                    return <button ref={setRef} class={CssUI.ButtonOutlined}
                         onmousedown={() => { setVisibiliy(!isVisible()) }}
                     >
                         <IconFilter />
@@ -89,7 +89,7 @@ export function UiTest() {
 
             <Input name="password1" type="password" label='label' placeholder="placeholder"
                 end={[
-                    <button class={CssUI.IconButton} type="reset"><IconCross /></button>,
+                    <button class={CssUI.ButtonIcon} type="reset"><IconCross /></button>,
                 ]} />
             <Input name="password2" type="password" placeholder="placeholder" />
             <Input name="range" type="range" header='range' placeholder="range" />
@@ -229,17 +229,38 @@ const selectOptions = [
 //Buttons
 //FN:DOC
 export function ButtonTest(setProgress?: (progress: number) => void) {
-    return <div style={{ "display": "flex", "align-items": "center", "flex-wrap": "wrap" }}>
+    return <div>
 
-        <button>BaseButton</button>
+        <div>
+            <button>Button</button>
+            <button class={CssUI.ButtonRev}>ButtonRev</button>
+            <button class={CssUI.ButtonRound}>ButtonRound</button>
+            <button class={CssUI.ButtonRoundRev}>ButtonRoundRev</button>
+        </div>
 
-        <button class={CssUI.MaterialButton}>MaterialButton</button>
+        <div>
+            <button class={CssUI.ButtonMaterial}>ButtonMaterial</button>
+            <button class={CssUI.ButtonMaterialRound}>ButtonMaterialRound</button>
+            <button class={CssUI.ButtonMaterialRev}>ButtonMaterialRev</button>
+            <button class={CssUI.ButtonMaterialRoundRev}>ButtonMaterialRoundRev</button>
+        </div>
 
-        <button class={CssUI.OutlinedButton}>OutlinedButton</button>
+        <div>
+            <button class={CssUI.ButtonOutlined}>ButtonOutlined</button>
+            <button class={CssUI.ButtonOutlinedRound}>ButtonOutlinedRound</button>
+            <button class={CssUI.ButtonOutlinedPlain}>ButtonOutlinedPlain</button>
+            <button class={CssUI.ButtonOutlinedRoundPlain}>ButtonOutlinedRoundPlain</button>
+        </div>
 
-        <button class={CssUI.IconButton} onClick={() => {
-            setProgress?.(80);
-        }}><IconHome /></button>
+        <div>
+            <button class={CssUI.ButtonIconPlain}><IconHome /></button>
+            <button class={CssUI.ButtonIconMaterial}><IconHome /></button>
+            <button class={CssUI.ButtonIconMaterialRev}><IconHome /></button>
+
+            <button class={CssUI.ButtonIcon} onClick={() => {
+                setProgress?.(80);
+            }}><IconHome /></button>
+        </div>
 
         <AsyncButton onClick={async (): Promise<void> => {
             // Simulate an async operation (e.g., API call)
@@ -254,7 +275,7 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
                 }, 2000);
             });
         }}>
-            Click Me
+            Async Me
         </AsyncButton>
     </div>;
 }

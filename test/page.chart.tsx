@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Grid, GridLayout, Select } from "../src/ui/gen";
+import { Grid, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
 import { AreaChart, CircleChart, RadarChart } from "../src/gen";
 
@@ -16,45 +16,59 @@ export function ChartTest() {
 
   const [toggle, setToggle] = createSignal(false);
 
-  let [chartType, setChartType] = createSignal<"bar" | "line" | "stacked-bar">()
-  let [curveType, setCurveType] = createSignal<"linear" | "cubic-bezier" | "catmull-rom">()
-
   return <GridLayout
     header={<TestHeader />}
   >
 
-    <div class="flex">
+    <button onClick={() => { setToggle(!toggle()) }}>Toggle</button>
 
-      <button onClick={() => { setToggle(!toggle()) }}>Toggle</button>
-
-      <Select
-        name="curveType"
-        setValue={setCurveType}
-        initialValue="cubic-bezier"
-        options={[
-          { value: "linear", label: "linear" },
-          { value: "cubic-bezier", label: "cubic-bezier" },
-          { value: "catmull-rom", label: "catmull-rom" },
-        ]} />
-
-      <Select
-        name="chartType"
-        setValue={setChartType}
-        initialValue="line"
-        options={[
-          { value: "line", label: "line" },
-          { value: "bar", label: "bar" },
-          { value: "stacked-bar", label: "stacked-bar" },
-        ]} />
-    </div>
-
-    <Grid cols={2} rows={2}>
+    <Grid cols={2} rows={1}>
 
       <AreaChart
         width={300}
         height={150}
-        curveType={curveType()}
-        chartType={chartType()}
+        curveType={"catmull-rom"}
+        chartType={"line"}
+        duration={1000}
+        data={[
+          {
+            label: "Guardians of the Galaxy",
+            values: toggle() ? r1 : r2,
+            lineColor: "#f01b1b",
+            areaColor: "#f01b1b55"
+          },
+          {
+            label: "The Avengers",
+            values: toggle() ? r3 : r4,
+            lineColor: "#0099ff"
+          }
+        ]}
+      />
+
+      <AreaChart
+        width={300}
+        height={150}
+        chartType={"bar"}
+        duration={1000}
+        data={[
+          {
+            label: "Guardians of the Galaxy",
+            values: toggle() ? r1 : r2,
+            lineColor: "#f01b1b",
+            areaColor: "#f01b1b55"
+          },
+          {
+            label: "The Avengers",
+            values: toggle() ? r3 : r4,
+            lineColor: "#0099ff"
+          }
+        ]}
+      />
+
+      <AreaChart
+        width={300}
+        height={150}
+        chartType={"stacked-bar"}
         duration={1000}
         data={[
           {

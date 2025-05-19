@@ -1,6 +1,6 @@
 /*CSS:
-button, .IconButton, .MaterialButton, .OutlinedButton,
-.MaterialRoundButton, .OutlinedRoundButton, .Tag {
+button, .ButtonIcon, .ButtonMaterial, .ButtonOutlined,
+.ButtonMaterialRound, .ButtonOutlinedRound, .Tag {
     display: inline-flex;
     line-height: 1;
     font-size: inherit;
@@ -22,59 +22,66 @@ button:focus {
     outline: none;
 }
 
-button:hover, .MaterialButton:hover, .MaterialRoundButton:hover {
+button:hover, .ButtonMaterial:hover, .ButtonMaterialRound:hover {
     background: var(--surface-bg) radial-gradient(circle, transparent 1%, var(--surface-bg) 1%) center/15000%;
 }
-.IconButton:hover,  .OutlinedButton:hover, .OutlinedRoundButton:hover {
+.ButtonIcon:hover,  .ButtonOutlined:hover, .ButtonOutlinedRound:hover {
     color: var(--primary);
     background: var(--primary-bg) radial-gradient(circle, transparent 1%, var(--primary-bg) 1%) center/15000%;
 }
 
-button:active, .IconButton:active, .MaterialButton:active, .OutlinedButton:active,
-.MaterialRoundButton:active, .OutlinedRoundButton:active {
+button:active, .ButtonIcon:active, .ButtonMaterial:active, .ButtonOutlined:active,
+.ButtonMaterialRound:active, .ButtonOutlinedRound:active {
     background-color: var(--surface);
     background-size: 100%;
     transition: background 0s;
 }
 
-
-button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
-.MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
+button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined:disabled,
+.ButtonMaterialRound:disabled, .ButtonOutlinedRound:disabled {
     color: var(--disabled);
     background: var(--disabled-container);
     cursor: not-allowed;
 }
 
-.IconButton {
+.ButtonIcon, .ButtonIconPlain, .ButtonIconMaterial, .ButtonIconMaterialRev {
     padding: .5rem;
     border-radius: 100rem;
 }
-
-.IconButtonPlain {
-    padding: .5rem;
+.ButtonIconPlain {
     color: inherit;
     background: transparent;
-    border-radius: 100rem;
 }
 
-.MaterialButton, .MaterialRoundButton {
+.ButtonRev, .ButtonRoundRev {
+    color: var(--body-bg);
+    background: var(--body);
+    border: 1px solid var(--body);
+}
+
+.ButtonMaterial, .ButtonMaterialRound, .ButtonIconMaterial {
     color: var(--body);
     background: var(--primary-bg);
     border: 1px solid transparent;
 }
-.ButtonMaterialRev, .ButtonMaterialRoundRev {
+.ButtonMaterialRev, .ButtonMaterialRoundRev, .ButtonIconMaterialRev {
     color: var(--body-bg);
     background: var(--primary);
     border: 1px solid transparent;
 }
 
-.OutlinedButton, .OutlinedRoundButton {
+.ButtonOutlined, .ButtonOutlinedRound {
     color: var(--primary);
     background: transparent;
     border: 1px solid var(--primary-border);
 }
+.ButtonOutlinedPlain, .ButtonOutlinedRoundPlain {
+    color: var(--surface);
+    background: transparent;
+    border: 1px solid var(--surface-tint);
+}
 
-.OutlinedRoundButton, .MaterialRoundButton, .ButtonMaterialRoundRev {
+.ButtonRound, .ButtonRoundRev, .ButtonOutlinedRound, .ButtonOutlinedRoundPlain, .ButtonMaterialRound, .ButtonMaterialRoundRev {
     border-radius: .5rem;
 }
 

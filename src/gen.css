@@ -17,7 +17,7 @@
     --spacing: 1rem;
     --primary-border: oklch(from var(--primary) calc(l + 0.1) c h);
     --modal-bg: oklch(from var(--body-bg) calc(l + .3) c h);
-    --modal-col: var(--body-col);
+    --modal-col: var(--body);
     --size-0: 0;
     --size-1: calc(var(--spacing) * 0.25);
     --size-2: calc(var(--spacing) * 0.5);
@@ -29,12 +29,12 @@
 .light {
     --input-bg: #ffffff;
     --body-bg: white;
-    --body-col: black;
+    --body: black;
     --primary: #6750A4;
     --primary-bg: #EADDFF;
     --secondary: #b4216b;
     --secondary-bg: #ffe3f1;
-    --surface: oklch(from var(--body-col) calc(l + .5) c h);
+    --surface: oklch(from var(--body) calc(l + .5) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l - .025) c h);
     --surface-tint: oklch(from var(--surface-bg) calc(l - .08) c h);
     --error: #B3261E;
@@ -48,12 +48,12 @@
 .night {
     --input-bg: #3b3b3b;
     --body-bg: black;
-    --body-col: white;
+    --body: white;
     --primary: #d8c8fa;
     --primary-bg: #4F378B;
     --secondary: #b4216b;
     --secondary-bg: #454245;
-    --surface: oklch(from var(--body-col) calc(l + .3) c h);
+    --surface: oklch(from var(--body) calc(l + .3) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l + .25) c h);
     --surface-tint: oklch(from var(--surface-bg) calc(l + .08) c h);
     --error: #ff7262;
@@ -278,8 +278,8 @@ svg {
     background: var(--primary);
     transition: width 0.2s ease-in-out;
 }
-button, .IconButton, .MaterialButton, .OutlinedButton,
-.MaterialRoundButton, .OutlinedRoundButton, .Tag {
+button, .ButtonIcon, .ButtonMaterial, .ButtonOutlined,
+.ButtonMaterialRound, .ButtonOutlinedRound, .Tag {
     display: inline-flex;
     line-height: 1;
     font-size: inherit;
@@ -299,51 +299,59 @@ button, .IconButton, .MaterialButton, .OutlinedButton,
 button:focus {
     outline: none;
 }
-button:hover, .MaterialButton:hover, .MaterialRoundButton:hover {
+button:hover, .ButtonMaterial:hover, .ButtonMaterialRound:hover {
     background: var(--surface-bg) radial-gradient(circle, transparent 1%, var(--surface-bg) 1%) center/15000%;
 }
-.IconButton:hover,  .OutlinedButton:hover, .OutlinedRoundButton:hover {
+.ButtonIcon:hover,  .ButtonOutlined:hover, .ButtonOutlinedRound:hover {
     color: var(--primary);
     background: var(--primary-bg) radial-gradient(circle, transparent 1%, var(--primary-bg) 1%) center/15000%;
 }
-button:active, .IconButton:active, .MaterialButton:active, .OutlinedButton:active,
-.MaterialRoundButton:active, .OutlinedRoundButton:active {
+button:active, .ButtonIcon:active, .ButtonMaterial:active, .ButtonOutlined:active,
+.ButtonMaterialRound:active, .ButtonOutlinedRound:active {
     background-color: var(--surface);
     background-size: 100%;
     transition: background 0s;
 }
-button:disabled, .IconButton:disabled, .MaterialButton:disabled, .OutlinedButton:disabled,
-.MaterialRoundButton:disabled, .OutlinedRoundButton:disabled {
+button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined:disabled,
+.ButtonMaterialRound:disabled, .ButtonOutlinedRound:disabled {
     color: var(--disabled);
     background: var(--disabled-container);
     cursor: not-allowed;
 }
-.IconButton {
+.ButtonIcon, .ButtonIconPlain, .ButtonIconMaterial, .ButtonIconMaterialRev {
     padding: .5rem;
     border-radius: 100rem;
 }
-.IconButtonPlain {
-    padding: .5rem;
+.ButtonIconPlain {
     color: inherit;
     background: transparent;
-    border-radius: 100rem;
 }
-.MaterialButton, .MaterialRoundButton {
+.ButtonRev, .ButtonRoundRev {
+    color: var(--body-bg);
+    background: var(--body);
+    border: 1px solid var(--body);
+}
+.ButtonMaterial, .ButtonMaterialRound, .ButtonIconMaterial {
     color: var(--body);
     background: var(--primary-bg);
     border: 1px solid transparent;
 }
-.ButtonMaterialRev, .ButtonMaterialRoundRev {
+.ButtonMaterialRev, .ButtonMaterialRoundRev, .ButtonIconMaterialRev {
     color: var(--body-bg);
     background: var(--primary);
     border: 1px solid transparent;
 }
-.OutlinedButton, .OutlinedRoundButton {
+.ButtonOutlined, .ButtonOutlinedRound {
     color: var(--primary);
     background: transparent;
     border: 1px solid var(--primary-border);
 }
-.OutlinedRoundButton, .MaterialRoundButton, .ButtonMaterialRoundRev {
+.ButtonOutlinedPlain, .ButtonOutlinedRoundPlain {
+    color: var(--surface);
+    background: transparent;
+    border: 1px solid var(--surface-tint);
+}
+.ButtonRound, .ButtonRoundRev, .ButtonOutlinedRound, .ButtonOutlinedRoundPlain, .ButtonMaterialRound, .ButtonMaterialRoundRev {
     border-radius: .5rem;
 }
 .GradientTag {
@@ -1684,7 +1692,7 @@ input[type="range"]:focus ~ .RangeValue {
 }
 body {
   background: var(--body-bg);
-  color: var(--body-col);
+  color: var(--body);
   align-items: center;
   justify-content: center;
   height: 100vh;

@@ -3,7 +3,7 @@
 sol(--spacing , 1rem);
 
 sol(--body-bg , white , black);
-sol(--body-col , black , white);
+sol(--body , black , white);
 
 sol(--primary , #6750A4 , #d8c8fa);
 sol(--primary-bg , #EADDFF , #4F378B);
@@ -12,7 +12,7 @@ sol(--primary-border , oklch(from var(--primary) calc(l + 0.1) c h));
 sol(--secondary , #b4216b , #b4216b);
 sol(--secondary-bg , #ffe3f1 , #454245);
 
-sol(--surface , oklch(from var(--body-col) calc(l + .5) c h) , oklch(from var(--body-col) calc(l + .3) c h) );
+sol(--surface , oklch(from var(--body) calc(l + .5) c h) , oklch(from var(--body) calc(l + .3) c h) );
 sol(--surface-bg , oklch(from var(--body-bg) calc(l - .025) c h) , oklch(from var(--body-bg) calc(l + .25) c h) );
 sol(--surface-tint , oklch(from var(--surface-bg) calc(l - .08) c h) , oklch(from var(--surface-bg) calc(l + .08) c h) );
 
@@ -26,7 +26,7 @@ sol(--a-hover-col , #ffac90 , #ffac90);
 sol(--a-active-col , #cf90ff , #cf90ff); 
 
 sol(--modal-bg , oklch(from var(--body-bg) calc(l + .3) c h) ); 
-sol(--modal-col , var(--body-col) ); 
+sol(--modal-col , var(--body) ); 
 
 ::-webkit-scrollbar {
   height: 8px;
@@ -61,7 +61,7 @@ sol(--modal-col , var(--body-col) );
 
 body {
   background: var(--body-bg);
-  color: var(--body-col);
+  color: var(--body);
   align-items: center;
   justify-content: center;
   // width: 100vw;
