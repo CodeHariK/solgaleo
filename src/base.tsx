@@ -2,6 +2,10 @@
 
 sol(--spacing , 1rem);
 
+sol(--border, 1px);
+sol(--button-padding, 0.5rem .75rem);
+sol(--icon-padding, .5rem);
+
 sol(--body-bg , white , black);
 sol(--body , black , white);
 
@@ -16,11 +20,11 @@ sol(--surface , oklch(from var(--body) calc(l + .5) c h) , oklch(from var(--body
 sol(--surface-bg , oklch(from var(--body-bg) calc(l - .025) c h) , oklch(from var(--body-bg) calc(l + .25) c h) );
 sol(--surface-tint , oklch(from var(--surface-bg) calc(l - .08) c h) , oklch(from var(--surface-bg) calc(l + .08) c h) );
 
-sol(--error , #B3261E , #ff7262);
-sol(--error-container , #F9DEDC , #8C1D18);
+sol(--error , #ffffff);
+sol(--error-bg , #e85b53);
 
-sol(--disabled , #bdbdbd , #bcbcbc);
-sol(--disabled-container , #e7e7e7 , #7d7d7d) ;
+sol(--disabled , #bdbdbd , #8b8b8b);
+sol(--disabled-bg , #e7e7e7 , #565656) ;
 
 sol(--a-hover-col , #ffac90 , #ffac90);
 sol(--a-active-col , #cf90ff , #cf90ff); 
@@ -89,7 +93,6 @@ body {
 }
 
 input,
-// button,
 textarea,
 select {
   font: inherit;

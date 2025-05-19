@@ -93,7 +93,7 @@ render(() =>
   --secondary-bg: #e4d8f7;
   --surface: #fffffcc6;
   --error: #B3261E;
-  --error-container: #F9DEDC;
+  --error-bg: #F9DEDC;
   --disabled: #9CA3AF;
 }
 

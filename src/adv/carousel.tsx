@@ -65,7 +65,7 @@ import { CssUI } from "../gen";
     }
     &::scroll-button(*):disabled {
         color: var(--disabled);
-        background: var(--disabled-container);
+        background: var(--disabled-bg);
     }
     &::scroll-button(*):not(:disabled):is(:hover, :active) {
         background-color: var(--primary-bg);
@@ -374,7 +374,7 @@ export function TabBar(props: {
         <div class={CssADV.Tabby} ref={sliderRef} />
 
         <Show when={props.pagination}>
-            <button class={CssUI.IconButton}
+            <button class={CssUI.ButtonIcon}
                 onClick={() => {
                     if (currentTab() > 0) {
                         setTab(currentTab() - 1)
@@ -415,7 +415,7 @@ export function TabBar(props: {
         </Show>
 
         <Show when={props.pagination}>
-            <button class={CssUI.IconButton}
+            <button class={CssUI.ButtonIcon}
                 onClick={() => {
                     if (currentTab() < props.pagination.totalItems) {
                         setTab(currentTab() + 1)

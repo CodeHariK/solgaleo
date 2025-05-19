@@ -1,16 +1,20 @@
+import { createSignal, JSX } from "solid-js";
+import { CssUI } from "./gen";
+import { IconDown } from "../svg/svg";
+
 /*CSS:
 button, .ButtonIcon, .ButtonMaterial, .ButtonOutlined,
-.ButtonMaterialRound, .ButtonOutlinedRound, .Tag {
+.ButtonMaterialRound, .ButtonOutlinedRound {
     display: inline-flex;
-    line-height: 1;
+    // line-height: 1;
     font-size: inherit;
     gap: 0.5rem;
-    padding: 0.9rem 1rem;
+    padding: var(--button-padding);
     align-items: center;
     justify-content: center;
     color: var(--primary);
     background: var(--surface-bg);
-    border: 1px solid transparent;
+    border: var(--border) solid transparent;
     user-select: none;
     cursor: pointer;
     
@@ -37,15 +41,15 @@ button:active, .ButtonIcon:active, .ButtonMaterial:active, .ButtonOutlined:activ
     transition: background 0s;
 }
 
-button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined:disabled,
-.ButtonMaterialRound:disabled, .ButtonOutlinedRound:disabled {
+button:disabled {
     color: var(--disabled);
-    background: var(--disabled-container);
+    border: var(--border) solid var(--disabled);
+    background: var(--disabled-bg);
     cursor: not-allowed;
 }
 
 .ButtonIcon, .ButtonIconPlain, .ButtonIconMaterial, .ButtonIconMaterialRev {
-    padding: .5rem;
+    padding: var(--icon-padding);
     border-radius: 100rem;
 }
 .ButtonIconPlain {
@@ -56,51 +60,53 @@ button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined
 .ButtonRev, .ButtonRoundRev {
     color: var(--body-bg);
     background: var(--body);
-    border: 1px solid var(--body);
+    border: var(--border) solid var(--body);
 }
 
 .ButtonMaterial, .ButtonMaterialRound, .ButtonIconMaterial {
     color: var(--body);
     background: var(--primary-bg);
-    border: 1px solid transparent;
+    border: var(--border) solid transparent;
 }
 .ButtonMaterialRev, .ButtonMaterialRoundRev, .ButtonIconMaterialRev {
     color: var(--body-bg);
     background: var(--primary);
-    border: 1px solid transparent;
+    border: var(--border) solid transparent;
 }
 
 .ButtonOutlined, .ButtonOutlinedRound {
     color: var(--primary);
     background: transparent;
-    border: 1px solid var(--primary-border);
+    border: var(--border) solid var(--primary-border);
 }
 .ButtonOutlinedPlain, .ButtonOutlinedRoundPlain {
     color: var(--surface);
     background: transparent;
-    border: 1px solid var(--surface-tint);
+    border: var(--border) solid var(--surface-tint);
 }
 
-.ButtonRound, .ButtonRoundRev, .ButtonOutlinedRound, .ButtonOutlinedRoundPlain, .ButtonMaterialRound, .ButtonMaterialRoundRev {
+.ButtonRound, .ButtonRoundRev, .ButtonOutlinedRound, .ButtonOutlinedRoundPlain, .ButtonMaterialRound, .ButtonMaterialRoundRev, .ButtonErrorRound, .ButtonErrorOutlinedRound  {
     border-radius: .5rem;
 }
 
-.GradientTag {
+.ButtonGradient {
     background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
     border-radius: 2rem;
     padding: .3rem .5rem; 
 }
 
-.ErrorButton {
+.ButtonError, .ButtonErrorRound {
     color: var(--error);
-    background: var(--error-container);
+    background: var(--error-bg);
+}
+    
+.ButtonErrorOutlinedRound, .ButtonErrorOutlined {
+    color: var(--error-bg);
+    background: var(--body-bg);
+    border: var(--border) solid var(--error-bg);
 }
 
 */
-
-import { createSignal, JSX } from "solid-js";
-import { CssUI } from "./gen";
-import { IconDown } from "../svg/svg";
 
 interface AsyncButtonProps {
     onClick: () => Promise<void>; // Async function to be executed
@@ -128,7 +134,7 @@ export function AsyncButton(props: AsyncButtonProps) {
         <button
             onClick={handleClick}
             disabled={isLoading()} // Disable button while loading
-            class={hasError() ? CssUI.ErrorButton : ""} // Apply error class if there's an error
+            class={hasError() ? CssUI.ButtonError : ""} // Apply error class if there's an error
         >
             {isLoading() ? "Loading..." : props.children}
         </button>
@@ -139,9 +145,8 @@ export function AsyncButton(props: AsyncButtonProps) {
 
 .selection-options {
     display: flex;
-    border-top: 1px solid var(--surface-tint);
-    border-bottom: 1px solid var(--surface-tint);
-    margin-top: 16px;
+    border-top: var(--border) solid var(--surface-tint);
+    border-bottom: var(--border) solid var(--surface-tint);
 }
 
 .option {
@@ -152,13 +157,13 @@ export function AsyncButton(props: AsyncButtonProps) {
     justify-content: center;
     align-items: center;
     color: var(--surface);
-    border-left: 1px solid var(--surface-tint);
+    border-left: var(--border) solid var(--surface-tint);
 }
 
 */
 
-export function Options() {
-    return <div class="selection-options">
+export function Options(props: { style?: JSX.CSSProperties, buttonStyle?: JSX.CSSProperties }) {
+    return <div class="selection-options" style={props.style}>
 
         <div class="option">COLOUR</div>
 

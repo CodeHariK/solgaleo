@@ -153,7 +153,7 @@ export function BottomBar() {
 
 export function MobileHeader() {
     return <header class={CssNAV.MobileHeader}>
-        <button class={CssUI.IconButtonPlain}><IconChevronLeft /></button>
-        <button class={CssUI.IconButton}><IconLogout /></button>
+        <button class={CssUI.ButtonIconPlain}><IconChevronLeft /></button>
+        <button class={CssUI.ButtonIcon}><IconLogout /></button>
     </header>;
 }

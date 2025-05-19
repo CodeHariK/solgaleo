@@ -1,6 +1,6 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch, Grid, GridItem } from '../src/ui/gen.ts';
+import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch, Grid, GridItem, Options } from '../src/ui/gen.ts';
 import { IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 import { createSignal, For, JSX } from 'solid-js';
@@ -67,6 +67,7 @@ export function UiTest() {
         >
 
             <CheckboxGroup header="Countries" name={"hello"} checkboxes={checkboxes} />
+            <CheckboxGroup header="Countries" name={"hello"} variant='chip' checkboxes={checkboxes} />
 
             <Select name="country" options={selectOptions} header="Country" />
 
@@ -233,9 +234,21 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
 
         <div>
             <button>Button</button>
+            <button class={CssUI.ButtonGradient}>ButtonGradient</button>
+            <button class={CssUI.ButtonErrorRound}>ButtonError</button>
             <button class={CssUI.ButtonRev}>ButtonRev</button>
             <button class={CssUI.ButtonRound}>ButtonRound</button>
             <button class={CssUI.ButtonRoundRev}>ButtonRoundRev</button>
+            <button class={CssUI.ButtonRoundRev} disabled>Disabled ButtonRoundRev</button>
+        </div>
+
+        <div>
+            <button class={CssUI.ButtonIconPlain}><IconHome /></button>
+            <button class={CssUI.ButtonIconMaterial}><IconHome /></button>
+            <button class={CssUI.ButtonIconMaterialRev}><IconHome /></button>
+            <button class={CssUI.ButtonIcon} onClick={() => {
+                setProgress?.(80);
+            }}><IconHome /></button>
         </div>
 
         <div>
@@ -247,36 +260,32 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
 
         <div>
             <button class={CssUI.ButtonOutlined}>ButtonOutlined</button>
+            <button class={CssUI.ButtonErrorOutlined}>ButtonErrorOutlined</button>
             <button class={CssUI.ButtonOutlinedRound}>ButtonOutlinedRound</button>
             <button class={CssUI.ButtonOutlinedPlain}>ButtonOutlinedPlain</button>
             <button class={CssUI.ButtonOutlinedRoundPlain}>ButtonOutlinedRoundPlain</button>
         </div>
 
         <div>
-            <button class={CssUI.ButtonIconPlain}><IconHome /></button>
-            <button class={CssUI.ButtonIconMaterial}><IconHome /></button>
-            <button class={CssUI.ButtonIconMaterialRev}><IconHome /></button>
-
-            <button class={CssUI.ButtonIcon} onClick={() => {
-                setProgress?.(80);
-            }}><IconHome /></button>
+            <AsyncButton onClick={async (): Promise<void> => {
+                // Simulate an async operation (e.g., API call)
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        const shouldFail = Math.random() < 0.5; // 50% chance to fail
+                        if (shouldFail) {
+                            reject(new Error("Something went wrong!"));
+                        } else {
+                            resolve(); // Resolve without returning a value
+                        }
+                    }, 2000);
+                });
+            }}>
+                AsyncButton
+            </AsyncButton>
         </div>
 
-        <AsyncButton onClick={async (): Promise<void> => {
-            // Simulate an async operation (e.g., API call)
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    const shouldFail = Math.random() < 0.5; // 50% chance to fail
-                    if (shouldFail) {
-                        reject(new Error("Something went wrong!"));
-                    } else {
-                        resolve(); // Resolve without returning a value
-                    }
-                }, 2000);
-            });
-        }}>
-            Async Me
-        </AsyncButton>
+        <Options />
+
     </div>;
 }
 //FN:END

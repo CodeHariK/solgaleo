@@ -27,9 +27,9 @@ import { CssUI } from "../gen";
 .ModalContent {
     background: var(--modal-bg);
     color: var(--modal-col);
-    padding: 1rem;
+    // padding: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px var(--surface);
+    // box-shadow: 0 4px 6px -1px var(--surface);
     overflow-y: auto;
     pointer-events: none;
     
@@ -40,15 +40,15 @@ import { CssUI } from "../gen";
 
     transform-origin: center;
 
-    transform: scale(1) translateY(50px);
+    transform: translateY(10px);
     opacity: 0;
 }
 .ModalContentShow {
     pointer-events: auto;
     
-    transform: scale(1) translateY(0px);
+    transform: translateY(0px);
     opacity: 1;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
 */
@@ -59,7 +59,7 @@ type CornerPosition = 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
 
 type ModalProps = {
     visibilitySignal?: Signal<boolean>;
-    child: (visible: Signal<boolean>) => JSX.Element;
+    child: (anchorRef: HTMLButtonElement | null, visible: Signal<boolean>) => JSX.Element;
     title?: string;
     parentScrollContainerQuery?: string,
     overlayMargin?: number;
@@ -345,7 +345,7 @@ export function Modal(props: ModalProps) {
                             "--ModalFullScreen": props.fullScreen ? "0px" : ""
                         }}
                     >
-                        {props.child([isVisible, setIsVisible])}
+                        {props.child(anchorRef(), [isVisible, setIsVisible])}
                     </div>
                 </div>
             </Portal>

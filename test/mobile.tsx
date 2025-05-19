@@ -52,7 +52,7 @@ export function MobileApp() {
 
                 <div class="price-favorite">
                     <h1 class="price flex space-between items-center"><span>£173</span>
-                        <button class={CssUI.IconButtonPlain}>
+                        <button class={CssUI.ButtonIconPlain}>
                             <IconHeart fill style={{ color: "#fb6f6f" }} />
                         </button>
                     </h1>
@@ -64,7 +64,7 @@ export function MobileApp() {
 
             </div>
 
-            <Options />
+            <Options style={{ "margin-top": "16px" }} />
 
             <div class="p4">
 
@@ -87,7 +87,7 @@ export function MobileApp() {
                 {products.map((product) => (
                     <div class="product-card" >
                         <div class="product-image">
-                            <button class={CssUI.IconButtonPlain} style={{
+                            <button class={CssUI.ButtonIconPlain} style={{
                                 position: "absolute",
                                 right: "8px",
                                 bottom: "8px",

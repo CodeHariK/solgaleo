@@ -1,6 +1,6 @@
 import { Key } from "@solid-primitives/keyed";
 import { useSpaceContext } from "./spaceform";
-import { createSignal, onMount, type JSX } from "solid-js";
+import { createSignal, onMount, Setter, type JSX } from "solid-js";
 import { IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
 
@@ -8,6 +8,7 @@ import { CssUI } from "./gen.ts";
 
 fieldset {
     border: none;
+    padding: 0;
 }
 
 fieldset div {
@@ -59,11 +60,37 @@ select {
     color: var(--primary);
 }
 
+.Chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.Chip {
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--primary);
+    background: var(--surface-bg);
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ChipSelected {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+.ChipDisabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 */
 
 function useLocalState() {
     const [values, setValues] = createSignal<Record<string, any>>({});
-    const [errors, setErrors] = createSignal<Record<string, string>>({});
+    const [errors, _setErrors] = createSignal<Record<string, string>>({});
 
     const handleChange = (name: string, value: any) => {
         setValues(prev => ({ ...prev, [name]: value }));
@@ -95,6 +122,7 @@ type CheckboxGroupProps = {
     onChange?: (value: Set<string>) => void;
     setValue?: (value: Set<string>) => void;
     initialValue?: string[];
+    variant?: 'checkbox' | 'chip';
 };
 
 export function CheckboxGroup(props: CheckboxGroupProps) {
@@ -128,35 +156,60 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
 
             {props.header && <legend>{props.header}</legend>}
 
-            <Key each={props.checkboxes} by="value">
-                {(option) => (
-                    <div>
-                        <input
-                            id={option().value}
-                            name={props.name}
-                            type="checkbox"
-                            value={option().value}
-                            checked={new Set(state().values[props.name]).has(option().value) || false}
-                            disabled={option().disabled}
-                            onInput={() => {
-                                let s = new Set<string>(state().values[props.name])
-                                if (s.has(option().value)) {
-                                    s.delete(option().value)
-                                } else {
-                                    s.add(option().value)
+            <div classList={{
+                [CssUI.Chips]: props.variant === 'chip'
+            }}>
+                <Key each={props.checkboxes} by="value">
+                    {(option) => (
+                        props.variant === 'chip' ? (
+                            <div
+                                class={`${CssUI.Chip} 
+                                    ${new Set(state().values[props.name]).has(option().value) ? CssUI.ChipSelected : ''} 
+                                    ${option().disabled ? CssUI.ChipDisabled : ''}`
                                 }
-                                handleCheckboxChange(s);
-                            }}
-                        />
-                        <label aria-disabled={option().disabled} for={option().value} >
-                            {option().label}
-                            {option().helperText && (
-                                <p>{option().helperText}</p>
-                            )}
-                        </label>
-                    </div>
-                )}
-            </Key>
+                                onClick={() => {
+                                    if (option().disabled) return;
+                                    let s = new Set<string>(state().values[props.name])
+                                    if (s.has(option().value)) {
+                                        s.delete(option().value)
+                                    } else {
+                                        s.add(option().value)
+                                    }
+                                    handleCheckboxChange(s);
+                                }}
+                            >
+                                {option().label}
+                            </div>
+                        ) : (
+                            <div>
+                                <input
+                                    id={option().value}
+                                    name={props.name}
+                                    type="checkbox"
+                                    value={option().value}
+                                    checked={new Set(state().values[props.name]).has(option().value) || false}
+                                    disabled={option().disabled}
+                                    onInput={() => {
+                                        let s = new Set<string>(state().values[props.name])
+                                        if (s.has(option().value)) {
+                                            s.delete(option().value)
+                                        } else {
+                                            s.add(option().value)
+                                        }
+                                        handleCheckboxChange(s);
+                                    }}
+                                />
+                                <label aria-disabled={option().disabled} for={option().value} >
+                                    {option().label}
+                                    {option().helperText && (
+                                        <p>{option().helperText}</p>
+                                    )}
+                                </label>
+                            </div>
+                        )
+                    )}
+                </Key>
+            </div>
         </fieldset>
     );
 }
@@ -560,6 +613,12 @@ type InputProps = {
     pattern?: RegExp;
     icon?: JSX.Element;
     end?: JSX.Element[];
+    style?: JSX.CSSProperties;
+
+    onChange?: (value: any) => void;
+    onFocus?: (e: FocusEvent) => void;
+
+    ref?: Setter<HTMLButtonElement>
 
     textarea?: boolean;
     min?: number;
@@ -601,11 +660,12 @@ export function Input(props: InputProps) {
         if (!props.pattern || props.pattern.test(value)) {
             handleChange(props.name, value);
             props.setValue?.(value);
+            props.onChange?.(value)
         }
     };
 
     return (
-        <fieldset>
+        <fieldset style={props.style}>
 
             {props.header && <legend>{props.header}</legend>}
 
@@ -635,6 +695,8 @@ export function Input(props: InputProps) {
                         onInput={(e) => {
                             handleInputChange(e.target.value);
                         }}
+                        onFocus={props.onFocus}
+                        ref={props.ref}
                         class={`${state().errors[props.name] ? CssUI.ErrorTextInput : ''}`}
                     />
 
@@ -653,6 +715,8 @@ export function Input(props: InputProps) {
                                 updateRangeValue(e.currentTarget);
                             }
                         }}
+                        onFocus={props.onFocus}
+                        ref={props.ref}
                         min={props.min}
                         max={props.max}
                         step={props.step}
@@ -670,7 +734,7 @@ export function Input(props: InputProps) {
                     <div class={CssUI.InputEnd}>
                         <button
                             type="button"
-                            class={CssUI.IconButton}
+                            class={CssUI.ButtonIconPlain}
                             onClick={() => setShowPassword(!showPassword())}
                         >
                             {showPassword() ? <IconUnlock /> : <IconLock />}

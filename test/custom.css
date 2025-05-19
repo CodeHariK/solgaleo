@@ -7,6 +7,6 @@
     --secondary-bg: rgb(255, 255, 199);
     --surface: oklch(from var(--body-bg) calc(l - .01) c h);
     --error: #B3261E;
-    --error-container: #F9DEDC;
+    --error-bg: #F9DEDC;
     --disabled: #9CA3AF;
 }

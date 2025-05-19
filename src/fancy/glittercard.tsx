@@ -117,7 +117,7 @@ export function GlitterCard() {
 
     return (
         <div ref={cardRef} class="card">
-            <span class={`${CssUI.IconButton} mb4`}>Featured</span>
+            <span class={`${CssUI.ButtonIcon} mb4`}>Featured</span>
             <h2 class="title">Modern Design Card</h2>
             <p class="description">
                 A beautifully crafted card component featuring glassmorphism, smooth animations,

@@ -15,7 +15,12 @@
     --rainsrc: ;
     --rainsize: ;
     --spacing: 1rem;
+    --border: 1px;
+    --button-padding: 0.5rem .75rem;
+    --icon-padding: .5rem;
     --primary-border: oklch(from var(--primary) calc(l + 0.1) c h);
+    --error: #ffffff;
+    --error-bg: #e85b53;
     --modal-bg: oklch(from var(--body-bg) calc(l + .3) c h);
     --modal-col: var(--body);
     --size-0: 0;
@@ -37,10 +42,8 @@
     --surface: oklch(from var(--body) calc(l + .5) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l - .025) c h);
     --surface-tint: oklch(from var(--surface-bg) calc(l - .08) c h);
-    --error: #B3261E;
-    --error-container: #F9DEDC;
     --disabled: #bdbdbd;
-    --disabled-container: #e7e7e7;
+    --disabled-bg: #e7e7e7;
     --a-hover-col: #ffac90;
     --a-active-col: #cf90ff;
 }
@@ -56,10 +59,8 @@
     --surface: oklch(from var(--body) calc(l + .3) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l + .25) c h);
     --surface-tint: oklch(from var(--surface-bg) calc(l + .08) c h);
-    --error: #ff7262;
-    --error-container: #8C1D18;
-    --disabled: #bcbcbc;
-    --disabled-container: #7d7d7d;
+    --disabled: #8b8b8b;
+    --disabled-bg: #565656;
     --a-hover-col: #ffac90;
     --a-active-col: #cf90ff;
 }
@@ -279,17 +280,16 @@ svg {
     transition: width 0.2s ease-in-out;
 }
 button, .ButtonIcon, .ButtonMaterial, .ButtonOutlined,
-.ButtonMaterialRound, .ButtonOutlinedRound, .Tag {
+.ButtonMaterialRound, .ButtonOutlinedRound {
     display: inline-flex;
-    line-height: 1;
     font-size: inherit;
     gap: 0.5rem;
-    padding: 0.9rem 1rem;
+    padding: var(--button-padding);
     align-items: center;
     justify-content: center;
     color: var(--primary);
     background: var(--surface-bg);
-    border: 1px solid transparent;
+    border: var(--border) solid transparent;
     user-select: none;
     cursor: pointer;
     background-repeat: no-repeat;
@@ -312,14 +312,14 @@ button:active, .ButtonIcon:active, .ButtonMaterial:active, .ButtonOutlined:activ
     background-size: 100%;
     transition: background 0s;
 }
-button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined:disabled,
-.ButtonMaterialRound:disabled, .ButtonOutlinedRound:disabled {
+button:disabled {
     color: var(--disabled);
-    background: var(--disabled-container);
+    border: var(--border) solid var(--disabled);
+    background: var(--disabled-bg);
     cursor: not-allowed;
 }
 .ButtonIcon, .ButtonIconPlain, .ButtonIconMaterial, .ButtonIconMaterialRev {
-    padding: .5rem;
+    padding: var(--icon-padding);
     border-radius: 100rem;
 }
 .ButtonIconPlain {
@@ -329,45 +329,49 @@ button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined
 .ButtonRev, .ButtonRoundRev {
     color: var(--body-bg);
     background: var(--body);
-    border: 1px solid var(--body);
+    border: var(--border) solid var(--body);
 }
 .ButtonMaterial, .ButtonMaterialRound, .ButtonIconMaterial {
     color: var(--body);
     background: var(--primary-bg);
-    border: 1px solid transparent;
+    border: var(--border) solid transparent;
 }
 .ButtonMaterialRev, .ButtonMaterialRoundRev, .ButtonIconMaterialRev {
     color: var(--body-bg);
     background: var(--primary);
-    border: 1px solid transparent;
+    border: var(--border) solid transparent;
 }
 .ButtonOutlined, .ButtonOutlinedRound {
     color: var(--primary);
     background: transparent;
-    border: 1px solid var(--primary-border);
+    border: var(--border) solid var(--primary-border);
 }
 .ButtonOutlinedPlain, .ButtonOutlinedRoundPlain {
     color: var(--surface);
     background: transparent;
-    border: 1px solid var(--surface-tint);
+    border: var(--border) solid var(--surface-tint);
 }
-.ButtonRound, .ButtonRoundRev, .ButtonOutlinedRound, .ButtonOutlinedRoundPlain, .ButtonMaterialRound, .ButtonMaterialRoundRev {
+.ButtonRound, .ButtonRoundRev, .ButtonOutlinedRound, .ButtonOutlinedRoundPlain, .ButtonMaterialRound, .ButtonMaterialRoundRev, .ButtonErrorRound, .ButtonErrorOutlinedRound  {
     border-radius: .5rem;
 }
-.GradientTag {
+.ButtonGradient {
     background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
     border-radius: 2rem;
     padding: .3rem .5rem;
 }
-.ErrorButton {
+.ButtonError, .ButtonErrorRound {
     color: var(--error);
-    background: var(--error-container);
+    background: var(--error-bg);
+}
+.ButtonErrorOutlinedRound, .ButtonErrorOutlined {
+    color: var(--error-bg);
+    background: var(--body-bg);
+    border: var(--border) solid var(--error-bg);
 }
 .selection-options {
     display: flex;
-    border-top: 1px solid var(--surface-tint);
-    border-bottom: 1px solid var(--surface-tint);
-    margin-top: 16px;
+    border-top: var(--border) solid var(--surface-tint);
+    border-bottom: var(--border) solid var(--surface-tint);
 }
 .option {
     flex: 1;
@@ -377,10 +381,11 @@ button:disabled, .ButtonIcon:disabled, .ButtonMaterial:disabled, .ButtonOutlined
     justify-content: center;
     align-items: center;
     color: var(--surface);
-    border-left: 1px solid var(--surface-tint);
+    border-left: var(--border) solid var(--surface-tint);
 }
 fieldset {
     border: none;
+    padding: 0;
 }
 fieldset div {
     display: flex;
@@ -422,6 +427,28 @@ select {
     height: 1.25rem;
     pointer-events: none;
     color: var(--primary);
+}
+.Chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.Chip {
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--primary);
+    background: var(--surface-bg);
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.ChipSelected {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+.ChipDisabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 .ToggleSwitch {
     width: 60px;
@@ -887,7 +914,7 @@ input[type="range"]:focus ~ .RangeValue {
     }
     &::scroll-button(*):disabled {
         color: var(--disabled);
-        background: var(--disabled-container);
+        background: var(--disabled-bg);
     }
     &::scroll-button(*):not(:disabled):is(:hover, :active) {
         background-color: var(--primary-bg);
@@ -1647,9 +1674,7 @@ input[type="range"]:focus ~ .RangeValue {
 .ModalContent {
     background: var(--modal-bg);
     color: var(--modal-col);
-    padding: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px var(--surface);
     overflow-y: auto;
     pointer-events: none;
     position: fixed;
@@ -1657,14 +1682,14 @@ input[type="range"]:focus ~ .RangeValue {
     max-width: 100%;
     max-height: 100%;
     transform-origin: center;
-    transform: scale(1) translateY(50px);
+    transform: translateY(10px);
     opacity: 0;
 }
 .ModalContentShow {
     pointer-events: auto;
-    transform: scale(1) translateY(0px);
+    transform: translateY(0px);
     opacity: 1;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 ::-webkit-scrollbar {
   height: 8px;
@@ -1710,7 +1735,6 @@ body {
     }
 }
 input,
-// button,
 textarea,
 select {
   font: inherit;

@@ -1,5 +1,5 @@
 import { createSignal, JSX, Show, Signal } from "solid-js";
-import { DragBox, GridLayout, IconHome, VCarousel } from "../src/gen";
+import { DragBox, GridLayout, IconHome, Input, VCarousel } from "../src/gen";
 import * as N from "../src/nav/gen";
 import { TestHeader } from "./common";
 
@@ -28,9 +28,10 @@ export function NavTest() {
                 <p style={{ padding: "40px", }} onclick={() => { setExperiment(4), modalVisibility[1](true); }}>ModalAnchorTop</p>,
                 <p style={{ padding: "40px", }} onclick={() => { setExperiment(5), modalVisibility[1](true); }}>ModalAnchorBottom</p>,
                 <p style={{ padding: "40px", }} onclick={() => { setExperiment(6), modalVisibility[1](true); }}>ModalAnchorDrag</p>,
+                <p style={{ padding: "40px", }} onclick={() => { setExperiment(7), modalVisibility[1](true); }}>ModalInput</p>,
             ]} />}
     >
-        {BreadcrumbTest()}
+        <BreadcrumbTest />
 
         <Show when={experiment() == 0}>
             {DummyModal(modalVisibility, '5%', '35%', null)}
@@ -56,7 +57,6 @@ export function NavTest() {
             {DummyModalAnchor(true, modalVisibility, "0%", "98%", 10, 'left')}
             {DummyModalAnchor(true, modalVisibility, "0%", "0%", 10, 'left')}
             {DummyModalAnchor(true, modalVisibility, "90%", "0%", 10, 'left')}
-
         </Show>
 
         <Show when={experiment() == 3}>
@@ -102,6 +102,28 @@ export function NavTest() {
                 child={() => <TestDialog info="" modalVisibilty={modalVisibility} />}
             />
         </Show>
+        <Show when={experiment() == 7}>
+            <N.Modal
+                title="Hello"
+                visibilitySignal={modalVisibility}
+                anchor={{
+                    align: 'bottom',
+                    offset: 10,
+                    element: ([_, setRef], [, setVisibility]) => {
+                        return <div class="px16">
+                            <Input
+                                ref={setRef}
+                                style={{ width: "300px" }}
+                                name="Search"
+                                type="search"
+                                onFocus={() => { setVisibility(true) }}
+                            />
+                        </div>
+                    }
+                }}
+                child={(anchorRef) => <TestDialog anchorRef={anchorRef} info={`Hello`} modalVisibilty={modalVisibility} />}
+            />
+        </Show>
 
     </GridLayout>
 }
@@ -127,8 +149,13 @@ export function BreadcrumbTest() {
 }
 //FN:END
 
-function TestDialog({ info, modalVisibilty }: { info: JSX.Element, modalVisibilty: Signal<boolean> }) {
-    return <div class="flex flex-col">
+function TestDialog({ anchorRef, info, modalVisibilty }: {
+    anchorRef?: HTMLButtonElement,
+    info: JSX.Element,
+    modalVisibilty: Signal<boolean>
+}) {
+    return <div class="flex flex-col p4"
+        style={{ width: `${anchorRef?.getBoundingClientRect().width}px` }}>
         <p>how are you?</p>
         <div class="flex mt4 gap4">
             <button>ok</button>
@@ -154,10 +181,10 @@ function DummyModal(modalVisibility: Signal<boolean>,
     />;
 }
 
-function DummyModalAnchor(fixed: boolean, modalVisibilty: Signal<boolean>, left, top, offset, align) {
+function DummyModalAnchor(fixed: boolean, modalVisibility: Signal<boolean>, left, top, offset, align) {
     return <N.Modal
         title="Hello"
-        visibilitySignal={modalVisibilty}
+        visibilitySignal={modalVisibility}
         anchor={{
             align: align,
             offset: offset,
@@ -176,6 +203,6 @@ function DummyModalAnchor(fixed: boolean, modalVisibilty: Signal<boolean>, left,
                 </button>;
             }
         }}
-        child={() => <TestDialog info={`${left} ${top} ${align}`} modalVisibilty={modalVisibilty} />}
+        child={() => <TestDialog info={`${left} ${top} ${align}`} modalVisibilty={modalVisibility} />}
     />
 }
