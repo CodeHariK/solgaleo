@@ -1,6 +1,5 @@
 import { Accessor, createEffect, createSignal, For, JSX, onCleanup, onMount, Show } from "solid-js";
 import { CssADV } from "./gen";
-import { RandomColor } from "../utils/color";
 import { IconChevronLeft, IconChevronRight } from "../svg/svg";
 import { CssUI } from "../gen";
 
@@ -447,7 +446,7 @@ export function TabBar(props: {
 }
 */
 
-export function HList(props: { titles: JSX.Element[], index: Accessor<number> }) {
+export function HList(props: { pages: JSX.Element[], index: Accessor<number> }) {
 
     let scrollListRef: HTMLUListElement | undefined;
 
@@ -464,10 +463,8 @@ export function HList(props: { titles: JSX.Element[], index: Accessor<number> })
     })
 
     return <ul class={CssADV.HList} ref={scrollListRef}>
-        {props.titles.map((page) => (
-            <li
-                style={{ background: RandomColor({}) }}
-            >
+        {props.pages.map((page) => (
+            <li>
                 <h2>{page}</h2>
             </li>
         ))}

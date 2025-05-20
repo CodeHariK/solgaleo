@@ -28,7 +28,6 @@ import { debounce } from '../utils/debounce';
 
 .TableHeaderContainer {
     display: grid;
-    flex-direction: column;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -37,6 +36,11 @@ import { debounce } from '../utils/debounce';
 .CellItem {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // min-width: 0;
 }
 
 .TableRowDetails {
@@ -54,39 +58,7 @@ import { debounce } from '../utils/debounce';
 
 */
 
-export type SuperTableProps = {
-    tableArray: TableProps[];
-    headerstart?: JSX.Element;
-    headerend?: JSX.Element;
-    footerstart?: JSX.Element;
-    footerend?: JSX.Element;
-    style?: JSX.CSSProperties;
-    tableStyle?: JSX.CSSProperties;
-};
-
-export function SuperTable(props: SuperTableProps) {
-    return (
-        <div class={CssADV.SuperTable} style={props.style}>
-            {!(props.headerstart || props.headerend) ? null : (
-                <div class={CssADV.TableHeader}>
-                    {props.headerstart}
-                    {props.headerend}
-                </div>
-            )}
-
-            <Table tableArray={props.tableArray} tableStyle={props.tableStyle} />
-
-            {!(props.footerstart || props.footerend) ? null : (
-                <div class={CssADV.TableFooter}>
-                    {props.footerstart}
-                    {props.footerend}
-                </div>
-            )}
-        </div>
-    );
-}
-
-type TableProps = {
+type TableRowProps = {
     title?: string;
     data: {
         info?: JSX.Element;
@@ -100,10 +72,16 @@ type TableProps = {
     rowCellStyle?: (rowIndex: number, colIndex: number, tableIndex: number) => JSX.CSSProperties
 };
 
-export function Table({ tableStyle, tableArray }: {
-    tableStyle?: JSX.CSSProperties,
-    tableArray: TableProps[],
+export function Table(props: {
+    tableArray: TableRowProps[];
+    headerstart?: JSX.Element;
+    headerend?: JSX.Element;
+    footerstart?: JSX.Element;
+    footerend?: JSX.Element;
+    style?: JSX.CSSProperties;
+    tableStyle?: JSX.CSSProperties;
 }) {
+
     const [expandedRow, setExpandedRow] = createSignal<number | null>(null);
 
     const debouncedSetExpandedRow = debounce((rowIndex: number | null) => {
@@ -111,37 +89,47 @@ export function Table({ tableStyle, tableArray }: {
     }, 100);
 
     return (
-        <div style={tableStyle}>
-            <For each={tableArray}>
-                {(table, tableIndex) => (
-                    <>
-                        <div class={CssADV.TableHeaderContainer}
-                            style={{
-                                "grid-template-columns": `repeat(${table.data[0]?.rowItems?.length ?? 1}, 1fr)`,
-                                ...table.headerStyle
-                            }}>
-                            <h1 style={{ "grid-column": `span ${table.headerItems?.length ?? 1}` }}>{table.title}</h1>
-                            <div style={{
-                                display: "contents"
-                            }}>
-                                <For each={table.headerItems}>
-                                    {(headerItem, headerCol) => <div
-                                        class={CssADV.CellItem}
-                                        style={table.headerCellStyle(headerCol(), tableIndex())}
-                                    >{headerItem}</div>}
-                                </For>
-                            </div>
-                        </div>
+        <div class={CssADV.SuperTable} style={props.style}>
+            {!(props.headerstart || props.headerend) ? null : (
+                <div class={CssADV.TableHeader}>
+                    {props.headerstart}
+                    {props.headerend}
+                </div>
+            )}
 
-                        <Show when={table.data}>
-                            <div style={{
-                                display: "grid",
-                                "grid-template-columns": `repeat(${table.data[0]?.rowItems?.length ?? 1}, 1fr)`,
-                                ...table.rowStyle
-                            }}>
-                                <For each={table.data}>
-                                    {(item, rowIndex) => (
-                                        <>
+            <div style={props.tableStyle}>
+                <For each={props.tableArray}>
+                    {(table, tableIndex) => (
+                        <>
+                            <div
+                                class={CssADV.TableHeaderContainer}
+                                style={{
+                                    "grid-template-columns": `repeat(${table.data[0]?.rowItems?.length ?? 1}, 1fr)`,
+                                    ...table.headerStyle
+                                }}
+                            >
+
+                                {table.title && <h1 style={{ "grid-column": `span ${table.headerItems?.length ?? 1}` }}>{table.title}</h1>}
+
+                                <div style={{ display: "contents" }}>
+                                    <For each={table.headerItems}>
+                                        {(headerItem, headerCol) => <div
+                                            class={CssADV.CellItem}
+                                            style={table.headerCellStyle(headerCol(), tableIndex())}
+                                        >{headerItem}</div>}
+                                    </For>
+                                </div>
+                            </div>
+
+                            <Show when={table.data}>
+                                <div style={{
+                                    display: "grid",
+                                    "grid-template-columns": `repeat(${table.data[0]?.rowItems?.length ?? 1}, 1fr)`,
+                                    ...table.rowStyle
+                                }}>
+
+                                    <For each={table.data}>
+                                        {(item, rowIndex) => (
                                             <div
                                                 style={{
                                                     display: "contents"
@@ -157,7 +145,14 @@ export function Table({ tableStyle, tableArray }: {
                                                     </div>
                                                 </Show>
                                                 <For each={item.rowItems}>
-                                                    {(cell, colIndex) => <div class={CssADV.CellItem} style={table.rowCellStyle?.(rowIndex(), colIndex(), tableIndex())}>{cell}</div>}
+                                                    {(cell, colIndex) => {
+                                                        return <div
+                                                            class={CssADV.CellItem}
+                                                            style={table.rowCellStyle?.(rowIndex(), colIndex(), tableIndex())}
+                                                        >
+                                                            {cell}
+                                                        </div>;
+                                                    }}
                                                 </For>
                                                 <Show when={item.hiddenDetails}>
                                                     <div class={CssADV.TableRowDetails}
@@ -168,14 +163,22 @@ export function Table({ tableStyle, tableArray }: {
                                                     </div>
                                                 </Show>
                                             </div>
-                                        </>
-                                    )}
-                                </For>
-                            </div>
-                        </Show>
-                    </>
-                )}
-            </For>
+                                        )}
+                                    </For>
+                                </div>
+                            </Show>
+                        </>
+                    )}
+                </For>
+            </div>
+
+            {!(props.footerstart || props.footerend) ? null : (
+                <div class={CssADV.TableFooter}>
+                    {props.footerstart}
+                    {props.footerend}
+                </div>
+            )}
         </div>
     );
 }
+

@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { RichText, BlogList, Carousel, Markdown, Slides, SuperTable, Carousel3D, TabBar, HList } from "../src/adv/gen";
+import { RichText, BlogList, Carousel, Markdown, Slides, Table, Carousel3D, TabBar, HList } from "../src/adv/gen";
 import { IconCross, IconTableHeading } from "../src/svg/gen";
 import { CssUI, GridLayout } from "../src/ui/gen";
 import { TestHeader } from "./common";
@@ -38,7 +38,7 @@ export function AdvTest() {
     let [currentTab, setCurrentTab] = createSignal(0)
 
     return <GridLayout
-        mode="flow"
+        // mode="flow"
         header={<TestHeader />}
         footer={<TestHeader />}
     >
@@ -51,7 +51,7 @@ export function AdvTest() {
         <TabBar
             titles={["Font", "Display", "Grid", "Tip"]}
             onTabChange={(i) => { setCurrentTab(i) }} />
-        <HList titles={["Font", "Display", "Grid", "Tip"]} index={currentTab} />
+        <HList pages={["Font", "Display", "Grid", "Tip"]} index={currentTab} />
 
         <Carousel3D items={[
             <h2>Item 1</h2>,
@@ -100,7 +100,7 @@ export function AdvTest() {
 //SuperTable : Table with sticky header
 //FN:DOC
 export function SuperTableTest() {
-    return <SuperTable
+    return <Table
 
         tableStyle={{
             "max-height": "300px",
@@ -122,7 +122,7 @@ export function SuperTableTest() {
                     <><p>Started </p><IconTableHeading /></>,
                     <><p>Active </p><IconTableHeading /></>,
                     <><p>Valid </p><IconTableHeading /></>,
-                    <>Revoke</>,
+                    <p>Revoke</p>,
                 ],
                 rowStyle: {
                     "grid-template-columns": `1fr 2fr 1fr 1fr 1fr`
@@ -135,13 +135,15 @@ export function SuperTableTest() {
                         margin: ".1rem",
                         padding: "10px",
                         background: tableHeaderColor,
+                        color: "black",
                     };
                 },
                 rowCellStyle: (row, col) => {
                     return {
                         padding: "10px",
                         margin: ".1rem",
-                        background: (col == 1 || row == 1) ? tableHeaderColor : ""
+                        background: (col == 1 || row == 1) ? tableHeaderColor : "red",
+                        color: "black",
                     };
                 },
                 data: [
@@ -185,7 +187,7 @@ export function SuperTableTest() {
             <button class={CssUI.ButtonMaterial}>Previous</button>
             <button class={CssUI.ButtonMaterial}>Next</button>
         </div>}
-    ></SuperTable>;
+    ></Table>;
 }
 //FN:END
 

@@ -167,6 +167,7 @@ li {
   text-wrap: pretty;
 
   font-size: var(--spacing);
+  font-weight: 100;
   line-height: calc(var(--spacing) * 1.25);
   letter-spacing: -0.01rem;
   word-spacing: -0.05rem;
@@ -385,7 +386,8 @@ sol(--size-16 , calc(var(--spacing) * 4));
 .f800 { font-weight: 800; }
 .f900 { font-weight: 900; }
 
-.border-basic { border: 1px solid var(--primary);}
+.border { border: 1px solid var(--surface);}
+.border-primary { border: 1px solid var(--primary);}
 
 .border-0 { border-width: 0; }
 .border-1 { border-width: 1px; }
