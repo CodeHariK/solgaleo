@@ -47,15 +47,14 @@ export function RatingsBar(props: { ratings?: number, reviews?: number }) {
 */
 
 export function ProgressBar({ progress, boxStyle, progressStyle }: {
-    progress: Accessor<number>,
+    progress?: Accessor<number>,
     boxStyle?: JSX.CSSProperties,
     progressStyle?: JSX.CSSProperties,
 }) {
     return (
         <div class={CssUI.Progress} style={boxStyle}>
-            <div
-                class={CssUI.ProgressFill}
-                style={{ ...progressStyle, width: `${progress()}%` }} // Set width based on progress
+            <div class={CssUI.ProgressFill}
+                style={{ width: `${progress?.()}%`, ...progressStyle, }}
             />
         </div>
     );

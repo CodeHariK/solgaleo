@@ -1,4 +1,4 @@
-import { JSX } from "solid-js";
+import { JSX, Switch, Match } from "solid-js";
 
 import { CssUI } from "./gen.ts";
 import { MetaProvider, Title } from "@solidjs/meta";
@@ -171,8 +171,8 @@ import { MetaProvider, Title } from "@solidjs/meta";
 }
 */
 
-type GridLayoutProps = {
-    title?: string,
+interface GridLayoutProps {
+    title?: string
     header?: JSX.Element;
     footer?: JSX.Element;
 
@@ -190,71 +190,46 @@ type GridLayoutProps = {
     mode?: 'fixed' | 'scroll' | 'flow';
 };
 
-export function GridLayout({
-    title,
-    header,
-    footer,
-    gridStyle,
-    left, leftStyle,
-    right, rightStyle,
-    children, childrenStyle,
-    mode = 'fixed'
-}: GridLayoutProps) {
+export function GridLayout(props: GridLayoutProps) {
+    return <MetaProvider>
+        <Title>{props.title}</Title>
 
-    if (mode == 'fixed') {
-        return (
-            <MetaProvider>
-                <Title>{title}</Title>
-
-                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFixed}`} style={gridStyle}>
-                    {header && <header class={CssUI.GridHeader}>{header}</header>}
-                    {left && <nav class={CssUI.GridLeft} style={leftStyle}>{left}</nav>}
-                    {children && <section class={CssUI.GridMiddle} style={childrenStyle}>{children}</section>}
-                    {right && <aside class={CssUI.GridRight} style={rightStyle}>{right}</aside>}
-                    {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
-                </main>
-            </MetaProvider>
-
-        )
-    } else if (mode == 'scroll') {
-        return (
-
-            <MetaProvider>
-                <Title>{title}</Title>
-
-                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutScroll}`} style={gridStyle}>
-                    {left && <nav class={CssUI.GridLeft} style={leftStyle}>{left}</nav>}
+        <Switch fallback={
+            <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFixed}`} style={props.gridStyle}>
+                {props.header && <header class={CssUI.GridHeader}>{props.header}</header>}
+                {props.left && <nav class={CssUI.GridLeft} style={props.leftStyle}>{props.left}</nav>}
+                {props.children && <section class={CssUI.GridMiddle} style={props.childrenStyle}>{props.children}</section>}
+                {props.right && <aside class={CssUI.GridRight} style={props.rightStyle}>{props.right}</aside>}
+                {props.footer && <footer class={CssUI.GridFooter}>{props.footer}</footer>}
+            </main>
+        }>
+            <Match when={props.mode === 'scroll'}>
+                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutScroll}`} style={props.gridStyle}>
+                    {props.left && <nav class={CssUI.GridLeft} style={props.leftStyle}>{props.left}</nav>}
                     <section class={CssUI.GridMiddle}>
                         <div class={CssUI.GridScrollContainer}>
-                            {header && <header class={CssUI.GridHeader}>{header}</header>}
-                            {children && <div class={CssUI.GridContent} style={childrenStyle}>{children}</div>}
-                            {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
+                            {props.header && <header class={CssUI.GridHeader}>{props.header}</header>}
+                            {props.children && <div class={CssUI.GridContent} style={props.childrenStyle}>{props.children}</div>}
+                            {props.footer && <footer class={CssUI.GridFooter}>{props.footer}</footer>}
                         </div>
                     </section>
-                    {right && <aside class={CssUI.GridRight} style={rightStyle}>{right}</aside>}
+                    {props.right && <aside class={CssUI.GridRight} style={props.rightStyle}>{props.right}</aside>}
                 </main>
+            </Match>
 
-            </MetaProvider>
-        )
-    } else {
-        return (
-
-            <MetaProvider>
-                <Title>{title}</Title>
-
-                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFlow}`} style={gridStyle}>
-                    {header && <header class={CssUI.GridHeader}>{header}</header>}
-                    {left && <nav class={CssUI.GridLeft} style={leftStyle}>{left}</nav>}
+            <Match when={props.mode === 'flow'}>
+                <main class={`${CssUI.GridLayout} ${CssUI.GridLayoutFlow}`} style={props.gridStyle}>
+                    {props.header && <header class={CssUI.GridHeader}>{props.header}</header>}
+                    {props.left && <nav class={CssUI.GridLeft} style={props.leftStyle}>{props.left}</nav>}
                     <section class={CssUI.GridMiddle}>
                         <div class={CssUI.GridScrollContainer}>
-                            {children && <div class={CssUI.GridContent} style={childrenStyle}>{children}</div>}
+                            {props.children && <div class={CssUI.GridContent} style={props.childrenStyle}>{props.children}</div>}
                         </div>
                     </section>
-                    {right && <aside class={CssUI.GridRight} style={rightStyle}>{right}</aside>}
-                    {footer && <footer class={CssUI.GridFooter}>{footer}</footer>}
+                    {props.right && <aside class={CssUI.GridRight} style={props.rightStyle}>{props.right}</aside>}
+                    {props.footer && <footer class={CssUI.GridFooter}>{props.footer}</footer>}
                 </main>
-
-            </MetaProvider>
-        )
-    }
+            </Match>
+        </Switch>
+    </MetaProvider>
 }

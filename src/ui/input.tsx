@@ -11,11 +11,6 @@ fieldset {
     padding: 0;
 }
 
-fieldset div {
-    display: flex;
-    align-items: center;
-}
-
 input[type="checkbox"], input[type="radio"] {
     sol(--input-accent-color , var(--primary));
     accent-color: var(--input-accent-color, var(--primary));
@@ -107,25 +102,24 @@ function useLocalState() {
     };
 }
 
-type CheckboxOption = {
+type Option = {
     value: string;
     label: JSX.Element;
     helperText?: string;
     disabled?: boolean;
 }
 
-type CheckboxGroupProps = {
+export function CheckboxGroup(props: {
     name: string;
-    header?: string;
-    horizontal?: boolean;
-    checkboxes: Array<CheckboxOption>;
+    header?: JSX.Element;
+    style?: JSX.CSSProperties;
+    inputStyle?: JSX.CSSProperties;
+    options: Array<Option>;
     onChange?: (value: Set<string>) => void;
     setValue?: (value: Set<string>) => void;
     initialValue?: string[];
     variant?: 'checkbox' | 'chip';
-};
-
-export function CheckboxGroup(props: CheckboxGroupProps) {
+}) {
     let context;
     try {
         context = useSpaceContext();
@@ -143,7 +137,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     });
 
     const handleCheckboxChange = (s: Set<string>) => {
-        const values = props.checkboxes
+        const values = props.options
             .filter((c) => s.has(c.value))
             .map((c) => c.value);
         handleChange(props.name, values);
@@ -152,17 +146,16 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     };
 
     return (
-        <fieldset classList={{ "flex": props.horizontal }}>
+        <fieldset>
 
             {props.header && <legend>{props.header}</legend>}
 
-            <div classList={{
-                [CssUI.Chips]: props.variant === 'chip'
-            }}>
-                <Key each={props.checkboxes} by="value">
+            <div style={{ "display": "flex", "align-items": "center", ...props.style }}
+                classList={{ [CssUI.Chips]: props.variant === 'chip' }}>
+                <Key each={props.options} by="value">
                     {(option) => (
                         props.variant === 'chip' ? (
-                            <div
+                            <div style={{ ...props.inputStyle }}
                                 class={`${CssUI.Chip} 
                                     ${new Set(state().values[props.name]).has(option().value) ? CssUI.ChipSelected : ''} 
                                     ${option().disabled ? CssUI.ChipDisabled : ''}`
@@ -181,7 +174,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
                                 {option().label}
                             </div>
                         ) : (
-                            <div>
+                            <div style={{ "display": "flex", "align-items": "center", ...props.inputStyle }}>
                                 <input
                                     id={option().value}
                                     name={props.name}
@@ -214,24 +207,16 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     );
 }
 
-type RadioOption = {
-    value: string;
-    label: JSX.Element;
-    helperText?: string;
-    disabled?: boolean;
-};
-
-type RadioGroupProps = {
+export function RadioGroup(props: {
     name: string;
-    header?: string;
+    header?: JSX.Element;
     horizontal?: boolean;
-    options: Array<RadioOption>;
+    style?: JSX.CSSProperties;
+    options: Array<Option>;
     onChange?: (value: string) => void;
     setValue?: (value: string) => void;
     initialValue?: string;
-};
-
-export function RadioGroup(props: RadioGroupProps) {
+}) {
     let context;
     try {
         context = useSpaceContext();
@@ -254,7 +239,7 @@ export function RadioGroup(props: RadioGroupProps) {
 
             <Key each={props.options} by="value">
                 {(option) => (
-                    <div>
+                    <div style={{ "display": "flex", "align-items": "center", ...props.style }}>
                         <input
                             id={`radio-${option().value}`}
                             name={props.name}
@@ -281,23 +266,16 @@ export function RadioGroup(props: RadioGroupProps) {
     );
 }
 
-
-type SelectOption = {
-    value: string;
-    label: string;
-};
-
-type SelectProps = {
+export function Select(props: {
     name: string;
-    header?: string;
-    options: Array<SelectOption>;
+    header?: JSX.Element;
+    options: Array<Option>;
+    style?: JSX.CSSProperties;
     disabled?: boolean;
     onChange?: (value: string) => void;
     setValue?: (value: string) => void;
     initialValue?: string;
-};
-
-export function Select(props: SelectProps) {
+}) {
     let context;
     try {
         context = useSpaceContext();
@@ -318,7 +296,7 @@ export function Select(props: SelectProps) {
         <fieldset>
             {props.header && <legend>{props.header}</legend>}
 
-            <div>
+            <div style={{ "display": "flex", "align-items": "center", ...props.style }}>
                 <select
                     name={props.name}
                     value={state().values[props.name] || ""}
@@ -333,7 +311,7 @@ export function Select(props: SelectProps) {
                 >
                     <Key each={props.options} by="value">
                         {(option) => (
-                            <option value={option().value} >
+                            <option disabled={option().disabled} value={option().value} >
                                 {option().label}
                             </option>
                         )}
@@ -377,14 +355,14 @@ export function Select(props: SelectProps) {
 
 */
 
-interface ToggleSwitchProps {
+export function ToggleSwitch(props: {
     name: string;
+    style?: JSX.CSSProperties;
+    header?: JSX.Element;
     onChange?: (value: boolean) => void;
     setValue?: (value: boolean) => void;
     initialValue?: boolean;
-}
-
-export function ToggleSwitch(props: ToggleSwitchProps) {
+}) {
     let context;
     try {
         context = useSpaceContext();
@@ -409,13 +387,16 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
     };
 
     return (
-        <fieldset>
-            <div
+        <fieldset style={props.style}>
+            {props.header && <legend style={{ display: "contents" }}>{props.header}</legend>}
+
+            <div style={{ "display": "flex", "align-items": "center" }}
                 classList={{
                     [CssUI.ToggleChecked]: state().values[props.name],
                 }}
                 class={CssUI.ToggleSwitch}
-                onClick={toggleValue}>
+                onClick={toggleValue}
+            >
                 <div class={CssUI.ToggleThumb}></div>
             </div>
         </fieldset>
@@ -602,18 +583,19 @@ input[type="range"]:focus ~ .RangeValue {
 
 */
 
-type InputProps = {
+export function Input(props: {
     name: string;
     type: "none" | "text" | "url" | "email" | "numeric" | "decimal" | "search" | "password" | "range" | "color" | "date" | "month" | "week" | "time" | "datetime-local";
     placeholder?: string;
     label?: string;
-    header?: string;
+    header?: JSX.Element;
     disabled?: boolean;
     readOnly?: boolean;
     pattern?: RegExp;
     icon?: JSX.Element;
     end?: JSX.Element[];
     style?: JSX.CSSProperties;
+    inputStyle?: JSX.CSSProperties;
 
     onChange?: (value: any) => void;
     onFocus?: (e: FocusEvent) => void;
@@ -626,9 +608,7 @@ type InputProps = {
     step?: number;
     setValue?: (value: any) => void;
     initialValue?: any;
-};
-
-export function Input(props: InputProps) {
+}) {
     let context;
     try {
         context = useSpaceContext();
@@ -669,11 +649,11 @@ export function Input(props: InputProps) {
 
             {props.header && <legend>{props.header}</legend>}
 
-            <div class={CssUI.Input}
+            <div style={{ "--value-left": rangeLeft(), "display": "flex", "align-items": "center", ...props.inputStyle }}
+                class={CssUI.Input}
                 data-has-icon={!!(props.icon || props.type === "password")}
                 data-has-label={!!props.label}
                 data-is-range={props.type === "range"}
-                style={{ "--value-left": rangeLeft() }}
             >
 
                 {(props.icon || props.type === "password") && (
@@ -804,16 +784,15 @@ export function Input(props: InputProps) {
 }
 */
 
-type FileUploaderProps = {
+export function FileUploader(props: {
     name: string;
-    header?: string;
+    header?: JSX.Element;
     accept: string[];
+    style?: JSX.CSSProperties;
     uploadFunc: (formdata: FormData) => Promise<{ valid: boolean, info: JSX.Element }>;
     initialValue?: File | string;
     setValue?: (value: string | File) => void;
-};
-
-export function FileUploader(props: FileUploaderProps) {
+}) {
     let context;
     try {
         context = useSpaceContext();
@@ -934,11 +913,10 @@ export function FileUploader(props: FileUploaderProps) {
     };
 
     return (
-
         <fieldset>
             {props.header && <legend>{props.header}</legend>}
 
-            <div class={CssUI.UploadContainer}>
+            <div style={{ ...props.style }} class={CssUI.UploadContainer}>
                 <div
                     class={`${CssUI.Dropzone} ${isDragging() ? CssUI.DropzoneDragging : ''}`}
                     onDragOver={(event) => {
@@ -1020,5 +998,5 @@ function startsWithPattern(inputString: string, patterns: string[]) {
             return true; // Return true if there's a match
         }
     }
-    return false; // Return false if no patterns match
+    return false;
 }

@@ -1,55 +1,49 @@
-import { GridLayout, TreeContent, TreeView, VCarousel } from '../src/gen';
+import { createSignal } from 'solid-js';
+import { CheckboxGroup, GridLayout, Select, VCarousel } from '../src/gen';
 import { TestHeader } from './common';
 
 export function GridTest() {
+
+    const [gridMode, setGridMode] = createSignal<"fixed" | "scroll" | "flow">()
+    const [showList, setShowList] = createSignal<Set<string>>(new Set())
+
     return <GridLayout
         header={<TestHeader />}
-        left={<TreeView id='grid' updateRoute data={gridTabs()} />}
-    >
-        <TreeContent
-            id='grid'
-            data={gridTabs()}
-        />
-    </GridLayout>
-}
+        left={<>
+            <Select
+                name='mode'
+                setValue={setGridMode}
+                initialValue="fixed"
+                options={[
+                    { label: "fixed", value: "fixed" },
+                    { label: "scroll", value: "scroll" },
+                    { label: "flow", value: "flow" },
+                ]} />
 
-function FixedLeftRight() {
-    return <GridLayout
-        header={<TestHeader />}
-        left={<TestVCarousel />}
-        right={<TestVCarousel />}
-    >
-    </GridLayout>
-}
+            <CheckboxGroup
+                name='show'
+                setValue={setShowList}
+                initialValue={["footer", "header", "left", "right"]}
+                style={{ "flex-direction": "column", "align-items": "start" }}
+                options={[
+                    { label: "header", value: "header" },
+                    { label: "footer", value: "footer" },
+                    { label: "left", value: "left" },
+                    { label: "right", value: "right" },
+                ]}>
 
-function FixedRight() {
-    return <GridLayout
-        // header={<TestHeader />}
-        right={<TestVCarousel />}
+            </CheckboxGroup>
+        </>}
     >
-    </GridLayout>
-}
-
-function FixedLeft() {
-    return <GridLayout
-        header={<TestHeader />}
-        left={<TestVCarousel />}
-    >
-    </GridLayout>
-}
-
-function FixedEmpty() {
-    return <GridLayout
-    // header={<TestHeader />}
-    >
-    </GridLayout>
-}
-
-function FixedMiddle() {
-    return <GridLayout
-        header={<TestHeader />}
-    >
-        <TestVCarousel />
+        <GridLayout
+            header={showList().has("header") ? <TestHeader /> : null}
+            footer={showList().has("footer") ? <TestHeader /> : null}
+            left={showList().has("left") ? <TestVCarousel /> : null}
+            right={showList().has("right") ? <TestVCarousel /> : null}
+            mode={gridMode()}
+        >
+            <TestVCarousel />
+        </GridLayout>
     </GridLayout>
 }
 
@@ -93,36 +87,3 @@ export function TestVCarousel() {
         listStyle={{ padding: "10px" }} />
 }
 //FN:END
-
-const gridTabs = () => [
-    {
-        id: "fixed-all-3",
-        label: "fixed-all-3",
-        content: <FixedAll3 />
-    },
-    {
-        id: "fixed-middle",
-        label: "fixed-middle",
-        content: <FixedMiddle />
-    },
-    {
-        id: "fixed-empty",
-        label: "fixed-empty",
-        content: <FixedEmpty />
-    },
-    {
-        id: "fixed-left",
-        label: "fixed-left",
-        content: <FixedLeft />
-    },
-    {
-        id: "fixed-right",
-        label: "fixed-right",
-        content: <FixedRight />
-    },
-    {
-        id: "fixed-left-right",
-        label: "fixed-left-right",
-        content: <FixedLeftRight />
-    }
-]

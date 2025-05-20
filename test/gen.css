@@ -1,7 +1,7 @@
 /*
+demo.mobile.tsx
 page.adv.tsx
 page.root.tsx
-mobile.tsx
 prism.tsx
 page.svg.tsx
 css.tsx
@@ -32,6 +32,30 @@ css.tsx
     --mark-anim-col: blue;
 }
 
+.product-card {
+    margin-bottom: 32px;
+}
+.product-image {
+    background: var(--primary-bg);
+    display: flex;
+    position: relative;
+    aspect-ratio: 1 / 1;
+}
+.product-info {
+    margin-top: 8px;
+    padding: 16px;
+    padding-bottom: 0;
+}
+.product-description {
+    font-size: 14px;
+    color: var(--surface);
+    margin-top: 4px;
+    overflow: hidden;
+    margin-top: 24px;
+}
+.product-description p {
+    margin-bottom: 16px;
+}
 .blog-title {
     font-size: 1.875rem;
     line-height: 2.25rem;
@@ -57,30 +81,6 @@ css.tsx
 .CodeCard {
 	box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 	transition: transform 0.2s ease-in-out;
-}
-.product-card {
-    margin-bottom: 32px;
-}
-.product-image {
-    background: var(--primary-bg);
-    display: flex;
-    position: relative;
-    aspect-ratio: 1 / 1;
-}
-.product-info {
-    margin-top: 8px;
-    padding: 16px;
-    padding-bottom: 0;
-}
-.product-description {
-    font-size: 14px;
-    color: var(--surface);
-    margin-top: 4px;
-    overflow: hidden;
-    margin-top: 24px;
-}
-.product-description p {
-    margin-bottom: 16px;
 }
 .light {
     --mono-1: hsl(230, 8%, 24%);

@@ -1,10 +1,11 @@
 
 import * as yup from 'yup';
 import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch, Grid, GridItem, Options } from '../src/ui/gen.ts';
-import { IconCross, IconDown, IconFilter, IconHome } from '../src/svg/gen.ts';
+import { IconCross, IconDown, IconFilter, IconHome, } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 import { createSignal, For, JSX } from 'solid-js';
 import { Modal, TreeView } from '../src/nav/gen.ts';
+import { Dashboard } from './demo.dashboard.tsx';
 
 export function UiTest() {
 
@@ -15,6 +16,8 @@ export function UiTest() {
     //                         {t}
     //                         <Story />
     //                     </section>)
+
+    return <Dashboard />
 
     return <GridLayout
         header={<TestHeader />}
@@ -66,8 +69,8 @@ export function UiTest() {
             }}
         >
 
-            <CheckboxGroup header="Countries" name={"hello"} checkboxes={checkboxes} />
-            <CheckboxGroup header="Countries" name={"hello"} variant='chip' checkboxes={checkboxes} />
+            <CheckboxGroup header="Countries" name={"hello"} options={checkboxes} />
+            <CheckboxGroup header="Countries" name={"hello"} variant='chip' options={checkboxes} />
 
             <Select name="country" options={selectOptions} header="Country" />
 
@@ -221,7 +224,7 @@ const checkboxes = [
 
 const selectOptions = [
     { value: "us", label: "United States" },
-    { value: "ca", label: "Canada" },
+    { value: "ca", label: "Canada", disabled: true },
     { value: "fr", label: "France" },
     { value: "de", label: "Germany" }
 ];
@@ -282,6 +285,8 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
             }}>
                 AsyncButton
             </AsyncButton>
+
+            <button class={CssUI.ButtonElevated}>Elevated</button>
         </div>
 
         <Options />

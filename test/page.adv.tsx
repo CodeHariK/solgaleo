@@ -165,7 +165,7 @@ export function SuperTableTest() {
                             })()}</p>,
                             <p>Active</p>,
                             <p>{s.exp.toString()}</p>,
-                            <button class={CssUI.IconButton}><IconCross /></button>
+                            <button class={CssUI.ButtonIcon}><IconCross /></button>
                         ]
                     };
                 }
@@ -177,13 +177,13 @@ export function SuperTableTest() {
             <h3>Login sessions</h3>
         </div>}
         headerend={<div class="flex gap2">
-            <button class={CssUI.OutlinedButton}>Revoke All</button>
-            <button class={CssUI.MaterialButton}>Logout</button>
+            <button class={CssUI.ButtonOutlined}>Revoke All</button>
+            <button class={CssUI.ButtonMaterial}>Logout</button>
         </div>}
         footerstart={<p>Page 1 of 10</p>}
         footerend={<div class="flex gap2">
-            <button class={CssUI.MaterialButton}>Previous</button>
-            <button class={CssUI.MaterialButton}>Next</button>
+            <button class={CssUI.ButtonMaterial}>Previous</button>
+            <button class={CssUI.ButtonMaterial}>Next</button>
         </div>}
     ></SuperTable>;
 }

@@ -12,6 +12,9 @@ let r2 = createRandomArray(5, 100)
 let r3 = createRandomArray(5, 100)
 let r4 = createRandomArray(5, 100)
 
+//FN:START
+//Chart
+//FN:DOC
 export function ChartTest() {
 
   const [toggle, setToggle] = createSignal(false);
@@ -126,3 +129,4 @@ export function ChartTest() {
 
   </GridLayout>
 }
+//FN:END

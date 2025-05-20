@@ -1,6 +1,7 @@
 import '../gen.css'
 
 export * from "./position.tsx"; 
+export * from "./card.tsx"; 
 export * from "./gridlayout.tsx"; 
 export * from "./grid.tsx"; 
 export * from "./accordion.tsx"; 
@@ -14,6 +15,10 @@ export * from "./provider.tsx";
 
 export const CssUI = {
     DragBox: "DragBox",
+    Card: "Card",
+    CardHeader: "CardHeader",
+    CardContent: "CardContent",
+    CardFooter: "CardFooter",
     GridLayout: "GridLayout",
     GridLayoutFixed: "GridLayoutFixed",
     GridLayoutScroll: "GridLayoutScroll",
@@ -50,6 +55,7 @@ export const CssUI = {
     ButtonGradient: "ButtonGradient",
     ButtonError: "ButtonError",
     ButtonErrorOutlined: "ButtonErrorOutlined",
+    ButtonElevated: "ButtonElevated",
     SelectionOptions: "selection-options",
     Option: "option",
     SelectChevron: "SelectChevron",

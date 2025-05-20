@@ -23,12 +23,12 @@ export function FancyTest() {
     <TransitionWidget
       showFirstWidget={toggle()}
       one={
-        <button class={CssUI.OutlinedButton} style={{ "font-size": "80px" }} onclick={() => setToggle(prev => !prev)}>
+        <button class={CssUI.ButtonOutlined} style={{ "font-size": "80px" }} onclick={() => setToggle(prev => !prev)}>
           One
         </button>
       }
       two={
-        <button class={CssUI.MaterialButton} style={{ "font-size": "30px" }} onclick={() => setToggle(prev => !prev)}>
+        <button class={CssUI.ButtonMaterial} style={{ "font-size": "30px" }} onclick={() => setToggle(prev => !prev)}>
           Two
         </button>
       }

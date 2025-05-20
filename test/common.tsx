@@ -18,13 +18,13 @@ export function TestHeader() {
             <AA href={'/fancy'} title='Fancy' >Fancy</AA>,
             <AA href={'/ui'} title='Ui' >Ui</AA>,
             <AA href={'/grid'} title='Grid'>Grid</AA>,
-            <AA href="/tabs" >Tab</AA>,
             <AA href="/chart" >Chart</AA>,
+            <AA href="/tabs" >Tab</AA>,
             <AA href="/tabs?two.light=Root.Pictures.Vacation" >Tabs</AA>,
         ]}
         right={[
             <button
-                class={CssUI.IconButton}
+                class={CssUI.ButtonIcon}
                 type="button"
                 onClick={() => window.open('https://github.com/codeharik/solgaleo', '_blank')}>
                 Github

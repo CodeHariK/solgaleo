@@ -97,6 +97,26 @@ svg {
         cursor: move;
         pointer-events: auto;
     }
+.Card {
+    border: 1px solid var(--surface);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.CardHeader {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.CardContent {
+    padding: calc(.5 * var(--spacing));
+}
+.CardFooter {
+    padding: calc(.5 * var(--spacing));
+    display: flex;
+    justify-content: flex-end;
+    gap: calc(.5 * var(--spacing));
+}
 .GridLayout {
     width: 100%;
     height: 100%;
@@ -323,7 +343,7 @@ button:disabled {
     border-radius: 100rem;
 }
 .ButtonIconPlain {
-    color: inherit;
+    color: var(--surface);
     background: transparent;
 }
 .ButtonRev, .ButtonRoundRev {
@@ -368,6 +388,24 @@ button:disabled {
     background: var(--body-bg);
     border: var(--border) solid var(--error-bg);
 }
+.ButtonElevated {
+    color: var(--body);
+    border: 1px solid var(--body-bg);
+    border-radius: 4px;
+    padding: 0.8em 2em;
+    background: var(--body-bg);
+    transition: 0.2s;
+}
+.ButtonElevated:hover {
+    color: var(--primary);
+    transform: translate(-0.25rem, -0.25rem);
+    background: var(--primary-bg);
+    box-shadow: 0.25rem 0.25rem var(--surface-bg);
+}
+.ButtonElevated:active {
+    transform: translate(0);
+    box-shadow: none;
+}
 .selection-options {
     display: flex;
     border-top: var(--border) solid var(--surface-tint);
@@ -386,10 +424,6 @@ button:disabled {
 fieldset {
     border: none;
     padding: 0;
-}
-fieldset div {
-    display: flex;
-    align-items: center;
 }
 input[type="checkbox"], input[type="radio"] {
     accent-color: var(--input-accent-color, var(--primary));
@@ -1826,10 +1860,6 @@ label[aria-disabled="true"] {
 pre {
   white-space: pre-wrap;
   font-family: monospace;
-}
-hr {
-  border: 1px solid var(--secondary);
-  margin: .3rem 0rem;
 }
 @media (min-width: 768px) {
 }

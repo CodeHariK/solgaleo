@@ -11,6 +11,10 @@ export * from "./nav/gen";
 export const CssSRC = {
     AnimateSpin: "animate-spin",
     DragBox: "DragBox",
+    Card: "Card",
+    CardHeader: "CardHeader",
+    CardContent: "CardContent",
+    CardFooter: "CardFooter",
     GridLayout: "GridLayout",
     GridLayoutFixed: "GridLayoutFixed",
     GridLayoutScroll: "GridLayoutScroll",
@@ -47,6 +51,7 @@ export const CssSRC = {
     ButtonGradient: "ButtonGradient",
     ButtonError: "ButtonError",
     ButtonErrorOutlined: "ButtonErrorOutlined",
+    ButtonElevated: "ButtonElevated",
     SelectionOptions: "selection-options",
     Option: "option",
     SelectChevron: "SelectChevron",

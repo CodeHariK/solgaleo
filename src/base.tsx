@@ -206,11 +206,6 @@ pre {
   font-family: monospace;
 }
 
-hr {
-  border: 1px solid var(--secondary);
-  margin: .3rem 0rem;
-}
-
 @media (min-width: 768px) {
 }
 

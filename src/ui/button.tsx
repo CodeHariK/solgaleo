@@ -53,7 +53,7 @@ button:disabled {
     border-radius: 100rem;
 }
 .ButtonIconPlain {
-    color: inherit;
+    color: var(--surface);
     background: transparent;
 }
 
@@ -104,6 +104,28 @@ button:disabled {
     color: var(--error-bg);
     background: var(--body-bg);
     border: var(--border) solid var(--error-bg);
+}
+
+
+.ButtonElevated {
+    color: var(--body);
+    border: 1px solid var(--body-bg);
+    border-radius: 4px;
+    padding: 0.8em 2em;
+    background: var(--body-bg);
+    transition: 0.2s;
+}
+
+.ButtonElevated:hover {
+    color: var(--primary);
+    transform: translate(-0.25rem, -0.25rem);
+    background: var(--primary-bg);
+    box-shadow: 0.25rem 0.25rem var(--surface-bg);
+}
+
+.ButtonElevated:active {
+    transform: translate(0);
+    box-shadow: none;
 }
 
 */
