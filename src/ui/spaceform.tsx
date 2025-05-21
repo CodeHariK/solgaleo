@@ -108,21 +108,29 @@ export function SpaceForm(props: SpaceFormProps) {
     );
 }
 
-export function SpaceDebugInfo() {
-    const context = useSpaceContext();
-
-    if (!context) {
-        throw new Error("TextInput must be used within a FormProvider");
+function serializeRecord(record: Record<string, any>): Record<string, any> {
+    const result: Record<string, any> = {};
+    for (const [key, value] of Object.entries(record)) {
+        if (value instanceof Set) {
+            result[key] = Array.from(value); // Convert Set to Array
+        } else if (typeof value === 'object' && value !== null) {
+            result[key] = serializeRecord(value); // Recursively serialize nested objects
+        } else {
+            result[key] = value; // Copy primitive values
+        }
     }
+    return result;
+}
 
-    const { state } = context;
+export function SpaceDebugInfo() {
+    const { state } = useSpaceContext();
 
     return (
         <div class="m2 border-basic p4 br8">
             <h5>Spaceform debug info</h5>
             <hr />
             <pre>
-                {JSON.stringify(state(), null, 2)}
+                {JSON.stringify(serializeRecord(state()), null, 2)}
             </pre>
         </div>
     );

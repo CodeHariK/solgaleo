@@ -63,6 +63,8 @@ export const CssUI = {
     Chip: "Chip",
     ChipSelected: "ChipSelected",
     ChipDisabled: "ChipDisabled",
+    SelectTrigger: "select-trigger",
+    Arrow: "arrow",
     ToggleSwitch: "ToggleSwitch",
     ToggleThumb: "ToggleThumb",
     ToggleChecked: "ToggleChecked",

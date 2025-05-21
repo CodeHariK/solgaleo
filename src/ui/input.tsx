@@ -1,8 +1,9 @@
 import { Key } from "@solid-primitives/keyed";
 import { useSpaceContext } from "./spaceform";
-import { createSignal, onMount, Setter, type JSX } from "solid-js";
-import { IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
+import { createEffect, createSignal, onMount, Setter, Show, type JSX } from "solid-js";
+import { IconCross, IconDown, IconKey, IconLock, IconUnlock } from "../svg/svg.tsx";
 import { CssUI } from "./gen.ts";
+import { Modal } from "../nav/modal.tsx";
 
 /*CSS:
 
@@ -113,8 +114,9 @@ export function CheckboxGroup(props: {
     name: string;
     header?: JSX.Element;
     style?: JSX.CSSProperties;
-    inputStyle?: JSX.CSSProperties;
+    inputStyle?: (index: number) => JSX.CSSProperties;
     options: Array<Option>;
+    multiple?: boolean;
     onChange?: (value: Set<string>) => void;
     setValue?: (value: Set<string>) => void;
     initialValue?: string[];
@@ -129,6 +131,8 @@ export function CheckboxGroup(props: {
 
     const { state, handleChange, initializeValue } = context;
 
+    const [highlightedIndex, setHighlightedIndex] = createSignal(-1)
+
     onMount(() => {
         if (props.initialValue !== undefined) {
             initializeValue(props.name, props.initialValue);
@@ -136,14 +140,27 @@ export function CheckboxGroup(props: {
         }
     });
 
-    const handleCheckboxChange = (s: Set<string>) => {
-        const values = props.options
-            .filter((c) => s.has(c.value))
-            .map((c) => c.value);
-        handleChange(props.name, values);
-        props.setValue?.(s);
-        props.onChange?.(s);
-    };
+    function onInput(option: Option) {
+        return () => {
+            if (option.disabled) return;
+            let values = new Set<string>(state().values[props.name]);
+            if (values.has(option.value)) {
+                values.delete(option.value);
+            } else {
+                values.add(option.value);
+            }
+            if (!props.multiple) {
+                values = !values.has(option.value) ? new Set<string>() : new Set<string>([option.value])
+            }
+            props.setValue?.(values);
+            props.onChange?.(values);
+            handleChange(props.name, values);
+        };
+    }
+
+    function isOptionSelected(option: Option): boolean {
+        return new Set(state().values[props.name]).has(option.value) || false;
+    }
 
     return (
         <fieldset>
@@ -153,45 +170,46 @@ export function CheckboxGroup(props: {
             <div style={{ "display": "flex", "align-items": "center", ...props.style }}
                 classList={{ [CssUI.Chips]: props.variant === 'chip' }}>
                 <Key each={props.options} by="value">
-                    {(option) => (
+                    {(option, index) => (
                         props.variant === 'chip' ? (
-                            <div style={{ ...props.inputStyle }}
+                            <div style={props.inputStyle?.(index())}
                                 class={`${CssUI.Chip} 
-                                    ${new Set(state().values[props.name]).has(option().value) ? CssUI.ChipSelected : ''} 
+                                    ${isOptionSelected(option()) ? CssUI.ChipSelected : ''} 
                                     ${option().disabled ? CssUI.ChipDisabled : ''}`
                                 }
-                                onClick={() => {
-                                    if (option().disabled) return;
-                                    let s = new Set<string>(state().values[props.name])
-                                    if (s.has(option().value)) {
-                                        s.delete(option().value)
-                                    } else {
-                                        s.add(option().value)
-                                    }
-                                    handleCheckboxChange(s);
-                                }}
+                            // onClick={onInput(option())}
                             >
                                 {option().label}
+                                <button
+                                    type="button"
+                                    class={CssUI.ButtonIconPlain}
+                                    style={{ "font-size": ".7rem", padding: ".2rem", "margin-left": ".2rem" }}
+                                    onClick={() => onInput(option())}
+                                    aria-label={`Remove ${option().label}`}
+                                >
+                                    <IconCross />
+                                </button>
                             </div>
                         ) : (
-                            <div style={{ "display": "flex", "align-items": "center", ...props.inputStyle }}>
-                                <input
-                                    id={option().value}
-                                    name={props.name}
-                                    type="checkbox"
-                                    value={option().value}
-                                    checked={new Set(state().values[props.name]).has(option().value) || false}
-                                    disabled={option().disabled}
-                                    onInput={() => {
-                                        let s = new Set<string>(state().values[props.name])
-                                        if (s.has(option().value)) {
-                                            s.delete(option().value)
-                                        } else {
-                                            s.add(option().value)
-                                        }
-                                        handleCheckboxChange(s);
-                                    }}
-                                />
+                            <div style={props.inputStyle?.(index())}
+                                class={`p2 flex items-center gap4 ${!props.multiple && isOptionSelected(option()) ? "primary" : ""} ${highlightedIndex() === index() ? "surface-bg" : ""}`}
+                                onMouseEnter={() => setHighlightedIndex(index())}
+                                onMouseLeave={() => setHighlightedIndex(-1)}
+                                onClick={onInput(option())}
+                            >
+                                <Show when={props.multiple}>
+                                    <input
+                                        id={option().value}
+                                        name={props.name}
+                                        type="checkbox"
+                                        value={option().value}
+                                        checked={isOptionSelected(option())}
+                                        aria-selected={isOptionSelected(option())}
+                                        disabled={option().disabled}
+                                        role="option"
+                                        onInput={onInput(option())}
+                                    />
+                                </Show>
                                 <label aria-disabled={option().disabled} for={option().value} >
                                     {option().label}
                                     {option().helperText && (
@@ -205,6 +223,143 @@ export function CheckboxGroup(props: {
             </div>
         </fieldset>
     );
+}
+
+/*CSS:
+
+.select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 46px;
+}
+
+.arrow {
+    border: solid #666;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transition: transform 0.2s ease;
+}
+
+.arrow.down {
+    transform: rotate(45deg);
+    margin-top: -3px;
+}
+
+.arrow.up {
+    transform: rotate(-135deg);
+    margin-bottom: -3px;
+}
+
+*/
+
+export function CustomSelect(props: {
+    id: string;
+    options: { label: string, value: string }[]
+    multiple: boolean
+    onChange: (value: any) => any;
+}) {
+    const [isOpen, setIsOpen] = createSignal(false)
+
+    const [searchTerm, setSearchTerm] = createSignal("")
+    const [selected, setSelected] = createSignal<Set<string>>(new Set())
+
+    createEffect(() => {
+        console.log(selected())
+    })
+
+    const filteredOptions = () => {
+        if (!searchTerm()) return props.options
+        const term = searchTerm().toLowerCase()
+        return props.options.filter((option) => option.label.toLowerCase().includes(term))
+    }
+
+    const clearAll = (event) => {
+        event.stopPropagation()
+        props.onChange(props.multiple ? [] : "")
+    }
+
+    const modalVisibility = createSignal(false);
+
+    return <Modal
+        title="Hello"
+        visibilitySignal={modalVisibility}
+        anchor={{
+            align: 'bottom',
+            offset: 10,
+            element: ([_, setRef], [, setVisibility]) => {
+                return <div
+                    ref={setRef} onClick={() => { setVisibility(true) }}
+                    class={`select-trigger ${props.multiple ? "multi-select-trigger" : ""}`}
+                    // onClick={toggleDropdown}
+                    aria-haspopup="listbox"
+                    aria-expanded={isOpen()}
+                    id={props.id}
+                >
+                    {/* <label for="single-select">Single Select:</label> */}
+
+                    {props.multiple ? (
+                        <div class="selected-tags">
+                            {Array.from(selected().values()).length > 0 ? (
+                                <>
+                                    <CheckboxGroup
+                                        name="hello"
+                                        multiple={props.multiple}
+                                        variant="chip"
+                                        setValue={setSelected}
+                                        options={props.options
+                                            .filter((option) => selected().has(option.value))} />
+
+                                </>
+                            ) : (
+                                <span class="surface-text">Select options...</span>
+                            )}
+                        </div>
+                    ) : (
+                        <span class="selected-text">{Array.from(selected().values()).toString()}</span>
+                    )}
+
+                    <div class="trigger-buttons">
+                        {props.multiple && Array.from(selected().values()).length > 0 && (
+                            <button type="button" class="clear-all" onClick={clearAll} aria-label="Clear all selections">
+                                Clear
+                            </button>
+                        )}
+                        <span class={`arrow ${isOpen() ? "up" : "down"}`}></span>
+                    </div>
+                </div>
+            }
+        }}
+
+        child={(anchorRef) => {
+            return <div class="border flex flex-col p4"
+                style={{ width: `${anchorRef?.getBoundingClientRect().width}px`, "max-height": "200px" }}>
+
+                <Input
+                    name="Search"
+                    type="search"
+                    setValue={setSearchTerm}
+                />
+
+                <CheckboxGroup
+                    name="hello"
+                    multiple={props.multiple}
+                    setValue={setSelected}
+                    style={{ padding: ".5rem", "flex-direction": "column", "align-items": "start" }}
+                    inputStyle={() => { return { "width": "100%" } }}
+                    options={filteredOptions().filter((option) => { return option.value.includes(searchTerm()) })} />
+
+            </div>;
+        }}
+    />
 }
 
 export function RadioGroup(props: {

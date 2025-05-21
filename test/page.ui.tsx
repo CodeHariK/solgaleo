@@ -1,6 +1,6 @@
 
 import * as yup from 'yup';
-import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch, Grid, GridItem, Options } from '../src/ui/gen.ts';
+import { CheckboxGroup, RadioGroup, RatingsBar, Select, CssUI, SpaceDebugInfo, SpaceForm, SpaceFormError, Input, GridLayout, FileUploader, Accordion, AsyncButton, ProgressBar, ToggleSwitch, Grid, GridItem, Options, CustomSelect } from '../src/ui/gen.ts';
 import { IconCross, IconDown, IconFilter, IconHome, } from '../src/svg/gen.ts';
 import { TestHeader } from './common.tsx';
 import { createSignal, For, JSX } from 'solid-js';
@@ -53,7 +53,7 @@ export function UiTest() {
             initialFormState={{
                 values: {
                     "first_name": "Hello",
-                    "hello": ["checkbox-3"],
+                    "multi": ["checkbox-3"],
                     "country": "fr",
                     "countries": "USA",
                     "range": 20,
@@ -69,8 +69,24 @@ export function UiTest() {
             }}
         >
 
-            <CheckboxGroup header="Countries" name={"hello"} options={checkboxes} />
-            <CheckboxGroup header="Countries" name={"hello"} variant='chip' options={checkboxes} />
+            <CheckboxGroup header="single" name={"single"} options={checkboxes} />
+            <CheckboxGroup header="multi" multiple name={"multi"} options={checkboxes} />
+            <CheckboxGroup header="singlechip" name={"singlechip"} variant='chip' options={checkboxes} />
+            <CheckboxGroup header="multichip" multiple name={"multichip"} variant='chip' options={checkboxes} />
+
+            <CustomSelect
+                id="single-select"
+                options={checkboxes}
+                onChange={(value) => console.log(value)}
+                multiple={false}
+            />
+
+            <CustomSelect
+                id="multi-select"
+                options={checkboxes}
+                onChange={(values) => console.log(values)}
+                multiple={true}
+            />
 
             <Select name="country" options={selectOptions} header="Country" />
 
@@ -202,24 +218,10 @@ export const validationSchema = yup.object().shape({
 
 
 const checkboxes = [
-    {
-        value: "checkbox-1",
-        label: "I agree to the terms and conditions",
-        helperText: "Terms and conditions apply.",
-        disabled: false
-    },
-    {
-        value: "checkbox-2",
-        label: "I want to get promotional offers",
-        helperText: "Get offers and updates.",
-        disabled: false
-    },
-    {
-        value: "checkbox-3",
-        label: "I am 18 years or older",
-        helperText: "Get offers and updates.",
-        disabled: true
-    }
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana", helperText: "banana", disabled: true },
+    { value: "blueberry", label: "Blueberry" },
+    { value: "mango", label: "Mango" },
 ];
 
 const selectOptions = [

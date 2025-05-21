@@ -484,6 +484,34 @@ select {
     opacity: 0.5;
     cursor: not-allowed;
 }
+.select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 46px;
+}
+.arrow {
+    border: solid #666;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transition: transform 0.2s ease;
+}
+.arrow.down {
+    transform: rotate(45deg);
+    margin-top: -3px;
+}
+.arrow.up {
+    transform: rotate(-135deg);
+    margin-bottom: -3px;
+}
 .ToggleSwitch {
     width: 60px;
     height: 30px;
@@ -1996,6 +2024,7 @@ pre {
 .underline { text-decoration: underline; }
 .line { text-decoration: line-through; }
 .overline { text-decoration: overline; }
+.italic { font-style: italic; }
 .bold { font-weight: bold; }
 .f100 { font-weight: 100; }
 .f200 { font-weight: 200; }
@@ -2040,12 +2069,18 @@ pre {
     0px 3.3px 4.5px -0.9px hsl(var(--shadow-color) / 0.21),
     0px 4.6px 6.2px -1px hsl(var(--shadow-color) / 0.24);
 }
-.pri { color: var(--primary); background: var(--primary-bg); }
-.revpri { color: var(--primary-bg); background: var(--primary); }
-.sec { color: var(--secondary); background: var(--secondary-bg); }
-.revsec { color: var(--secondary-bg); background: var(--secondary); }
+.primary { color: var(--primary); background: var(--primary-bg); }
+.primary-r { color: var(--primary-bg); background: var(--primary); }
+.secondary { color: var(--secondary); background: var(--secondary-bg); }
+.secondary-r { color: var(--secondary-bg); background: var(--secondary); }
 .surface { color: var(--surface); background: var(--surface-bg); }
-.revsurface { color: var(--surface-bg); background: var(--surface); }
+.surface-r { color: var(--surface-bg); background: var(--surface); }
+.primary-text { color: var(--primary); }
+.secondary-text { color: var(--secondary); }
+.surface-text { color: var(--surface); }
+.primary-bg { background: var(--primary-bg); }
+.secondary-bg { background: var(--secondary-bg); }
+.surface-bg { background: var(--surface-bg); }
 @keyframes fade-in {
     to {
         opacity: 1
