@@ -27,6 +27,7 @@ svg {
     // height: var(--svg-size);
     width: 1em;
     height: 1em;
+    flex-shrink: 0;
     color: currentColor;
     // background: var(--icon-bg);
     // sol(--svg-ring-width , 4px);

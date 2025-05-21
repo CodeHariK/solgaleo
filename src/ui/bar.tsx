@@ -38,24 +38,30 @@ export function RatingsBar(props: { ratings?: number, reviews?: number }) {
 .ProgressFill {
     height: 100%;
     background: var(--primary);
-    // background: linear-gradient(90deg,
-    //     var(--primary) 0%, 
-    //     var(--secondary) 50%,
-    //     var(--primary) 100%);
     transition: width 0.2s ease-in-out;
 }
 */
 
-export function ProgressBar({ progress, boxStyle, progressStyle }: {
+export function ProgressBar(props: {
+    title?: JSX.Element
     progress?: Accessor<number>,
     boxStyle?: JSX.CSSProperties,
     progressStyle?: JSX.CSSProperties,
 }) {
     return (
-        <div class={CssUI.Progress} style={boxStyle}>
-            <div class={CssUI.ProgressFill}
-                style={{ width: `${progress?.()}%`, ...progressStyle, }}
-            />
-        </div>
+        <>
+            {
+                props.title &&
+                <div class="flex space-between">
+                    <p>{props.title}</p>
+                    <span>{props.progress?.()}%</span>
+                </div>
+            }
+            <div class={CssUI.Progress} style={props.boxStyle}>
+                <div class={CssUI.ProgressFill}
+                    style={{ width: `${props.progress?.()}%`, ...props.progressStyle, }}
+                />
+            </div>
+        </>
     );
 }

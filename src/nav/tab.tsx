@@ -79,7 +79,8 @@ export function TreeView(props: {
     updateRoute?: boolean
     showContent?: boolean;
     onClick?: (tab: Tree) => void;
-    style?: JSX.CSSProperties;
+    treeStyle?: JSX.CSSProperties;
+    buttonStyle?: JSX.CSSProperties,
 }) {
     const [_] = useRoutes(props.id, updateContent);
     const [tree, setTree] = createSignal(props.level ? props.data : convertTree(props.data));
@@ -117,7 +118,7 @@ export function TreeView(props: {
     return (
         <ul
             class={CssNAV.TreeView}
-            style={props.style}
+            style={props.treeStyle}
             role="menu"
             aria-level={props.level ?? 0}
         >
@@ -132,6 +133,7 @@ export function TreeView(props: {
 
                             <div
                                 class={CssNAV.TreeHeader}
+                                style={props.buttonStyle}
                                 classList={{ [CssNAV.TreeActive]: activePath()?.startsWith(treeItem.id) }}
                                 onClick={(e) => {
                                     setIsOpen(!isOpen());
@@ -143,7 +145,8 @@ export function TreeView(props: {
                                 </div>
 
                                 <div style={{ display: "flex", "flex-direction": "column" }}>
-                                    <span>{treeItem.label}</span>
+
+                                    {treeItem.label}
 
                                     <Show when={props.showContent && isOpen() && treeItem.content}>
                                         <div class={CssNAV.TreeContent}

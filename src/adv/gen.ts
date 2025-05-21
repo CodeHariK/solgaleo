@@ -25,7 +25,7 @@ export const CssADV = {
     BlogItem: "BlogItem",
     BlogItemAnimate: "BlogItemAnimate",
     BlogLinkActive: "BlogLinkActive",
-    SuperTable: "SuperTable",
+    Table: "Table",
     TableHeader: "TableHeader",
     TableFooter: "TableFooter",
     TableHeaderContainer: "TableHeaderContainer",

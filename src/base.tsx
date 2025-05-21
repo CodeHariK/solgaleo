@@ -1,6 +1,6 @@
 /*CSS:
 
-sol(--spacing , 1rem);
+sol(--spacing , .84rem);
 
 sol(--border, 1px);
 sol(--button-padding, 0.5rem .75rem);
@@ -13,8 +13,8 @@ sol(--primary , #6750A4 , #d8c8fa);
 sol(--primary-bg , #EADDFF , #4F378B);
 sol(--primary-border , oklch(from var(--primary) calc(l + 0.1) c h));
 
-sol(--secondary , #b4216b , #b4216b);
-sol(--secondary-bg , #ffe3f1 , #454245);
+sol(--secondary , #9d1459 , #fbb2d7);
+sol(--secondary-bg , #fbb2d7 , #9d1459);
 
 sol(--surface , oklch(from var(--body) calc(l + .5) c h) , oklch(from var(--body) calc(l + .3) c h) );
 sol(--surface-bg , oklch(from var(--body-bg) calc(l - .025) c h) , oklch(from var(--body-bg) calc(l + .25) c h) );
@@ -22,6 +22,9 @@ sol(--surface-tint , oklch(from var(--surface-bg) calc(l - .08) c h) , oklch(fro
 
 sol(--error , #ffffff);
 sol(--error-bg , #e85b53);
+
+sol(--active , #e3fdd4);
+sol(--active-bg , #077320);
 
 sol(--disabled , #bdbdbd , #8b8b8b);
 sol(--disabled-bg , #e7e7e7 , #565656) ;
@@ -162,8 +165,7 @@ h6 {
   word-spacing: -0.05rem;
 }
 
-p,
-li {
+body, p, li {
   text-wrap: pretty;
 
   font-size: var(--spacing);

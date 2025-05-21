@@ -7,7 +7,9 @@ interface CircleChartProps {
         value: number;
         color: string;
     }[];
-    radius: number;
+    radius?: number;
+    width?: string;
+    height?: string;
     thickness?: number;
     duration?: number;
     startAngle?: number;
@@ -16,28 +18,51 @@ interface CircleChartProps {
 export function CircleChart(props: CircleChartProps) {
     const [hoveredSegment, setHoveredSegment] = createSignal<Point | null>(null);
     const [internalData, setInternalData] = createSignal(props.data);
+    let containerRef: HTMLDivElement;
     let canvasRef: HTMLCanvasElement;
     let animationFrameId: number;
+    let resizeObserver: ResizeObserver;
 
-    // Calculate actual dimensions
-    const diameter = props.radius * 2;
-    const clampedThickness = props.thickness
-        ? Math.min(Math.max(props.thickness, 0), props.radius)
-        : props.radius * 0.3;
+    // Calculate dimensions based on container size
+    function calculateDimensions() {
+        if (!containerRef) return { radius: 100, diameter: 200 }; // Default values
+        
+        const rect = containerRef.getBoundingClientRect();
+        const minSize = Math.min(rect.width, rect.height);
+        const radius = props.radius ?? minSize / 2;
+        const diameter = radius * 2;
+        
+        return { radius, diameter };
+    }
 
+    function updateCanvasSize() {
+        if (!containerRef || !canvasRef) return;
+        const { diameter } = calculateDimensions();
+        
+        canvasRef.width = diameter;
+        canvasRef.height = diameter;
+        
+        drawChart(internalData());
+    }
+
+    // Modify drawChart to use calculated dimensions
     function drawChart(data: typeof props.data, progress = 1) {
         if (!canvasRef) return;
         const ctx = canvasRef.getContext('2d');
         if (!ctx) return;
 
+        const { radius, diameter } = calculateDimensions();
+        const clampedThickness = props.thickness
+            ? Math.min(Math.max(props.thickness, 0), radius)
+            : radius * 0.3;
+
         ctx.clearRect(0, 0, diameter, diameter);
         ctx.save();
 
-        const centerX = props.radius;
-        const centerY = props.radius;
+        const centerX = radius;
+        const centerY = radius;
         const startAngle = props.startAngle ?? -Math.PI / 2;
 
-        // Rest of drawing logic stays the same but uses props.radius and clampedThickness
         const total = data.reduce((sum, item) => sum + item.value, 0);
         const points: Point[] = [];
 
@@ -49,15 +74,15 @@ export function CircleChart(props: CircleChartProps) {
             const midAngle = currentAngle + segmentAngle / 2;
 
             ctx.beginPath();
-            ctx.arc(centerX, centerY, props.radius, currentAngle, endAngle);
-            ctx.arc(centerX, centerY, props.radius - clampedThickness, endAngle, currentAngle, true);
+            ctx.arc(centerX, centerY, radius, currentAngle, endAngle);
+            ctx.arc(centerX, centerY, radius - clampedThickness, endAngle, currentAngle, true);
             ctx.closePath();
             ctx.fillStyle = item.color;
             ctx.fill();
 
             points.push({
-                x: centerX + Math.cos(midAngle) * (props.radius - clampedThickness / 2),
-                y: centerY + Math.sin(midAngle) * (props.radius - clampedThickness / 2),
+                x: centerX + Math.cos(midAngle) * (radius - clampedThickness / 2),
+                y: centerY + Math.sin(midAngle) * (radius - clampedThickness / 2),
                 value: item.value,
                 label: item.label,
                 color: item.color,
@@ -76,7 +101,7 @@ export function CircleChart(props: CircleChartProps) {
             const y = e.clientY - rect.top - centerY;
             const distance = Math.sqrt(x * x + y * y);
 
-            if (distance <= props.radius && distance >= props.radius - clampedThickness) {
+            if (distance <= radius && distance >= radius - clampedThickness) {
                 const angle = Math.atan2(y, x);
                 let normalizedAngle = angle;
                 if (normalizedAngle < startAngle) {
@@ -130,9 +155,11 @@ export function CircleChart(props: CircleChartProps) {
 
     // Initialize on mount
     onMount(() => {
-        if (!canvasRef) return;
+        resizeObserver = new ResizeObserver(updateCanvasSize);
+        resizeObserver.observe(containerRef);
+
         const initialData = props.data.map(item => ({ ...item, value: 0 }));
-        drawChart(initialData);
+        updateCanvasSize();
         requestAnimationFrame(() => animate(initialData, props.data, props.duration ?? 500));
     });
 
@@ -151,15 +178,19 @@ export function CircleChart(props: CircleChartProps) {
 
     onCleanup(() => {
         cancelAnimationFrame(animationFrameId);
+        resizeObserver?.disconnect();
     });
 
     return (
-        <div style={{ position: "relative" }}>
-            <canvas
-                width={diameter}
-                height={diameter}
-                ref={canvasRef}
-            />
+        <div 
+            ref={containerRef}
+            style={{ 
+                position: "relative",
+                width: props.width ?? '100%',
+                height: props.height ?? '100%'
+            }}
+        >
+            <canvas ref={canvasRef} />
 
             {/* Tooltip position calculation updated */}
             {hoveredSegment() && (

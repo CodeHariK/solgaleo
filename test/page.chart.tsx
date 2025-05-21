@@ -28,8 +28,7 @@ export function ChartTest() {
     <Grid cols={2} rows={1}>
 
       <AreaChart
-        width={300}
-        height={150}
+        height={"250px"}
         curveType={"catmull-rom"}
         chartType={"line"}
         duration={1000}
@@ -49,8 +48,7 @@ export function ChartTest() {
       />
 
       <AreaChart
-        width={300}
-        height={150}
+        height={"250px"}
         chartType={"bar"}
         duration={1000}
         data={[
@@ -69,8 +67,7 @@ export function ChartTest() {
       />
 
       <AreaChart
-        width={300}
-        height={150}
+        height={"250px"}
         chartType={"stacked-bar"}
         duration={1000}
         data={[

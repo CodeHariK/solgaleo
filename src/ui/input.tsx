@@ -512,6 +512,7 @@ export function Select(props: {
 
 export function ToggleSwitch(props: {
     name: string;
+    class?: string;
     style?: JSX.CSSProperties;
     header?: JSX.Element;
     onChange?: (value: boolean) => void;
@@ -542,7 +543,7 @@ export function ToggleSwitch(props: {
     };
 
     return (
-        <fieldset style={props.style}>
+        <fieldset class={props.class} style={props.style}>
             {props.header && <legend style={{ display: "contents" }}>{props.header}</legend>}
 
             <div style={{ "display": "flex", "align-items": "center" }}

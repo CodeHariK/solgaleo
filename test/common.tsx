@@ -24,7 +24,7 @@ export function TestHeader() {
         ]}
         right={[
             <button
-                class={CssUI.ButtonIcon}
+                class={CssUI.ButtonRound}
                 type="button"
                 onClick={() => window.open('https://github.com/codeharik/solgaleo', '_blank')}>
                 Github

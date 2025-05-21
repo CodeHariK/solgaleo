@@ -241,6 +241,7 @@ export function ButtonTest(setProgress?: (progress: number) => void) {
             <button>Button</button>
             <button class={CssUI.ButtonGradient}>ButtonGradient</button>
             <button class={CssUI.ButtonErrorRound}>ButtonError</button>
+            <button class={CssUI.ButtonActive}>ButtonActive</button>
             <button class={CssUI.ButtonRev}>ButtonRev</button>
             <button class={CssUI.ButtonRound}>ButtonRound</button>
             <button class={CssUI.ButtonRoundRev}>ButtonRoundRev</button>
@@ -304,7 +305,7 @@ export function TestTree() {
     return <TreeView
         id="testtree"
         onClick={(data) => { console.log(data.data); }}
-        style={{
+        treeStyle={{
             "flex-direction": "row"
         }}
         data={[

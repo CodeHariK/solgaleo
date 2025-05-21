@@ -10,7 +10,6 @@ interface RadarChartProps {
         fillColor?: string;
     }[];
     labels: string[];
-    radius: number;
     duration?: number;
     gridCount?: number;
     padding?: number;  // Single padding number
@@ -20,17 +19,31 @@ interface RadarChartProps {
         gridColor?: string;
         axisColor?: string;
     };
+    width?: string;
+    height?: string;
+    radius?: number;
 }
 
 export function RadarChart(props: RadarChartProps) {
     const [hoveredPoint, setHoveredPoint] = createSignal<Point | null>(null);
     const [internalData, setInternalData] = createSignal(props.data);
     let canvasRef: HTMLCanvasElement;
+    let containerRef: HTMLDivElement;
+    let resizeObserver: ResizeObserver;
     let animationFrameId: number;
 
-    // Calculate dimensions
-    const diameter = props.radius * 2;
     const gridCount = props.gridCount ?? 5;
+
+    function calculateDimensions() {
+        if (!containerRef) return { radius: 100, diameter: 200 }; // Default values
+
+        const rect = containerRef.getBoundingClientRect();
+        const minSize = Math.min(rect.width, rect.height);
+        const radius = props.radius ?? (minSize / 2 - (props.padding ?? 20));
+        const diameter = radius * 2;
+
+        return { radius, diameter };
+    }
 
     function normalizeData(data: typeof props.data): typeof props.data {
         // Find max value for each axis across all series
@@ -47,26 +60,36 @@ export function RadarChart(props: RadarChartProps) {
         }));
     }
 
+    function updateCanvasSize() {
+        if (!containerRef || !canvasRef) return;
+        const { diameter } = calculateDimensions();
+        const padding = props.padding ?? 20;
+        const totalSize = diameter + (padding * 2);
+
+        canvasRef.width = totalSize;
+        canvasRef.height = totalSize;
+
+        drawChart(internalData());
+    }
+
     function drawChart(data: typeof props.data, progress = 1) {
         if (!canvasRef) return;
         const ctx = canvasRef.getContext('2d');
         if (!ctx) return;
 
-        // Single padding value with default
+        const { radius, diameter } = calculateDimensions();
         const padding = props.padding ?? 20;
 
         // Adjust canvas size to include padding
         const totalDiameter = diameter + (padding * 2);
-        canvasRef.width = totalDiameter;
-        canvasRef.height = totalDiameter;
 
         // Clear and prepare canvas
         ctx.clearRect(0, 0, totalDiameter, totalDiameter);
         ctx.save();
 
         // Center coordinates now include padding
-        const centerX = props.radius + padding;
-        const centerY = props.radius + padding;
+        const centerX = radius + padding;
+        const centerY = radius + padding;
         const angleStep = (Math.PI * 2) / props.labels.length;
 
         // Get style values with defaults
@@ -92,8 +115,8 @@ export function RadarChart(props: RadarChartProps) {
             series.values.forEach((val, i) => {
                 const angle = -Math.PI / 2 + i * angleStep;
                 const normalizedValue = val * progress;
-                const x = centerX + Math.cos(angle) * (props.radius * normalizedValue);
-                const y = centerY + Math.sin(angle) * (props.radius * normalizedValue);
+                const x = centerX + Math.cos(angle) * (radius * normalizedValue);
+                const y = centerY + Math.sin(angle) * (radius * normalizedValue);
 
                 points.push({ x, y });
             });
@@ -146,7 +169,7 @@ export function RadarChart(props: RadarChartProps) {
 
         // Draw grid after data
         for (let g = 1; g <= gridCount; g++) {
-            const gridRadius = (props.radius * g) / gridCount;
+            const gridRadius = (radius * g) / gridCount;
             ctx.beginPath();
             ctx.strokeStyle = style.gridColor;
             ctx.setLineDash([2, 2]);
@@ -162,8 +185,8 @@ export function RadarChart(props: RadarChartProps) {
                 ctx,
                 { x: centerX, y: centerY },
                 {
-                    x: centerX + Math.cos(angle) * props.radius,
-                    y: centerY + Math.sin(angle) * props.radius
+                    x: centerX + Math.cos(angle) * radius,
+                    y: centerY + Math.sin(angle) * radius
                 },
                 1,
                 style.axisColor
@@ -175,7 +198,7 @@ export function RadarChart(props: RadarChartProps) {
         ctx.fillStyle = style.fontColor;
         props.labels.forEach((label, i) => {
             const angle = -Math.PI / 2 + i * angleStep;
-            const labelRadius = props.radius + (padding * 0.5); // Use half padding for label distance
+            const labelRadius = radius + (padding * 0.5); // Use half padding for label distance
             const x = centerX + Math.cos(angle) * labelRadius;
             const y = centerY + Math.sin(angle) * labelRadius;
             ctx.fillText(label, x, y);
@@ -234,18 +257,18 @@ export function RadarChart(props: RadarChartProps) {
         animationFrameId = requestAnimationFrame(update);
     }
 
-    // Update onMount to pass duration
     onMount(() => {
-        if (!canvasRef) return;
+        resizeObserver = new ResizeObserver(updateCanvasSize);
+        resizeObserver.observe(containerRef);
+
         const initialData = props.data.map(series => ({
             ...series,
             values: Array(series.values.length).fill(0)
         }));
-        drawChart(initialData);
+        updateCanvasSize();
         requestAnimationFrame(() => animate(initialData, props.data, props.duration ?? 500));
     });
 
-    // Create effect to watch all props
     createEffect(() => {
         // Destructure all props to track them
         const {
@@ -268,15 +291,19 @@ export function RadarChart(props: RadarChartProps) {
 
     onCleanup(() => {
         cancelAnimationFrame(animationFrameId);
+        resizeObserver?.disconnect();
     });
 
     return (
-        <div style={{ position: "relative" }}>
-            <canvas
-                width={diameter + (props.padding ?? 20) * 2}
-                height={diameter + (props.padding ?? 20) * 2}
-                ref={canvasRef}
-            />
+        <div
+            ref={containerRef}
+            style={{
+                position: "relative",
+                width: props.width ?? '100%',
+                height: props.height ?? '100%',
+            }}
+        >
+            <canvas ref={canvasRef} />
 
             {/* Tooltip */}
             {hoveredPoint() && (

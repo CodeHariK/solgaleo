@@ -301,12 +301,13 @@ export function VCarousel({ children, listStyle, itemStyle }: {
 .Tabby {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 5px;
+    // height: 100%;
     background: var(--primary-bg);
     border-radius: 100px;
     z-index: 0;
-    transition: all 1s ease;
+    transition: all .5s ease;
     overflow: hidden;
 }
 */
@@ -446,7 +447,12 @@ export function TabBar(props: {
 }
 */
 
-export function HList(props: { pages: JSX.Element[], index: Accessor<number> }) {
+export function HList(props: {
+    pages: JSX.Element[],
+    index: Accessor<number>,
+    style?: JSX.CSSProperties
+    pageStyle?: JSX.CSSProperties
+}) {
 
     let scrollListRef: HTMLUListElement | undefined;
 
@@ -462,11 +468,13 @@ export function HList(props: { pages: JSX.Element[], index: Accessor<number> }) 
         scrollToPage(props.index())
     })
 
-    return <ul class={CssADV.HList} ref={scrollListRef}>
+    return <ul
+        class={CssADV.HList}
+        style={props.style}
+        ref={scrollListRef}
+    >
         {props.pages.map((page) => (
-            <li>
-                <h2>{page}</h2>
-            </li>
+            <li style={props.pageStyle}>{page}</li>
         ))}
     </ul>;
 }

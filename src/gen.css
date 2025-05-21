@@ -14,13 +14,15 @@
     --flicker-shadow: #36e2f8;
     --rainsrc: ;
     --rainsize: ;
-    --spacing: 1rem;
+    --spacing: .84rem;
     --border: 1px;
     --button-padding: 0.5rem .75rem;
     --icon-padding: .5rem;
     --primary-border: oklch(from var(--primary) calc(l + 0.1) c h);
     --error: #ffffff;
     --error-bg: #e85b53;
+    --active: #e3fdd4;
+    --active-bg: #077320;
     --modal-bg: oklch(from var(--body-bg) calc(l + .3) c h);
     --modal-col: var(--body);
     --size-0: 0;
@@ -37,8 +39,8 @@
     --body: black;
     --primary: #6750A4;
     --primary-bg: #EADDFF;
-    --secondary: #b4216b;
-    --secondary-bg: #ffe3f1;
+    --secondary: #9d1459;
+    --secondary-bg: #fbb2d7;
     --surface: oklch(from var(--body) calc(l + .5) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l - .025) c h);
     --surface-tint: oklch(from var(--surface-bg) calc(l - .08) c h);
@@ -54,8 +56,8 @@
     --body: white;
     --primary: #d8c8fa;
     --primary-bg: #4F378B;
-    --secondary: #b4216b;
-    --secondary-bg: #454245;
+    --secondary: #fbb2d7;
+    --secondary-bg: #9d1459;
     --surface: oklch(from var(--body) calc(l + .3) c h);
     --surface-bg: oklch(from var(--body-bg) calc(l + .25) c h);
     --surface-tint: oklch(from var(--surface-bg) calc(l + .08) c h);
@@ -77,6 +79,7 @@ svg {
     display: inline-block;
     width: 1em;
     height: 1em;
+    flex-shrink: 0;
     color: currentColor;
 }
 .DragBox {
@@ -339,8 +342,9 @@ button:disabled {
     cursor: not-allowed;
 }
 .ButtonIcon, .ButtonIconPlain, .ButtonIconMaterial, .ButtonIconMaterialRev {
-    padding: var(--icon-padding);
     border-radius: 100rem;
+    width: 2em;
+    height: 2em;
 }
 .ButtonIconPlain {
     color: var(--surface);
@@ -382,6 +386,10 @@ button:disabled {
 .ButtonError, .ButtonErrorRound {
     color: var(--error);
     background: var(--error-bg);
+}
+.ButtonActive, .ButtonActiveRound {
+    color: var(--active);
+    background: var(--active-bg);
 }
 .ButtonErrorOutlinedRound, .ButtonErrorOutlined {
     color: var(--error-bg);
@@ -896,7 +904,7 @@ input[type="range"]:focus ~ .RangeValue {
     transition: color 0.5s ease, transform 0.3s ease;
     transform: scale(1.05);
 }
-.SuperTable {
+.Table {
     display: flex;
     flex-direction: column;
     border-radius: 0.75rem;
@@ -1099,12 +1107,12 @@ input[type="range"]:focus ~ .RangeValue {
 .Tabby {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 5px;
     background: var(--primary-bg);
     border-radius: 100px;
     z-index: 0;
-    transition: all 1s ease;
+    transition: all .5s ease;
     overflow: hidden;
 }
 .HList {
@@ -1854,8 +1862,7 @@ h6 {
   letter-spacing: -0.01rem;
   word-spacing: -0.05rem;
 }
-p,
-li {
+body, p, li {
   text-wrap: pretty;
   font-size: var(--spacing);
   font-weight: 100;

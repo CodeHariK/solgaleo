@@ -5,7 +5,7 @@ import { debounce } from '../utils/debounce';
 
 /*CSS:
 
-.SuperTable {
+.Table {
     display: flex; 
     flex-direction: column; 
     border-radius: 0.75rem; 
@@ -89,7 +89,7 @@ export function Table(props: {
     }, 100);
 
     return (
-        <div class={CssADV.SuperTable} style={props.style}>
+        <div class={CssADV.Table} style={props.style}>
             {!(props.headerstart || props.headerend) ? null : (
                 <div class={CssADV.TableHeader}>
                     {props.headerstart}

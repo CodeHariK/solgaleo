@@ -49,8 +49,10 @@ button:disabled {
 }
 
 .ButtonIcon, .ButtonIconPlain, .ButtonIconMaterial, .ButtonIconMaterialRev {
-    padding: var(--icon-padding);
+    // padding: var(--icon-padding);
     border-radius: 100rem;
+    width: 2em;
+    height: 2em;
 }
 .ButtonIconPlain {
     color: var(--surface);
@@ -98,6 +100,10 @@ button:disabled {
 .ButtonError, .ButtonErrorRound {
     color: var(--error);
     background: var(--error-bg);
+}
+.ButtonActive, .ButtonActiveRound {
+    color: var(--active);
+    background: var(--active-bg);
 }
     
 .ButtonErrorOutlinedRound, .ButtonErrorOutlined {

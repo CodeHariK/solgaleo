@@ -54,6 +54,8 @@ export const CssUI = {
     ButtonErrorOutlinedRound: "ButtonErrorOutlinedRound",
     ButtonGradient: "ButtonGradient",
     ButtonError: "ButtonError",
+    ButtonActive: "ButtonActive",
+    ButtonActiveRound: "ButtonActiveRound",
     ButtonErrorOutlined: "ButtonErrorOutlined",
     ButtonElevated: "ButtonElevated",
     SelectionOptions: "selection-options",
