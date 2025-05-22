@@ -44,19 +44,13 @@ code[class*="language-"],
 pre[class*="language-"] {
     background: var(--syntax-bg);
     color: var(--mono-1);
-    font-family: "Fira Code", "Fira Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
     direction: ltr;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
     word-break: normal;
     line-height: 1.5;
-    -moz-tab-size: 2;
-    -o-tab-size: 2;
     tab-size: 2;
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
     hyphens: none;
 }
 

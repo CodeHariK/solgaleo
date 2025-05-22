@@ -2,6 +2,9 @@ import { createSignal, For } from "solid-js";
 import { AreaChart, CssUI, Grid, GridItem, GridLayout, HList, IconAddUser, IconCart, IconCheck, IconChevronLeft, IconChevronRight, IconDown, IconEmail, IconHeart, IconHome, IconUpload, ProgressBar, TabBar, Table, ToggleSwitch, TreeView } from "../src/gen";
 import { TestHeader } from "./common";
 
+//FN:START
+//Dashboard
+//FN:DOC
 export function Dashboard() {
 
     let [currentTab, setCurrentTab] = createSignal(0)
@@ -130,16 +133,15 @@ export function Dashboard() {
 
                 <HList
                     index={currentTab}
-                    pageStyle={{ margin: "4px" }}
+                    pageStyle={{ padding: "4px" }}
                     pages={[
 
-                        <div style={{ height: "100%", width: "100%" }}>
+                        <div class="h-full flex flex-col justify-end">
                             <AreaChart
-                                width={300}
-                                height={300}
                                 curveType={"catmull-rom"}
                                 chartType={"line"}
                                 duration={1000}
+                                style={{ "max-height": "300px" }}
                                 data={[
                                     {
                                         label: "Cpu",
@@ -153,14 +155,11 @@ export function Dashboard() {
 
                         <Table
 
-                            tableStyle={{
+                            style={{
                                 margin: "10px 0 0 0",
                                 padding: "10px",
                                 border: "1px solid var(--surface)",
                                 "border-radius": "var(--spacing)"
-                            }}
-
-                            style={{
                             }}
 
                             tableArray={[
@@ -311,3 +310,4 @@ export function Dashboard() {
 
     </GridLayout>
 }
+//FN:END

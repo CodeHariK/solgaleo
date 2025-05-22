@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, JSX, onCleanup, onMount } from "solid-js";
 import { DrawBezierCurve, DrawCatmullRomSpline, DrawCircle, DrawGrid, DrawLinearCurve, DrawRectangle, DrawTriangle, IsPointInRect } from "./canvas";
 
 export type Point = {
@@ -21,19 +21,21 @@ type AreaChartData = {
 
 type AreaChartProps = {
     data: AreaChartData[];
-    width: number;
-    height: number;
     duration?: number;
     curveType?: 'linear' | 'catmull-rom' | 'cubic-bezier';
     chartType?: 'line' | 'bar' | 'stacked-bar';
     barWidth?: number;
+    drawGrid?: boolean;
+    style?: JSX.CSSProperties;
 }
 
 export function AreaChart(props: AreaChartProps) {
     const [hoveredPoint, setHoveredPoint] = createSignal<Point | null>(null);
     const [internalData, setInternalData] = createSignal(props.data);
+    let containerRef: HTMLDivElement;
     let canvasRef: HTMLCanvasElement;
     let animationFrameId: number;
+    let resizeObserver: ResizeObserver;
 
     function drawChart(data: typeof props.data) {
         if (!canvasRef) return;
@@ -41,7 +43,7 @@ export function AreaChart(props: AreaChartProps) {
         if (!ctx) return;
 
         // Clear with full rect
-        ctx.clearRect(0, 0, props.width, props.height);
+        ctx.clearRect(0, 0, canvasRef.width, canvasRef.height);
         ctx.save();
 
         // Update padding - remove right padding since legend is now in HTML
@@ -53,8 +55,8 @@ export function AreaChart(props: AreaChartProps) {
         };
 
         // Calculate drawing area
-        const drawWidth = props.width - padding.left - padding.right;
-        const drawHeight = props.height - padding.top - padding.bottom;
+        const drawWidth = canvasRef.width - padding.left - padding.right;
+        const drawHeight = canvasRef.height - padding.top - padding.bottom;
 
         // For stacked bars, we need to calculate max of sums
         const maxY = props.chartType === 'stacked-bar'
@@ -63,7 +65,9 @@ export function AreaChart(props: AreaChartProps) {
             )) * 1.1
             : Math.max(...data.flatMap((d) => d.values)) * 1.1;
 
-        DrawGrid(ctx, props.width, props.height, 50, 1, "#ccc");
+        if (props.drawGrid) {
+            DrawGrid(ctx, canvasRef.width, canvasRef.height, 50, 1, "#ccc");
+        }
 
         // Store points for hit testing
         const POINTS: Point[] = [];
@@ -76,7 +80,7 @@ export function AreaChart(props: AreaChartProps) {
                 series.values.forEach((val, i) => {
                     const barX = padding.left + (drawWidth * i) / series.values.length + (barWidth * seriesIndex);
                     const height = (val / maxY) * drawHeight;
-                    const y = props.height - padding.bottom - height;
+                    const y = canvasRef.height - padding.bottom - height;
 
                     DrawRectangle(ctx,
                         { x: barX, y }, barWidth, height,
@@ -106,7 +110,7 @@ export function AreaChart(props: AreaChartProps) {
                 data.forEach((series) => {
                     const val = series.values[i];
                     const height = (val / maxY) * drawHeight;
-                    const y = props.height - padding.bottom - height - stackHeight;
+                    const y = canvasRef.height - padding.bottom - height - stackHeight;
 
                     DrawRectangle(ctx,
                         { x, y }, barWidth, height,
@@ -136,7 +140,7 @@ export function AreaChart(props: AreaChartProps) {
 
                 const points = series.values.map((val, i) => ({
                     x: padding.left + (drawWidth * i) / (series.values.length - 1),
-                    y: props.height - padding.bottom - (val / maxY) * drawHeight
+                    y: canvasRef.height - padding.bottom - (val / maxY) * drawHeight
                 }));
 
                 points.forEach((point, i) => {
@@ -165,8 +169,8 @@ export function AreaChart(props: AreaChartProps) {
 
                 // Fill area only if areaColor is provided
                 if (series.areaColor) {
-                    ctx.lineTo(props.width - padding.right, props.height - padding.bottom);
-                    ctx.lineTo(padding.left, props.height - padding.bottom);
+                    ctx.lineTo(canvasRef.width - padding.right, canvasRef.height - padding.bottom);
+                    ctx.lineTo(padding.left, canvasRef.height - padding.bottom);
                     ctx.closePath();
                     ctx.fillStyle = series.areaColor;
                     ctx.fill();
@@ -175,7 +179,7 @@ export function AreaChart(props: AreaChartProps) {
                 // Draw points on top of lines
                 series.values.forEach((val, i) => {
                     const x = padding.left + (drawWidth * i) / (series.values.length - 1);
-                    const y = props.height - padding.bottom - (val / maxY) * drawHeight;
+                    const y = canvasRef.height - padding.bottom - (val / maxY) * drawHeight;
 
                     // Draw points with different shapes based on series index
                     switch (seriesIndex % 3) {
@@ -287,14 +291,31 @@ export function AreaChart(props: AreaChartProps) {
         animationFrameId = requestAnimationFrame(update);
     }
 
-    // Update onMount to pass duration
+    function updateCanvasSize() {
+        if (!containerRef || !canvasRef) return;
+
+        const rect = containerRef.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
+        canvasRef.width = rect.width;
+        canvasRef.height = rect.height;
+
+        drawChart(internalData());
+    }
+
     onMount(() => {
-        if (!canvasRef) return;
+        // Set up resize observer on the parent element instead
+        if (containerRef.parentElement) {
+            resizeObserver = new ResizeObserver(updateCanvasSize);
+            resizeObserver.observe(containerRef.parentElement);
+        }
+
+        // Initial setup
         const initialData = props.data.map(series => ({
             ...series,
             values: Array(series.values.length).fill(0)
         }));
-        drawChart(initialData);
+        updateCanvasSize();
         requestAnimationFrame(() => animate(initialData, props.data, props.duration ?? 500));
     });
 
@@ -321,13 +342,28 @@ export function AreaChart(props: AreaChartProps) {
 
     onCleanup(() => {
         cancelAnimationFrame(animationFrameId);
+        resizeObserver?.disconnect();
     });
 
     return (
-        <div style={{ position: "relative" }}>
-
-            <canvas width={props.width} height={props.height} ref={canvasRef} />
-
+        <div
+            ref={containerRef}
+            style={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                "min-height": "300px",
+                ...props.style
+            }}
+        >
+            <canvas
+                ref={canvasRef}
+                style={{
+                    display: "block",
+                    width: "100%",
+                    height: "100%"
+                }}
+            />
             {/* Tooltip */}
             {hoveredPoint() && (
                 <div

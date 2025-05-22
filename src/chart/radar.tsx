@@ -1,4 +1,4 @@
-import { createSignal, onMount, createEffect, onCleanup } from "solid-js";
+import { createSignal, onMount, createEffect, onCleanup, JSX } from "solid-js";
 import { DrawCircle, DrawLine } from "./canvas";
 import { Point } from "./area";
 
@@ -19,9 +19,8 @@ interface RadarChartProps {
         gridColor?: string;
         axisColor?: string;
     };
-    width?: string;
-    height?: string;
     radius?: number;
+    containerStyle?: JSX.CSSProperties; // Add containerStyle prop
 }
 
 export function RadarChart(props: RadarChartProps) {
@@ -62,6 +61,10 @@ export function RadarChart(props: RadarChartProps) {
 
     function updateCanvasSize() {
         if (!containerRef || !canvasRef) return;
+
+        const rect = containerRef.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
         const { diameter } = calculateDimensions();
         const padding = props.padding ?? 20;
         const totalSize = diameter + (padding * 2);
@@ -258,8 +261,11 @@ export function RadarChart(props: RadarChartProps) {
     }
 
     onMount(() => {
-        resizeObserver = new ResizeObserver(updateCanvasSize);
-        resizeObserver.observe(containerRef);
+        // Observe parent for size changes
+        if (containerRef.parentElement) {
+            resizeObserver = new ResizeObserver(updateCanvasSize);
+            resizeObserver.observe(containerRef.parentElement);
+        }
 
         const initialData = props.data.map(series => ({
             ...series,
@@ -299,12 +305,23 @@ export function RadarChart(props: RadarChartProps) {
             ref={containerRef}
             style={{
                 position: "relative",
-                width: props.width ?? '100%',
-                height: props.height ?? '100%',
+                width: "100%",
+                height: "100%",
+                "min-height": "300px",
+                display: "flex",
+                "align-items": "center",
+                "justify-content": "center",
+                ...props.containerStyle
             }}
         >
-            <canvas ref={canvasRef} />
-
+            <canvas
+                ref={canvasRef}
+                style={{
+                    display: "block",
+                    "max-width": "100%",
+                    "max-height": "100%"
+                }}
+            />
             {/* Tooltip */}
             {hoveredPoint() && (
                 <div

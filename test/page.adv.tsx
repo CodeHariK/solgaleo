@@ -102,15 +102,10 @@ export function AdvTest() {
 export function SuperTableTest() {
     return <Table
 
-        tableStyle={{
+        style={{
             "max-height": "300px",
             "overflow-y": "scroll",
-            margin: "10px 0px",
-        }}
-
-        style={{
             margin: "10px",
-            padding: "15px",
             width: "90%",
             "box-shadow": "rgba(0, 0, 0, 0.1) 0px 0px 6px 2px",
         }}
@@ -174,20 +169,7 @@ export function SuperTableTest() {
                 )
             };
         })}
-
-        headerstart={<div>
-            <h3>Login sessions</h3>
-        </div>}
-        headerend={<div class="flex gap2">
-            <button class={CssUI.ButtonOutlined}>Revoke All</button>
-            <button class={CssUI.ButtonMaterial}>Logout</button>
-        </div>}
-        footerstart={<p>Page 1 of 10</p>}
-        footerend={<div class="flex gap2">
-            <button class={CssUI.ButtonMaterial}>Previous</button>
-            <button class={CssUI.ButtonMaterial}>Next</button>
-        </div>}
-    ></Table>;
+    />
 }
 //FN:END
 

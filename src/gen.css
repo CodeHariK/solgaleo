@@ -904,25 +904,7 @@ input[type="range"]:focus ~ .RangeValue {
     transition: color 0.5s ease, transform 0.3s ease;
     transform: scale(1.05);
 }
-.Table {
-    display: flex;
-    flex-direction: column;
-    border-radius: 0.75rem;
-    background-clip: border-box;
-}
-.TableHeader {
-    display: flex;
-    overflow: hidden;
-    align-items: center;
-    justify-content: space-between;
-    background-clip: border - box;
-}
-.TableFooter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.TableHeaderContainer {
+.TableStickyHeader {
     display: grid;
     position: sticky;
     top: 0;
@@ -1865,7 +1847,7 @@ h6 {
 body, p, li {
   text-wrap: pretty;
   font-size: var(--spacing);
-  font-weight: 100;
+  font-weight: 300;
   line-height: calc(var(--spacing) * 1.25);
   letter-spacing: -0.01rem;
   word-spacing: -0.05rem;

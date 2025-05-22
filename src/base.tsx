@@ -169,7 +169,7 @@ body, p, li {
   text-wrap: pretty;
 
   font-size: var(--spacing);
-  font-weight: 100;
+  font-weight: 300;
   line-height: calc(var(--spacing) * 1.25);
   letter-spacing: -0.01rem;
   word-spacing: -0.05rem;

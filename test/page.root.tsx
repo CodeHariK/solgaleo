@@ -92,7 +92,7 @@ export function RootPage() {
 		/>}
 
 		gridStyle={{
-			"grid-template-columns": "minmax(200px, 50%) 1fr"
+			"grid-template-columns": "minmax(200px, 20%) 1fr"
 		}}
 	>
 		<>{CssTEST.Docs[codeIndex()].element()}</>

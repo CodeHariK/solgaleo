@@ -460,6 +460,7 @@ export function HList(props: {
         const child = scrollListRef?.children[index] as HTMLElement | undefined;
         if (child && scrollListRef) {
             const left = child.offsetLeft;
+            console.log(left)
             scrollListRef.scrollTo({ left, behavior: "smooth" });
         }
     };

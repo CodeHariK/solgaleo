@@ -1,4 +1,4 @@
-import { createSignal, onMount, createEffect, onCleanup } from "solid-js";
+import { createSignal, onMount, createEffect, onCleanup, JSX } from "solid-js";
 import { Point } from "./area";
 
 interface CircleChartProps {
@@ -8,11 +8,10 @@ interface CircleChartProps {
         color: string;
     }[];
     radius?: number;
-    width?: string;
-    height?: string;
     thickness?: number;
     duration?: number;
     startAngle?: number;
+    containerStyle?: JSX.CSSProperties;
 }
 
 export function CircleChart(props: CircleChartProps) {
@@ -26,22 +25,25 @@ export function CircleChart(props: CircleChartProps) {
     // Calculate dimensions based on container size
     function calculateDimensions() {
         if (!containerRef) return { radius: 100, diameter: 200 }; // Default values
-        
+
         const rect = containerRef.getBoundingClientRect();
         const minSize = Math.min(rect.width, rect.height);
         const radius = props.radius ?? minSize / 2;
         const diameter = radius * 2;
-        
+
         return { radius, diameter };
     }
 
     function updateCanvasSize() {
         if (!containerRef || !canvasRef) return;
+
+        const rect = containerRef.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
         const { diameter } = calculateDimensions();
-        
         canvasRef.width = diameter;
         canvasRef.height = diameter;
-        
+
         drawChart(internalData());
     }
 
@@ -155,8 +157,11 @@ export function CircleChart(props: CircleChartProps) {
 
     // Initialize on mount
     onMount(() => {
-        resizeObserver = new ResizeObserver(updateCanvasSize);
-        resizeObserver.observe(containerRef);
+        // Observe parent for size changes
+        if (containerRef.parentElement) {
+            resizeObserver = new ResizeObserver(updateCanvasSize);
+            resizeObserver.observe(containerRef.parentElement);
+        }
 
         const initialData = props.data.map(item => ({ ...item, value: 0 }));
         updateCanvasSize();
@@ -182,15 +187,27 @@ export function CircleChart(props: CircleChartProps) {
     });
 
     return (
-        <div 
+        <div
             ref={containerRef}
-            style={{ 
+            style={{
                 position: "relative",
-                width: props.width ?? '100%',
-                height: props.height ?? '100%'
+                width: "100%",
+                height: "100%",
+                'min-height': "300px",
+                display: "flex",
+                'align-items': "center",
+                "justify-content": "center",
+                ...props.containerStyle
             }}
         >
-            <canvas ref={canvasRef} />
+            <canvas
+                ref={canvasRef}
+                style={{
+                    display: "block",
+                    "max-width": "100%",
+                    "max-height": "100%"
+                }}
+            />
 
             {/* Tooltip position calculation updated */}
             {hoveredSegment() && (
