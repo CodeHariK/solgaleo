@@ -2,7 +2,7 @@ import { onCleanup, onMount } from "solid-js";
 import { CssUI } from "../gen";
 
 /*CSS:
-.card {
+.glittercard {
     width: 100%;
     max-width: 400px;
     color: var(--primary-bg);
@@ -18,7 +18,7 @@ import { CssUI } from "../gen";
     transition: all 0.3s ease;
 }
 
-.card::before {
+.glittercard::before {
     content: '';
     position: absolute;
     top: 0;
@@ -33,11 +33,11 @@ import { CssUI } from "../gen";
     transition: opacity 0.3s ease;
 }
 
-.card:hover {
+.glittercard:hover {
     transform: perspective(1000px) translateZ(20px);
 }
 
-.card:hover::before {
+.glittercard:hover::before {
     opacity: 1;
 }
 
@@ -50,7 +50,7 @@ import { CssUI } from "../gen";
     -webkit-text-fill-color: transparent;
 }
 
-.card .description {
+.glittercard .description {
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -116,7 +116,7 @@ export function GlitterCard() {
     });
 
     return (
-        <div ref={cardRef} class="card">
+        <div ref={cardRef} class="glittercard">
             <span class={`${CssUI.ButtonIcon} mb4`}>Featured</span>
             <h2 class="title">Modern Design Card</h2>
             <p class="description">

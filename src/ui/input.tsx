@@ -267,7 +267,7 @@ export function CustomSelect(props: {
     multiple: boolean
     onChange: (value: any) => any;
 }) {
-    const [isOpen, setIsOpen] = createSignal(false)
+    const [isOpen, _setIsOpen] = createSignal(false)
 
     const [searchTerm, setSearchTerm] = createSignal("")
     const [selected, setSelected] = createSignal<Set<string>>(new Set())

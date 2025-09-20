@@ -12,3 +12,10 @@ gotest:
 
 goexample:
 	go run main.go -dir=dist-example
+
+generate-files:
+    bun run dev
+run-test-app:
+	bun run test
+link:
+	bun link

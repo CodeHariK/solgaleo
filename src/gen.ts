@@ -127,7 +127,7 @@ export const CssSRC = {
     MarqueeChild: "MarqueeChild",
     FlickerText: "FlickerText",
     Skeleton: "skeleton",
-    Card: "card",
+    Glittercard: "glittercard",
     Title: "title",
     Description: "description",
     Stats: "stats",
